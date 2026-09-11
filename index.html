@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#090a0f">
   <meta name="color-scheme" content="dark">
+  <!-- v26 route-title polish: v25 itinerary preserved; sequential day titles now use directional arrows for clearer mobile scanning. -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Taiwan &amp; Hong Kong '26 — Final Mobile Travel Companion v23</title>
+  <title>Taiwan &amp; Hong Kong '26 — Premium Mobile Travel Companion v26</title>
   <meta name="description" content="A field-first Taiwan and Hong Kong travel companion with live booking, prep, FX and day execution tools.">
   <meta name="format-detection" content="telephone=no">
   <meta name="application-name" content="Taiwan + Hong Kong '26">
@@ -1744,7 +1745,8 @@
     .day-hero::after { content:""; position:absolute; pointer-events:none; inset:1px; border-radius:inherit; border-top:1px solid rgb(255 255 255 / .055); opacity:.72; }
     .day-kicker strong { color: var(--selection); }
     .day-title { font-size: clamp(1.34rem, 3.1vw, 1.86rem); line-height: 1.11; letter-spacing: -.034em; }
-    .day-title .route-arrow { display:inline-block; margin:0 .27em; color:color-mix(in oklab,var(--selection) 75%,var(--text-2)); font-size:.72em; font-weight:560; line-height:1; transform:translateY(-.035em); }
+    .day-title .route-arrow { display:inline-block; margin-left:.27em; margin-right:0; color:color-mix(in oklab,var(--selection) 75%,var(--text-2)); font-size:.72em; font-weight:560; line-height:1; transform:translateY(-.035em); white-space:nowrap; }
+    .day-title .route-arrow::after { content:'\00a0'; }
     .day-title .title-separator { display:inline-block; margin:0 .25em; color:var(--muted-2); font-size:.57em; font-weight:650; opacity:.75; transform:translateY(-.08em); }
     .journey-progress-fill { background: linear-gradient(90deg, color-mix(in oklab,var(--selection) 82%,var(--accent-strong)), color-mix(in oklab,var(--ambient-city) 62%,var(--ambient-secondary)) 68%, var(--ambient-secondary)); box-shadow: 0 0 20px color-mix(in oklab,var(--selection) 17%,transparent); }
     .journey-progress-fill::after { background: color-mix(in oklab,var(--ambient-secondary) 70%,white 30%); box-shadow: 0 0 0 3px color-mix(in oklab,var(--ambient-secondary) 10%,var(--surface)), 0 0 15px color-mix(in oklab,var(--ambient-secondary) 28%,transparent); }
@@ -2165,6 +2167,266 @@
     }
   </style>
 
+
+  <style id="expressive-harmony-v25">
+    /* v25: expressive, not noisy. Color marks place and state; content surfaces stay calm. */
+    :root {
+      --muted-2: oklch(60% .024 260);
+      --ambient-tertiary: oklch(79% .11 92);
+      --expressive-glow: 1;
+      --motion-fast: 170ms;
+      --motion-standard: 220ms;
+      --motion-spatial: 320ms;
+    }
+    @property --ambient-tertiary { syntax:'<color>'; inherits:true; initial-value:oklch(79% .11 92); }
+
+    body[data-city-theme='flight'] {
+      --ambient-city: oklch(76.5% .135 239);
+      --ambient-secondary: oklch(73.5% .135 292);
+      --ambient-tertiary: oklch(79% .105 174);
+      --selection: color-mix(in oklab, var(--ambient-city) 64%, var(--ambient-secondary) 36%);
+    }
+    body[data-city-theme='taipei'] {
+      --ambient-city: oklch(78% .135 184);
+      --ambient-secondary: oklch(75% .155 28);
+      --ambient-tertiary: oklch(83% .135 93);
+      --selection: color-mix(in oklab, var(--ambient-city) 62%, var(--ambient-secondary) 38%);
+    }
+    body[data-city-theme='kaohsiung'] {
+      --ambient-city: oklch(84% .165 82);
+      --ambient-secondary: oklch(77% .125 184);
+      --ambient-tertiary: oklch(74% .15 27);
+      --selection: color-mix(in oklab, var(--ambient-city) 58%, var(--ambient-secondary) 42%);
+    }
+    body[data-city-theme='hk'] {
+      --ambient-city: oklch(73% .17 306);
+      --ambient-secondary: oklch(75% .145 244);
+      --ambient-tertiary: oklch(74% .15 344);
+      --selection: color-mix(in oklab, var(--ambient-city) 60%, var(--ambient-secondary) 40%);
+    }
+    @media (color-gamut:p3) {
+      body[data-city-theme='flight'] { --ambient-city:oklch(76.5% .155 239); --ambient-secondary:oklch(73.5% .155 292); --ambient-tertiary:oklch(79% .125 174); }
+      body[data-city-theme='taipei'] { --ambient-city:oklch(78% .155 184); --ambient-secondary:oklch(75% .18 28); --ambient-tertiary:oklch(83% .155 93); }
+      body[data-city-theme='kaohsiung'] { --ambient-city:oklch(84% .185 82); --ambient-secondary:oklch(77% .145 184); --ambient-tertiary:oklch(74% .17 27); }
+      body[data-city-theme='hk'] { --ambient-city:oklch(73% .195 306); --ambient-secondary:oklch(75% .165 244); --ambient-tertiary:oklch(74% .175 344); }
+    }
+
+    body {
+      background:
+        radial-gradient(760px 520px at var(--cursor-x) var(--cursor-y), color-mix(in oklab,var(--ambient-city) 11%,transparent), transparent 68%),
+        radial-gradient(900px 570px at 108% -7%, color-mix(in oklab,var(--ambient-secondary) 9%,transparent), transparent 66%),
+        radial-gradient(760px 500px at -11% 108%, color-mix(in oklab,var(--ambient-tertiary) 5.5%,transparent), transparent 69%),
+        linear-gradient(180deg,var(--bg-raised),var(--bg) 31%,oklch(10.5% .014 272));
+      transition: --ambient-city 480ms var(--ease-ui), --ambient-secondary 480ms var(--ease-ui), --ambient-tertiary 480ms var(--ease-ui);
+    }
+
+    /* One restrained glass layer for navigation, per Apple material hierarchy. */
+    .app-chrome::before {
+      background:
+        radial-gradient(440px 120px at 35% -48%,color-mix(in oklab,var(--ambient-city) 18%,transparent),transparent 72%),
+        radial-gradient(430px 120px at 66% -55%,color-mix(in oklab,var(--ambient-secondary) 13%,transparent),transparent 73%),
+        radial-gradient(340px 100px at 84% -62%,color-mix(in oklab,var(--ambient-tertiary) 8%,transparent),transparent 75%);
+    }
+    .brand-mark {
+      background:
+        radial-gradient(circle at 26% 20%,rgb(255 255 255 / .38),transparent 28%),
+        linear-gradient(142deg,color-mix(in oklab,var(--ambient-city) 86%,white 8%) 0 38%,color-mix(in oklab,var(--ambient-secondary) 84%,var(--ambient-city)) 67%,color-mix(in oklab,var(--ambient-tertiary) 82%,var(--ambient-secondary)) 100%);
+      box-shadow:0 9px 26px color-mix(in oklab,var(--selection) 18%,transparent),inset 0 1px 0 rgb(255 255 255 / .31);
+    }
+    .nav-lens,.mobile-nav-lens {
+      background:
+        radial-gradient(120% 115% at 24% -22%,rgb(255 255 255 / .14),transparent 56%),
+        linear-gradient(145deg,color-mix(in oklab,var(--ambient-city) 13%,rgb(255 255 255 / .07)),color-mix(in oklab,var(--ambient-secondary) 11%,rgb(255 255 255 / .055)) 65%,color-mix(in oklab,var(--ambient-tertiary) 7%,rgb(255 255 255 / .05)));
+      border-color:color-mix(in oklab,var(--selection) 19%,rgb(255 255 255 / .055));
+      transition:transform var(--motion-spatial) var(--ease-spring),background var(--motion-standard) var(--ease-ui),border-color var(--motion-standard) var(--ease-ui);
+    }
+    .nav-item.is-active svg,.mobile-nav-item.is-active svg { color:color-mix(in oklab,var(--selection) 78%,white 22%); }
+    .status-pill { border-color:color-mix(in oklab,var(--selection) 31%,transparent); background:color-mix(in oklab,var(--selection) 9%,var(--surface)); }
+    .status-dot { background:var(--selection); }
+    .skip-link { min-height:44px; display:inline-flex; align-items:center; }
+    .plan-switch button { min-height:44px; }
+
+    /* Stability is part of premium motion: content never shifts merely because state changed. */
+    .tab-pane,.plan-panel,.timeline-card { animation:none !important; }
+    .mobile-nav-item.is-active { translate:0 0; }
+    .mobile-nav-item.is-active svg { translate:0 0; }
+    .journey-progress-fill { transition:width 420ms var(--ease-spring),background var(--motion-standard) var(--ease-ui),box-shadow var(--motion-standard) var(--ease-ui); }
+
+    /* Day rail: city color is a locator, not a full-card wash. */
+    .day-chip { --chip-accent:var(--selection); --chip-secondary:var(--ambient-secondary); position:relative; overflow:hidden; }
+    .day-chip:has(.theme-flight) { --chip-accent:oklch(76.5% .135 239); --chip-secondary:oklch(73.5% .135 292); }
+    .day-chip:has(.theme-taipei) { --chip-accent:oklch(78% .135 184); --chip-secondary:oklch(75% .155 28); }
+    .day-chip:has(.theme-kaohsiung) { --chip-accent:oklch(84% .165 82); --chip-secondary:oklch(77% .125 184); }
+    .day-chip:has(.theme-hk) { --chip-accent:oklch(73% .17 306); --chip-secondary:oklch(75% .145 244); }
+    .day-chip::after { content:""; position:absolute; left:10px; right:10px; bottom:0; height:2px; border-radius:999px; background:linear-gradient(90deg,var(--chip-accent),var(--chip-secondary)); opacity:0; transition:opacity var(--motion-fast) var(--ease-ui); }
+    .day-chip.is-active {
+      color:var(--text);
+      border-color:color-mix(in oklab,var(--chip-accent) 38%,var(--stroke)) !important;
+      background:linear-gradient(180deg,color-mix(in oklab,var(--chip-accent) 11%,var(--surface-2)),color-mix(in oklab,var(--chip-secondary) 4%,var(--surface))) !important;
+      box-shadow:inset 0 1px 0 rgb(255 255 255 / .06),0 8px 22px color-mix(in oklab,var(--chip-accent) 8%,transparent);
+      transform:none !important;
+    }
+    .day-chip.is-active::after { opacity:.92; }
+    .day-chip.is-active .day-chip-number { color:color-mix(in oklab,var(--chip-accent) 78%,white 22%); background:color-mix(in oklab,var(--chip-accent) 10%,var(--surface-2)); border-color:color-mix(in oklab,var(--chip-accent) 21%,var(--stroke)); }
+    .day-chip:active { transform:scale(.985) !important; }
+
+    /* More playful hero moment; the itinerary beneath remains monochromatic and easy to scan. */
+    .day-hero { --hero-primary:var(--ambient-city); --hero-secondary:var(--ambient-secondary); --hero-tertiary:var(--ambient-tertiary); }
+    .day-hero.city-flight { --hero-primary:oklch(76.5% .135 239); --hero-secondary:oklch(73.5% .135 292); --hero-tertiary:oklch(79% .105 174); }
+    .day-hero.city-taipei { --hero-primary:oklch(78% .135 184); --hero-secondary:oklch(75% .155 28); --hero-tertiary:oklch(83% .135 93); }
+    .day-hero.city-kaohsiung { --hero-primary:oklch(84% .165 82); --hero-secondary:oklch(77% .125 184); --hero-tertiary:oklch(74% .15 27); }
+    .day-hero.city-hk { --hero-primary:oklch(73% .17 306); --hero-secondary:oklch(75% .145 244); --hero-tertiary:oklch(74% .15 344); }
+    .day-hero {
+      background:
+        radial-gradient(600px 280px at 104% -4%,color-mix(in oklab,var(--hero-primary) 12%,transparent),transparent 69%),
+        radial-gradient(470px 270px at -8% 112%,color-mix(in oklab,var(--hero-secondary) 7%,transparent),transparent 72%),
+        radial-gradient(380px 220px at 72% 112%,color-mix(in oklab,var(--hero-tertiary) 4%,transparent),transparent 73%),
+        linear-gradient(180deg,color-mix(in oklab,var(--surface-2) 70%,var(--surface)),var(--surface)) !important;
+      border-color:color-mix(in oklab,var(--hero-primary) 14%,var(--stroke)) !important;
+    }
+    .day-hero::after {
+      content:""; position:absolute; pointer-events:none; z-index:0; right:-46px; top:-54px; width:190px; height:190px; border-radius:50%;
+      background:repeating-radial-gradient(circle at center,transparent 0 29px,color-mix(in oklab,var(--hero-primary) 7%,transparent) 30px 31px,transparent 32px 48px);
+      -webkit-mask-image:linear-gradient(135deg,#000,transparent 68%); mask-image:linear-gradient(135deg,#000,transparent 68%);
+      opacity:.8;
+    }
+    .journey-progress { background:color-mix(in oklab,var(--hero-primary) 7%,rgb(255 255 255 / .045)); }
+    .journey-progress-fill { background:linear-gradient(90deg,var(--hero-primary),var(--hero-secondary) 62%,var(--hero-tertiary)); box-shadow:0 0 18px color-mix(in oklab,var(--hero-primary) 19%,transparent); }
+    .journey-progress-fill::after { background:color-mix(in oklab,var(--hero-tertiary) 74%,white 26%); box-shadow:0 0 0 3px color-mix(in oklab,var(--hero-tertiary) 9%,var(--surface)),0 0 14px color-mix(in oklab,var(--hero-tertiary) 28%,transparent); }
+
+    .fact-card { transition:border-color var(--motion-fast) var(--ease-ui),background-color var(--motion-fast) var(--ease-ui); }
+    .fact-card:nth-child(1) .fact-label i,.fact-card:nth-child(1) .fact-label svg { color:var(--hero-primary); }
+    .fact-card:nth-child(2) .fact-label i,.fact-card:nth-child(2) .fact-label svg { color:var(--hero-secondary); }
+    .fact-card:nth-child(3) .fact-label i,.fact-card:nth-child(3) .fact-label svg { color:var(--hero-tertiary); }
+    .fact-card:nth-child(4) .fact-label i,.fact-card:nth-child(4) .fact-label svg { color:color-mix(in oklab,var(--hero-primary) 58%,var(--hero-secondary)); }
+
+    /* Semantic color lives at the edge and icon, never behind long text. */
+    .timeline-card { --item-accent:var(--selection); }
+    .timeline-card.tone-food { --item-accent:var(--success); }
+    .timeline-card.tone-transit { --item-accent:var(--info); }
+    .timeline-card.tone-active { --item-accent:color-mix(in oklab,var(--ambient-city) 74%,var(--teal)); }
+    .timeline-card.tone-wellness { --item-accent:var(--violet); }
+    .timeline-card.tone-culture { --item-accent:var(--warning); }
+    .timeline-card.is-now { --item-accent:var(--warning); }
+    .timeline-stack::before { background:linear-gradient(to bottom,color-mix(in oklab,var(--ambient-city) 58%,transparent),var(--stroke-strong) 16%,var(--stroke-strong) 84%,color-mix(in oklab,var(--ambient-secondary) 42%,transparent)); }
+    .timeline-card::before { background:var(--item-accent); box-shadow:0 0 0 5px var(--bg),0 0 16px color-mix(in oklab,var(--item-accent) 26%,transparent); }
+    .timeline-time { color:color-mix(in oklab,var(--item-accent) 82%,white 18%); }
+    .timeline-icon { color:color-mix(in oklab,var(--item-accent) 82%,white 18%) !important; background:color-mix(in oklab,var(--item-accent) 8%,var(--surface-2)) !important; border-color:color-mix(in oklab,var(--item-accent) 20%,var(--stroke)) !important; }
+    .timeline-card.is-now { border-color:color-mix(in oklab,var(--warning) 29%,var(--stroke)) !important; }
+    .guide-panel { background:linear-gradient(180deg,color-mix(in oklab,var(--item-accent) 2.3%,var(--surface-3)),var(--surface-3)); }
+    .step-index { color:color-mix(in oklab,var(--item-accent) 68%,var(--muted)); border-color:color-mix(in oklab,var(--item-accent) 12%,var(--stroke)); }
+
+    .section-title::after { content:""; display:inline-block; width:14px; height:3px; margin-left:8px; border-radius:999px; vertical-align:middle; background:linear-gradient(90deg,var(--ambient-city),var(--ambient-secondary)); opacity:.62; }
+
+    .summary-card { position:relative; overflow:hidden; }
+    .summary-card::after { content:""; position:absolute; inset:auto -60px -82px auto; width:160px; height:160px; border-radius:50%; pointer-events:none; background:radial-gradient(circle,color-mix(in oklab,var(--summary-accent) 7%,transparent),transparent 68%); }
+    .summary-card.protein { --summary-accent:var(--success); border-color:color-mix(in oklab,var(--success) 12%,var(--stroke)); }
+    .summary-card.tip { --summary-accent:var(--ambient-tertiary); border-color:color-mix(in oklab,var(--ambient-tertiary) 12%,var(--stroke)); }
+    .summary-card.protein .summary-icon { color:var(--success); background:color-mix(in oklab,var(--success) 7%,var(--surface-2)); }
+    .summary-card.tip .summary-icon { color:var(--ambient-tertiary); background:color-mix(in oklab,var(--ambient-tertiary) 7%,var(--surface-2)); }
+    .backup-section { border-color:color-mix(in oklab,var(--teal) 12%,var(--stroke)); background:linear-gradient(180deg,color-mix(in oklab,var(--teal) 4.5%,var(--surface)),var(--surface)); }
+    .backup-card { background:linear-gradient(155deg,color-mix(in oklab,var(--ambient-tertiary) 2%,var(--surface-3)),var(--surface-3)); }
+
+    /* Days index: location color aids scanning without turning the list into colored tiles. */
+    .city-filter { --filter-accent:var(--selection); position:relative; border:1px solid transparent; background:transparent !important; }
+    .city-filter-all { --filter-accent:var(--selection); }
+    .city-filter-taipei { --filter-accent:oklch(78% .135 184); }
+    .city-filter-kaohsiung { --filter-accent:oklch(84% .165 82); }
+    .city-filter-hk { --filter-accent:oklch(73% .17 306); }
+    .city-filter[aria-pressed='true'] { color:var(--text) !important; background:color-mix(in oklab,var(--filter-accent) 10%,var(--surface-2)) !important; border-color:color-mix(in oklab,var(--filter-accent) 22%,var(--stroke)); box-shadow:inset 0 1px 0 rgb(255 255 255 / .045); }
+    .city-filter[aria-pressed='false']:hover { background:rgb(255 255 255 / .035) !important; }
+
+    .index-card { --index-accent:var(--selection); position:relative; overflow:hidden; }
+    .index-card.index-theme-flight { --index-accent:oklch(76.5% .135 239); }
+    .index-card.index-theme-taipei { --index-accent:oklch(78% .135 184); }
+    .index-card.index-theme-kaohsiung { --index-accent:oklch(84% .165 82); }
+    .index-card.index-theme-hk { --index-accent:oklch(73% .17 306); }
+    .index-card::before { content:""; position:absolute; left:0; top:13px; bottom:13px; width:2px; border-radius:3px; background:var(--index-accent); opacity:.68; }
+    .index-card > div:first-child > div:first-child > span:first-child { color:color-mix(in oklab,var(--index-accent) 82%,white 18%) !important; background:color-mix(in oklab,var(--index-accent) 8%,var(--surface-2)) !important; border:1px solid color-mix(in oklab,var(--index-accent) 17%,var(--stroke)); }
+    .index-card > div:first-child > span:last-child { color:color-mix(in oklab,var(--index-accent) 55%,var(--muted)); }
+
+    /* Plan: one expressive hero, then restrained urgency/status accents. */
+    .plan-hero {
+      background:
+        radial-gradient(620px 270px at 100% 0,color-mix(in oklab,var(--selection) 11%,transparent),transparent 69%),
+        radial-gradient(510px 260px at 0 110%,color-mix(in oklab,var(--ambient-secondary) 7%,transparent),transparent 73%),
+        radial-gradient(380px 200px at 72% 120%,color-mix(in oklab,var(--ambient-tertiary) 4%,transparent),transparent 73%),
+        var(--surface);
+    }
+    .plan-stat:first-child { --stat-accent:var(--selection); }
+    .plan-stat:last-child { --stat-accent:var(--teal); }
+    .plan-stat.is-active { border-color:color-mix(in oklab,var(--stat-accent) 28%,var(--stroke)); background:color-mix(in oklab,var(--stat-accent) 6%,var(--surface-2)); }
+    .plan-stat:first-child strong { color:color-mix(in oklab,var(--selection) 38%,var(--text)); }
+    .plan-stat:last-child strong { color:color-mix(in oklab,var(--teal) 36%,var(--text)); }
+    .plan-switch { transition:border-color var(--motion-standard) var(--ease-ui); }
+    .plan-switch:has(#plan-tab-prep[aria-selected='true']) { --plan-lens-primary:var(--teal); --plan-lens-secondary:var(--ambient-tertiary); }
+    .plan-switch:has(#plan-tab-bookings[aria-selected='true']) { --plan-lens-primary:var(--selection); --plan-lens-secondary:var(--ambient-secondary); }
+    .plan-switch-lens { background:linear-gradient(145deg,color-mix(in oklab,var(--plan-lens-primary,var(--selection)) 13%,rgb(255 255 255 / .065)),color-mix(in oklab,var(--plan-lens-secondary,var(--ambient-secondary)) 9%,rgb(255 255 255 / .05))); transition:transform 300ms var(--ease-spring),background var(--motion-standard) var(--ease-ui); }
+    .plan-card::before { content:""; position:absolute; z-index:1; left:0; top:14px; bottom:14px; width:2px; border-radius:3px; background:var(--plan-accent); opacity:.75; }
+    .prep-card { position:relative; overflow:hidden; border-color:color-mix(in oklab,var(--teal) 8%,var(--stroke)); }
+    .prep-card::after { content:""; position:absolute; width:120px; height:120px; border-radius:50%; right:-72px; bottom:-76px; pointer-events:none; background:radial-gradient(circle,color-mix(in oklab,var(--teal) 5%,transparent),transparent 68%); }
+
+    /* Toolkit gets destination identity and small semantic cues, not full saturation. */
+    .hotel-card { --hotel-accent:var(--selection); position:relative; overflow:hidden; background:var(--surface) !important; border:1px solid color-mix(in oklab,var(--hotel-accent) 11%,var(--stroke)) !important; border-radius:var(--radius-md) !important; box-shadow:var(--shadow-card); }
+    .hotel-card::before { content:""; position:absolute; top:0; left:14px; right:14px; height:2px; border-radius:0 0 4px 4px; background:linear-gradient(90deg,var(--hotel-accent),color-mix(in oklab,var(--hotel-accent) 34%,transparent)); opacity:.75; }
+    .hotel-taipei { --hotel-accent:oklch(78% .135 184); }
+    .hotel-kaohsiung { --hotel-accent:oklch(84% .165 82); }
+    .hotel-hk { --hotel-accent:oklch(73% .17 306); }
+    .hotel-card > div:first-child > span:first-child { color:color-mix(in oklab,var(--hotel-accent) 80%,white 20%) !important; }
+    .operating-rules-card { border-color:color-mix(in oklab,var(--ambient-city) 8%,var(--stroke)) !important; }
+    .rule-tile { --rule-accent:var(--selection); position:relative; overflow:hidden; background:var(--surface-3) !important; border-color:color-mix(in oklab,var(--rule-accent) 9%,var(--stroke)) !important; }
+    .rule-tile::before { content:""; position:absolute; left:0; top:9px; bottom:9px; width:2px; border-radius:2px; background:var(--rule-accent); opacity:.65; }
+    .rule-move { --rule-accent:var(--info); }
+    .rule-queue { --rule-accent:var(--warning); }
+    .rule-book { --rule-accent:var(--ambient-secondary); }
+    .rule-energy { --rule-accent:var(--success); }
+    .budget-card { border-color:color-mix(in oklab,var(--ambient-tertiary) 9%,var(--stroke)) !important; }
+    .currency-switch { background:var(--surface-3) !important; border-color:var(--stroke) !important; }
+    .currency-switch button[aria-pressed='true'] { color:var(--text) !important; background:color-mix(in oklab,var(--selection) 10%,var(--surface-2)) !important; box-shadow:inset 0 1px 0 rgb(255 255 255 / .045); }
+    .budget-card > div:last-of-type > div:last-of-type span:last-child { color:color-mix(in oklab,var(--selection) 76%,white 24%) !important; }
+
+    /* Hover is reserved for pointer devices; touch gets crisp press feedback only. */
+    @media (hover:hover) and (pointer:fine) {
+      .hotel-card:hover { border-color:color-mix(in oklab,var(--hotel-accent) 22%,var(--stroke)) !important; }
+      .index-card:hover { border-color:color-mix(in oklab,var(--index-accent) 21%,var(--stroke)) !important; }
+      .timeline-card:hover { border-color:color-mix(in oklab,var(--item-accent) 18%,var(--stroke)) !important; }
+    }
+
+    @media (max-width:767px) {
+      :root { --expressive-glow:.82; }
+      body {
+        background:
+          radial-gradient(520px 390px at 106% -4%,color-mix(in oklab,var(--ambient-city) 9%,transparent),transparent 68%),
+          radial-gradient(470px 350px at -12% 104%,color-mix(in oklab,var(--ambient-secondary) 5.5%,transparent),transparent 70%),
+          linear-gradient(180deg,var(--bg-raised),var(--bg) 30%,oklch(10.5% .014 272));
+      }
+      .app-chrome::before { opacity:.82; }
+      .day-hero::after { width:150px; height:150px; right:-46px; top:-48px; opacity:.55; }
+      .day-chip::after { left:9px; right:9px; }
+      .timeline-card { transform:none !important; }
+      .timeline-card:hover { transform:none !important; }
+      .plan-card::before { top:12px; bottom:12px; }
+      .hotel-card { box-shadow:0 1px 0 rgb(255 255 255 / .02),0 10px 24px rgb(0 0 0 / .14); }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      body,.nav-lens,.mobile-nav-lens,.journey-progress-fill,.plan-switch-lens,.day-chip::after { transition:none !important; }
+      .day-chip:active,.nav-item:active,.mobile-nav-item:active,.icon-action:active,.brand-button:active { transform:none !important; }
+    }
+    @media (prefers-reduced-transparency:reduce) {
+      .app-chrome,.mobile-dock,.day-strip-wrap { -webkit-backdrop-filter:none !important; backdrop-filter:none !important; background:var(--surface) !important; }
+      .nav-lens,.mobile-nav-lens { background:var(--surface-2) !important; }
+    }
+    @media (prefers-contrast:more) {
+      .day-chip.is-active,.city-filter[aria-pressed='true'],.plan-stat.is-active { border-width:2px !important; }
+      .index-card::before,.plan-card::before,.hotel-card::before,.rule-tile::before { opacity:1; }
+    }
+    @media (forced-colors:active) {
+      .day-hero::after,.summary-card::after,.prep-card::after,.index-card::before,.plan-card::before,.hotel-card::before,.rule-tile::before { display:none !important; }
+      .city-filter[aria-pressed='true'],.currency-switch button[aria-pressed='true'] { outline:2px solid Highlight; outline-offset:-2px; }
+    }
+  </style>
+
 </head>
 
 <body class="min-h-full bg-slate-950 text-slate-100 flex flex-col"
@@ -2424,10 +2686,10 @@
         </div>
 
         <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-          <button type="button" @click="selectedCityFilter = 'all'" :class="selectedCityFilter === 'all' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'all'" class="px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">All · 全部</button>
-          <button type="button" @click="selectedCityFilter = 'taipei'" :class="selectedCityFilter === 'taipei' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'taipei'" class="px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Taipei · 台北</button>
-          <button type="button" @click="selectedCityFilter = 'kaohsiung'" :class="selectedCityFilter === 'kaohsiung' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'kaohsiung'" class="px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Kaohsiung · 高雄</button>
-          <button type="button" @click="selectedCityFilter = 'hk'" :class="selectedCityFilter === 'hk' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'hk'" class="px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Hong Kong · 香港</button>
+          <button type="button" @click="selectedCityFilter = 'all'" :class="selectedCityFilter === 'all' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'all'" class="city-filter city-filter-all px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">All · 全部</button>
+          <button type="button" @click="selectedCityFilter = 'taipei'" :class="selectedCityFilter === 'taipei' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'taipei'" class="city-filter city-filter-taipei px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Taipei · 台北</button>
+          <button type="button" @click="selectedCityFilter = 'kaohsiung'" :class="selectedCityFilter === 'kaohsiung' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'kaohsiung'" class="city-filter city-filter-kaohsiung px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Kaohsiung · 高雄</button>
+          <button type="button" @click="selectedCityFilter = 'hk'" :class="selectedCityFilter === 'hk' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'hk'" class="city-filter city-filter-hk px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Hong Kong · 香港</button>
         </div>
       </div>
 
@@ -2435,6 +2697,7 @@
       <div class="space-y-3">
         <template x-for="day in filteredDays" :key="day.id">
           <div class="index-card bg-slate-900/80 border border-slate-800 hover:border-slate-700/80 rounded-2xl p-4 transition-all cursor-pointer"
+               :class="'index-theme-' + getDayTheme(day)"
                @click="openDay(day.id)">
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-2">
@@ -2571,7 +2834,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
           <!-- Taipei -->
-          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
+          <div class="hotel-card hotel-taipei bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
             <div>
               <span class="text-xs font-mono text-rose-400 font-medium">Taipei (5 Nights)</span>
               <h5 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.taipei.name"></h5>
@@ -2589,7 +2852,7 @@
           </div>
 
           <!-- Kaohsiung -->
-          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
+          <div class="hotel-card hotel-kaohsiung bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
             <div>
               <span class="text-xs font-mono text-rose-400 font-medium">Kaohsiung (4 Nights)</span>
               <h5 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.kaohsiung.name"></h5>
@@ -2607,7 +2870,7 @@
           </div>
 
           <!-- Hong Kong -->
-          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
+          <div class="hotel-card hotel-hk bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
             <div>
               <span class="text-xs font-mono text-rose-400 font-medium">Hong Kong (5 Nights)</span>
               <h5 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.hk.name"></h5>
@@ -2627,21 +2890,21 @@
       </div>
 
       <!-- Core operating rules -->
-      <div class="surface-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <div class="surface-card operating-rules-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
         <h4 class="text-sm font-semibold text-white">Operating Rules · 旅行規則</h4>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs leading-relaxed">
-          <div class="rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Move efficiently · 交通</strong><span class="text-slate-400 block mt-1">Walk/public transit when direct. For 3 people, take a taxi/app car when it saves ~15+ min, removes an awkward transfer, protects a booking, or avoids dragging luggage.</span></div>
-          <div class="rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Don’t queue · 排隊</strong><span class="text-slate-400 block mt-1">Default food line cutoff: ~10–15 min. Use the named nearby backup rather than sacrificing the route for a marginally better restaurant.</span></div>
-          <div class="rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Book lightly · 預約</strong><span class="text-slate-400 block mt-1">Reserve when it is easy and free. Avoid prepayment, non-refundable deposits or card guarantees unless the experience genuinely requires it.</span></div>
-          <div class="rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Protect energy · 體力</strong><span class="text-slate-400 block mt-1">The active days and booked recovery sessions are already sufficient. Skip optional gym/bodywork when it would compromise sleep, hikes or fixed experiences.</span></div>
+          <div class="rule-tile rule-move rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Move efficiently · 交通</strong><span class="text-slate-400 block mt-1">Walk/public transit when direct. For 3 people, take a taxi/app car when it saves ~15+ min, removes an awkward transfer, protects a booking, or avoids dragging luggage.</span></div>
+          <div class="rule-tile rule-queue rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Don’t queue · 排隊</strong><span class="text-slate-400 block mt-1">Default food line cutoff: ~10–15 min. Use the named nearby backup rather than sacrificing the route for a marginally better restaurant.</span></div>
+          <div class="rule-tile rule-book rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Book lightly · 預約</strong><span class="text-slate-400 block mt-1">Reserve when it is easy and free. Avoid prepayment, non-refundable deposits or card guarantees unless the experience genuinely requires it.</span></div>
+          <div class="rule-tile rule-energy rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Protect energy · 體力</strong><span class="text-slate-400 block mt-1">The active days and booked recovery sessions are already sufficient. Skip optional gym/bodywork when it would compromise sleep, hikes or fixed experiences.</span></div>
         </div>
       </div>
 
       <!-- Budget -->
-      <div class="surface-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <div class="surface-card budget-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
         <div class="flex items-center justify-between gap-3">
           <h4 class="text-sm font-semibold text-white">Budget · 預算</h4>
-          <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-mono">
+          <div class="currency-switch flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-mono">
             <button type="button" @click="selectedCurrency = 'USD'" :class="selectedCurrency === 'USD' ? 'bg-slate-800 text-white' : 'text-slate-400'" :aria-pressed="selectedCurrency === 'USD'" class="px-2.5 py-1 rounded-lg min-h-[44px]">USD</button>
             <button type="button" @click="selectedCurrency = 'TWD'" :class="selectedCurrency === 'TWD' ? 'bg-slate-800 text-white' : 'text-slate-400'" :aria-pressed="selectedCurrency === 'TWD'" class="px-2.5 py-1 rounded-lg min-h-[44px]">TWD</button>
             <button type="button" @click="selectedCurrency = 'HKD'" :class="selectedCurrency === 'HKD' ? 'bg-slate-800 text-white' : 'text-slate-400'" :aria-pressed="selectedCurrency === 'HKD'" class="px-2.5 py-1 rounded-lg min-h-[44px]">HKD</button>
@@ -2869,11 +3132,11 @@
             id: 'b-05',
             title: 'Ngong Ping 360 Crystal Cable Car',
             titleTc: '昂坪360',
-            eventDate: 'Fri, Dec 11 (10:00 AM target)',
+            eventDate: 'Fri, Dec 11 (10:30–10:45 AM target)',
             openDate: 'Target check: Nov 11',
             cost: 'HK$240/person',
             url: 'https://www.np360.com.hk/',
-            notes: 'Weekday service opens at 10:00 AM. One-way Crystal Cabin from Tung Chung.'
+            notes: 'Weekday service opens at 10:00 AM. With the 9:30 AM hotel departure, target a 10:30–10:45 AM one-way Crystal Cabin from Tung Chung; this still comfortably protects the 1:20 PM Bus 21 to Tai O.'
           },
           {
             id: 'b-06',
@@ -2949,7 +3212,7 @@
             id: 'b-15',
             title: 'The Gym Pod @ Xiqu Centre — Routine Gym',
             titleTc: 'The Gym Pod @ 戲曲中心',
-            eventDate: 'Thu, Dec 10 (9:15 AM – 10:15 AM target)',
+            eventDate: 'Thu, Dec 10 (9:45 AM – 10:45 AM target)',
             openDate: 'Check live app ~1 week ahead',
             cost: 'Live app checkout; HKFIT100 currently advertises first eligible hour free',
             url: 'https://thegympod.hk/xiqu-centre-west-kowloon/',
@@ -2959,7 +3222,7 @@
             id: 'b-16',
             title: 'The Gym Pod @ Xiqu Centre — Routine Gym',
             titleTc: 'The Gym Pod @ 戲曲中心',
-            eventDate: 'Sat, Dec 12 (8:45 AM – 9:45 AM target)',
+            eventDate: 'Sat, Dec 12 (9:45 AM – 10:45 AM target)',
             openDate: 'Check live app ~1 week ahead',
             cost: 'Live app checkout; do not assume HKFIT100 can be reused',
             url: 'https://thegympod.hk/xiqu-centre-west-kowloon/',
@@ -2979,11 +3242,11 @@
             id: 'b-18',
             title: 'Alishan 7329 Reserved Seats + THSR Day Trip',
             titleTc: '阿里山 7329 預約座位 + 高鐵當日來回',
-            eventDate: 'Sun, Dec 06 (8:40 AM bus up • 4:40 PM bus down)',
-            openDate: '2026-11-08 00:00 Taiwan time',
+            eventDate: 'Sun, Dec 06 (9:30 AM bus up • 4:40 PM bus down)',
+            openDate: '2026-11-05 00:00 Taiwan time',
             cost: 'Bus NT$566 RT + THSR ~NT$820 RT/person; forest entry/branch train extra',
             url: 'https://www.taiwantrip.com.tw/Frontend/Route/Select_p?RouteID=R0007',
-            notes: 'Critical: buy SEAT-RESERVATION tickets in BOTH directions. Current official rule opens reserved seats 29 days before excluding travel day; for Sun Dec 6 that means Sun Nov 8 at 00:00 Taiwan time. Check in ≥10 min before each bus; a seat can be released if not checked in by 5 min before departure. Current timetable: THSR Chiayi 8:40 AM → Alishan 11:10 AM; Alishan 4:40 PM → THSR Chiayi 7:10 PM. Book matching Zuoying↔Chiayi THSR after exact train times are released.'
+            notes: 'Critical: buy SEAT-RESERVATION tickets in BOTH directions. The current official English route page says reservations can open 31 days before travel (so start checking Thu Nov 5 at 00:00 Taiwan time), while the current Chinese route page says 29 days (Sun Nov 8). Start checking Nov 5 and retry Nov 8 if inventory is not yet released. Check in ≥10 min before each bus; a seat can be released if not checked in by 5 min before departure. Selected timetable: THSR Chiayi 9:30 AM → Alishan 12:00 PM; Alishan 4:40 PM → THSR Chiayi 7:10 PM. This preserves a useful mountain window while avoiding the old 6:50 AM hotel departure. Book matching Zuoying↔Chiayi THSR after exact train times are released.'
           }
         ],
 
@@ -2994,7 +3257,7 @@
             shortLabel: 'Flight / 飛行',
             city: 'Flight / 飛行',
             dateString: 'Sat, Nov 28, 2026',
-            title: 'JFK Departure & Transpacific Crossing',
+            title: 'JFK Departure → Transpacific Crossing',
             titleTc: 'JFK 出發・跨太平洋飛行',
             hotelRef: null,
             transitSummary: 'Cathay Pacific CX841 Nonstop (~16h05 leg)',
@@ -3049,7 +3312,7 @@
             shortLabel: 'Arrival / 抵達',
             city: 'Taipei / 台北',
             dateString: 'Sun, Nov 29, 2026',
-            title: 'Touchdown, Airport MRT & Warm Dinner',
+            title: 'Touchdown → Airport MRT → Warm Dinner',
             titleTc: '抵達台北・機場捷運・暖胃晚餐',
             hotelRef: 'taipei',
             transitSummary: 'Express Airport MRT (~39m direct)',
@@ -3172,8 +3435,8 @@
             shortLabel: 'Dihua / 迪化',
             city: 'Taipei / 台北',
             dateString: 'Mon, Nov 30, 2026',
-            title: 'Dihua Woodcraft, Qingshan Festival & Nanjichang Night Market',
-            titleTc: '迪化街木作・艋舺青山王祭・南機場夜市',
+            title: 'Dihua → Qingshan Festival → Nanjichang → Dadaocheng Riverside Night',
+            titleTc: '迪化街・青山王祭・南機場・大稻埕河濱夜走',
             hotelRef: 'taipei',
             transitSummary: 'MRT Green Line (Beimen to Longshan)',
             weatherExpected: '~22°C • Typically mild/drier season',
@@ -3273,24 +3536,33 @@
                     { label: 'Anchor 1', detail: 'Start at Xiaodi Tube Rice Cake 曉迪筒仔米糕 in Lane 307 for rice cake / braised pork / soup. Share portions so this is not the whole meal.' },
                     { label: 'Anchor 2', detail: 'If its line is <=10–15 min, try Ho Jia Steamed Stinky Tofu 禾甲現蒸臭豆腐, Lane 313 No.18. It is vegetarian and better as a shared contrast than a protein anchor.' },
                     { label: 'Queue Rule', detail: 'Ho Jia can develop long evening waits. If the line is >10–15 min, skip it with zero regret; Xiaodi plus another clearly busy cooked-food stall is enough.' },
-                    { label: 'Exit', detail: 'Finish around 8:30 PM and return toward the hotel. No second night market.' }
+                    { label: 'Exit', detail: 'Finish around 8:20 PM. Use a short taxi/ride north to Dadaocheng Wharf for the river-night finish; no second night market.' }
+                  ]
+                }
+              },
+              {
+                time: '~8:45 PM – 10:05 PM',
+                title: 'Dadaocheng Wharf + Yanping Riverside Night Walk',
+                titleTc: '大稻埕碼頭＋延平河濱夜走',
+                icon: 'footprints',
+                notes: 'The day already visits Dadaocheng in daylight; returning briefly at night is intentionally a different riverfront experience, and it is still on the west side of Taipei. Current city listing keeps the wharf open to 10 PM and Yanping Riverside Park is 24 hours.',
+                navigateTo: 'Dadaocheng Wharf, Datong District, Taipei',
+                addressTc: '台北市大同區大稻埕碼頭',
+                guide: {
+                  steps: [
+                    { label: 'Transfer', detail: 'After Nanjichang dinner, split a short taxi/app ride to Dadaocheng Wharf rather than adding a slow multi-transfer transit leg.' },
+                    { label: 'Wharf', detail: 'Walk the lit pier/river edge and the container-market frontage without turning it into another food stop.' },
+                    { label: 'Riverside', detail: 'Continue onto the Yanping Riverside path for open space and night views along the Tamsui River.' },
+                    { label: 'Exit', detail: 'Start back around 9:50–10:05 PM and reach Via Hotel around 10:20–10:30 PM.' }
                   ]
                 }
               }
             ],
             rainPlan: 'Light / moderate rain: Use umbrellas or ponchos and keep Qingshan procession. Severe weather: Spend more time in Dihua indoor shops, cafés, covered arcades, Huashan / Syntrend / Taipei Main underground mall, and skip outdoor procession only if severe conditions warrant.',
-            backups: {
-              activity: {
-                title: 'Dadaocheng Wharf & Riverside Walk',
-                titleTc: '大稻埕碼頭 & 河濱散步',
-                note: 'Same-cluster non-food fallback if time opens before the festival.',
-                navigateTo: '大稻埕碼頭, 台北市大同區',
-                addressTc: '台北市大同區大稻埕碼頭'
-              }
-            },
+            backups: {},
             foodRecommendation: '四海豆漿大王 → 賣麵炎仔 → 南街得意 → 曉迪筒仔米糕 / 禾甲現蒸臭豆腐',
             proteinPlan: 'Target ~150 g: breakfast = savory soy milk + egg crepe + extra egg; at Dadaocheng/Nanjichang prioritize chicken, pork, beef, dumplings, tofu, eggs and skewers before carb-heavy snacks. Convenience-store chicken + soy milk is the late top-up if needed. · 目標約150g：早餐鹹豆漿＋蛋餅＋加蛋；大稻埕／南機場先吃雞、豬、牛、餃類、豆腐、蛋與肉串，再分食澱粉型小吃。不足時晚上用便利商店雞胸＋無糖豆漿補。',
-            insiderTip: 'Do not take taxis into Wanhua today due to festival street closures. Take MRT Green Line to Longshan Temple and walk.'
+            insiderTip: 'Do not take taxis into the active Wanhua procession zone. After dinner, however, a short taxi north to Dadaocheng is the efficient move; the river walk now gives the day a proper ~10 PM finish.'
           },
 
           {
@@ -3299,7 +3571,7 @@
             shortLabel: 'Beitou / 北投',
             city: 'Taipei / 台北',
             dateString: 'Tue, Dec 01, 2026',
-            title: 'Chrysanthemum Show, Beitou Hot Spring & Tamsui Active Sunset',
+            title: 'Chrysanthemum Show → Beitou Hot Spring → Tamsui Active Sunset',
             titleTc: '士林菊展・北投溫泉・淡水八里渡船夕陽',
             hotelRef: 'taipei',
             transitSummary: 'MRT Red Line Corridor',
@@ -3488,7 +3760,7 @@
             shortLabel: 'Jiufen / 九份',
             city: 'Taipei Day Trip / 台北近郊',
             dateString: 'Wed, Dec 02, 2026',
-            title: 'Shifen Waterfall, Jinguashi Trails & Jiufen Dusk',
+            title: 'Shifen Waterfall → Jinguashi Trails → Jiufen Dusk',
             titleTc: '十分瀑布・金瓜石步道・九份黃昏',
             hotelRef: 'taipei',
             transitSummary: 'Private Van Exception — multi-stop mountain day (9:30 AM – 7:30 PM)',
@@ -3668,7 +3940,7 @@
             shortLabel: '101 / 象山',
             city: 'Taipei / 台北',
             dateString: 'Thu, Dec 03, 2026',
-            title: 'CookInn Class, Taipei 101 & Elephant Mountain',
+            title: 'CookInn Class → Taipei 101 → Elephant Mountain',
             titleTc: '台灣料理課・台北101・象山夜景',
             hotelRef: 'taipei',
             transitSummary: 'MRT Red Line (Taipei Main -> 101 -> Xiangshan)',
@@ -3812,165 +4084,169 @@
             shortLabel: 'KHH / 高雄',
             city: 'Kaohsiung / 高雄',
             dateString: 'Fri, Dec 04, 2026',
-            title: 'Bullet Train South, Cable Wakeboarding & Ruifeng',
-            titleTc: '高鐵南下・蓮潭滑水・瑞豐夜市',
+            title: 'THSR South → Lotus Pond → Bouldering → Ruifeng → Love River',
+            titleTc: '高鐵南下・蓮池潭・抱石攀岩・瑞豐・愛河夜走',
             hotelRef: 'kaohsiung',
-            transitSummary: 'THSR Train (1h 40m) to Zuoying',
-            weatherExpected: '~25°C • Typically warm southern climate',
+            transitSummary: 'THSR + short taxi/MRT hops + walking / 高鐵・短程叫車／捷運・步行',
+            weatherExpected: '~25°C • Warm south; bouldering is indoors',
             rainBackupAvailable: true,
-            easyPlan: "If tired after the train, shorten wakeboarding to the beginner/two-tower session or skip it for a Lotus Pond cooldown walk. Preserve Ruifeng Night Market.",
-            leaveByTime: '9:15 AM final checkout',
+            easyPlan: "If tired after the train, shorten Boulder Space to ~75–90 minutes. Keep Ruifeng; make the Love River walk optional only if legs are genuinely done.",
+            leaveByTime: '9:30 AM final checkout',
             timeline: [
               {
-                time: '9:15 AM – 10:15 AM',
-                title: 'Depart Hotel & Board THSR at Taipei Main Station',
-                titleTc: '飯店 → 台北車站高鐵',
+                time: '9:30 AM – 10:15 AM',
+                title: 'Checkout ➔ Taipei Main ➔ THSR Boarding',
+                titleTc: '退房 → 台北車站 → 高鐵上車',
                 icon: 'train',
-                notes: 'Check out, navigate to HSR gates with luggage, and board the 10:15 AM bullet train.',
+                notes: 'A normal 9:30 AM departure still gives enough margin for the 10:15 AM train because the hotel is close to Taipei Main. No artificial early gym today.',
                 navigateTo: 'Taipei Main Station (HSR Gates), Zhongzheng District, Taipei',
                 guide: {
-                  intro: 'Checkout, station navigation, lunch purchase, and bullet train boarding.',
+                  intro: 'Simple transfer morning: checkout, short walk, board.',
                   steps: [
-                    { label: 'Checkout', detail: 'Check out of Via Hotel by 9:15 AM. Collect all charging cables and luggage.' },
-                    { label: 'Station Navigation', detail: 'Walk 8 minutes to Taipei Main Station. Follow blue High Speed Rail (高鐵) signage down to B1 concourse.' },
-                    { label: 'Pre-Boarding Supplies', detail: 'Buy only water/coffee or a small grab-and-go item if needed. Do not buy a full lunch here; Shen Fu Wonton in Zuoying is the planned lunch after arrival.' },
-                    { label: 'Boarding', detail: 'Tap mobile QR or ticket at HSR gate for 10:15 AM train. Head down to platform and board assigned car.' }
+                    { label: 'Checkout', detail: 'Leave Via Hotel at 9:30 AM with all luggage. Do a quick cable/passport sweep before closing the room.' },
+                    { label: 'Station', detail: 'Walk to Taipei Main Station and follow High Speed Rail / 高鐵 signs to the HSR concourse.' },
+                    { label: 'Supplies', detail: 'Buy water or coffee only if needed. The real lunch is Shen Fu Wonton after arrival in Zuoying.' },
+                    { label: 'Board', detail: 'Be through the HSR gate with enough time to find the assigned car for the 10:15 AM departure.' }
                   ]
                 }
               },
               {
                 time: '10:15 AM – 11:55 AM',
-                title: 'THSR Bullet Train: Taipei ➔ Zuoying (Kaohsiung)',
-                titleTc: '台灣高鐵：台北站 → 左營站',
+                title: 'THSR: Taipei ➔ Zuoying',
+                titleTc: '台灣高鐵：台北 → 左營',
                 icon: 'train',
-                notes: 'Use the 1h40 ride to hydrate and rest. Do not force a train meal; Shen Fu Wonton in Zuoying is the planned quick lunch immediately after arrival.',
-                navigateTo: 'Taipei Main Station (HSR Gates), Zhongzheng District, Taipei',
+                notes: 'Use the 1h40 ride to hydrate and rest. This is deliberately not another meal or activity block.',
+                navigateTo: 'THSR Zuoying Station, Kaohsiung',
                 guide: {
-                  intro: 'High-speed transit down western plains of Taiwan at 300 km/h.',
                   steps: [
-                    { label: 'Stow Bags', detail: 'Place large suitcases in luggage bays at end of train car or overhead racks.' },
-                    { label: 'Hydrate & Rest', detail: 'Use the smooth 1h 40m ride to hydrate and rest. Save the real lunch for Shen Fu Wonton after arrival in Zuoying.' },
-                    { label: 'Prepare to Alight', detail: 'Alight at THSR Zuoying Station. Retrieve bags 5 minutes before arrival.' }
+                    { label: 'Stow', detail: 'Put large bags in the luggage area/appropriate racks and keep valuables with you.' },
+                    { label: 'Reset', detail: 'Hydrate, charge phones and rest. Save appetite for the named Zuoying lunch.' },
+                    { label: 'Arrival', detail: 'Retrieve luggage a few minutes before Zuoying and exit efficiently.' }
                   ]
                 }
               },
-                            {
-                time: '11:55 AM – 12:35 PM',
-                title: 'Zuoying Bag Storage + Shen Fu Wonton Quick Lunch',
-                titleTc: '高鐵左營寄放行李＋神福餛飩快速午餐',
+              {
+                time: '11:55 AM – 12:40 PM',
+                title: 'Zuoying Bag Storage + Shen Fu Wonton Lunch',
+                titleTc: '左營寄放行李＋神福餛飩午餐',
                 icon: 'utensils',
-                notes: 'Keep luggage in northern Kaohsiung, then eat a fast named local lunch near Lotus Pond. This is cleaner than a generic station bento and preserves a real 20–25 minute transfer/check-in buffer before the 1:00 PM wakeboarding block.',
+                notes: 'Store luggage at/around the THSR station, then take the short hop to Shen Fu Wonton. This keeps the afternoon hands-free and makes the first Kaohsiung meal specific.',
                 navigateTo: '高雄市左營區左營大路84號',
                 addressTc: '高雄市左營區左營大路84號',
                 guide: {
-                  intro: 'One compact storage + fuel sequence before the active afternoon.',
+                  intro: 'Compact fuel stop before an active afternoon.',
                   steps: [
-                    { label: 'Store Bags', detail: 'After 11:55 arrival, use THSR Zuoying baggage storage / lockers. Keep passports and valuables in daypacks.' },
-                    { label: 'Fast Ride', detail: 'Around 12:10, split a short taxi/app-dispatched ride to Shen Fu Wonton Shop 神福餛飩, 左營大路84號.' },
-                    { label: 'Quick Lunch', detail: 'Order wonton soup/dry wontons plus a protein side. Current hours are broad and the shop has a deep review base; keep the meal to ~20–25 minutes.' },
-                    { label: 'Queue Rule', detail: 'If Shen Fu is >10 minutes to seat/order, skip it and use a station 7-ELEVEN/FamilyMart protein meal. WakePark start matters more.' },
-                    { label: 'To WakePark', detail: 'Hard-depart by ~12:35 PM for Lotus WakePark, already wearing swim-ready layers when possible. If lunch starts late, shorten the order rather than compressing wakeboarding check-in.' }
-                  ],
-                  recheck: 'Before travel: confirm THSR baggage storage availability and Lotus afternoon check-in requirements.'
+                    { label: 'Store Bags', detail: 'Use THSR Zuoying baggage storage / lockers. Keep passports, wallets and electronics in daypacks.' },
+                    { label: 'Shen Fu', detail: 'Split a short taxi/app-dispatched ride to 神福餛飩, 左營大路84號.' },
+                    { label: 'Order', detail: 'Get wonton soup/dry wontons plus a protein side. Keep the meal to roughly 20–25 minutes.' },
+                    { label: 'Queue Rule', detail: 'If Shen Fu is >10 minutes to order/seat, use the station 7-ELEVEN/FamilyMart protein fallback and continue. Do not burn the afternoon on lunch.' }
+                  ]
                 }
               },
               {
-                time: '1:00 PM – 4:00 PM',
-                title: 'Lotus WakePark — Beginner Cable Wakeboarding',
-                titleTc: '蓮潭滑水主題樂園・纜繩滑水體驗',
-                icon: 'waves',
-                notes: 'High-value active afternoon. Target a 2-hour beginner cable-wakeboarding session plus briefing, gear and shower. Current official/venue listings show Friday operating hours that cover this window; recheck 48–72h before travel.',
-                navigateTo: 'Lotus WakePark 蓮潭滑水主題樂園, Kaohsiung',
-                addressTc: '高雄市左營區蓮池潭西南水域',
-                guide: {
-                  intro: 'A genuinely sporty Kaohsiung experience rather than another scheduled craft workshop. Beginner-friendly cable systems let the group learn progressively without needing a boat.',
-                  steps: [
-                    { label: 'Arrival', detail: 'Aim to reach Lotus WakePark around 12:40–12:50 PM for the 1:00 PM afternoon operating block. Show the booking or ask for the best first-timer package for 3 adults.' },
-                    { label: 'Beginner Setup', detail: 'Use the beginner lesson / two-tower progression first. Complete land instruction, helmet/life-vest fitting, start simulation and safety briefing before entering the water.' },
-                    { label: 'Ride', detail: 'Target roughly 2 hours of actual wakeboarding. Focus on clean starts, stable stance and turns; do not burn the whole afternoon chasing advanced obstacles on a first session.' },
-                    { label: 'Energy Rule', detail: 'This replaces the 7:40 AM Taipei gym. Treat wakeboarding as the athletic session for the day so the morning stays relaxed and the night market remains fun.' },
-                    { label: 'Shower & Change', detail: 'Finish riding by roughly 3:30–3:40 PM, rinse/shower and change into dry clothes before leaving. Keep a dry bag or plastic bag for wet gear.' }
-                  ],
-                  exit: 'Be fully changed and leaving the park by ~4:00 PM.',
-                  recheck: '48–72h before: confirm Friday hours, weather/wind/lightning policy, beginner package, instructor availability and whether advance booking is needed for 3.'
-                }
-              },
-              {
-                time: '4:00 PM – 5:15 PM',
-                title: 'Lotus Pond Cooldown Walk + Transfer to Ruifeng',
-                titleTc: '蓮池潭湖畔散步・前往瑞豐',
+                time: '12:45 PM – 1:35 PM',
+                title: 'Lotus Pond Fast Walk — Dragon/Tiger Area, No Temple Checklist',
+                titleTc: '蓮池潭快速散步・不做寺廟打卡清單',
                 icon: 'footprints',
-                notes: 'Keep this loose. Walk a short lakeside stretch after showering, grab water/coffee if wanted, then head toward Kaohsiung Arena/Ruifeng. No temple checklist and no cross-city Pier-2 detour.',
+                notes: 'A short open-air first look at Kaohsiung while already in Zuoying. Walk the lake edge and architecture; do not turn it into a long religious-site circuit.',
                 navigateTo: 'Lotus Pond, Zuoying District, Kaohsiung',
                 addressTc: '高雄市左營區蓮池潭',
                 guide: {
                   steps: [
-                    { label: 'Cooldown', detail: 'Walk 20–35 minutes along whichever lakeside section looks pleasant. This is a recovery stroll, not another sightseeing checklist.' },
-                    { label: 'Hydrate', detail: 'Wakeboarding can be deceptively tiring. Get water/electrolytes and a small protein top-up if needed before the market.' },
-                    { label: 'Move to Ruifeng', detail: 'Head toward Kaohsiung Arena / Ruifeng around 4:45–5:00 PM. Use MRT/bus if clean; split a short app-dispatched taxi if it saves meaningful time.' }
-                  ],
-                  exit: 'Aim to reach the Ruifeng area around ~5:15–5:30 PM.'
-                }
-              },
-                            {
-                time: '5:30 PM – 8:00 PM',
-                title: "Zeng's Fujian Fried Noodles + Angel Fried Chicken — Ruifeng Dinner",
-                titleTc: '曾氏福建炒麵＋天使雞排・瑞豐晚餐',
-                icon: 'utensils',
-                notes: 'Two extremely high-volume, strongly reviewed Ruifeng anchors. Browse the market around them; do not turn the evening into a 10-stall checklist.',
-                navigateTo: '高雄市左營區南屏路 瑞豐夜市第一排',
-                addressTc: '高雄市左營區南屏路／裕誠路 瑞豐夜市',
-                guide: {
-                  intro: 'Specific two-anchor dinner after wakeboarding.',
-                  steps: [
-                    { label: 'Anchor 1', detail: "Start at Zeng's Fujian Fried Noodles 曾氏福建炒麵 瑞豐總店 on the first row. Share a noodle plate; it currently carries an unusually strong review signal." },
-                    { label: 'Anchor 2', detail: 'Then share Angel Fried Chicken 天使雞排 on Yucheng Road. One cutlet for 3 is enough alongside noodles and other protein.' },
-                    { label: 'Browse', detail: 'Do one market lap for atmosphere. Buy any extra item only if it looks freshly cooked and the line is short; no anonymous “must-eat” list.' },
-                    { label: 'Queue Rule', detail: 'If either named anchor exceeds ~10–15 min, skip it. If weather/closure makes Ruifeng unpleasant, use Din Tai Fung Kaohsiung Branch at Hanshin Arena, B1, as the named seated fallback.' },
-                    { label: 'Exit', detail: 'Leave around 7:45–8:00 PM, retrieve luggage at Zuoying, then ride south once to the hotel.' }
+                    { label: 'Walk', detail: 'Use the lakefront around the Dragon/Tiger Pagoda area as a 40–50 minute walking loop.' },
+                    { label: 'Photo Rule', detail: 'Stop for architecture/lake photos when they are good, but skip temple interiors unless something genuinely interests you.' },
+                    { label: 'Exit', detail: 'Head back toward New Zuoying Station/Global Mall by ~1:35 PM for the climbing block.' }
                   ]
                 }
               },
               {
-                time: '8:00 PM – 9:00 PM',
-                title: 'Retrieve Bags at Zuoying ➔ Hotel Check-In',
-                titleTc: '左營取行李 → 頭等艙飯店入住',
+                time: '1:50 PM – 3:50 PM',
+                title: 'Boulder Space Zuoying — Indoor Bouldering Session',
+                titleTc: 'Boulder Space 圓石空間・室內抱石攀岩',
+                icon: 'dumbbell',
+                notes: 'A route-perfect sporty block directly inside the New Zuoying Station / Global Mall complex, adding a real active experience with almost zero routing penalty. Current Global Mall pricing lists adult entry NT$350 + shoe rental NT$80 (NT$430 total).',
+                navigateTo: 'Boulder Space 圓石空間攀岩場 左營店, Global Mall New Zuoying Station, Kaohsiung',
+                addressTc: '高雄市左營區站前北路1號 環球購物中心新左營車站3樓',
+                guide: {
+                  intro: 'Route-perfect active replacement: two hours of indoor bouldering instead of a weather-sensitive water sport.',
+                  steps: [
+                    { label: 'Check-In', detail: 'Go to Boulder Space on the 3F Global Mall / New Zuoying Station complex. Ask staff for the adult single-entry option with climbing-shoe rental; recheck current hours/pricing before travel.' },
+                    { label: 'Safety First', detail: 'Tell staff if anyone is new. Do the gym safety/fall briefing and start on the easiest bouldering problems. Use bouldering only; no rope/auto-belay component is needed for this itinerary.' },
+                    { label: 'Session', detail: 'Rotate attempts and rest. Prioritize technique, balance and a broad set of easier routes instead of destroying forearms on one hard problem.' },
+                    { label: 'Stop Fresh', detail: 'Finish around 3:45–3:50 PM while everyone still feels good. This is a travel activity, not a max-effort training day.' }
+                  ],
+                  recheck: '48–72h before: confirm Friday hours, walk-in policy and current shoe-rental/day-pass pricing.'
+                }
+              },
+              {
+                time: '3:50 PM – 4:55 PM',
+                title: 'Retrieve Bags ➔ Airline Inn Check-In',
+                titleTc: '取行李 → 頭等艙飯店入住',
                 icon: 'luggage',
-                notes: 'After Ruifeng, make one short northbound hop to Zuoying, collect the stored suitcases, then ride the Red Line south once to Kaohsiung Main Station and check in. This avoids hotel backtracking during the prime afternoon.',
-                navigateTo: 'THSR Zuoying Station, Kaohsiung',
-                addressTc: '高雄市左營區高鐵路105號',
+                notes: 'Do the luggage chore now, before the evening. For 3 people, a tactical taxi from Zuoying to Airline Inn is reasonable if it saves the MRT + suitcase friction.',
+                navigateTo: 'Airline Inn - Kaohsiung Station, No. 33 Jianguo 3rd Rd, Kaohsiung',
+                addressTc: '高雄市三民區建國三路33號',
                 guide: {
                   steps: [
-                    { label: 'Ruifeng Exit', detail: 'Leave the market around 7:45–8:00 PM. Take the Red Line north from Kaohsiung Arena to Zuoying.' },
-                    { label: 'Collect Bags', detail: 'Retrieve all stored luggage and verify no small bags are left behind.' },
-                    { label: 'One-Way South', detail: 'Take the Red Line south to Kaohsiung Main Station. Walk ~7–10 minutes to Airline Inn; use a short taxi only if luggage/fatigue makes the walk annoying.' },
-                    { label: 'Check-In', detail: 'Complete hotel check-in, shower if wanted, and keep the rest of the night free. No Liuhe add-on.' }
+                    { label: 'Collect', detail: 'Return to the station storage point and collect every bag.' },
+                    { label: 'Move South Once', detail: 'Compare Red Line vs Uber / 55688 / LINE GO. With 3 adults + luggage, take the car if it materially simplifies the transfer.' },
+                    { label: 'Check-In', detail: 'Check into Airline Inn, drop all luggage and take a fast 10–15 minute reset. Leave again around 5:00 PM.' }
+                  ]
+                }
+              },
+              {
+                time: '5:15 PM – 7:30 PM',
+                title: "Zeng's Fujian Fried Noodles + Angel Fried Chicken — Ruifeng Dinner",
+                titleTc: '曾氏福建炒麵＋天使雞排・瑞豐晚餐',
+                icon: 'utensils',
+                notes: 'Use Ruifeng as the lively dinner block, but keep it to a two-anchor meal plus one browse lap rather than a ten-stall checklist.',
+                navigateTo: '高雄市左營區南屏路 瑞豐夜市第一排',
+                addressTc: '高雄市左營區南屏路／裕誠路 瑞豐夜市',
+                guide: {
+                  intro: 'Specific, high-volume night-market dinner after climbing.',
+                  steps: [
+                    { label: 'Anchor 1', detail: "Start at Zeng's Fujian Fried Noodles 曾氏福建炒麵 瑞豐總店. Share one plate." },
+                    { label: 'Anchor 2', detail: 'Then share Angel Fried Chicken 天使雞排 on Yucheng Road. Add another meat/tofu/egg item only if the line is short.' },
+                    { label: 'Browse', detail: 'Do one full market lap for atmosphere and whatever genuinely looks good. Do not queue just because a stall is viral.' },
+                    { label: 'Queue Rule', detail: 'Any named anchor >10–15 min: skip it. If rain makes Ruifeng miserable, use Din Tai Fung Kaohsiung Branch at Hanshin Arena B1 instead.' },
+                    { label: 'Exit', detail: 'Leave by about 7:30 PM so the night still has a proper outdoor Kaohsiung finish.' }
+                  ]
+                }
+              },
+              {
+                time: '7:50 PM – 9:20 PM',
+                title: 'Heart of Love River — Lit Riverside Night Walk',
+                titleTc: '愛河之心・夜間河濱散步',
+                icon: 'footprints',
+                notes: 'A proper after-dinner walk instead of returning to the hotel at 8 PM. The Heart of Love River is open 24 hours and is designed around illuminated water, bridges and riverside paths.',
+                navigateTo: 'Heart of Love River, Kaohsiung',
+                addressTc: '高雄市三民區博愛一路與同盟一路口',
+                guide: {
+                  intro: 'Low-friction night scenery on the way back toward central Kaohsiung.',
+                  steps: [
+                    { label: 'Transfer', detail: 'From Ruifeng/Kaohsiung Arena, head south toward the Heart of Love River using the simplest MRT + walk or short taxi.' },
+                    { label: 'Loop', detail: 'Walk both sides of the lit water/bridge area at an easy pace. This is decompression after the climbing + market blocks, not another attraction checklist.' },
+                    { label: 'Photos', detail: 'Use the reflections and bridge lighting for night photos; keep moving rather than camping at one viewpoint.' },
+                    { label: 'Hotel', detail: 'Leave around 9:20 PM and return to Airline Inn by roughly 9:45–10:00 PM.' }
                   ]
                 }
               }
             ],
-            rainPlan: 'Light rain is fine only if Lotus WakePark confirms normal operation. For lightning, strong wind, closure or anyone not wanting to ride, skip it and use Pier-2 warehouse galleries + harbor walk as the active-ish fallback before Ruifeng. Do not force a water session in marginal conditions.',
+            rainPlan: 'Boulder Space is indoors, so the main athletic block survives rain. In steady/heavy rain, skip Lotus Pond and the Love River walk. Keep the climb; use Ruifeng only if conditions are comfortable, otherwise switch to Din Tai Fung at Hanshin Arena and return to the hotel.',
             backups: {
-              activity: {
-                title: 'Pier-2 Warehouse Galleries & Harbor Walk',
-                titleTc: '駁二倉庫群 & 港灣散步',
-                note: 'Weather/closure fallback for Lotus WakePark; keep it flexible and active rather than booking another craft workshop.',
-                navigateTo: '高雄市鹽埕區大勇路1號',
-                addressTc: '高雄市鹽埕區大勇路1號'
-              },
               foods: [
                 {
                   title: 'Din Tai Fung Kaohsiung Branch',
                   titleTc: '鼎泰豐 高雄店',
-                  note: 'Named indoor fallback explicitly referenced in the Ruifeng timeline if weather/closure breaks the night market. Use only with <=15 min wait.',
+                  note: 'Named indoor dinner fallback if rain makes Ruifeng unpleasant. Use only with <=15 min wait.',
                   navigateTo: '高雄市左營區博愛二路777號B1',
                   addressTc: '高雄市左營區博愛二路777號B1'
                 }
               ]
             },
             foodRecommendation: 'Shen Fu Wonton 神福餛飩 → 曾氏福建炒麵 → 天使雞排',
-            proteinPlan: 'Target ~150 g: use an easy protein-forward breakfast before checkout (eggs + soy milk + chicken/lean protein), eat a real HSR lunch, then make Ruifeng protein-first—grilled chicken, steak/beef, squid, prawns, eggs/tofu—while sharing fried starches and desserts. Wakeboarding replaces the morning gym, so fuel and hydrate for the water session. · 目標約150g：退房前用蛋＋無糖豆漿＋雞胸／其他瘦肉打底，高鐵上吃一頓正式午餐；瑞豐夜市先吃烤雞、牛排／牛肉、魷魚、蝦、蛋／豆腐，炸物與甜點分食。今天以滑水取代早晨健身，記得補水與正常進食。',
-            insiderTip: 'Book THSR tickets on Nov 6. Dec 4 wakeboarding replaces the early Taipei lift; keep the morning sane, then use the active afternoon + Ruifeng as the Kaohsiung opener.'
+            proteinPlan: 'Target ~150 g: breakfast before checkout should be protein-forward; Shen Fu is the real lunch; after bouldering use Ruifeng for chicken/beef/seafood/egg/tofu before fried starches and dessert. Carry one simple protein drink/soy milk only if needed. · 目標約150g：退房前先用高蛋白早餐打底；神福餛飩是正式午餐；抱石後在瑞豐先吃雞、牛、海鮮、蛋／豆腐，再分食炸物與甜點。不足時再補一份蛋白飲／無糖豆漿即可。',
+            insiderTip: 'The sporty replacement is intentionally at New Zuoying Station: almost no detour, weather-proof, inexpensive, and easy to stop after ~2 hours. The evening now continues through Ruifeng and a Love River night walk instead of ending at hotel check-in.'
           },
 
           {
@@ -3979,7 +4255,7 @@
             shortLabel: 'Tainan / 台南',
             city: 'Tainan Day Trip / 台南一日',
             dateString: 'Sat, Dec 05, 2026',
-            title: 'Tainan Fast Track: Markets, Hayashi, Anping & Wusheng',
+            title: 'Tainan Fast Track: Markets → Hayashi → Anping → Wusheng',
             titleTc: '台南高效率一日：市場・林百貨・安平・武聖夜市',
             hotelRef: 'kaohsiung',
             transitSummary: 'TRA Express Train (~35m direct)',
@@ -4204,32 +4480,32 @@
             weatherExpected: 'High-elevation mountain • much colder than Kaohsiung • recheck 48h before',
             rainBackupAvailable: true,
             easyPlan: "If the mountain forecast is poor or transport is disrupted, do NOT force Alishan. Run the full Cijin coastal day today instead; Monday remains massage + shrimp fishing with a later start.",
-            leaveByTime: '6:50 AM from hotel',
+            leaveByTime: '7:50 AM from hotel — justified early exception',
             timeline: [
               {
-                time: '6:50 AM – ~8:20 AM',
+                time: '7:50 AM – ~9:10 AM',
                 title: 'Kaohsiung ➔ THSR Zuoying ➔ THSR Chiayi',
                 titleTc: '高雄 → 高鐵左營站 → 高鐵嘉義站',
                 icon: 'train',
-                notes: 'Early start is justified today. Use MRT/taxi to Zuoying, then the fastest practical THSR that reaches Chiayi by ~8:15–8:20 AM. Exact Dec 6 train number/time is a recheck item; protect the fixed 8:40 AM 7329 bus.',
+                notes: 'This is still an early exception, but 6:50 AM was unnecessary. Leave around 7:50 AM and use MRT/taxi + THSR to reach Chiayi by ~9:10 AM, protecting the official 9:30 AM reserved 7329 bus.',
                 navigateTo: 'THSR Chiayi Station, Taibao City, Chiayi County',
                 guide: {
-                  intro: 'Fast south-to-mountain connection built around the reserved 8:40 AM Alishan bus.',
+                  intro: 'Sleep-friendly compromise built around the official 9:30 AM Alishan bus rather than the 8:40 AM departure.',
                   steps: [
-                    { label: 'Breakfast First', detail: 'Leave Airline Inn around 6:50 AM. Because the mountain day is transport-heavy, buy a protein-forward breakfast before boarding: tea eggs + unsweetened soy milk + ready chicken/lean meat or equivalent. Add one portable protein item for later.' },
+                    { label: 'Breakfast First', detail: 'Leave Airline Inn around 7:50 AM. Eat a fast protein-forward breakfast beforehand or carry it: tea eggs + unsweetened soy milk + chicken/lean meat or equivalent. Add one portable protein item for the mountain.' },
                     { label: 'Get to Zuoying', detail: 'Use MRT Red Line from Kaohsiung Main to Zuoying by default. If running late, use a Uber / 55688 / LINE GO because missing the reserved mountain bus is far more expensive than one tactical taxi.' },
-                    { label: 'THSR Selection', detail: 'Book the practical morning THSR after the Dec 6 schedule is available. Hard requirement: reach THSR Chiayi with roughly 20 minutes of bus-boarding buffer.' },
-                    { label: 'Bus Bay', detail: 'At THSR Chiayi, use Exit 2 / Platform 7 for the Alishan A-line. Have the reserved-seat QR ready and complete check-in by ~8:30 AM (officially ≥10 min before departure).' }
+                    { label: 'THSR Selection', detail: 'Book the practical morning THSR after the Dec 6 schedule is available. Hard requirement: reach THSR Chiayi around 9:05–9:10 AM so the reserved-seat check-in is stress-free.' },
+                    { label: 'Bus Bay', detail: 'At THSR Chiayi, use Exit 2 / Platform 7 for the Alishan A-line. Have the reserved-seat QR ready and complete check-in by ~9:20 AM (officially ≥10 min before departure).' }
                   ],
                   recheck: 'Confirm exact Zuoying→Chiayi THSR train and platform after reservations open.'
                 }
               },
               {
-                time: '8:40 AM – 11:10 AM',
+                time: '9:30 AM – 12:00 PM',
                 title: 'Reserved Bus 7329: THSR Chiayi ➔ Alishan',
                 titleTc: '台灣好行 7329：高鐵嘉義站 → 阿里山',
                 icon: 'bus',
-                notes: 'Current official A-line timetable: 8:40 AM departure, 11:10 AM Alishan arrival. Current one-way fare NT$283. Use the official seat-reservation product for Sunday rather than a generic package/QR ticket that may not reserve a seat.',
+                notes: 'Current official A-line timetable includes 9:30 AM THSR Chiayi departure → 12:00 PM Alishan arrival. Current one-way fare NT$283. Reserve actual seats for the Sunday round trip.',
                 navigateTo: 'Alishan Transport Station, Alishan Township, Chiayi County',
                 addressTc: '嘉義縣阿里山鄉阿里山轉運站',
                 guide: {
@@ -4244,7 +4520,7 @@
                 }
               },
                             {
-                time: '~11:10 AM – 12:00 PM',
+                time: '12:00 PM – 12:35 PM',
                 title: 'Enter Alishan + Shan Bin Restaurant — Fast Mountain Lunch',
                 titleTc: '進入阿里山＋山賓餐廳快速午餐',
                 icon: 'utensils',
@@ -4253,20 +4529,20 @@
                 guide: {
                   intro: 'More resilient arrival sequence: restroom + food + walking, with no fragile 20-minute train connection.',
                   steps: [
-                    { label: 'Enter', detail: 'Clear the recreation-area gate after the 11:10 AM bus arrival and use the restroom.' },
+                    { label: 'Enter', detail: 'Clear the recreation-area gate after the noon bus arrival and use the restroom immediately.' },
                     { label: 'Lunch', detail: 'Go to Shan Bin Restaurant 山賓餐廳 for a quick hot lunch. Keep the order simple and protein-forward; share dishes rather than waiting on a large banquet.' },
                     { label: 'Queue Rule', detail: 'If seating will take >10 minutes, skip it and use packed 7-ELEVEN/FamilyMart eggs, soy milk, chicken/lean meat plus one convenient hot snack. Do not delay the forest.' },
-                    { label: 'Rail Decision', detail: 'Ignore the 11:30 Zhaoping train unless it somehow lines up with zero rush. The default is to WALK from the Alishan/Zhaoping area into the forest; the afternoon Shenmu branch train remains the planned heritage-rail ride.' }
+                    { label: 'Rail Decision', detail: 'Do not chase a branch train on arrival. Walk straight into the forest after lunch; keep the 3:40 PM Shenmu train only if your walking route naturally reaches it with buffer.' }
                   ],
-                  exit: 'Be moving into the Zhaoping / Sister Ponds forest route by ~12:00 PM.'
+                  exit: 'Be moving into the Zhaoping / Sister Ponds forest route by ~12:35 PM.'
                 }
               },
               {
-                time: '~12:00 PM – 3:25 PM',
+                time: '~12:35 PM – 3:30 PM',
                 title: 'Zhaoping ➔ Sister Ponds ➔ Giant Tree Forest Walk',
                 titleTc: '沼平 → 姊妹潭 → 巨木群森林健行',
                 icon: 'footprints',
-                notes: 'This is the point of the day: cedar/cypress forest, elevated trails and giant trees. Move efficiently and skip religious detours. Build in a short mountain lunch/tea stop, but keep most of the window for walking.',
+                notes: 'This is the point of the day: nearly three focused hours of cedar/cypress forest, elevated trails and giant trees after the compact lunch. Move efficiently and skip religious detours.',
                 navigateTo: 'Zhaoping Park, Alishan Township, Chiayi County',
                 addressTc: '嘉義縣阿里山鄉沼平公園',
                 guide: {
@@ -4275,7 +4551,7 @@
                     { label: 'Zhaoping & Forest', detail: 'Start through Zhaoping Park and the signed forest boardwalks. Keep a steady walking pace rather than lingering at every photo platform.' },
                     { label: 'Sister Ponds', detail: 'Pass Sister Ponds (姊妹潭) as a short scenic stop. Photos, quick loop, continue.' },
                     { label: 'Temple Rule', detail: 'If a route passes a shrine/temple, treat it as a navigation landmark only. Do not allocate a dedicated religious visit.' },
-                    { label: 'Protein Lunch', detail: 'Use packed eggs/chicken/soy drink plus one local hot item if convenient. Try Alishan high-mountain tea, but do not let a long restaurant queue consume the hiking window.' },
+                    { label: 'Tea/Water', detail: 'Lunch is already handled at Shan Bin. Carry water and, if convenient, try a small Alishan high-mountain tea; do not create another sit-down stop.' },
                     { label: 'Giant Trees', detail: 'Continue toward the Giant Tree Trail / Sacred Tree area. Prioritize the largest cypress/cedar sections and forest atmosphere over checklist-style monument stops.' },
                     { label: 'Pace Check', detail: 'By ~3:20–3:25 PM, begin positioning toward Shenmu Station. The reserved 4:40 PM bus down is the hard constraint.' }
                   ]
@@ -4315,6 +4591,24 @@
                     { label: 'Recovery', detail: 'Pack light for Monday Cijin and sleep. No gym Monday morning; today already includes an early start, altitude and several hours of walking.' }
                   ]
                 }
+              },
+              {
+                time: '~8:35 PM – 9:35 PM',
+                title: 'Old Jiang Red Tea Milk — Flexible Kaohsiung Late Supper',
+                titleTc: '老江紅茶牛奶・高雄彈性宵夜',
+                icon: 'utensils',
+                notes: 'If the HSR connection runs normally, finish the long mountain day with one easy local 24-hour stop near the hotel instead of another attraction. If you are exhausted or delayed, skip it cleanly.',
+                navigateTo: '高雄市新興區南台路51號',
+                addressTc: '高雄市新興區南台路51號',
+                guide: {
+                  intro: 'A low-stakes late supper after five hours of mountain-bus travel.',
+                  steps: [
+                    { label: 'Arrival Gate', detail: 'Only go if you are back in central Kaohsiung by roughly 8:35–8:45 PM and still want food. Otherwise go straight to the hotel.' },
+                    { label: 'Order', detail: 'At 老江紅茶牛奶 南台總店, share the charcoal-style milk tea and add ham/egg toast or another egg/meat item as appetite requires.' },
+                    { label: 'No Queue Mission', detail: 'This is a convenient local closeout, not a famous-food objective. If it is unexpectedly annoying, use the convenience store and sleep.' },
+                    { label: 'Hotel', detail: 'Walk/taxi back to Airline Inn and aim to be in the room by roughly 10:00 PM.' }
+                  ]
+                }
               }
             ],
             rainPlan: 'If Alishan has heavy rain, dangerous wind, mountain-road disruption, railway suspension, or clearly poor visibility, cancel rather than forcing a 5-hour transport day. Run the FULL Cijin coastal day on Sunday instead. Do not move Alishan to Monday because the fixed 2:15 PM massage makes the mountain logistics incompatible.',
@@ -4326,9 +4620,9 @@
                 navigateTo: 'Cijin Ferry Station, Qijin District, Kaohsiung'
               }
             },
-            foodRecommendation: 'Shan Bin Restaurant 山賓餐廳 → packed 7-ELEVEN / FamilyMart protein only if the restaurant queue is poor',
-            proteinPlan: 'Target ~150 g despite the mountain logistics: front-load ~45–55 g before/around the HSR, carry ~35–45 g of portable protein (tea eggs, unsweetened soy milk, chicken/lean meat, yogurt if practical), then finish with a ~50–60 g meat/seafood dinner back in Kaohsiung. Local Alishan tea/snacks stay in the day; convenience food supports the target rather than replacing the experience. · 山區交通日仍以約150g為目標：高鐵前後先吃45–55g，隨身帶約35–45g蛋白（茶葉蛋、無糖豆漿、雞胸／瘦肉、方便時可帶優格），回高雄再用50–60g肉／海鮮晚餐補足。阿里山茶與在地小吃照吃，便利商店只是補蛋白，不取代旅行體驗。',
-            insiderTip: 'The critical optimization is the 8:40 AM / 4:40 PM reserved 7329 pair. The full Chiayi→Alishan forest railway is scenic but too slow for this day trip; use the short Zhaoping/Shenmu branch lines inside the park instead.'
+            foodRecommendation: 'Shan Bin Restaurant 山賓餐廳 → Old Jiang Red Tea Milk 老江紅茶牛奶 after Kaohsiung return if hungry; packed 7-ELEVEN / FamilyMart protein remains the no-delay fallback',
+            proteinPlan: 'Target ~150 g without forcing a late heavy dinner: front-load ~45–55 g before/around the HSR, carry ~35–45 g of portable protein (tea eggs, unsweetened soy milk, chicken/lean meat, yogurt if practical), get another ~30–45 g from the hot Shan Bin lunch, then use Old Jiang ham/egg toast or a convenience-store protein top-up only if still hungry after returning to Kaohsiung. Local Alishan tea/snacks stay in the day; convenience food supports the target rather than replacing the experience. · 山區交通日仍以約150g為目標，但不用硬塞一頓很重的宵夜：高鐵前後先吃45–55g，隨身帶35–45g蛋白（茶葉蛋、無糖豆漿、雞胸／瘦肉、方便時可帶優格），山賓熱午餐再補約30–45g；回高雄若仍餓，再用老江火腿蛋吐司或便利商店蛋白補足。阿里山茶與在地小吃照吃，便利商店只是補蛋白，不取代旅行體驗。',
+            insiderTip: 'The 9:30 AM / 4:40 PM reserved 7329 pair is the better fit for your sleep preference: you give up only 50 minutes on the mountain versus the 8:40 bus, but avoid a 6:50 AM hotel departure. A 9:30 AM hotel departure would be too late for a worthwhile public-transport Alishan day.'
           },
 
           {
@@ -4337,7 +4631,7 @@
             shortLabel: 'Cijin / 旗津',
             city: 'Kaohsiung',
             dateString: 'Mon, Dec 07, 2026',
-            title: 'Cijin Headland, Recovery Massage & Shrimp Fishing',
+            title: 'Cijin Headland → Recovery Massage → Shrimp Fishing',
             titleTc: '旗津岬角・全身指壓・夜間釣蝦',
             hotelRef: 'kaohsiung',
             transitSummary: 'MRT + Ferry + Tactical Metered Taxi / 捷運・渡輪・計程車',
@@ -4531,7 +4825,7 @@
             shortLabel: 'HK / 抵港',
             city: 'Hong Kong / 香港',
             dateString: 'Tue, Dec 08, 2026',
-            title: 'THSR to TPE, Flight CX443 & Jordan Night Wander',
+            title: 'THSR to TPE → Flight CX443 → Jordan Night Wander',
             titleTc: '高鐵往桃園・CX443赴港・佐敦夜遊',
             hotelRef: 'hk',
             transitSummary: 'THSR -> Airport MRT -> CX443 (3:50 PM)',
@@ -4651,7 +4945,7 @@
                 }
               },
                             {
-                time: '8:30 PM – 10:00 PM',
+                time: '8:30 PM – 9:45 PM',
                 title: 'Mak Man Kee Wonton Noodles — Jordan Arrival Supper',
                 titleTc: '麥文記麵家・佐敦抵港宵夜',
                 icon: 'utensils',
@@ -4664,7 +4958,23 @@
                     { label: 'Walk', detail: 'From Sasa Inn, walk north on Nathan Road and turn onto Parkes Street.' },
                     { label: 'Supper', detail: 'At Mak Man Kee 麥文記麵家, 白加士街51號, order wonton noodles plus a second protein dish if hungry.' },
                     { label: 'Queue Rule', detail: 'If the wait is >10–15 min or energy is low, skip supper and return to the hotel. Arrival-night sleep has higher value.' },
-                    { label: 'Return', detail: 'Walk back to Sasa by ~10:15 PM.' }
+                    { label: 'Continue', detail: 'Finish around 9:40–9:45 PM and continue through Jordan toward Temple Street for one compact night walk.' }
+                  ]
+                }
+              },
+              {
+                time: '9:45 PM – 10:25 PM',
+                title: 'Temple Street + Jordan Night Walk',
+                titleTc: '廟街＋佐敦夜間散步',
+                icon: 'footprints',
+                notes: 'A short first-night Hong Kong walk after supper: neon, market frontage and neighborhood streets without turning it into another eating mission.',
+                navigateTo: 'Temple Street Night Market, Jordan, Hong Kong',
+                addressTc: '香港佐敦廟街',
+                guide: {
+                  steps: [
+                    { label: 'Route', detail: 'Walk from Parkes Street toward Temple Street and enter around the Jordan section.' },
+                    { label: 'Browse', detail: 'Spend ~30 minutes on the stalls, signs and side streets. Browse only; no need to buy or eat anything unless something truly stands out.' },
+                    { label: 'Hotel', detail: 'Walk south back to Sasa Inn and aim to be in the room around 10:30 PM.' }
                   ]
                 }
               }
@@ -4681,7 +4991,7 @@
             shortLabel: 'Peak / 山頂',
             city: 'Hong Kong / 香港',
             dateString: 'Wed, Dec 09, 2026',
-            title: 'Central Urban Walk, Victoria Peak & Happy Valley Races',
+            title: 'Central Urban Walk → Victoria Peak → Happy Valley Races',
             titleTc: '中上環城市步行・太平山・跑馬地夜馬',
             hotelRef: 'hk',
             transitSummary: 'Star Ferry -> Peak Tram -> Tram',
@@ -4826,17 +5136,17 @@
             shortLabel: 'Kowloon / 九龍',
             city: 'Hong Kong / 香港',
             dateString: 'Thu, Dec 10, 2026',
-            title: 'M+ Fast Pass, Sham Shui Po & Oi Man Sang Dai Pai Dong',
-            titleTc: 'M+ 快逛・深水埗・愛文生大牌檔',
+            title: 'M+ Fast Pass → Sham Shui Po → Oi Man Sang → WestK Night Walk',
+            titleTc: 'M+ 快逛・深水埗・愛文生・西九海濱夜走',
             hotelRef: 'hk',
             transitSummary: 'All-Kowloon Day (MTR Red Line)',
             weatherExpected: '~20°C • Mild seasonal conditions',
             rainBackupAvailable: true,
-            easyPlan: "If tired, shorten the Sham Shui Po street hunt. Preserve M+ and the early Sham Shui Po dinner; skip extra wandering afterward.",
-            leaveByTime: '9:00 AM for gym',
+            easyPlan: "If tired, shorten Sham Shui Po by ~30 minutes. Preserve M+, the dai-pai-dong dinner and at least a short WestK waterfront walk; cut the last stretch of the park first.",
+            leaveByTime: '9:30 AM for gym',
             timeline: [
               {
-                time: '9:00 AM – 10:50 AM',
+                time: '9:30 AM – 11:25 AM',
                 title: 'Routine Gym — Private 60-min Pod',
                 titleTc: 'The Gym Pod @ 戲曲中心',
                 icon: 'dumbbell',
@@ -4845,10 +5155,10 @@
                 addressTc: '香港九龍西九文化區柯士甸道西88號 戲曲中心',
                 guide: {
                   steps: [
-                    { label: 'Booking & Arrival', detail: 'Book TWO consecutive 30-minute sessions in The Gym Pod app. Select/declare 3 pax correctly. Check the live booking window around a week ahead. Leave Sasa around 9:00 AM; walk if routing is clean, otherwise split a short red metered taxi.' },
+                    { label: 'Booking & Arrival', detail: 'Book TWO consecutive 30-minute sessions in The Gym Pod app. Select/declare 3 pax correctly. Check the live booking window around a week ahead. Leave Sasa around 9:30 AM; walk if routing is clean, otherwise split a short red metered taxi.' },
                     { label: 'Price & Access', detail: 'The official Xiqu page currently directs users to live app pricing rather than publishing a fixed base rate. Promo code HKFIT100 currently advertises the first eligible hour free. VERIFY eligibility and the exact 3-person checkout total before confirming.' },
                     { label: 'Training', detail: 'Use the private Smith machine, cable station, dumbbells and adjustable bench. Rotate among stations efficiently for 60 minutes. Keep 2–3 reps in reserve and avoid unnecessary cardio/leg fatigue.' },
-                    { label: 'Shower & M+', detail: 'The Gym Pod Xiqu page does not advertise showers. Return briefly to Sasa Inn after the workout for a quick shower/change, then use the cheapest practical direct option to M+: walk if timing/weather is good, otherwise split a red metered taxi. Do not go into M+ sweaty.' }
+                    { label: 'Shower & M+', detail: 'Train roughly 9:45–10:45 AM. The Gym Pod Xiqu page does not advertise showers, so return briefly to Sasa for a quick shower/change, then head to M+ for noon. No need for the old 9:00 departure.' }
                   ]
                 }
               },
@@ -4892,7 +5202,7 @@
                 }
               },
                             {
-                time: '4:45 PM – 6:30 PM',
+                time: '4:45 PM – 6:20 PM',
                 title: "Oi Man Sang (backup: Let's Yum Cha) — Sham Shui Po Dinner",
                 titleTc: '愛文生（備案：飲茶點心）・深水埗晚餐',
                 icon: 'utensils',
@@ -4906,19 +5216,38 @@
                     { label: 'Primary 4:45', detail: 'Get to Oi Man Sang 愛文生 around opening-adjacent time. Order 2–3 wok dishes for 3 such as black-pepper beef/potato, razor clams/prawns and vegetables.' },
                     { label: 'Hard Queue Rule', detail: 'Independent 2026 reviews praise the food but also report waits as long as 75 minutes. If the quoted wait is >15 min, LEAVE immediately.' },
                     { label: 'Backup', detail: "Use Let's Yum Cha 飲茶點心 nearby as the explicit backup. It has a stronger review score and broad hours; this is preferable to wasting an hour in a queue." },
-                    { label: 'After Dinner', detail: 'Take MTR back toward Jordan/TST around 6:30 PM. Walk neighborhood streets only if everyone still wants mileage; no second dinner.' }
+                    { label: 'After Dinner', detail: 'Leave around 6:20 PM and move south toward West Kowloon Art Park. This is now a real evening block, not an early hotel return.' }
+                  ]
+                }
+              },
+              {
+                time: '~6:55 PM – 9:30 PM',
+                title: 'West Kowloon Art Park + Victoria Harbour Waterfront Night Walk',
+                titleTc: '西九文化區藝術公園＋維港海濱夜走',
+                icon: 'footprints',
+                notes: 'This fixes the old 6:30 PM dead end. WestK Art Park is officially open until 11 PM and gives you lawns, footpaths and a long harbourfront without adding another paid attraction.',
+                navigateTo: 'Art Park, West Kowloon Cultural District, Hong Kong',
+                addressTc: '香港西九文化區藝術公園',
+                guide: {
+                  intro: 'Long, relaxed post-dinner walk with real open space and skyline views.',
+                  steps: [
+                    { label: 'Get There', detail: 'From Sham Shui Po, take the fastest live MTR/bus/taxi option south toward Austin/Kowloon Station and enter WestK around 6:55–7:10 PM.' },
+                    { label: 'Art Park', detail: 'Walk the lawns/footpaths and the waterfront edge rather than going into another museum. Use the Competition Pavilion / harbourfront as one landmark, not a destination queue.' },
+                    { label: 'Harbour Walk', detail: 'Continue east/southeast along the West Kowloon promenade at an easy pace with Victoria Harbour views. Stop for photos when the skyline/reflections are good.' },
+                    { label: 'Flex', detail: 'If there is live street performance or a temporary outdoor installation that looks interesting, stop briefly; otherwise keep the walk unstructured.' },
+                    { label: 'Hotel', detail: 'Start back around 9:20–9:30 PM and reach Sasa Inn around 9:45–10:00 PM.' }
                   ]
                 }
               }
             ],
-            rainPlan: 'M+ Museum and Langham Place mall are fully indoor and connected via sheltered transit.',
+            rainPlan: 'M+ remains the indoor anchor. In steady evening rain, skip the WestK lawn/waterfront and return to TST for a covered K11 MUSEA / Nathan Road walk; do not force an exposed harbor stroll.',
             backups: {
               activity: {
-                title: 'West Kowloon Waterfront & Xiqu Centre',
-                titleTc: '西九文化區海濱 & 戲曲中心',
-                note: 'Harbor-lawn fallback right outside M+ if you prefer open air over the market streets.',
-                navigateTo: '香港西九文化區柯士甸道西88號',
-                addressTc: '香港西九文化區柯士甸道西88號'
+                title: 'K11 MUSEA / TST Covered Night Walk',
+                titleTc: 'K11 MUSEA／尖沙咀有蓋夜走',
+                note: 'Steady-rain fallback after dinner: use covered/indoor TST circulation rather than forcing the Art Park waterfront.',
+                navigateTo: 'K11 MUSEA, Tsim Sha Tsui, Hong Kong',
+                addressTc: '香港尖沙咀梳士巴利道18號'
               },
               services: [
                 {
@@ -4947,7 +5276,7 @@
             },
             foodRecommendation: 'Kung Wo 公和荳品廠 (small snack) → Oi Man Sang 愛文生; >15-min queue → Let\'s Yum Cha',
             proteinPlan: 'Target ~150 g: after the gym, use Sham Shui Po for a real protein meal—beef, chicken, tofu/soy or fish-ball snacks—then make Oi Man Sang dinner meat/seafood first. Kung Wo is a small tasting stop, not the meal base. · 目標約150g：健身後在深水埗以牛、雞、豆腐／豆品或魚蛋補蛋白；愛文生晚餐以肉／海鮮為主。公和荳品只是小份嚐鮮，不當主餐。',
-            insiderTip: 'Keeping all activities strictly in Kowloon today saves 2 hours of cross-harbor transit.'
+            insiderTip: 'This day now stays entirely in Kowloon but no longer dies at 6:30 PM: the Art Park/waterfront gives you a high-value, open-space night finish and still gets you back around 10 PM.'
           },
 
           {
@@ -4956,17 +5285,17 @@
             shortLabel: 'Lantau / 大嶼山',
             city: 'Hong Kong / 香港',
             dateString: 'Fri, Dec 11, 2026',
-            title: 'Ngong Ping 360, Big Buddha Fast Pass & Tai O Loop',
-            titleTc: '昂坪360・大佛快逛・大澳漁村環線',
+            title: 'Ngong Ping 360 → Tai O Loop → Kowloon Harbour Night Walk',
+            titleTc: '昂坪360・大澳環線・九龍維港夜走',
             hotelRef: 'hk',
             transitSummary: 'MTR -> Cable Car -> Bus 21 -> Bus 11 loop',
             weatherExpected: '~19°C • Mountain & coastal breeze',
             rainBackupAvailable: true,
             easyPlan: null,
-            leaveByTime: '9:00 AM from hotel',
+            leaveByTime: '9:30 AM from hotel',
             timeline: [
               {
-                time: '9:00 AM – 9:50 AM',
+                time: '9:30 AM – 10:20 AM',
                 title: 'Hotel ➔ Kowloon Station ➔ Tung Chung',
                 titleTc: '飯店 → 九龍站 → 東涌站',
                 icon: 'train',
@@ -4981,11 +5310,11 @@
                 }
               },
               {
-                time: '~10:00 AM – 10:30/10:45 AM',
-                title: 'First Ngong Ping 360 Crystal Cable Car Cabin',
+                time: '~10:30 AM – 11:00/11:15 AM',
+                title: 'Ngong Ping 360 Crystal Cable Car Cabin',
                 titleTc: '昂坪360東涌纜車站',
                 icon: 'eye',
-                notes: 'Weekday service opens at 10:00 AM. Walk from Tung Chung MTR to terminal and board first practical cabin after opening.',
+                notes: 'Weekday service opens at 10:00 AM. A 9:30 hotel departure should put you at Tung Chung around 10:20; walk to the terminal and target the first practical booked Crystal Cabin around 10:30–10:45 without manufacturing an early start.',
                 navigateTo: '香港大嶼山東涌達東路11號',
                 addressTc: '香港大嶼山東涌達東路11號',
                 guide: {
@@ -4998,7 +5327,7 @@
                 }
               },
               {
-                time: '~10:45/11:00 AM – 11:45 AM',
+                time: '~11:00/11:15 AM – 12:10 PM',
                 title: 'Tian Tan Big Buddha & Po Lin Monastery',
                 titleTc: '天壇大佛 & 寶蓮禪寺',
                 icon: 'landmark',
@@ -5011,12 +5340,12 @@
                     { label: 'Skip Retail Village', detail: 'Walk briskly through Ngong Ping retail village; do not lose time in commercial souvenir shops.' },
                     { label: '268 Steps', detail: 'Climb 268 granite steps to base of 34-meter bronze Buddha at a comfortable pace.' },
                     { label: 'Lotus Terrace', detail: 'Circle base for 360-degree mountain and South China Sea views.' },
-                    { label: 'Po Lin Quick Pass', detail: 'If convenient, do a brief courtyard/hall exterior pass after descending. No long temple loop; leave the zone around ~11:45 AM.' }
+                    { label: 'Po Lin Quick Pass', detail: 'If convenient, do a brief courtyard/hall exterior pass after descending. No long temple loop; leave the zone around ~12:10 PM.' }
                   ]
                 }
               },
                             {
-                time: '11:45 AM – 1:05 PM',
+                time: '12:10 PM – 1:05 PM',
                 title: 'Ngong Ping Bus Buffer + Packed Protein Lunch',
                 titleTc: '昂坪公車緩衝＋自帶蛋白午餐',
                 icon: 'backpack',
@@ -5071,11 +5400,11 @@
                 }
               },
               {
-                time: '~6:30 PM – 7:45 PM',
+                time: '~6:10 PM – 7:20 PM',
                 title: 'Australia Dairy Company — Jordan Dinner',
                 titleTc: '澳洲牛奶公司',
                 icon: 'utensils',
-                notes: 'Move this classic cha chaan teng to Friday, when it is currently open; Thursday is its regular closure day. Jordan is a natural return corridor from Lantau/Kowloon Station toward Sasa Inn.',
+                notes: 'Friday is the right day for this classic cha chaan teng. Keep dinner efficient so the night can continue south through Kowloon Park to the harbour rather than ending at 7:45 PM.',
                 navigateTo: 'Australia Dairy Company, Jordan, Hong Kong',
                 guide: {
                   intro: 'Fast, iconic but route-compatible post-Lantau dinner instead of leaving the day with an undefined meal.',
@@ -5083,6 +5412,25 @@
                     { label: 'Return', detail: 'From Tung Chung, take the Tung Chung Line back toward Kowloon, then continue to Jordan/TST with the simplest live MTR/taxi option.' },
                     { label: 'Order', detail: 'Try scrambled eggs/toast, macaroni soup with ham, steamed milk/egg pudding or another classic cha chaan teng combination. Add a meat/egg-heavy dish so dinner supports the protein target.' },
                     { label: 'Queue Rule', detail: 'If the line is >~10–15 minutes, skip immediately and walk next door to Mak Man Kee Noodle Shop 麥文記麵家 (51 Parkes St), already vetted for the arrival night. Do not queue after an all-day Lantau loop.' }
+                  ]
+                }
+              },
+              {
+                time: '~7:25 PM – 9:45 PM',
+                title: 'Kowloon Park ➔ Tsim Sha Tsui Promenade Night Walk',
+                titleTc: '九龍公園 → 尖沙咀海濱夜走',
+                icon: 'footprints',
+                notes: 'A natural southbound walk from Jordan to the hotel area: greenery first, then the harbour skyline. Kowloon Park is open until midnight; the TST promenade is the official 8 PM Symphony of Lights vantage area.',
+                navigateTo: 'Kowloon Park, Tsim Sha Tsui, Hong Kong',
+                addressTc: '香港九龍公園',
+                guide: {
+                  intro: 'After-dinner park + harbour sequence with no extra ticket or cross-city transfer.',
+                  steps: [
+                    { label: 'Park', detail: 'From Australia Dairy, enter Kowloon Park from the Austin/Jordan side and walk south through the gardens/paths rather than staying on Nathan Road.' },
+                    { label: '8 PM Decision', detail: 'If dinner finishes on time, continue toward the Clock Tower/TST waterfront for the 8:00 PM Symphony of Lights. If you are running late, do not sprint—just enjoy the skyline after the show.' },
+                    { label: 'Promenade', detail: 'Walk east from the Clock Tower along the Tsim Sha Tsui Promenade / Avenue of Stars for harbour reflections and night photography.' },
+                    { label: 'No Duplication Rule', detail: 'This is a ground-level skyline walk. Aqua Luna tomorrow is the water-based harbour experience, so do not add another cruise tonight.' },
+                    { label: 'Hotel', detail: 'Turn back around 9:30 PM and reach Sasa Inn by roughly 9:45–10:00 PM.' }
                   ]
                 }
               }
@@ -5106,8 +5454,8 @@
               ]
             },
             foodRecommendation: 'Packed 7-ELEVEN protein lunch → Tai O Bakery 大澳餅店 → Australia Dairy Company 澳洲牛奶公司',
-            proteinPlan: "Target ~150 g: Ngong Ping's vegetarian lunch is the weak point, so front-load protein before leaving with eggs + milk/soy milk + chicken/other lean protein. At Po Lin choose tofu/bean dishes; at Australia Dairy Company prioritize eggs/ham/meat and milk-based items, then top up only if needed. · 目標約150g：昂坪素食午餐是最容易不足的一餐，所以出發前先用蛋＋牛奶／豆漿＋雞胸／其他瘦肉打底；寶蓮寺午餐優先豆腐豆類。澳洲牛奶公司以蛋、火腿／肉類與奶類為主，不足再補。",
-            insiderTip: 'Dolphin sightings on small boats are fun bonuses, not guarantees. Enjoy the wooden stilt village atmosphere.'
+            proteinPlan: "Target ~150 g: front-load breakfast with eggs + milk/soy milk + chicken/lean protein, then use the packed 7-ELEVEN lunch as a deliberate protein meal at Ngong Ping. At Australia Dairy Company prioritize eggs/ham/meat and milk-based items; Tai O Bakery is just a shared sweet. · 目標約150g：早餐先用蛋＋牛奶／豆漿＋雞胸／瘦肉打底；昂坪直接吃事先準備的7-ELEVEN高蛋白午餐。澳洲牛奶公司以蛋、火腿／肉類與奶類為主；大澳餅店沙翁只是分食甜點。",
+            insiderTip: 'A 9:30 AM hotel departure works: weekday Ngong Ping 360 opens at 10:00, and the current Bus 21 schedule still gives you the 1:20 PM Ngong Ping → Tai O departure. There is enough time for a 10:30–10:45 Crystal Cabin, a focused Big Buddha/Po Lin pass and the packed lunch without creating an unnecessary early start. The night walk then uses Kowloon Park and the TST harbourfront naturally on the way back.'
           },
 
           {
@@ -5116,17 +5464,17 @@
             shortLabel: 'Finale / 尾聲',
             city: 'Hong Kong / 香港',
             dateString: 'Sat, Dec 12, 2026',
-            title: '60th Brands Expo, 5:30 PM Aqua Luna & Finale Dinner',
+            title: '60th Brands Expo → 5:30 PM Aqua Luna → Finale Dinner',
             titleTc: '第60屆工展會・Aqua Luna 黃昏船・最後晚餐',
             hotelRef: 'hk',
             transitSummary: 'Ding Ding Tram & Wooden Junk Boat',
             weatherExpected: '~20°C • Mild evening conditions',
             rainBackupAvailable: true,
             easyPlan: "If tired, shorten time at Brands Expo. Preserve 5:30 PM Aqua Luna sunset sail.",
-            leaveByTime: '8:30 AM for gym',
+            leaveByTime: '9:30 AM for gym',
             timeline: [
               {
-                time: '8:30 AM – 10:15 AM',
+                time: '9:30 AM – 11:25 AM',
                 title: 'Routine Gym — Private 60-min Pod',
                 titleTc: 'The Gym Pod @ 戲曲中心',
                 icon: 'dumbbell',
@@ -5135,15 +5483,15 @@
                 addressTc: '香港九龍西九文化區柯士甸道西88號 戲曲中心',
                 guide: {
                   steps: [
-                    { label: 'Arrival', detail: 'Leave Sasa around 8:30 AM. Arrive around ~8:45 AM for the pre-booked two-slot reservation.' },
+                    { label: 'Arrival', detail: 'Leave Sasa around 9:30 AM. Target a 9:45–10:45 AM two-slot reservation for the 60-minute workout.' },
                     { label: 'Price', detail: 'Verify the live 60-minute / 3-person checkout total in the app. Do NOT assume HKFIT100 is reusable for this second session.' },
-                    { label: 'Training', detail: 'Approximately 8:45–9:45 AM. Moderate 60-minute maintenance session. Smith/cable/dumbbell rotation. 2–3 reps in reserve. No failure or high-volume legs.' },
-                    { label: 'Shower & Breakfast Transit', detail: 'Return to Sasa immediately afterward because Gym Pod does not advertise showers. Quick shower/change. Then continue to Sheung Wan for dim sum.' }
+                    { label: 'Training', detail: 'Approximately 9:45–10:45 AM. Moderate 60-minute maintenance session. Smith/cable/dumbbell rotation. 2–3 reps in reserve. No failure or high-volume legs.' },
+                    { label: 'Shower & Central', detail: 'Return to Sasa immediately afterward because Gym Pod does not advertise showers. Quick shower/change, then continue to Central for the noon dim-sum target.' }
                   ]
                 }
               },
                             {
-                time: '11:00 AM – 12:00 PM',
+                time: '12:00 PM – 1:00 PM',
                 title: "Maxim's Palace City Hall (backup: One Dim Sum Central) — Trolley Dim Sum",
                 titleTc: '美心皇宮大會堂（備案：一點心中環）・推車點心',
                 icon: 'utensils',
@@ -5163,7 +5511,7 @@
                 }
               },
               {
-                time: '12:10 PM – 12:50 PM',
+                time: '1:10 PM – 1:50 PM',
                 title: 'Ding-Ding Tram to Causeway Bay',
                 titleTc: '香港電車：上環 → 銅鑼灣',
                 icon: 'train',
@@ -5179,7 +5527,7 @@
                 }
               },
               {
-                time: '1:00 PM – 2:45 PM',
+                time: '2:00 PM – 3:30 PM',
                 title: '60th Brands Expo at Victoria Park',
                 titleTc: '維多利亞公園 (第60屆香港工展會)',
                 icon: 'sparkles',
@@ -5194,7 +5542,7 @@
                     { label: 'Priority Zones', detail: 'Prioritize Hong Kong Brands Square, Food & Beverage, Grocery & Noodles, and Hometown Flavors.' },
                     { label: 'Sampling Strategy', detail: 'Sample local pastries, sauces, and noodle bites before purchasing.' },
                     { label: 'Take-Home Products', detail: 'For anything intended for U.S. entry, prefer clearly labeled, commercially packaged non-meat products (e.g. sealed tea, packaged cookies/biscuits) and keep the packaging/receipt. Avoid heavy glass jars or meat-containing items.' },
-                    { label: 'Exit Timing', detail: 'Begin wrapping up around 2:30 PM and be out of Victoria Park by ~2:45 PM. Return toward Tsim Sha Tsui for a long reset buffer before the fixed 5:10 PM Aqua Luna pier arrival.' }
+                    { label: 'Exit Timing', detail: 'Begin wrapping up around 3:15 PM and be out by ~3:30 PM. Return toward Tsim Sha Tsui immediately; you still retain a comfortable reset buffer before the fixed 5:10 PM Aqua Luna pier arrival.' }
                   ]
                 }
               },
@@ -5281,7 +5629,7 @@
             },
             foodRecommendation: 'Maxim\'s Palace City Hall → Yat Tung Heen 逸東軒 → Kai Kai Dessert 佳佳甜品',
             proteinPlan: 'Target ~150 g: trolley dim sum can be high-protein if you prioritize shrimp dumplings, siu mai, beef balls, steamed ribs and roast meats. At the finale dinner go seafood/meat-heavy; treat expo samples, egg tarts and tong sui as shared extras. · 目標約150g：推車點心可很高蛋白，先吃蝦餃、燒賣、牛肉丸、蒸排骨與燒味。最後晚餐以海鮮／肉為主；展銷會試吃、蛋撻、糖水當分食加碼。',
-            insiderTip: 'Aqua Luna allows 1 free weather reschedule with 12 hours notice. Check tomorrow’s forecast on Friday.'
+            insiderTip: 'The old 8:30 AM gym departure was unnecessary. A 9:30 AM start still fits gym → noon dim sum → Brands Expo → 5:10 PM Aqua Luna check-in; keep the strict dim-sum queue fallback so the fixed harbour sail remains protected.'
           },
 
           {
@@ -5290,7 +5638,7 @@
             shortLabel: 'Home / 返程',
             city: 'Departure / 返程',
             dateString: 'Sun, Dec 13, 2026',
-            title: 'Kowloon In-Town Check-in, Bakehouse & Flight to NYC',
+            title: 'Kowloon In-Town Check-in → Bakehouse → Flight to NYC',
             titleTc: '九龍市區預辦登機・Bakehouse・返紐約',
             hotelRef: 'hk',
             transitSummary: 'In-Town Check-in -> Express -> CX840',
@@ -5821,7 +6169,7 @@
           const title = String(item?.title || '').toLowerCase();
           if (['utensils', 'store', 'shopping-bag'].includes(icon) || /breakfast|lunch|dinner|snack|dessert|food|market|bakery|tea|coffee/.test(title)) return 'tone-food';
           if (['train', 'bus', 'car', 'plane', 'plane-landing', 'plane-takeoff', 'ship', 'luggage', 'navigation'].includes(icon)) return 'tone-transit';
-          if (['dumbbell', 'footprints', 'waves', 'backpack'].includes(icon) || /hike|walk|wake|gym|climb|trail|race/.test(title)) return 'tone-active';
+          if (['dumbbell', 'footprints', 'waves', 'backpack'].includes(icon) || /hike|walk|gym|climb|trail|race/.test(title)) return 'tone-active';
           if (['bath', 'heart-pulse', 'flower'].includes(icon) || /massage|spa|recovery|bath/.test(title)) return 'tone-wellness';
           if (['landmark', 'building-2', 'camera', 'hammer', 'eye'].includes(icon)) return 'tone-culture';
           return 'tone-default';
@@ -5960,7 +6308,7 @@
         },
 
         syncThemeColor() {
-          const colors = { flight: '#08111d', taipei: '#071512', kaohsiung: '#171008', hk: '#130b19' };
+          const colors = { flight: '#07121f', taipei: '#071916', kaohsiung: '#1a1208', hk: '#160c1f' };
           const meta = document.querySelector('meta[name="theme-color"]');
           if (meta) meta.setAttribute('content', colors[this.currentCityTheme] || '#090a0f');
         },
@@ -6250,7 +6598,7 @@
 
         exportState() {
           const statePayload = {
-            version: 23,
+            version: 24,
             exportedAt: new Date().toISOString(),
             activeDayId: this.activeDayId,
             planView: this.planView,
