@@ -1,17 +1,16 @@
 /*
-  Offline service worker for the Taiwan & Hong Kong '26 travel companion.
+  Offline service worker for Taiwan + Hong Kong 2026.
 
   Strategy: cache-first with background revalidation.
-  A travel companion must never show an error page on a subway platform, so a cached
-  copy is always served immediately. When there is signal, the network copy is fetched
-  in the background and stored for next time — so an update appears one visit later,
-  which is the right trade against ever showing nothing.
+  A cached shell is served immediately for reliable offline use. When online,
+  successful same-origin responses refresh the current cache in the background.
+  The page's bypass check stores a detected HTML update under the canonical shell
+  key and reloads automatically.
 
-  Bump CACHE below after changing index.html if you want to force old caches to be
-  dropped; routine content edits are picked up automatically via ETag comparison.
+  Bump CACHE when older cache namespaces must be evicted.
 */
 const CACHE_PREFIX = 'twhk-2026-';
-const CACHE = `${CACHE_PREFIX}v9`;
+const CACHE = `${CACHE_PREFIX}v10`;
 const SHELL = [
   './index.html',
   './manifest.webmanifest',
@@ -54,8 +53,8 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET') return;
 
-  // The page's update check needs a real network round trip. Persist that response under
-  // the canonical shell key so the prompt's single reload displays the version it detected.
+  // The page's automatic version check needs a real network round trip. Persist that
+  // response under the canonical shell key so its reload displays the detected version.
   if (new URL(request.url).searchParams.has('swBypass')) {
     event.respondWith((async () => {
       const response = await fetch(request);
@@ -79,13 +78,8 @@ self.addEventListener('fetch', event => {
     const key = keyFor(request);
     const cached = await cache.match(key);
 
-    // Update notification is handled entirely on the page side (comparing
-    // document.lastModified against a fresh fetch's own Last-Modified header) rather than
-    // from here. An earlier version tried to postMessage the client the moment an ETag
-    // mismatch was detected during this very fetch, but the client for a 'navigate'
-    // request is not guaranteed discoverable via clients.matchAll() until shortly after
-    // this event resolves — a real race, not a theoretical one. This handler's only job
-    // now is what it is good at: keep the cache warm.
+    // The page owns automatic version checking and reload because a navigation client is not
+    // guaranteed to be discoverable via clients.matchAll() until shortly after this resolves.
     const fromNetwork = fetch(request).then(async response => {
       if (response && response.ok) {
         // Storage pressure must not turn a valid network response into a failed request.

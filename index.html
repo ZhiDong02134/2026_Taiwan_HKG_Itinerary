@@ -8,11 +8,11 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Taiwan &amp; Hong Kong 2026</title>
-  <meta name="description" content="A field-first Taiwan and Hong Kong travel companion with live booking, prep, FX and day execution tools.">
+  <title>Taiwan + Hong Kong 2026</title>
+  <meta name="description" content="A field-first Taiwan and Hong Kong itinerary with live booking, prep, FX and day execution tools.">
   <meta name="format-detection" content="telephone=no">
-  <meta name="application-name" content="Taiwan + Hong Kong '26">
-  <meta name="apple-mobile-web-app-title" content="TW · HK '26">
+  <meta name="application-name" content="Taiwan + Hong Kong 2026">
+  <meta name="apple-mobile-web-app-title" content="Taiwan + Hong Kong 2026">
   <!-- iOS ignores the manifest for the home-screen icon and cannot use an SVG here; without
        this PNG, Add to Home Screen falls back to a screenshot of the page. -->
   <link rel="apple-touch-icon" href="./icon-192.png">
@@ -32,7 +32,7 @@
   <link rel="apple-touch-startup-image" href="./splash-1290x2796.png" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
   <link rel="apple-touch-startup-image" href="./splash-1320x2868.png" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2315b8a6'/%3E%3Cpath d='M17 19c8-4 11 4 15 4s7-8 15-4v26c-8 4-11-4-15-4s-7 8-15 4Z' fill='none' stroke='white' stroke-width='4'/%3E%3C/svg%3E">
-<!-- Online Alpine runtime is pinned; the page now fails visibly instead of rendering a blank screen if it cannot load. -->
+<!-- The pinned Alpine runtime fails visibly instead of leaving a blank interactive shell. -->
   <!-- Tailwind CSS v4.1.10 compiled locally at build time; zero browser-time Tailwind runtime. -->
   <style id="tailwind-local-build">
 /*! tailwindcss v4.1.10 | MIT License | https://tailwindcss.com */
@@ -2512,21 +2512,12 @@
 
 
     /*
-      v27 coherence pass. This file was already the stronger of the two companions in
-      several respects — a real linear() spring, a properly sticky day rail, a
-      compositor-friendly progress transform, and a far cleaner cascade (171 !important
-      vs the Japan build's 566). What it lacked was motion on the single most frequent
-      action, plus two layout/rendering bugs that only show up on a phone.
-
-      Everything below is additive and scoped. The original decision to keep timeline
-      cards still during scrolling is preserved: card motion runs ONLY during an explicit
-      day change, never on scroll or on an unrelated re-render.
+      Timeline card motion runs only during an explicit day change, never during scrolling
+      or an unrelated render.
     */
 
     /* ---------- 1. Day-change choreography ---------- */
-    /* body[data-motion-direction] was already being set by setMotionDirection() and
-       already had a --destination-shift rule, but nothing consumed it for day changes.
-       These wire that existing signal to real motion. */
+    /* The direction signal keeps day-change motion spatially consistent. */
     body { --day-shift: 12px; }
     body[data-motion-direction='backward'] { --day-shift: -12px; }
 
@@ -2760,8 +2751,8 @@
     <div class="app-header-inner app-shell max-w-5xl mx-auto flex items-center justify-between gap-3">
       <button type="button" class="brand-button flex items-center gap-2.5 shrink-0" @click="switchTab('today', true)" aria-label="Open Today">
         <span class="brand-mark"><i data-lucide="map" class="w-4 h-4"></i></span>
-        <span class="brand-title font-semibold text-[13px] md:text-sm text-slate-100 hidden sm:inline">Taiwan + Hong Kong <span class="text-slate-500 font-medium">'26</span></span>
-        <span class="brand-title font-semibold text-[13px] text-slate-100 sm:hidden">TW · HK</span>
+        <span class="brand-title font-semibold text-[13px] md:text-sm text-slate-100 hidden sm:inline">Taiwan + Hong Kong <span class="text-slate-500 font-medium">2026</span></span>
+        <span class="brand-title font-semibold text-[13px] text-slate-100 sm:hidden">TW · HK 2026</span>
       </button>
 
       <nav class="desktop-tabs hidden md:grid" aria-label="Primary navigation" :style="'--nav-shift:' + (activeTabIndex * 100) + '%'">
@@ -2780,7 +2771,7 @@
   </header>
 
   <main id="app-main" class="app-shell flex-1 max-w-5xl w-full mx-auto px-4 pt-3 md:pt-5 pb-28 md:pb-12">
-    <h1 class="visually-hidden">Taiwan and Hong Kong 2026 travel companion</h1>
+    <h1 class="visually-hidden">Taiwan + Hong Kong 2026</h1>
 
     <!-- TAB 1: TODAY -->
     <section x-show="activeTab === 'today'" x-cloak class="tab-pane space-y-5">
@@ -2896,8 +2887,8 @@
         <div class="section-heading">
           <div><h3 class="section-title">Timeline · 行程</h3></div>
           <div class="flex items-center gap-1">
-            <template x-if="hasCurrentTimelineItem">
-              <button type="button" @click="scrollToCurrentTimeline()" class="today-jump" title="Jump to current stop" aria-label="Jump to current stop"><i data-lucide="locate-fixed" class="w-4 h-4"></i></button>
+            <template x-if="liveTripDayId">
+              <button type="button" @click="scrollToCurrentTimeline()" class="today-jump" title="Now" aria-label="Jump to current stop"><i data-lucide="locate-fixed" class="w-4 h-4"></i></button>
             </template>
             <template x-if="activeDayId !== liveTripDayId && liveTripDayId">
               <button type="button" @click="switchDay(liveTripDayId)" class="today-jump" title="Back to live day" aria-label="Back to live day"><i data-lucide="calendar-check" class="w-4 h-4"></i></button>
@@ -2909,10 +2900,12 @@
           <template x-for="(item, idx) in currentDay.timeline" :key="currentDay.id + '-' + idx">
             <article class="timeline-card"
                      :id="'timeline-item-' + idx"
-                     :class="[isCurrentTimelineItem(idx) ? 'is-now' : '', getTimelineTone(item)]">
+                     :class="[isCurrentTimelineItem(idx) ? 'is-now' : '', getTimelineTone(item)]"
+                     :aria-label="timelineAccessibleLabel(item, idx)"
+                     :aria-current="timelineItemState(idx) === 'current' ? 'time' : null">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0 flex-1">
-                  <span class="timeline-time font-mono" x-text="item.time"></span><template x-if="isCurrentTimelineItem(idx)"><span class="now-badge"><span class="now-badge-dot"></span>Now · 現在</span></template>
+                  <span class="timeline-time font-mono" x-text="item.time"></span><template x-if="isCurrentTimelineItem(idx)"><span class="now-badge"><span class="now-badge-dot"></span><span x-text="timelineItemLabel(idx)"></span></span></template>
                   <div class="flex items-start gap-2 mt-1">
                     <span class="summary-icon timeline-icon !w-8 !h-8 !rounded-[11px] shrink-0 mt-0.5"><i :data-lucide="item.icon || 'map-pin'" class="w-3.5 h-3.5"></i></span>
                     <div class="min-w-0">
@@ -2950,9 +2943,9 @@
           </template>
         </div>
       </section>
-      <aside class="today-side-rail">
+      <aside id="day-complete-target" class="today-side-rail" :aria-label="summaryTargetLabel">
       <section class="space-y-3">
-        <div class="section-heading"><div><h3 class="section-title">Day notes · 今日重點</h3></div></div>
+        <div class="section-heading"><div><h3 class="section-title">Day notes · 今日重點</h3></div><template x-if="summaryTargetLabel"><span class="now-badge"><span class="now-badge-dot"></span><span x-text="summaryTargetLabel"></span></span></template></div>
         <div class="daily-summary">
           <article class="summary-card protein"><span class="summary-icon"><i data-lucide="dumbbell" class="w-3.5 h-3.5"></i></span><p class="summary-label">Protein cue · 蛋白質</p><p class="summary-copy" x-text="withUsdConversion(currentDay.proteinPlan)"></p></article>
           <article class="summary-card tip"><span class="summary-icon"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i></span><p class="summary-label">Useful note · 提示</p><p class="summary-copy" x-text="withUsdConversion(currentDay.insiderTip)"></p></article>
@@ -3316,6 +3309,8 @@
         selectedCityFilter: 'all',
         activeDayId: 'day-02',
         lastLiveTripDayId: null,
+        relevantPlan: null,
+        smartLaunchActive: false,
         
         takeItEasyActive: false,
         rainPlanActive: false,
@@ -3588,6 +3583,7 @@
             shortLabel: 'Flight / 飛行',
             city: 'Flight / 飛行',
             dateString: 'Sat, Nov 28, 2026',
+            timeZone: 'America/New_York',
             title: 'JFK Departure → Transpacific Crossing',
             titleTc: 'JFK 出發・跨太平洋飛行',
             hotelRef: null,
@@ -3616,6 +3612,8 @@
               },
               {
                 time: '9:00 AM',
+                startAt: '2026-11-28T09:00:00-05:00',
+                endAt: '2026-11-29T14:05:00+08:00',
                 title: 'Board Flight CX841 to Hong Kong',
                 titleTc: '國泰航空 CX841：紐約甘迺迪 → 香港',
                 icon: 'plane',
@@ -3643,6 +3641,7 @@
             shortLabel: 'Arrival / 抵達',
             city: 'Taipei / 台北',
             dateString: 'Sun, Nov 29, 2026',
+            timeZone: 'Asia/Taipei',
             title: 'Touchdown → Airport MRT → Warm Dinner',
             titleTc: '抵達台北・機場捷運・暖胃晚餐',
             hotelRef: 'taipei',
@@ -3766,6 +3765,7 @@
             shortLabel: 'Dihua / 迪化',
             city: 'Taipei / 台北',
             dateString: 'Mon, Nov 30, 2026',
+            timeZone: 'Asia/Taipei',
             title: 'Dihua → Qingshan Festival → Nanjichang → Dadaocheng Riverside Night',
             titleTc: '迪化街・青山王祭・南機場・大稻埕河濱夜走',
             hotelRef: 'taipei',
@@ -3902,6 +3902,7 @@
             shortLabel: 'Beitou / 北投',
             city: 'Taipei / 台北',
             dateString: 'Tue, Dec 01, 2026',
+            timeZone: 'Asia/Taipei',
             title: 'Chrysanthemum Show → Beitou Hot Spring → Tamsui Active Sunset',
             titleTc: '士林菊展・北投溫泉・淡水八里渡船夕陽',
             hotelRef: 'taipei',
@@ -4091,6 +4092,7 @@
             shortLabel: 'Jiufen / 九份',
             city: 'Taipei Day Trip / 台北近郊',
             dateString: 'Wed, Dec 02, 2026',
+            timeZone: 'Asia/Taipei',
             title: 'Shifen Waterfall → Jinguashi Trails → Jiufen Dusk',
             titleTc: '十分瀑布・金瓜石步道・九份黃昏',
             hotelRef: 'taipei',
@@ -4271,6 +4273,7 @@
             shortLabel: '101 / 象山',
             city: 'Taipei / 台北',
             dateString: 'Thu, Dec 03, 2026',
+            timeZone: 'Asia/Taipei',
             title: 'CookInn Class → Taipei 101 → Elephant Mountain',
             titleTc: '台灣料理課・台北101・象山夜景',
             hotelRef: 'taipei',
@@ -4415,6 +4418,7 @@
             shortLabel: 'KHH / 高雄',
             city: 'Kaohsiung / 高雄',
             dateString: 'Fri, Dec 04, 2026',
+            timeZone: 'Asia/Taipei',
             title: 'THSR South → Lotus Pond → Bouldering → Ruifeng → Love River',
             titleTc: '高鐵南下・蓮池潭・抱石攀岩・瑞豐・愛河夜走',
             hotelRef: 'kaohsiung',
@@ -4586,6 +4590,7 @@
             shortLabel: 'Tainan / 台南',
             city: 'Tainan Day Trip / 台南一日',
             dateString: 'Sat, Dec 05, 2026',
+            timeZone: 'Asia/Taipei',
             title: 'Tainan Fast Track: Markets → Hayashi → Anping → Wusheng',
             titleTc: '台南高效率一日：市場・林百貨・安平・武聖夜市',
             hotelRef: 'kaohsiung',
@@ -4804,6 +4809,7 @@
             shortLabel: 'Alishan / 阿里山',
             city: 'Chiayi / Alishan',
             dateString: 'Sun, Dec 06, 2026',
+            timeZone: 'Asia/Taipei',
             title: 'Alishan High-Mountain Forest Day Trip',
             titleTc: '阿里山國家森林遊樂區・高山森林一日遊',
             hotelRef: 'kaohsiung',
@@ -4962,6 +4968,7 @@
             shortLabel: 'Cijin / 旗津',
             city: 'Kaohsiung',
             dateString: 'Mon, Dec 07, 2026',
+            timeZone: 'Asia/Taipei',
             title: 'Cijin Headland → Recovery Massage → Shrimp Fishing',
             titleTc: '旗津岬角・全身指壓・夜間釣蝦',
             hotelRef: 'kaohsiung',
@@ -5156,6 +5163,7 @@
             shortLabel: 'HK / 抵港',
             city: 'Hong Kong / 香港',
             dateString: 'Tue, Dec 08, 2026',
+            timeZone: 'Asia/Taipei',
             title: 'THSR to TPE → Flight CX443 → Jordan Night Wander',
             titleTc: '高鐵往桃園・CX443赴港・佐敦夜遊',
             hotelRef: 'hk',
@@ -5322,6 +5330,7 @@
             shortLabel: 'Peak / 山頂',
             city: 'Hong Kong / 香港',
             dateString: 'Wed, Dec 09, 2026',
+            timeZone: 'Asia/Hong_Kong',
             title: 'Central Urban Walk → Victoria Peak → Happy Valley Races',
             titleTc: '中上環城市步行・太平山・跑馬地夜馬',
             hotelRef: 'hk',
@@ -5467,6 +5476,7 @@
             shortLabel: 'Kowloon / 九龍',
             city: 'Hong Kong / 香港',
             dateString: 'Thu, Dec 10, 2026',
+            timeZone: 'Asia/Hong_Kong',
             title: 'M+ Fast Pass → Sham Shui Po → Oi Man Sang → WestK Night Walk',
             titleTc: 'M+ 快逛・深水埗・愛文生・西九海濱夜走',
             hotelRef: 'hk',
@@ -5616,6 +5626,7 @@
             shortLabel: 'Lantau / 大嶼山',
             city: 'Hong Kong / 香港',
             dateString: 'Fri, Dec 11, 2026',
+            timeZone: 'Asia/Hong_Kong',
             title: 'Ngong Ping 360 → Tai O Loop → Kowloon Harbour Night Walk',
             titleTc: '昂坪360・大澳環線・九龍維港夜走',
             hotelRef: 'hk',
@@ -5795,6 +5806,7 @@
             shortLabel: 'Finale / 尾聲',
             city: 'Hong Kong / 香港',
             dateString: 'Sat, Dec 12, 2026',
+            timeZone: 'Asia/Hong_Kong',
             title: '60th Brands Expo → 5:30 PM Aqua Luna → Finale Dinner',
             titleTc: '第60屆工展會・Aqua Luna 黃昏船・最後晚餐',
             hotelRef: 'hk',
@@ -5969,6 +5981,7 @@
             shortLabel: 'Home / 返程',
             city: 'Departure / 返程',
             dateString: 'Sun, Dec 13, 2026',
+            timeZone: 'Asia/Hong_Kong',
             title: 'Kowloon In-Town Check-in → Bakehouse → Flight to NYC',
             titleTc: '九龍市區預辦登機・Bakehouse・返紐約',
             hotelRef: 'hk',
@@ -6053,6 +6066,8 @@
               },
               {
                 time: '4:35 PM – 7:05 PM',
+                startAt: '2026-12-13T16:35:00+08:00',
+                endAt: '2026-12-13T19:05:00-05:00',
                 title: 'Cathay Pacific CX840 Non-Stop Flight to JFK',
                 titleTc: '國泰航空 CX840：香港 → 紐約甘迺迪',
                 icon: 'plane-takeoff',
@@ -6099,26 +6114,17 @@
         },
 
         get currentTimelineIndex() {
-          if (!this.liveTripDayId || this.activeDayId !== this.liveTripDayId || this.activeDayId === 'day-01') return -1;
-          const minutes = this.getTripLocalMinutes();
-          if (!Number.isFinite(minutes)) return -1;
-          const items = this.currentDay?.timeline || [];
-          let candidate = -1;
-          for (let i = 0; i < items.length; i++) {
-            const start = this.parseTimelineStartMinutes(items[i]?.time);
-            if (Number.isFinite(start) && start <= minutes) candidate = i;
-            if (Number.isFinite(start) && start > minutes) break;
-          }
-          if (candidate < 0) return -1;
-          const explicitEnd = this.parseTimelineEndMinutes(items[candidate]?.time);
-          const nextStart = candidate + 1 < items.length ? this.parseTimelineStartMinutes(items[candidate + 1]?.time) : NaN;
-          const fallbackEnd = Number.isFinite(nextStart) ? nextStart : Math.min(1439, this.parseTimelineStartMinutes(items[candidate]?.time) + 120);
-          const end = Number.isFinite(explicitEnd) ? Math.min(Number.isFinite(nextStart) ? nextStart : 1439, explicitEnd) : fallbackEnd;
-          return minutes < end ? candidate : -1;
+          if (!this.relevantPlan || this.relevantPlan.targetKind !== 'event' || this.activeDayId !== this.relevantPlan.day.id) return -1;
+          return this.relevantPlan.eventIndex;
         },
 
         get hasCurrentTimelineItem() {
-          return this.currentTimelineIndex >= 0;
+          return Boolean(this.liveTripDayId);
+        },
+
+        get summaryTargetLabel() {
+          if (!this.relevantPlan || this.activeDayId !== this.relevantPlan.day.id || this.relevantPlan.targetKind === 'event') return '';
+          return this.relevantPlan.label;
         },
 
         get bookedCount() {
@@ -6176,23 +6182,32 @@
         },
 
         get liveTripDayId() {
-          const now = Date.now();
+          return this.getLiveTripDayId(this.nowTick);
+        },
+
+        getLiveTripDayId(nowValue) {
+          const now = Number(nowValue);
           const tripStartEpoch = new Date('2026-11-28T06:15:00-05:00').getTime();
-          const day2StartEpoch = new Date('2026-11-29T14:00:00+08:00').getTime();
+          const day2StartEpoch = new Date('2026-11-29T14:05:00+08:00').getTime();
           const day16StartEpoch = new Date('2026-12-13T00:00:00+08:00').getTime();
           const tripEndEpoch = new Date('2026-12-13T19:05:00-05:00').getTime();
 
-          if (now < tripStartEpoch) return null;
+          if (!Number.isFinite(now) || now < tripStartEpoch) return null;
           if (now < day2StartEpoch) return 'day-01';
           if (now > tripEndEpoch) return null;
           if (now >= day16StartEpoch) return 'day-16';
 
-          const tripLocalDate = new Intl.DateTimeFormat('en-CA', {
-            timeZone: 'Asia/Taipei',
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-          }).format(new Date(now));
+          let tripLocalDate;
+          try {
+            tripLocalDate = new Intl.DateTimeFormat('en-CA', {
+              timeZone: now < day16StartEpoch ? 'Asia/Taipei' : 'Asia/Hong_Kong',
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit'
+            }).format(new Date(now));
+          } catch (error) {
+            return null;
+          }
 
           const dayMap = {
             '2026-11-29': 'day-02',
@@ -6263,26 +6278,35 @@
           if (window.__twhkStorageWriteFailed) this.notifyStorageFailure();
           this.sanitizePersistentState();
           this.determineCurrentDay();
-          this.updateCountdown();
           this.nowTick = Date.now();
-          setInterval(() => { this.nowTick = Date.now(); this.updateCountdown(); }, 60000);
+          this.relevantPlan = this.resolveRelevantPlan(this.nowTick);
+          this.smartLaunchActive = this.shouldSmartLaunch();
+          if (this.smartLaunchActive) {
+            this.activeTab = 'today';
+            history.scrollRestoration = 'manual';
+          } else {
+            const queryDay = new URLSearchParams(location.search).get('day');
+            if (this.days.some(day => day.id === queryDay)) this.activeTab = 'today';
+          }
+          this.updateCountdown();
+          setInterval(() => this.refreshLiveContext(true), 60000);
           this.refreshExchangeRates();
           this.refreshIcons();
           this.syncThemeColor();
           this.$nextTick(() => this.scrollActiveDayChip(true));
+          if (this.smartLaunchActive) {
+            window.setTimeout(() => requestAnimationFrame(() => this.positionRelevantPlan(this.relevantPlan, 'auto')), 120);
+          }
 
-          // Graceful midnight rollover
           document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
-              const newLiveId = this.liveTripDayId;
-              if (this.lastLiveTripDayId && this.activeDayId === this.lastLiveTripDayId && newLiveId && newLiveId !== this.lastLiveTripDayId) {
-                this.activeDayId = newLiveId;
-              }
-              this.lastLiveTripDayId = newLiveId;
-              this.updateCountdown();
+              this.refreshLiveContext(true);
               this.refreshExchangeRates();
               this.$nextTick(() => this.scrollActiveDayChip());
             }
+          });
+          window.addEventListener('pageshow', () => {
+            if (!document.hidden) this.refreshLiveContext(true);
           });
 
           this.$watch('activeTab', (val) => {
@@ -6305,15 +6329,10 @@
             this.rainPlanActive = false;
             this.syncThemeColor();
             this.refreshIcons();
-            // Always recentre on an explicit day change. Previously this called
-            // scrollActiveDayChip() without forceCenter, which early-returns whenever the
-            // chip is already "comfortably visible" — and a chip you just tapped always is.
-            // The result was that selecting a day left it wherever it sat, often hard against
-            // an edge with no neighbouring day reachable.
+            // Keep the selected chip centred so adjacent days remain reachable.
             this.$nextTick(() => this.scrollActiveDayChip(true));
           });
 
-          // Dynamic Lucide icon reactivity for conditional UI nodes
           this.$watch('takeItEasyActive', () => this.refreshIcons());
           this.$watch('rainPlanActive', () => this.refreshIcons());
           this.$watch('selectedCityFilter', () => this.refreshIcons());
@@ -6359,6 +6378,7 @@
             return;
           }
           const tabOrder = ['today', 'itinerary', 'plan', 'toolkit'];
+          this.smartLaunchActive = false;
           this.setMotionDirection(tabOrder.indexOf(this.activeTab), tabOrder.indexOf(tab));
           this.tabScrollPositions[this.activeTab] = window.scrollY || 0;
           const targetY = resetScroll ? 0 : (this.tabScrollPositions[tab] || 0);
@@ -6382,6 +6402,7 @@
 
         switchDay(dayId) {
           if (!dayId || dayId === this.activeDayId || !this.days.some(day => day.id === dayId)) return;
+          this.smartLaunchActive = false;
           this.setMotionDirection(
             this.days.findIndex(day => day.id === this.activeDayId),
             this.days.findIndex(day => day.id === dayId)
@@ -6390,14 +6411,7 @@
           this.playDayChange();
         },
 
-        // Changing the day is the most frequent action in the app and previously had no
-        // motion at all — the content simply blinked to the next day. The direction
-        // machinery (setMotionDirection -> body[data-motion-direction]) already existed
-        // but nothing consumed it, because destination-enter only runs when a .tab-pane
-        // mounts and the pane persists across day changes.
-        // This scopes the choreography to the day change itself, so the card entrance the
-        // original CSS deliberately disabled for scrolling stability never returns on
-        // scroll or on unrelated re-renders.
+        // Scope card choreography to explicit day changes so scrolling stays stable.
         playDayChange() {
           if (this.prefersReducedMotion()) return;
           const body = document.body;
@@ -6419,15 +6433,16 @@
           this.$nextTick(() => document.getElementById('chip-' + this.activeDayId)?.focus({ preventScroll: true }));
         },
 
-        getTripLocalMinutes() {
+        getScheduleMinutes(nowValue, timeZone) {
           try {
             const parts = new Intl.DateTimeFormat('en-US', {
-              timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
-            }).formatToParts(new Date(this.nowTick));
+              timeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+            }).formatToParts(new Date(nowValue));
             const hour = Number(parts.find(p => p.type === 'hour')?.value);
             const minute = Number(parts.find(p => p.type === 'minute')?.value);
-            return Number.isFinite(hour) && Number.isFinite(minute) ? hour * 60 + minute : NaN;
-          } catch (e) {
+            const second = Number(parts.find(p => p.type === 'second')?.value);
+            return [hour, minute, second].every(Number.isFinite) ? hour * 60 + minute + second / 60 : NaN;
+          } catch (error) {
             return NaN;
           }
         },
@@ -6451,20 +6466,94 @@
           return this.parseTimelineClock(matches[matches.length - 1][0]);
         },
 
+        resolveRelevantPlan(nowValue = Date.now()) {
+          const now = Number(nowValue);
+          const dayId = this.getLiveTripDayId(now);
+          const day = this.days.find(candidate => candidate.id === dayId);
+          if (!day) return null;
+          const items = day.timeline || [];
+          const tripEnd = new Date('2026-12-13T19:05:00-05:00').getTime();
+
+          for (let index = 0; index < items.length; index++) {
+            const item = items[index];
+            if (!('startAt' in item) && !('endAt' in item)) continue;
+            const start = new Date(item.startAt).getTime();
+            const end = new Date(item.endAt).getTime();
+            if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) {
+              return { day, targetKind: 'summary', state: 'next', label: 'UP NEXT' };
+            }
+            const includesTripEnd = day.id === 'day-16' && index === items.length - 1 && now === tripEnd;
+            if (now >= start && (now < end || includesTripEnd)) {
+              return { day, targetKind: 'event', eventIndex: index, state: 'current', label: 'CURRENT' };
+            }
+          }
+
+          const minutes = this.getScheduleMinutes(now, day.timeZone);
+          if (!Number.isFinite(minutes)) return { day, targetKind: 'summary', state: 'next', label: 'UP NEXT' };
+
+          for (let index = 0; index < items.length; index++) {
+            const item = items[index];
+            if (item.startAt && item.endAt) {
+              const start = new Date(item.startAt).getTime();
+              if (Number.isFinite(start) && now < start) {
+                return { day, targetKind: 'event', eventIndex: index, state: 'next', label: 'UP NEXT' };
+              }
+              continue;
+            }
+
+            const start = this.parseTimelineStartMinutes(item.time);
+            if (!Number.isFinite(start)) return { day, targetKind: 'summary', state: 'next', label: 'UP NEXT' };
+            if (minutes < start) return { day, targetKind: 'event', eventIndex: index, state: 'next', label: 'UP NEXT' };
+
+            const explicitEnd = this.parseTimelineEndMinutes(item.time);
+            const nextStart = index + 1 < items.length ? this.parseTimelineStartMinutes(items[index + 1].time) : NaN;
+            const end = Number.isFinite(explicitEnd)
+              ? Math.min(explicitEnd, Number.isFinite(nextStart) ? nextStart : explicitEnd)
+              : Number.isFinite(nextStart) ? nextStart : start + 120;
+            const hasGapAfterExplicitEnd = Number.isFinite(explicitEnd) && Number.isFinite(nextStart) && explicitEnd < nextStart;
+            if (minutes < end || (hasGapAfterExplicitEnd && minutes === explicitEnd)) {
+              return { day, targetKind: 'event', eventIndex: index, state: 'current', label: 'CURRENT' };
+            }
+          }
+
+          return { day, targetKind: 'complete', state: 'complete', label: 'DAY COMPLETE' };
+        },
+
         isCurrentTimelineItem(idx) {
           return idx === this.currentTimelineIndex;
         },
 
+        timelineItemState(idx) {
+          return this.isCurrentTimelineItem(idx) ? this.relevantPlan.state : '';
+        },
+
+        timelineItemLabel(idx) {
+          return this.isCurrentTimelineItem(idx) ? this.relevantPlan.label : '';
+        },
+
+        timelineAccessibleLabel(item, idx) {
+          const label = this.timelineItemLabel(idx);
+          return [label, item.time, item.title].filter(Boolean).join('. ');
+        },
+
         scrollToCurrentTimeline() {
-          const idx = this.currentTimelineIndex;
-          if (idx < 0) return;
-          const node = document.getElementById(`timeline-item-${idx}`);
-          if (!node) return;
-          node.scrollIntoView({ behavior: this.prefersReducedMotion() ? 'auto' : 'smooth', block: 'center' });
+          this.locateRelevantPlan();
+        },
+
+        locateRelevantPlan() {
+          this.nowTick = Date.now();
+          const plan = this.resolveRelevantPlan(this.nowTick);
+          if (!plan) return;
+          this.relevantPlan = plan;
+          this.activeTab = 'today';
+          this.activeDayId = plan.day.id;
+          this.lastLiveTripDayId = plan.day.id;
+          this.$nextTick(() => window.setTimeout(() => requestAnimationFrame(() => this.positionRelevantPlan(plan, this.prefersReducedMotion() ? 'auto' : 'smooth')), 60));
         },
 
         openDay(dayId) {
           if (!dayId || !this.days.some(day => day.id === dayId)) return;
+          this.smartLaunchActive = false;
           this.setMotionDirection(
             this.days.findIndex(day => day.id === this.activeDayId),
             this.days.findIndex(day => day.id === dayId)
@@ -6486,7 +6575,7 @@
           const validSavedDay = this.days.some(day => day.id === savedDay) ? savedDay : null;
 
           if (liveId) {
-            this.activeDayId = validSavedDay || liveId;
+            this.activeDayId = this.hasExplicitNavigation() ? (validSavedDay || liveId) : liveId;
           } else if (validSavedDay) {
             this.activeDayId = validSavedDay;
           } else {
@@ -6494,8 +6583,54 @@
           }
         },
 
+        hasExplicitNavigation() {
+          if (history.state?.smartLaunchGenerated === true) return false;
+          const query = new URLSearchParams(location.search);
+          const tab = query.get('tab');
+          const day = query.get('day');
+          return ['today', 'itinerary', 'plan', 'toolkit'].includes(tab)
+            || this.days.some(candidate => candidate.id === day);
+        },
+
+        shouldSmartLaunch() {
+          return Boolean(this.liveTripDayId && !this.hasExplicitNavigation());
+        },
+
+        positionRelevantPlan(plan, behavior = 'auto') {
+          if (!plan) return;
+          let target = plan.targetKind === 'event' ? document.getElementById(`timeline-item-${plan.eventIndex}`) : null;
+          if (!target) target = document.getElementById('day-complete-target');
+          if (!target) return;
+          const stickyBottom = [...document.querySelectorAll('.app-chrome, .day-strip-wrap')]
+            .filter(element => getComputedStyle(element).position === 'sticky')
+            .reduce((bottom, element) => Math.max(bottom, element.getBoundingClientRect().bottom), 0);
+          const targetTop = target.getBoundingClientRect().top + window.scrollY;
+          const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+          const root = document.documentElement;
+          const previousScrollBehavior = root.style.scrollBehavior;
+          if (behavior === 'auto') root.style.scrollBehavior = 'auto';
+          window.scrollTo({ top: Math.max(0, Math.min(maxScroll, targetTop - stickyBottom - 12)), behavior });
+          if (behavior === 'auto') root.style.scrollBehavior = previousScrollBehavior;
+        },
+
+        refreshLiveContext(allowRollover = false) {
+          const previousLiveId = this.lastLiveTripDayId;
+          const wasFollowingLiveDay = Boolean(previousLiveId && this.activeDayId === previousLiveId && this.activeTab === 'today');
+          this.nowTick = Date.now();
+          const plan = this.resolveRelevantPlan(this.nowTick);
+          const nextLiveId = plan?.day?.id || null;
+          this.relevantPlan = plan;
+          this.lastLiveTripDayId = nextLiveId;
+          this.updateCountdown();
+          if (allowRollover && wasFollowingLiveDay && nextLiveId && nextLiveId !== previousLiveId) {
+            this.activeTab = 'today';
+            this.activeDayId = nextLiveId;
+            this.$nextTick(() => window.setTimeout(() => requestAnimationFrame(() => this.positionRelevantPlan(plan, 'auto')), 60));
+          }
+        },
+
         updateCountdown() {
-          const now = Date.now();
+          const now = this.nowTick;
           const tripStartEpoch = new Date('2026-11-28T06:15:00-05:00').getTime();
           const tripEndEpoch = new Date('2026-12-13T19:05:00-05:00').getTime();
 
@@ -6653,7 +6788,7 @@
           const esc = (value) => String(value || '').replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;');
           const description = [item.notes, item.cost, item.url].filter(Boolean).join('\n');
           const ics = [
-            'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//TW-HK Travel Companion//Booking Reminder//EN',
+            'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Taiwan + Hong Kong 2026//Booking Reminder//EN',
             'CALSCALE:GREGORIAN', 'BEGIN:VEVENT', `UID:${item.id}-${startMs}@twhk26.local`,
             `DTSTAMP:${stamp(Date.now())}`, `DTSTART:${stamp(startMs)}`, `DTEND:${stamp(endMs)}`,
             `SUMMARY:${esc(this.getBookingActionVerb(item) + ': ' + item.title)}`, `DESCRIPTION:${esc(description)}`, 'BEGIN:VALARM', 'TRIGGER:-PT15M', 'ACTION:DISPLAY', `DESCRIPTION:${esc(this.getBookingActionVerb(item) + ': ' + item.title)}`, 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'
@@ -6662,7 +6797,7 @@
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = `twhk26_${item.id}_booking_reminder.ics`;
+          a.download = `taiwan_hong_kong_2026_${item.id}_booking_reminder.ics`;
           document.body.appendChild(a);
           a.click();
           a.remove();
@@ -6981,7 +7116,7 @@
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = `twhk26_user_state_${new Date().toISOString().slice(0,10)}.json`;
+          a.download = `taiwan_hong_kong_2026_user_state_${new Date().toISOString().slice(0,10)}.json`;
           document.body.appendChild(a);
           a.click();
           a.remove();
@@ -7001,7 +7136,10 @@
             this.completedDayIds = this.sanitizeIdList(parsed.completedDayIds, this.days.map(day => day.id));
             this.bookedIds = this.sanitizeIdList(parsed.bookedIds, this.bookings.map(item => item.id));
             this.adminPrepDoneIds = this.sanitizeIdList(parsed.adminPrepDoneIds, this.adminPrepList.map(item => item.id));
-            if (this.days.some(day => day.id === parsed.activeDayId)) this.activeDayId = parsed.activeDayId;
+            if (this.days.some(day => day.id === parsed.activeDayId)) {
+              this.smartLaunchActive = false;
+              this.activeDayId = parsed.activeDayId;
+            }
             if (['bookings', 'prep'].includes(parsed.planView)) this.planView = parsed.planView;
             if (['USD', 'TWD', 'HKD'].includes(parsed.selectedCurrency)) this.selectedCurrency = parsed.selectedCurrency;
             this.persistUserState();
@@ -7101,55 +7239,19 @@ ${r?'Expression: "'+r+`"
         });
       }, { once: true });
 
-      // Cache-first means a content update lands one visit later. Rather than leave that
-      // invisible, offer the reload explicitly.
-      //
-      // This deliberately does NOT rely on the service worker telling the page about an
-      // update via postMessage. That was tried first and found genuinely racy: the client
-      // for a 'navigate' request is not guaranteed discoverable via clients.matchAll() until
-      // shortly after the fetch event resolves, so a broadcast sent from inside that fetch
-      // handler can reach zero listeners — confirmed directly against this file. Worse, once
-      // *any* request (including the page's own navigation) has silently refreshed the
-      // cache, a later comparison inside the worker finds cached === fresh and has nothing
-      // left to report, even though the page on screen is still the old one.
-      //
-      // document.lastModified sidesteps all of that: it is set by the browser itself from
-      // the Last-Modified header of the exact response this document was rendered from, with
-      // no service worker involvement and no race. Comparing it against a fresh fetch's own
-      // Last-Modified header is a plain page-side check.
+      // The bypass response is cached under the canonical shell key before it reaches this
+      // comparison, so reloading here applies the exact version that was just detected.
       const myVersion = Date.parse(document.lastModified) || 0;
-      let updateShown = false;
-      const showUpdateBar = () => {
-        if (updateShown) return;
-        updateShown = true;
-        const bar = document.createElement('button');
-        bar.type = 'button';
-        bar.textContent = 'Updated itinerary available — tap to reload';
-        bar.setAttribute('aria-live', 'polite');
-        bar.style.cssText = [
-          'position:fixed',
-          'left:max(12px,env(safe-area-inset-left,0px))',
-          'right:max(12px,env(safe-area-inset-right,0px))',
-          'bottom:calc(96px + env(safe-area-inset-bottom,0px))',
-          'z-index:140',
-          'min-height:48px',
-          'padding:12px 16px',
-          'border:1px solid var(--stroke-strong,rgb(255 255 255/.17))',
-          'border-radius:15px',
-          'background:var(--surface-2,#1b1e27)',
-          'color:var(--text,#fff)',
-          'font:650 12.5px/1.3 -apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif',
-          'box-shadow:0 18px 48px rgb(0 0 0/.42)',
-          'cursor:pointer'
-        ].join(';');
-        bar.addEventListener('click', () => location.reload());
-        document.body.appendChild(bar);
-      };
+      let updateReloadStarted = false;
       const checkForUpdate = () => {
         fetch('./index.html?swBypass=1&_=' + Date.now(), { cache: 'no-store' }).then(response => {
+          if (!response.ok) return;
           const header = response.headers.get('Last-Modified');
           const serverVersion = header ? Date.parse(header) : 0;
-          if (serverVersion && myVersion && serverVersion > myVersion) showUpdateBar();
+          if (serverVersion && myVersion && serverVersion > myVersion && !updateReloadStarted) {
+            updateReloadStarted = true;
+            location.reload();
+          }
         }).catch(() => {});
       };
       window.addEventListener('load', () => window.setTimeout(checkForUpdate, 1500), { once: true });
@@ -7163,11 +7265,6 @@ ${r?'Expression: "'+r+`"
 <script id="history-routing">
   /*
     Back-button + deep-link support.
-
-    Without this the app pushed no history at all: after switching tabs four times, one
-    press of the Android system Back button exited the app entirely rather than stepping
-    back through it, and the URL never reflected what you were looking at, so a reload or a
-    shared link always dumped you on the default view.
 
     Tabs push a history entry, so Back retraces destinations. Day changes only *replace*
     the entry — 16 days would otherwise bury the app under history and make Back useless.
@@ -7194,8 +7291,14 @@ ${r?'Expression: "'+r+`"
       const host = document.querySelector('[x-data]');
       const app = window.Alpine && host && Alpine.$data(host);
       if (!app) return false;
+      const restoresSmartLaunch = history.state?.smartLaunchGenerated === true;
+      app.smartLaunchActive = restoresSmartLaunch || (app.smartLaunchActive && location.search === '');
 
-      const snapshot = () => ({ tab: app.activeTab, day: app[DAY_PROP] });
+      const snapshot = () => ({
+        tab: app.activeTab,
+        day: app[DAY_PROP],
+        ...(app.smartLaunchActive ? { smartLaunchGenerated: true } : {})
+      });
 
       // A URL is untrusted input: it can be hand-edited, stale after a rename, or a
       // shared link from an older build. Anything that is not a real tab or a real day is
@@ -7225,8 +7328,10 @@ ${r?'Expression: "'+r+`"
       // Restore from the URL on first load (deep link / reload / shared link).
       const initial = readState();
       restoring = true;
-      applyTab(initial.tab);
-      applyDay(initial.day);
+      if (!restoresSmartLaunch) {
+        applyTab(initial.tab);
+        applyDay(initial.day);
+      }
       restoring = false;
 
       const s = snapshot();
@@ -7248,6 +7353,7 @@ ${r?'Expression: "'+r+`"
         const st = event.state || readState();
         restoring = true;
         try {
+          app.smartLaunchActive = st.smartLaunchGenerated === true;
           applyTab(st.tab);
           applyDay(st.day);
         } finally {
