@@ -10,7 +10,7 @@
   Bump CACHE below after changing index.html if you want to force old caches to be
   dropped; routine content edits are picked up automatically via ETag comparison.
 */
-const CACHE = 'twhk-2026-v2';
+const CACHE = 'twhk-2026-v3';
 const SHELL = [
   './',
   './index.html',

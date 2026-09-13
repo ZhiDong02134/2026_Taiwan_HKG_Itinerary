@@ -2510,40 +2510,6 @@
 
   <style id="coherence-v27">
 
-  /* ---------- Boot veil: seamless handoff from the iOS launch screen ---------- */
-  /*
-    The launch image is dismissed as soon as the document paints, but the interface is
-    x-cloak'd until Alpine initialises — so there was a brief flash of empty chrome
-    between the branded splash and the real UI. This veil is a pixel-match for the splash
-    and simply fades out once Alpine is ready, turning two cuts into one continuous fade.
-    It is inert HTML/CSS: if scripting fails entirely the timeout below still clears it.
-  */
-  .boot-veil {
-    position: fixed;
-    inset: 0;
-    z-index: 300;
-    display: grid;
-    place-items: center;
-    background: linear-gradient(180deg, #05070b, #020306 45%);
-    transition: opacity 380ms cubic-bezier(.4,0,.2,1), visibility 0s linear 380ms;
-  }
-  .boot-veil-mark {
-    width: 22vmin;
-    max-width: 128px;
-    aspect-ratio: 1;
-    margin-bottom: 8vh;
-    border-radius: 28%;
-    display: block;
-  }
-  html[data-alpine-ready] .boot-veil,
-  html[data-boot-done] .boot-veil {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .boot-veil { transition: none; }
-  }
 
     /*
       v27 coherence pass. This file was already the stronger of the two companions in
@@ -2778,7 +2744,6 @@
       x-data="travelOS()"
       :data-city-theme="currentCityTheme"
       :data-motion-direction="motionDirection">
-<div class="boot-veil" role="status" aria-label="Loading Taiwan & Hong Kong '26"><svg class="boot-veil-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="18" fill="#15b8a6"/><path d="M17 19c8-4 11 4 15 4s7-8 15-4v26c-8 4-11-4-15-4s-7 8-15 4Z" fill="none" stroke="white" stroke-width="4" stroke-linejoin="round"/></svg></div>
 
 
   <a class="skip-link" href="#app-main">Skip to trip content</a>
@@ -7168,13 +7133,113 @@ ${r?'Expression: "'+r+`"
     }
   </script>
 
-<script id="boot-veil-runtime">
-  // Clear the veil once Alpine is up, and unconditionally after 3s so a failed runtime can
-  // never leave the interface covered.
+
+<script id="history-routing">
+  /*
+    Back-button + deep-link support.
+
+    Without this the app pushed no history at all: after switching tabs four times, one
+    press of the Android system Back button exited the app entirely rather than stepping
+    back through it, and the URL never reflected what you were looking at, so a reload or a
+    shared link always dumped you on the default view.
+
+    Tabs push a history entry, so Back retraces destinations. Day changes only *replace*
+    the entry — 16 days would otherwise bury the app under history and make Back useless.
+    Query params rather than a hash, because both documents already use hash fragments for
+    in-page section anchors.
+  */
   (() => {
-    const done = () => document.documentElement.setAttribute('data-boot-done', '');
-    document.addEventListener('alpine:initialized', done, { once: true });
-    window.setTimeout(done, 3000);
+    const DAY_PROP = 'activeDayId';
+    let restoring = false;
+
+    const readState = () => {
+      const q = new URLSearchParams(location.search);
+      return { tab: q.get('tab'), day: q.get('day') };
+    };
+    const urlFor = (tab, day) => {
+      const q = new URLSearchParams();
+      if (tab) q.set('tab', tab);
+      if (day !== undefined && day !== null && day !== '') q.set('day', String(day));
+      const s = q.toString();
+      return location.pathname + (s ? '?' + s : '') + location.hash;
+    };
+
+    const boot = () => {
+      const host = document.querySelector('[x-data]');
+      const app = window.Alpine && host && Alpine.$data(host);
+      if (!app) return false;
+
+      const snapshot = () => ({ tab: app.activeTab, day: app[DAY_PROP] });
+
+      // A URL is untrusted input: it can be hand-edited, stale after a rename, or a
+      // shared link from an older build. Anything that is not a real tab or a real day is
+      // ignored, otherwise the app lands in a state where no pane matches and the screen
+      // is simply blank.
+      const validTabs = (Array.isArray(app.tabs) && app.tabs.length)
+        ? app.tabs.map(t => t.id)
+        : [...document.querySelectorAll('[x-show]')]
+            .map(el => (el.getAttribute('x-show').match(/activeTab\s*===\s*'([^']+)'/) || [])[1])
+            .filter(Boolean);
+      const dayIsNumeric = typeof app[DAY_PROP] === 'number';
+      const dayKey = d => (dayIsNumeric ? d.dayNumber : d.id);
+      const coerceDay = v => (dayIsNumeric ? Number(v) : String(v));
+
+      const applyTab = t => {
+        if (!t || (validTabs.length && !validTabs.includes(t))) return;
+        if (t !== app.activeTab) app.activeTab = t;
+      };
+      const applyDay = v => {
+        if (v === null || v === undefined || v === '') return;
+        const want = coerceDay(v);
+        if (dayIsNumeric && !Number.isFinite(want)) return;
+        if (!(Array.isArray(app.days) && app.days.some(d => dayKey(d) === want))) return;
+        if (want !== app[DAY_PROP]) app[DAY_PROP] = want;
+      };
+
+      // Restore from the URL on first load (deep link / reload / shared link).
+      const initial = readState();
+      restoring = true;
+      applyTab(initial.tab);
+      applyDay(initial.day);
+      restoring = false;
+
+      const s = snapshot();
+      history.replaceState(s, '', urlFor(s.tab, s.day));
+
+      app.$watch('activeTab', () => {
+        if (restoring) return;
+        const n = snapshot();
+        history.pushState(n, '', urlFor(n.tab, n.day));
+      });
+
+      app.$watch(DAY_PROP, () => {
+        if (restoring) return;
+        const n = snapshot();
+        history.replaceState(n, '', urlFor(n.tab, n.day));
+      });
+
+      window.addEventListener('popstate', event => {
+        const st = event.state || readState();
+        restoring = true;
+        try {
+          applyTab(st.tab);
+          applyDay(st.day);
+        } finally {
+          // release after Alpine has applied the change so the watchers stay quiet
+          requestAnimationFrame(() => { restoring = false; });
+        }
+      });
+      return true;
+    };
+
+    // This script is parsed after the embedded Alpine runtime, so alpine:initialized has
+    // usually already fired by now and a plain listener never runs. Try immediately, keep
+    // the listener for the slow path, and poll briefly to cover both orderings.
+    if (!boot()) {
+      document.addEventListener('alpine:initialized', boot, { once: true });
+      let tries = 0;
+      const poll = setInterval(() => { if (boot() || ++tries > 60) clearInterval(poll); }, 50);
+    }
   })();
 </script>
 </body>
