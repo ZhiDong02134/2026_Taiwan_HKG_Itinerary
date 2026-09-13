@@ -8,14 +8,14 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Taiwan &amp; Hong Kong '26</title>
+  <title>Taiwan &amp; Hong Kong '26 — Premium Mobile Travel Companion v26</title>
   <meta name="description" content="A field-first Taiwan and Hong Kong travel companion with live booking, prep, FX and day execution tools.">
   <meta name="format-detection" content="telephone=no">
   <meta name="application-name" content="Taiwan + Hong Kong '26">
   <meta name="apple-mobile-web-app-title" content="TW · HK '26">
   <!-- iOS ignores the manifest for the home-screen icon and cannot use an SVG here; without
        this PNG, Add to Home Screen falls back to a screenshot of the page. -->
-  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="./icon-192.png">
   <link rel="manifest" href="./manifest.webmanifest">
   <!-- iOS launch screens. Without these, opening the home-screen app shows a blank
        white frame until the document paints; iOS does not honour the manifest's
@@ -2374,7 +2374,7 @@
 
     /* Location color aids scanning without turning the list into colored tiles. */
     .city-filter { --filter-accent:var(--selection); position:relative; border:1px solid transparent; background:transparent !important; }
-    .city-filter-all { --filter-accent:var(--selection); }
+    .city-filter-all { --filter-accent:var(--selection); min-width:44px; }
     .city-filter-taipei { --filter-accent:oklch(78% .135 184); }
     .city-filter-kaohsiung { --filter-accent:oklch(84% .165 82); }
     .city-filter-hk { --filter-accent:oklch(73% .17 306); }
@@ -3145,7 +3145,7 @@
       <!-- Hotel Bases -->
       <div class="space-y-3">
         <div>
-          <h4 class="text-sm font-semibold text-white">Hotel Bases · 住宿據點</h4>
+          <h3 class="text-sm font-semibold text-white">Hotel Bases · 住宿據點</h3>
           
         </div>
 
@@ -3154,7 +3154,7 @@
           <div class="hotel-card hotel-taipei bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
             <div>
               <span class="text-xs font-mono text-rose-400 font-medium">Taipei (5 Nights)</span>
-              <h5 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.taipei.name"></h5>
+              <h4 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.taipei.name"></h4>
               <span class="text-xs text-slate-400 block font-mono" lang="zh-TW" x-text="hotels.taipei.nameTc"></span>
               <p class="text-xs text-slate-300 mt-2 font-mono" lang="zh-TW" x-text="hotels.taipei.addressTc"></p>
             </div>
@@ -3172,7 +3172,7 @@
           <div class="hotel-card hotel-kaohsiung bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
             <div>
               <span class="text-xs font-mono text-rose-400 font-medium">Kaohsiung (4 Nights)</span>
-              <h5 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.kaohsiung.name"></h5>
+              <h4 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.kaohsiung.name"></h4>
               <span class="text-xs text-slate-400 block font-mono" lang="zh-TW" x-text="hotels.kaohsiung.nameTc"></span>
               <p class="text-xs text-slate-300 mt-2 font-mono" lang="zh-TW" x-text="hotels.kaohsiung.addressTc"></p>
             </div>
@@ -3190,7 +3190,7 @@
           <div class="hotel-card hotel-hk bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
             <div>
               <span class="text-xs font-mono text-rose-400 font-medium">Hong Kong (5 Nights)</span>
-              <h5 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.hk.name"></h5>
+              <h4 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.hk.name"></h4>
               <span class="text-xs text-slate-400 block font-mono" lang="zh-HK" x-text="hotels.hk.nameTc"></span>
               <p class="text-xs text-slate-300 mt-2 font-mono" lang="zh-HK" x-text="hotels.hk.addressTc"></p>
             </div>
@@ -3208,7 +3208,7 @@
 
       <!-- Core operating rules -->
       <div class="surface-card operating-rules-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
-        <h4 class="text-sm font-semibold text-white">Operating Rules · 旅行規則</h4>
+        <h3 class="text-sm font-semibold text-white">Operating Rules · 旅行規則</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs leading-relaxed">
           <div class="rule-tile rule-move rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Move efficiently · 交通</strong><span class="text-slate-400 block mt-1">Walk/public transit when direct. For 3 people, take a taxi/app car when it saves ~15+ min, removes an awkward transfer, protects a booking, or avoids dragging luggage.</span></div>
           <div class="rule-tile rule-queue rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Don’t queue · 排隊</strong><span class="text-slate-400 block mt-1">Default food line cutoff: ~10–15 min. Use the named nearby backup rather than sacrificing the route for a marginally better restaurant.</span></div>
@@ -3220,7 +3220,7 @@
       <!-- Budget -->
       <div class="surface-card budget-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
         <div class="flex items-center justify-between gap-3">
-          <h4 class="text-sm font-semibold text-white">Budget · 預算</h4>
+          <h3 class="text-sm font-semibold text-white">Budget · 預算</h3>
           <div class="currency-switch flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-mono">
             <button type="button" @click="selectedCurrency = 'USD'" :class="selectedCurrency === 'USD' ? 'bg-slate-800 text-white' : 'text-slate-400'" :aria-pressed="selectedCurrency === 'USD'" class="px-2.5 py-1 rounded-lg min-h-[44px]">USD</button>
             <button type="button" @click="selectedCurrency = 'TWD'" :class="selectedCurrency === 'TWD' ? 'bg-slate-800 text-white' : 'text-slate-400'" :aria-pressed="selectedCurrency === 'TWD'" class="px-2.5 py-1 rounded-lg min-h-[44px]">TWD</button>
@@ -7103,9 +7103,24 @@ ${r?'Expression: "'+r+`"
 
       // Cache-first means a content update lands one visit later. Rather than leave that
       // invisible, offer the reload explicitly.
+      //
+      // This deliberately does NOT rely on the service worker telling the page about an
+      // update via postMessage. That was tried first and found genuinely racy: the client
+      // for a 'navigate' request is not guaranteed discoverable via clients.matchAll() until
+      // shortly after the fetch event resolves, so a broadcast sent from inside that fetch
+      // handler can reach zero listeners — confirmed directly against this file. Worse, once
+      // *any* request (including the page's own navigation) has silently refreshed the
+      // cache, a later comparison inside the worker finds cached === fresh and has nothing
+      // left to report, even though the page on screen is still the old one.
+      //
+      // document.lastModified sidesteps all of that: it is set by the browser itself from
+      // the Last-Modified header of the exact response this document was rendered from, with
+      // no service worker involvement and no race. Comparing it against a fresh fetch's own
+      // Last-Modified header is a plain page-side check.
+      const myVersion = Date.parse(document.lastModified) || 0;
       let updateShown = false;
-      navigator.serviceWorker.addEventListener('message', event => {
-        if (event.data?.type !== 'SW_UPDATED' || updateShown) return;
+      const showUpdateBar = () => {
+        if (updateShown) return;
         updateShown = true;
         const bar = document.createElement('button');
         bar.type = 'button';
@@ -7129,6 +7144,17 @@ ${r?'Expression: "'+r+`"
         ].join(';');
         bar.addEventListener('click', () => location.reload());
         document.body.appendChild(bar);
+      };
+      const checkForUpdate = () => {
+        fetch('./index.html?swBypass=1&_=' + Date.now(), { cache: 'no-store' }).then(response => {
+          const header = response.headers.get('Last-Modified');
+          const serverVersion = header ? Date.parse(header) : 0;
+          if (serverVersion && myVersion && serverVersion > myVersion) showUpdateBar();
+        }).catch(() => {});
+      };
+      window.addEventListener('load', () => window.setTimeout(checkForUpdate, 1500), { once: true });
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') checkForUpdate();
       });
     }
   </script>

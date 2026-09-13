@@ -4,7 +4,7 @@
   "description": "Offline day-by-day field guide for the Taiwan and Hong Kong 2026 trip.",
   "start_url": "./",
   "scope": "./",
-  "id": "./",
+  "id": "/taiwan-pwa/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#090a0f",
