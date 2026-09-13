@@ -2478,6 +2478,201 @@
     }
   </style>
 
+  <style id="coherence-v27">
+    /*
+      v27 coherence pass. This file was already the stronger of the two companions in
+      several respects — a real linear() spring, a properly sticky day rail, a
+      compositor-friendly progress transform, and a far cleaner cascade (171 !important
+      vs the Japan build's 566). What it lacked was motion on the single most frequent
+      action, plus two layout/rendering bugs that only show up on a phone.
+
+      Everything below is additive and scoped. The original decision to keep timeline
+      cards still during scrolling is preserved: card motion runs ONLY during an explicit
+      day change, never on scroll or on an unrelated re-render.
+    */
+
+    /* ---------- 1. Day-change choreography ---------- */
+    /* body[data-motion-direction] was already being set by setMotionDirection() and
+       already had a --destination-shift rule, but nothing consumed it for day changes.
+       These wire that existing signal to real motion. */
+    body { --day-shift: 12px; }
+    body[data-motion-direction='backward'] { --day-shift: -12px; }
+
+    @keyframes day-hero-swap {
+      from { opacity: 0; transform: translate3d(var(--day-shift), 0, 0) scale(.994); }
+      to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+    }
+    @keyframes day-card-swap {
+      from { opacity: 0; transform: translate3d(calc(var(--day-shift) * .7), 6px, 0); }
+      to   { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+
+    body[data-day-changing] .day-hero {
+      animation: day-hero-swap 340ms var(--ease-spring) both;
+    }
+    body[data-day-changing] .timeline-card {
+      animation: day-card-swap 300ms var(--ease-emphasized) both !important;
+    }
+    body[data-day-changing] .summary-card,
+    body[data-day-changing] .backup-section {
+      animation: day-card-swap 300ms var(--ease-emphasized) both;
+      animation-delay: 120ms;
+    }
+
+    /* Stagger. sibling-index() where supported, an explicit ladder everywhere else, so
+       the cascade down the timeline reads the same on Safari as it does on Chromium. */
+    body[data-day-changing] .timeline-card:nth-child(1) { animation-delay: 0ms; }
+    body[data-day-changing] .timeline-card:nth-child(2) { animation-delay: 38ms; }
+    body[data-day-changing] .timeline-card:nth-child(3) { animation-delay: 76ms; }
+    body[data-day-changing] .timeline-card:nth-child(4) { animation-delay: 114ms; }
+    body[data-day-changing] .timeline-card:nth-child(5) { animation-delay: 152ms; }
+    body[data-day-changing] .timeline-card:nth-child(6) { animation-delay: 190ms; }
+    body[data-day-changing] .timeline-card:nth-child(n+7) { animation-delay: 220ms; }
+    @supports (animation-delay: calc(sibling-index() * 1ms)) {
+      body[data-day-changing] .timeline-card {
+        animation-delay: calc(min(sibling-index(), 7) * 34ms) !important;
+      }
+    }
+
+    /* The route rail should draw itself alongside the cards rather than appear complete. */
+    @keyframes day-rail-draw { from { transform: scaleY(.2); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+    body[data-day-changing] .timeline-stack::before {
+      transform-origin: top center;
+      animation: day-rail-draw 420ms var(--ease-emphasized) both;
+    }
+
+    /* ---------- 2. Progress bar: stop compressing the gradient ---------- */
+    /*
+      The fill was width:100% + transform:scaleX(--trip-progress) over a 90deg gradient.
+      Scaling the box scales its paint, so on day 1 of 16 the entire three-stop ramp was
+      squeezed into ~6% of the track and rendered as one flat sliver. clip-path keeps the
+      gradient at full width and reveals it instead — still compositor-driven, still
+      animatable, but the colour ramp survives at every value.
+    */
+    .journey-progress-fill {
+      transform: none !important;
+      clip-path: inset(0 calc((1 - var(--trip-progress, 0)) * 100%) 0 0 round 999px);
+      transition: clip-path 460ms var(--ease-spring), background var(--motion-standard) var(--ease-ui), box-shadow var(--motion-standard) var(--ease-ui) !important;
+      will-change: clip-path;
+    }
+
+    /* ---------- 3. Hero actions stop claiming their own row on a phone ---------- */
+    @media (max-width: 767px) {
+      /*
+        .hero-head switched to column + align-self:flex-end, which pushed the icon buttons
+        onto a dedicated row *below the progress bar* — roughly 56px of vertical space to
+        show one or two 44px controls floating in an otherwise empty band. Returning them
+        to the kicker row reclaims that row and balances the hero.
+      */
+      .hero-head { flex-direction: row !important; align-items: flex-start !important; gap: 10px !important; }
+      .hero-actions { align-self: flex-start !important; flex-direction: column; gap: 6px; }
+      .hero-actions .icon-action { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
+      .day-title { font-size: clamp(1.24rem, 5.8vw, 1.52rem); }
+    }
+    /*
+      One action fits beside the title; two or more stack vertically in the same column.
+      Counted with :nth-of-type, not :nth-child — Alpine leaves its <template x-if>
+      elements in the DOM, so a hero with a single rendered button still has that button
+      sitting at :nth-child(3) behind two empty templates.
+    */
+    @media (max-width: 767px) {
+      .hero-actions:has(.icon-action:nth-of-type(2)) { flex-direction: column; }
+      .hero-actions:not(:has(.icon-action:nth-of-type(2))) { flex-direction: row; }
+
+      /*
+        The progress rail deliberately stays inside the title column rather than reclaiming
+        the width under the action stack. Reclaiming it was tried and measured across all
+        16 days: because days carry one, two or three actions, the rail ended up 334px wide
+        on some days and 280px on others. A rail that changes width depending on how many
+        buttons a day happens to have is a worse incoherence than a slightly narrower rail
+        that is identical on every day.
+      */
+    }
+
+    /* ---------- 4. Colour harmony ---------- */
+    :root {
+      /*
+        The five semantic timeline tones were pulled from generic status colours at mixed
+        lightness and chroma, so a dense day read as a stack of unrelated hues. Unifying L
+        and lowering shared chroma keeps every tone distinguishable while letting the
+        destination ambience stay the loudest colour on screen — --warning keeps its
+        original chroma so "now" still wins.
+      */
+      --tone-l: 78%;
+      --tone-c: .092;
+      --tone-food: oklch(var(--tone-l) var(--tone-c) 156);
+      --tone-transit: oklch(var(--tone-l) var(--tone-c) 236);
+      --tone-wellness: oklch(var(--tone-l) var(--tone-c) 306);
+      --tone-culture: oklch(var(--tone-l) var(--tone-c) 88);
+    }
+    .timeline-card.tone-food { --item-accent: var(--tone-food); }
+    .timeline-card.tone-transit { --item-accent: var(--tone-transit); }
+    .timeline-card.tone-wellness { --item-accent: var(--tone-wellness); }
+    .timeline-card.tone-culture { --item-accent: var(--tone-culture); }
+    .timeline-card.is-now { --item-accent: var(--warning); }
+
+    /* ---------- 5. Interaction polish ---------- */
+    /*
+      No keyframe pop on the active dock icon: Alpine re-renders the icon on every day
+      change, so a keyframed animation replays spuriously whenever the day changes rather
+      than only when the destination changes. The existing spring transition on
+      .mobile-nav-item.is-active svg already carries that state change correctly.
+    */
+
+    /* @starting-style already handled entry; allow-discrete adds the matching exit so the
+       toast leaves as deliberately as it arrives instead of being cut. */
+    .toast-card {
+      transition:
+        opacity var(--motion-fast) var(--ease-ui),
+        transform var(--motion-standard) var(--ease-emphasized),
+        overlay var(--motion-standard) allow-discrete,
+        display var(--motion-standard) allow-discrete !important;
+    }
+
+    /* The day rail reserves 59px on a phone (--phone-day-rail-base); the hero's
+       scroll-margin assumed a hardcoded 68px and overshot every anchored scroll. */
+    @media (max-width: 767px) {
+      .day-hero {
+        scroll-margin-top: calc(var(--header-h) + var(--phone-day-rail-base) + env(safe-area-inset-top, 0px) + 8px);
+      }
+    }
+
+    @supports (corner-shape: squircle) {
+      .timeline-card, .summary-card, .backup-section, .plan-card, .prep-card, .hotel-card, .day-chip, .fact-card, .icon-action {
+        corner-shape: squircle;
+      }
+    }
+    @supports (text-box-trim: trim-both) {
+      .day-title, .plan-hero h2, .section-title, .timeline-title {
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
+      }
+    }
+
+    /* ---------- 6. Fallbacks for everything added above ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      body[data-day-changing] .day-hero,
+      body[data-day-changing] .timeline-card,
+      body[data-day-changing] .summary-card,
+      body[data-day-changing] .backup-section,
+      body[data-day-changing] .timeline-stack::before {
+        animation: none !important;
+      }
+      .journey-progress-fill, .toast-card { transition: none !important; }
+    }
+
+    @media (forced-colors: active) {
+      body[data-day-changing] .day-hero,
+      body[data-day-changing] .timeline-card,
+      body[data-day-changing] .summary-card,
+      body[data-day-changing] .backup-section,
+      body[data-day-changing] .timeline-stack::before {
+        animation: none !important;
+      }
+      .journey-progress-fill { clip-path: inset(0 calc((1 - var(--trip-progress, 0)) * 100%) 0 0); background: Highlight !important; }
+    }
+  </style>
+
 </head>
 
 <body class="min-h-full bg-slate-950 text-slate-100 flex flex-col"
@@ -6121,6 +6316,27 @@
             this.days.findIndex(day => day.id === dayId)
           );
           this.activeDayId = dayId;
+          this.playDayChange();
+        },
+
+        // Changing the day is the most frequent action in the app and previously had no
+        // motion at all — the content simply blinked to the next day. The direction
+        // machinery (setMotionDirection -> body[data-motion-direction]) already existed
+        // but nothing consumed it, because destination-enter only runs when a .tab-pane
+        // mounts and the pane persists across day changes.
+        // This scopes the choreography to the day change itself, so the card entrance the
+        // original CSS deliberately disabled for scrolling stability never returns on
+        // scroll or on unrelated re-renders.
+        playDayChange() {
+          if (this.prefersReducedMotion()) return;
+          const body = document.body;
+          window.clearTimeout(this._dayChangeTimer);
+          body.removeAttribute('data-day-changing');
+          this.$nextTick(() => {
+            void body.offsetWidth; // restart cleanly when days are tapped faster than the animation
+            body.setAttribute('data-day-changing', '');
+            this._dayChangeTimer = window.setTimeout(() => body.removeAttribute('data-day-changing'), 700);
+          });
         },
 
         switchRelativeDay(delta) {
@@ -6189,6 +6405,7 @@
           this.$nextTick(() => {
             requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'auto' }));
           });
+          this.playDayChange();
         },
 
         determineCurrentDay() {
