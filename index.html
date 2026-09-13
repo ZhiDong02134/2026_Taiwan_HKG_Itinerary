@@ -13,6 +13,10 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="application-name" content="Taiwan + Hong Kong '26">
   <meta name="apple-mobile-web-app-title" content="TW · HK '26">
+  <!-- iOS ignores the manifest for the home-screen icon and cannot use an SVG here; without
+       this PNG, Add to Home Screen falls back to a screenshot of the page. -->
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2315b8a6'/%3E%3Cpath d='M17 19c8-4 11 4 15 4s7-8 15-4v26c-8 4-11-4-15-4s-7 8-15 4Z' fill='none' stroke='white' stroke-width='4'/%3E%3C/svg%3E">
 <!-- Online Alpine runtime is pinned; the page now fails visibly instead of rendering a blank screen if it cannot load. -->
   <!-- Tailwind CSS v4.1.10 compiled locally at build time; zero browser-time Tailwind runtime. -->
@@ -1924,7 +1928,12 @@
       }
       .day-strip {
         gap: 6px;
-        scroll-padding-inline: 12px;
+        /*
+          A centred band one chip wide, so the selected day lands in the middle of the rail
+          with the previous and next day reachable on either side, instead of snapping to
+          the left edge where one neighbour is always off-screen.
+        */
+        scroll-padding-inline: calc(50% - 70px);
         -webkit-overflow-scrolling: touch;
         touch-action: auto;
       }
@@ -2637,6 +2646,16 @@
       }
     }
 
+    /*
+      The currency segmented control measured 42x44 — mobile-first sets a min-height on
+      these buttons but no min-width, and "USD" at 12px plus 10px of inline padding lands
+      just under the 44px floor. Everything else in both apps already passes.
+    */
+    .currency-switch button,
+    .surface-card button[class*="px-2"] {
+      min-width: 44px;
+    }
+
     @supports (corner-shape: squircle) {
       .timeline-card, .summary-card, .backup-section, .plan-card, .prep-card, .hotel-card, .day-chip, .fact-card, .icon-action {
         corner-shape: squircle;
@@ -2649,7 +2668,30 @@
       }
     }
 
-    /* ---------- 6. Fallbacks for everything added above ---------- */
+    /* ---------- 6. Legibility floor for reading text on a phone ---------- */
+    /*
+      expressive-harmony already pins most small labels to 12px. Two prose strings slipped
+      below it — the prep intro copy and the FX ticker — both read outdoors, so they get
+      the same floor. Short uppercase eyebrows stay small on purpose.
+    */
+    @media (max-width: 767px) {
+      .prep-intro p { font-size: 12px !important; line-height: 1.45 !important; }
+
+      /*
+        The FX line carries the rate every price on the page is converted at, so it should
+        be readable rather than ellipsised. Letting it wrap costs one line and shows the
+        whole rate instead of clipping it mid-number.
+      */
+      .budget-card .truncate {
+        font-size: 12px !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        line-height: 1.4 !important;
+      }
+    }
+
+    /* ---------- 7. Fallbacks for everything added above ---------- */
     @media (prefers-reduced-motion: reduce) {
       body[data-day-changing] .day-hero,
       body[data-day-changing] .timeline-card,
@@ -6239,7 +6281,12 @@
             this.rainPlanActive = false;
             this.syncThemeColor();
             this.refreshIcons();
-            this.$nextTick(() => this.scrollActiveDayChip());
+            // Always recentre on an explicit day change. Previously this called
+            // scrollActiveDayChip() without forceCenter, which early-returns whenever the
+            // chip is already "comfortably visible" — and a chip you just tapped always is.
+            // The result was that selecting a day left it wherever it sat, often hard against
+            // an edge with no neighbouring day reachable.
+            this.$nextTick(() => this.scrollActiveDayChip(true));
           });
 
           // Dynamic Lucide icon reactivity for conditional UI nodes
@@ -7004,6 +7051,51 @@ ${r?'Expression: "'+r+`"
         }
       }, 0);
     });
+  </script>
+  <script id="offline-shell">
+    // Without a service worker this page can only be opened offline if the browser's HTTP
+    // cache happens to still hold it, which on GitHub Pages is roughly ten minutes. Any tab
+    // discard after that — routine on iOS under memory pressure — lands on an error page.
+    // The worker serves a persistent copy from Cache Storage instead. Cross-origin requests
+    // are left untouched, so the Frankfurter FX call keeps its own timeout and cache
+    // fallback behaviour.
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(error => {
+          console.warn('[offline] service worker registration failed:', error);
+        });
+      }, { once: true });
+
+      // Cache-first means a content update lands one visit later. Rather than leave that
+      // invisible, offer the reload explicitly.
+      let updateShown = false;
+      navigator.serviceWorker.addEventListener('message', event => {
+        if (event.data?.type !== 'SW_UPDATED' || updateShown) return;
+        updateShown = true;
+        const bar = document.createElement('button');
+        bar.type = 'button';
+        bar.textContent = 'Updated itinerary available — tap to reload';
+        bar.setAttribute('aria-live', 'polite');
+        bar.style.cssText = [
+          'position:fixed',
+          'left:max(12px,env(safe-area-inset-left,0px))',
+          'right:max(12px,env(safe-area-inset-right,0px))',
+          'bottom:calc(96px + env(safe-area-inset-bottom,0px))',
+          'z-index:140',
+          'min-height:48px',
+          'padding:12px 16px',
+          'border:1px solid var(--stroke-strong,rgb(255 255 255/.17))',
+          'border-radius:15px',
+          'background:var(--surface-2,#1b1e27)',
+          'color:var(--text,#fff)',
+          'font:650 12.5px/1.3 -apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif',
+          'box-shadow:0 18px 48px rgb(0 0 0/.42)',
+          'cursor:pointer'
+        ].join(';');
+        bar.addEventListener('click', () => location.reload());
+        document.body.appendChild(bar);
+      });
+    }
   </script>
 </body>
 </html>
