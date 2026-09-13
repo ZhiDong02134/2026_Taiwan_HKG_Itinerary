@@ -17,6 +17,20 @@
        this PNG, Add to Home Screen falls back to a screenshot of the page. -->
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <link rel="manifest" href="./manifest.webmanifest">
+  <!-- iOS launch screens. Without these, opening the home-screen app shows a blank
+       white frame until the document paints; iOS does not honour the manifest's
+       background_color, so apple-touch-startup-image is the only mechanism. -->
+  <link rel="apple-touch-startup-image" href="./splash-750x1334.png" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-828x1792.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1125x2436.png" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1242x2688.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1080x2340.png" media="screen and (device-width: 360px) and (device-height: 780px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1170x2532.png" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1179x2556.png" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1206x2622.png" media="screen and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1284x2778.png" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1290x2796.png" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1320x2868.png" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2315b8a6'/%3E%3Cpath d='M17 19c8-4 11 4 15 4s7-8 15-4v26c-8 4-11-4-15-4s-7 8-15 4Z' fill='none' stroke='white' stroke-width='4'/%3E%3C/svg%3E">
 <!-- Online Alpine runtime is pinned; the page now fails visibly instead of rendering a blank screen if it cannot load. -->
   <!-- Tailwind CSS v4.1.10 compiled locally at build time; zero browser-time Tailwind runtime. -->
@@ -1934,6 +1948,13 @@
           the left edge where one neighbour is always off-screen.
         */
         scroll-padding-inline: calc(50% - 70px);
+        /*
+          Mandatory, not proximity. Proximity only snaps when a scroll happens to end near
+          a snap point, so on iOS momentum and rubber-banding regularly leave the selected
+          day off-centre. Mandatory guarantees it lands centred — this is what the Japan
+          build does, and why its rail behaves correctly.
+        */
+        scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         touch-action: auto;
       }
@@ -2488,6 +2509,42 @@
   </style>
 
   <style id="coherence-v27">
+
+  /* ---------- Boot veil: seamless handoff from the iOS launch screen ---------- */
+  /*
+    The launch image is dismissed as soon as the document paints, but the interface is
+    x-cloak'd until Alpine initialises — so there was a brief flash of empty chrome
+    between the branded splash and the real UI. This veil is a pixel-match for the splash
+    and simply fades out once Alpine is ready, turning two cuts into one continuous fade.
+    It is inert HTML/CSS: if scripting fails entirely the timeout below still clears it.
+  */
+  .boot-veil {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, #05070b, #020306 45%);
+    transition: opacity 380ms cubic-bezier(.4,0,.2,1), visibility 0s linear 380ms;
+  }
+  .boot-veil-mark {
+    width: 22vmin;
+    max-width: 128px;
+    aspect-ratio: 1;
+    margin-bottom: 8vh;
+    border-radius: 28%;
+    display: block;
+  }
+  html[data-alpine-ready] .boot-veil,
+  html[data-boot-done] .boot-veil {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .boot-veil { transition: none; }
+  }
+
     /*
       v27 coherence pass. This file was already the stronger of the two companions in
       several respects — a real linear() spring, a properly sticky day rail, a
@@ -2721,6 +2778,8 @@
       x-data="travelOS()"
       :data-city-theme="currentCityTheme"
       :data-motion-direction="motionDirection">
+<div class="boot-veil" role="status" aria-label="Loading Taiwan & Hong Kong '26"><svg class="boot-veil-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="18" fill="#15b8a6"/><path d="M17 19c8-4 11 4 15 4s7-8 15-4v26c-8 4-11-4-15-4s-7 8-15 4Z" fill="none" stroke="white" stroke-width="4" stroke-linejoin="round"/></svg></div>
+
 
   <a class="skip-link" href="#app-main">Skip to trip content</a>
 
@@ -6701,14 +6760,25 @@
           const el = document.getElementById('chip-' + this.activeDayId);
           const strip = document.getElementById('day-strip');
           if (!el || !strip) return;
-          const itemRect = el.getBoundingClientRect();
-          const stripRect = strip.getBoundingClientRect();
-          const comfortablyVisible = itemRect.left >= stripRect.left + 8 && itemRect.right <= stripRect.right - 8;
-          if (!forceCenter && comfortablyVisible) return;
-          el.scrollIntoView({
-            behavior: forceCenter && !this.prefersReducedMotion() ? 'smooth' : 'auto',
-            block: 'nearest',
-            inline: forceCenter ? 'center' : 'nearest'
+
+          if (!forceCenter) {
+            const itemRect = el.getBoundingClientRect();
+            const stripRect = strip.getBoundingClientRect();
+            if (itemRect.left >= stripRect.left + 8 && itemRect.right <= stripRect.right - 8) return;
+          }
+
+          // Centre by computing the scroll position directly rather than via
+          // scrollIntoView({inline:'center'}). scrollIntoView walks every scrollable
+          // ancestor (so it can nudge the page vertically too) and its interpretation of
+          // `inline` interacts with scroll-padding and scroll-snap differently across
+          // engines — on iOS Safari it frequently settles a chip off-centre. This maths is
+          // deterministic and only ever moves the strip.
+          const delta = el.getBoundingClientRect().left - strip.getBoundingClientRect().left;
+          const target = strip.scrollLeft + delta - (strip.clientWidth - el.offsetWidth) / 2;
+          const max = strip.scrollWidth - strip.clientWidth;
+          strip.scrollTo({
+            left: Math.max(0, Math.min(target, max)),
+            behavior: this.prefersReducedMotion() ? 'auto' : 'smooth'
           });
         },
 
@@ -7097,5 +7167,15 @@ ${r?'Expression: "'+r+`"
       });
     }
   </script>
+
+<script id="boot-veil-runtime">
+  // Clear the veil once Alpine is up, and unconditionally after 3s so a failed runtime can
+  // never leave the interface covered.
+  (() => {
+    const done = () => document.documentElement.setAttribute('data-boot-done', '');
+    document.addEventListener('alpine:initialized', done, { once: true });
+    window.setTimeout(done, 3000);
+  })();
+</script>
 </body>
 </html>

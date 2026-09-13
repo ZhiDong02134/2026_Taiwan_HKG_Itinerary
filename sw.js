@@ -10,15 +10,13 @@
   Bump CACHE below after changing index.html if you want to force old caches to be
   dropped; routine content edits are picked up automatically via ETag comparison.
 */
-const CACHE = 'twhk-2026-v1';
+const CACHE = 'twhk-2026-v2';
 const SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './apple-touch-icon.png',
   './icon-192.png',
-  './icon-512.png',
-  './icon-512-maskable.png'
+  './icon-512.png'
 ];
 
 self.addEventListener('install', event => {
