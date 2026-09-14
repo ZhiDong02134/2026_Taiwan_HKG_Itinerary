@@ -6479,7 +6479,7 @@
           if (dayId === this.activeDayId) this.smartLaunchActive = false;
           else this.switchDay(dayId);
           this.$nextTick(() => requestAnimationFrame(() => {
-            this.positionRelevantPlan({ targetKind: 'event', eventIndex: 0 }, 'auto');
+            this.positionRelevantPlan({ targetKind: 'day-summary' }, 'auto');
           }));
         },
 
@@ -6637,7 +6637,7 @@
           this.tabScrollPositions.today = 0;
           this.$nextTick(() => {
             requestAnimationFrame(() => {
-              this.positionRelevantPlan({ targetKind: 'event', eventIndex: 0 }, 'auto');
+              this.positionRelevantPlan({ targetKind: 'day-summary' }, 'auto');
             });
           });
           this.playDayChange();
