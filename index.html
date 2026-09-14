@@ -3357,6 +3357,20 @@
 
     function travelOS() {
       return {
+        init() {
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').then(registration => {
+              document.addEventListener('visibilitychange', async () => {
+                if (document.visibilityState === 'visible') {
+                  try {
+                    await registration.update();
+                  } catch (e) {
+                  }
+                }
+              });
+            });
+          }
+        },
         activeTab: (() => {
           const saved = getStorage('twhk_active_tab_v10', 'today');
           const migrated = saved === 'bookings' ? 'plan' : saved;
