@@ -2858,7 +2858,7 @@
         </div>
       </div>
 
-      <article class="day-hero"
+      <article id="day-summary" class="day-hero"
                :class="{
                  'city-hk': currentDay.hotelRef === 'hk',
                  'city-kaohsiung': currentDay.hotelRef === 'kaohsiung',
@@ -6358,7 +6358,7 @@
           this.syncThemeColor();
           this.$nextTick(() => this.scrollActiveDayChip(true));
           if (this.smartLaunchActive) {
-            window.setTimeout(() => requestAnimationFrame(() => this.positionRelevantPlan(this.relevantPlan, 'auto')), 120);
+            window.setTimeout(() => requestAnimationFrame(() => this.positionRelevantPlan({ targetKind: 'day-summary' }, 'auto')), 120);
           }
 
           document.addEventListener('visibilitychange', () => {
@@ -6620,7 +6620,8 @@
           this.activeTab = 'today';
           this.activeDayId = plan.day.id;
           this.lastLiveTripDayId = plan.day.id;
-          this.$nextTick(() => window.setTimeout(() => requestAnimationFrame(() => this.positionRelevantPlan(plan, this.prefersReducedMotion() ? 'auto' : 'smooth')), 60));
+          const positionPlan = plan.targetKind === 'event' ? plan : { targetKind: 'day-summary' };
+          this.$nextTick(() => window.setTimeout(() => requestAnimationFrame(() => this.positionRelevantPlan(positionPlan, this.prefersReducedMotion() ? 'auto' : 'smooth')), 60));
         },
 
         openDay(dayId) {
@@ -6672,7 +6673,9 @@
 
         positionRelevantPlan(plan, behavior = 'auto') {
           if (!plan) return;
-          let target = plan.targetKind === 'event' ? document.getElementById(`timeline-item-${plan.eventIndex}`) : null;
+          let target = plan.targetKind === 'event'
+            ? document.getElementById(`timeline-item-${plan.eventIndex}`)
+            : plan.targetKind === 'day-summary' ? document.getElementById('day-summary') : null;
           if (!target) target = document.getElementById('day-complete-target');
           if (!target) return;
           const stickyBottom = [...document.querySelectorAll('.app-chrome, .day-strip-wrap')]
