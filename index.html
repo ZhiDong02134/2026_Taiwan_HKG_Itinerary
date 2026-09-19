@@ -6391,6 +6391,15 @@
         init() {
           window.addEventListener('twhk-storage-failed', () => this.notifyStorageFailure());
           if (window.__twhkStorageWriteFailed) this.notifyStorageFailure();
+          // Confirms an automatic update after the fact. The flag is set immediately
+          // before the reload, so this is the first chance to say anything about it;
+          // delayed so the toast lands after the UI has settled rather than during boot.
+          try {
+            if (sessionStorage.getItem('twhk-just-updated')) {
+              sessionStorage.removeItem('twhk-just-updated');
+              setTimeout(() => this.showToast('Updated to the latest version'), 900);
+            }
+          } catch (_) {}
           this.sanitizePersistentState();
           this.determineCurrentDay();
           this.nowTick = Date.now();
@@ -7522,30 +7531,108 @@ ${r?'Expression: "'+r+`"
     // are left untouched, so the Frankfurter FX call keeps its own timeout and cache
     // fallback behaviour.
     if ('serviceWorker' in navigator) {
+      // Held so the update check can call registration.update() directly. Registering a
+      // second time here instead would create a duplicate worker.
+      let swRegistration = null;
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(error => {
+        navigator.serviceWorker.register('./sw.js').then(registration => {
+          swRegistration = registration;
+        }).catch(error => {
           console.warn('[offline] service worker registration failed:', error);
         });
       }, { once: true });
 
-      // The bypass response is cached under the canonical shell key before it reaches this
-      // comparison, so reloading here applies the exact version that was just detected.
+      // The routine check is a HEAD, not a GET. The previous version fetched the whole
+      // ~950KB shell on every single visibility change purely to read one header —
+      // measured at 4.86MB across five app switches, roughly 19MB/day at twenty, which
+      // is real money on roaming data abroad. HEAD returns Last-Modified with a zero-byte
+      // body (verified against live GitHub Pages), and because the worker early-returns
+      // on non-GET this probe goes straight to the network without touching cache logic.
+      //
+      // The expensive GET still happens, but only once the header has actually moved: it
+      // is what writes the new shell into Cache Storage under the canonical key, so the
+      // reload lands on the new version rather than the cached old one.
+      const CHECK_THROTTLE_MS = 5 * 60 * 1000;
+      const SETTLE_MS = 12 * 1000;
+      const RETRY_MS = 20 * 1000;
+
       const myVersion = Date.parse(document.lastModified) || 0;
       let updateReloadStarted = false;
-      const checkForUpdate = () => {
+      let lastCheckedAt = 0;
+      let hiddenAt = 0;
+      let settleUntil = 0;
+      let updatePending = false;
+      let retryTimer = 0;
+
+      // Reloading out from under someone reading a departure time is worse than shipping
+      // the update a few minutes later. Detection is DOM-based rather than component
+      // state so the identical block works in the sibling build, which has no modals.
+      const isMidTask = () => {
+        try {
+          if (document.querySelector('dialog[open], :popover-open')) return true;
+        } catch (_) { /* :popover-open unsupported — fall through to the role check */ }
+        return Array.from(document.querySelectorAll('[role="dialog"]')).some(el => {
+          const cs = getComputedStyle(el);
+          return cs.display !== 'none' && cs.visibility !== 'hidden'
+            && parseFloat(cs.opacity) > 0.01 && el.getBoundingClientRect().height > 0;
+        });
+      };
+      const safeToReload = () => !updateReloadStarted && Date.now() >= settleUntil && !isMidTask();
+
+      const applyUpdate = () => {
+        if (updateReloadStarted) return;
         fetch('./index.html?swBypass=1&_=' + Date.now(), { cache: 'no-store' }).then(response => {
           if (!response.ok) return;
-          const header = response.headers.get('Last-Modified');
-          const serverVersion = header ? Date.parse(header) : 0;
-          if (serverVersion && myVersion && serverVersion > myVersion && !updateReloadStarted) {
-            updateReloadStarted = true;
-            location.reload();
-          }
+          updateReloadStarted = true;
+          // The reload destroys in-page state, so the confirmation has to survive it.
+          try { sessionStorage.setItem('twhk-just-updated', '1'); } catch (_) {}
+          location.reload();
         }).catch(() => {});
       };
-      window.addEventListener('load', () => window.setTimeout(checkForUpdate, 1500), { once: true });
+
+      const flushPendingUpdate = () => {
+        if (!updatePending) return;
+        window.clearTimeout(retryTimer);
+        if (safeToReload()) {
+          updatePending = false;
+          applyUpdate();
+        } else {
+          retryTimer = window.setTimeout(flushPendingUpdate, RETRY_MS);
+        }
+      };
+
+      const checkForUpdate = (force) => {
+        if (updateReloadStarted) return;
+        const now = Date.now();
+        if (!force && now - lastCheckedAt < CHECK_THROTTLE_MS) return;
+        lastCheckedAt = now;
+
+        // Byte-compares sw.js and installs a new worker only if it differs. This is the
+        // only thing that catches a release where sw.js changed but index.html did not.
+        if (swRegistration) swRegistration.update().catch(() => {});
+
+        fetch('./index.html?swProbe=1&_=' + now, { method: 'HEAD', cache: 'no-store' })
+          .then(response => {
+            if (!response.ok) return;
+            const header = response.headers.get('Last-Modified');
+            const serverVersion = header ? Date.parse(header) : 0;
+            if (!serverVersion || !myVersion || serverVersion <= myVersion) return;
+            updatePending = true;
+            flushPendingUpdate();
+          })
+          .catch(() => { /* offline: try again on the next visible */ });
+      };
+
+      window.addEventListener('load', () => window.setTimeout(() => checkForUpdate(true), 1500), { once: true });
       document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') checkForUpdate();
+        if (document.visibilityState === 'hidden') { hiddenAt = Date.now(); return; }
+        const away = hiddenAt ? Date.now() - hiddenAt : Infinity;
+        hiddenAt = 0;
+        // A flick to another app and straight back means the user is still mid-thought;
+        // hold the reload briefly rather than yanking the page they just returned to.
+        if (away < SETTLE_MS) settleUntil = Date.now() + SETTLE_MS;
+        flushPendingUpdate();
+        checkForUpdate(false);
       });
     }
   </script>

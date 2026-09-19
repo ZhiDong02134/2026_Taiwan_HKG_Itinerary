@@ -10,7 +10,7 @@
   Bump CACHE when older cache namespaces must be evicted.
 */
 const CACHE_PREFIX = 'twhk-2026-';
-const CACHE = `${CACHE_PREFIX}v13`;
+const CACHE = `${CACHE_PREFIX}v14`;
 const SHELL = [
   './index.html',
   './manifest.webmanifest',
