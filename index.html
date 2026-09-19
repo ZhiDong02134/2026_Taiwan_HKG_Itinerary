@@ -2,7 +2,7 @@
 <html lang="en" class="h-full bg-slate-950 text-slate-100 antialiased selection:bg-rose-500 selection:text-white">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
   <meta name="theme-color" content="#090a0f">
   <meta name="color-scheme" content="dark">
   <meta name="mobile-web-app-capable" content="yes">
@@ -12,10 +12,10 @@
   <meta name="description" content="A field-first Taiwan and Hong Kong itinerary with live booking, prep, FX and day execution tools.">
   <meta name="format-detection" content="telephone=no">
   <meta name="application-name" content="Taiwan + Hong Kong 2026">
-  <meta name="apple-mobile-web-app-title" content="Taiwan + Hong Kong 2026">
+  <meta name="apple-mobile-web-app-title" content="TW · HK '26">
   <!-- iOS ignores the manifest for the home-screen icon and cannot use an SVG here; without
        this PNG, Add to Home Screen falls back to a screenshot of the page. -->
-  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
   <link rel="manifest" href="./manifest.webmanifest">
   <!-- iOS launch screens. Without these, opening the home-screen app shows a blank
        white frame until the document paints; iOS does not honour the manifest's
@@ -31,7 +31,7 @@
   <link rel="apple-touch-startup-image" href="./splash-1284x2778.png" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
   <link rel="apple-touch-startup-image" href="./splash-1290x2796.png" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
   <link rel="apple-touch-startup-image" href="./splash-1320x2868.png" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2315b8a6'/%3E%3Cpath d='M17 19c8-4 11 4 15 4s7-8 15-4v26c-8 4-11-4-15-4s-7 8-15 4Z' fill='none' stroke='white' stroke-width='4'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2718%27%20fill%3D%27%230d0f17%27%2F%3E%3Cg%20fill%3D%27%2351c6c0%27%3E%3Cpath%20d%3D%27M31.2%2018L31.6%209H32.4L32.8%2018Z%27%2F%3E%3Cpath%20d%3D%27M28.6%2018L35.4%2018L36.2%2021.5L27.8%2021.5Z%27%2F%3E%3Cpath%20d%3D%27M27.4%2023.6L25.8%2018.0L38.2%2018.0L36.6%2023.6Z%27%2F%3E%3Cpath%20d%3D%27M26.9%2029.8L25.3%2024.2L38.7%2024.2L37.1%2029.8Z%27%2F%3E%3Cpath%20d%3D%27M26.4%2036.0L24.8%2030.4L39.2%2030.4L37.6%2036.0Z%27%2F%3E%3Cpath%20d%3D%27M25.9%2042.2L24.3%2036.6L39.7%2036.6L38.1%2042.2Z%27%2F%3E%3Cpath%20d%3D%27M25.4%2042.8L38.6%2042.8L41.4%2050L22.6%2050Z%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 <!-- The pinned Alpine runtime fails visibly instead of leaving a blank interactive shell. -->
   <!-- Tailwind CSS v4.1.10 compiled locally at build time; zero browser-time Tailwind runtime. -->
   <style id="tailwind-local-build">
@@ -1295,6 +1295,9 @@
     .day-hero {
       position: relative;
       overflow: hidden;
+      /* Hands horizontal movement to the swipe handler while leaving vertical panning
+         to the browser, so scrolling the page through the hero stays native. */
+      touch-action: pan-y;
       border: 1px solid var(--stroke);
       border-radius: var(--radius-lg);
       background:
@@ -2859,6 +2862,9 @@
       </div>
 
       <article id="day-summary" class="day-hero"
+               @touchstart.passive="onHeroTouchStart($event)"
+               @touchend.passive="onHeroTouchEnd($event)"
+               @touchcancel.passive="_heroSwipe = null"
                :class="{
                  'city-hk': currentDay.hotelRef === 'hk',
                  'city-kaohsiung': currentDay.hotelRef === 'kaohsiung',
@@ -3292,9 +3298,9 @@
           <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">Flights</span><span class="font-mono text-slate-200" x-text="formatCurrency(1193)"></span></div>
           <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">Hotels</span><span class="font-mono text-slate-200" x-text="formatCurrency(768)"></span></div>
           <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">Transit</span><span class="font-mono text-slate-200" x-text="formatCurrency(303)"></span></div>
-          <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">Activities + wellness</span><span class="font-mono text-slate-200" x-text="formatCurrency(442)"></span></div>
+          <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">Activities + wellness</span><span class="font-mono text-slate-200" x-text="formatCurrency(376)"></span></div>
           <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">Food</span><span class="font-mono text-slate-200" x-text="formatCurrency(680)"></span></div>
-          <div class="flex justify-between pt-2 text-sm font-bold text-white"><span>Estimated / person</span><span class="font-mono text-rose-400" x-text="formatCurrency(3386)"></span></div>
+          <div class="flex justify-between pt-2 text-sm font-bold text-white"><span>Estimated / person</span><span class="font-mono text-rose-400" x-text="formatCurrency(3320)"></span></div>
           <p class="text-[11px] text-slate-500 pt-1">Planning estimate. Currency display uses the latest available daily FX rate when online, cached rates when offline; card/network conversion may differ.</p>
         </div>
       </div>
@@ -3357,20 +3363,6 @@
 
     function travelOS() {
       return {
-        init() {
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js').then(registration => {
-              document.addEventListener('visibilitychange', async () => {
-                if (document.visibilityState === 'visible') {
-                  try {
-                    await registration.update();
-                  } catch (e) {
-                  }
-                }
-              });
-            });
-          }
-        },
         activeTab: (() => {
           const saved = getStorage('twhk_active_tab_v10', 'today');
           const migrated = saved === 'bookings' ? 'plan' : saved;
@@ -3485,20 +3477,24 @@
           {
             id: 'ap-7',
             title: 'Set Up Hong Kong Gym Pod',
-            note: 'Before departure, all 3 travelers install The Gym Pod app and create accounts so guest invitations/door access work. Check the live app around a week ahead; verify the actual booking window, HKFIT100 eligibility and 3-pax checkout price when booking.'
+            note: 'Only the Thu Dec 10 session remains, and only if HKFIT100 / the live app makes it free or genuinely cheap. Before departure, all 3 travelers install The Gym Pod app and create accounts so guest invitations/door access work. Check the live app around a week ahead; verify the booking window, promo eligibility and exact 3-pax checkout total before confirming.'
+          },
+          {
+            id: 'ap-8',
+            title: 'Watch 2026 Asia Winter Baseball League · 留意冬季聯盟',
+            note: 'When the official 2026 schedule is published, check Dec 4–7 for a Kaohsiung-area game at Cheng Ching Lake (CCL) or Kaohsiung Li De (KLD). Add a game only if its exact start time cleanly replaces a weaker block; do not compromise Alishan, the fixed Dec 7 massage, or core first-timer anchors.'
           }
         ],
 
         bookings: [
           {
-            id: 'b-01',
-            title: 'CookInn Taiwan Cooking Class (XLB & Noodles)',
-            titleTc: 'CookInn Taiwan 旅人料理教室',
-            eventDate: 'Thu, Dec 03 (9:30 AM – 12:30 PM)',
-            openDate: 'Immediate',
-            cost: 'NT$2,650/person',
-            url: 'https://cookinn.tw/',
-            notes: 'Confirm class total reaches 4-person minimum (our group is 3). Classroom address sent via confirmation email.'
+            id: 'b-20',
+            title: 'Taipei Zhongzheng Sports Center — Archery + 10m Air Rifle',
+            titleTc: '臺北市中正運動中心・射箭＋10公尺空氣步槍',
+            eventDate: 'Thu, Dec 03 (Archery ~10:00 AM • Air Rifle ~1:00 PM)',
+            openDate: 'Recheck 48–72h prior',
+            cost: 'NT$650/person total',
+            notes: 'Local-price sports sampler: archery NT$300 for the first hour including bow/arrows/equipment and basic first-timer instruction; 10m air rifle NT$350/session including 30 pellets, target, rifle and coach. Recheck Thursday operating hours, walk-in rules and same-day capacity 48–72h before travel; do not prepay a tourist package.'
           },
           {
             id: 'b-02',
@@ -3566,9 +3562,9 @@
             titleTc: '北投麗禧溫泉酒店',
             eventDate: 'Tue, Dec 01 (~12:15 PM slot)',
             openDate: 'Check from Nov 01',
-            cost: '~NT$3,100–3,600 total for 3',
+            cost: 'NT$3,100 total for 3 (cheapest suitable private room)',
             url: 'https://www.gvrb.com.tw/',
-            notes: '90-min private white sulfur bath. Reservations open ~1 month ahead. Confirmed time overrides plan.'
+            notes: '90-min private white sulfur bath. The current cheapest suitable private-room pricing is NT$2,500 for 2 + NT$600 for the third adult = NT$3,100 total. Reservations open ~1 month ahead. Confirmed time overrides plan.'
           },
           {
             id: 'b-08',
@@ -3618,34 +3614,34 @@
             openDate: 'Check live app ~1 week ahead',
             cost: 'Live app checkout; HKFIT100 currently advertises first eligible hour free',
             url: 'https://thegympod.hk/xiqu-centre-west-kowloon/',
-            notes: 'Book two consecutive 30-min slots in app for 3 pax. Official Xiqu page sends users to the live pricing/app rather than publishing a fixed base rate. Verify HKFIT100 eligibility, booking window and exact 3-person total before confirming.'
+            notes: 'Book two consecutive 30-min slots in app for 3 pax only if the live checkout is free or genuinely cheap. Official Xiqu page sends users to the live pricing/app rather than publishing a fixed base rate. Verify HKFIT100 eligibility, booking window and exact 3-person total before confirming; otherwise skip the travel-gym block with zero regret.'
           },
           {
-            id: 'b-16',
-            title: 'The Gym Pod @ Xiqu Centre — Routine Gym',
-            titleTc: 'The Gym Pod @ 戲曲中心',
-            eventDate: 'Sat, Dec 12 (9:45 AM – 10:45 AM target)',
-            openDate: 'Check live app ~1 week ahead',
-            cost: 'Live app checkout; do not assume HKFIT100 can be reused',
-            url: 'https://thegympod.hk/xiqu-centre-west-kowloon/',
-            notes: 'Book two consecutive 30-min slots in app for 3 pax. Verify live price, booking window and exact 3-person total. Do not assume the first-hour promo can be reused.'
+            id: 'b-21',
+            title: 'Alishan Forest Railway — Shenmu Branch Paper Ticket',
+            titleTc: '阿里山林鐵神木線・紙本車票',
+            eventDate: 'Sun, Dec 06 (Target 3:40 PM Shenmu → Alishan)',
+            openDate: 'Check Fri, Nov 20 at 6:00 AM Taiwan time',
+            cost: 'NT$100/person',
+            url: 'https://afrch.forest.gov.tw/',
+            notes: 'Because Friday sales can open the following weekend, start checking Fri Nov 20 at 6:00 AM Taiwan time for the Dec 6 branch ride. Branch-line travel requires a physical paper ticket; do not rely on an e-ticket. Collect through a Forest Railway station / supported 7-ELEVEN ibon flow as currently instructed. If the 3:40 PM train is unavailable, walk back early and protect the fixed 4:40 PM 7329 bus.'
           },
           {
-            id: 'b-17',
-            title: 'M+ — Design Ah! + Myths and Monsters',
-            titleTc: 'M+：設計啊！＋神話與怪獸',
-            eventDate: 'Thu, Dec 10 (12:00 PM afternoon session • ~75 min)',
-            openDate: 'Book Ahead',
-            cost: 'HK$190/person',
-            url: 'https://www.mplus.org.hk/en/admission-tickets/',
-            notes: 'Single-price HK$190 adult admission currently covers all M+ galleries. Buy the Thursday 12:00 PM–closing AFTERNOON-session ticket. Prioritize interactive Design Ah! (through Jan 10, 2027) plus a fast Myths and Monsters pass (Oct 17, 2026–Apr 4, 2027).'
+            id: 'b-22',
+            title: 'LOST HK Mong Kok — Escape Room',
+            titleTc: 'LOST HK 旺角密室逃脫',
+            eventDate: 'Thu, Dec 10 (~12:00 PM • ~80–90 min total)',
+            openDate: 'Book / Confirm Ahead',
+            cost: 'HK$170/person at current Mon–Thu rate',
+            url: 'https://losthk.com/',
+            notes: 'Use the Mong Kok branch (3/F, 67–71 Argyle St; near MTR Exit D2) and book a 3-person room. Before paying, message the branch to confirm the selected room can be briefed/supported in Mandarin or English; avoid Cantonese-only wordplay. If language support is not suitable, skip the room rather than forcing a tourist activity.'
           },
           {
             id: 'b-18',
             title: 'Alishan 7329 Reserved Seats + THSR Day Trip',
             titleTc: '阿里山 7329 預約座位 + 高鐵當日來回',
             eventDate: 'Sun, Dec 06 (9:30 AM bus up • 4:40 PM bus down)',
-            openDate: '2026-11-05 00:00 Taiwan time',
+            openDate: 'Start checking Nov 05; retry daily through Nov 08',
             cost: 'Bus NT$566 RT + THSR ~NT$820 RT/person; forest entry/branch train extra',
             url: 'https://www.taiwantrip.com.tw/Frontend/Route/Select_p?RouteID=R0007',
             notes: 'Critical: buy SEAT-RESERVATION tickets in BOTH directions. The current official English route page says reservations can open 31 days before travel (so start checking Thu Nov 5 at 00:00 Taiwan time), while the current Chinese route page says 29 days (Sun Nov 8). Start checking Nov 5 and retry Nov 8 if inventory is not yet released. Check in ≥10 min before each bus; a seat can be released if not checked in by 5 min before departure. Selected timetable: THSR Chiayi 9:30 AM → Alishan 12:00 PM; Alishan 4:40 PM → THSR Chiayi 7:10 PM. This preserves a useful mountain window while avoiding the old 6:50 AM hotel departure. Book matching Zuoying↔Chiayi THSR after exact train times are released.'
@@ -4062,28 +4058,28 @@
                 }
               },
               {
-                time: '2:40 PM – 4:30 PM',
-                title: 'Beitou ➔ Tamsui ➔ Bali Ferry + Left Bank Power Walk',
-                titleTc: '淡水 → 八里渡船＋左岸快走',
+                time: '2:40 PM – 4:25 PM',
+                title: 'Beitou ➔ Tamsui ➔ Conditional Bali Ferry Micro-Loop',
+                titleTc: '淡水 → 八里渡船・條件式左岸短走',
                 icon: 'ship',
-                notes: 'Active, route-efficient replacement for the Guandu temple stop. Ride the Red Line straight to Tamsui, take the short ferry to Bali, power-walk the Left Bank waterfront, and return in time for the 5:03 PM sunset. Ferry is currently NT$40 each way. / 直接把寺廟段換成渡船＋八里左岸快走。',
+                notes: 'Bali is now a go/no-go micro-loop, not an anchor. New Taipei guidance allows materially longer waits/crossings depending on tide, so cross only if the next boat is visibly imminent. Otherwise stay in Tamsui and protect the 5:03 PM sunset. / 八里只在船班順時加，不為了過河犧牲淡水夕陽。',
                 navigateTo: '新北市淡水區渡船頭',
                 addressTc: '新北市淡水區渡船頭',
                 guide: {
-                  intro: 'A compact river/ferry/walking block that adds physical activity without creating a detour.',
+                  intro: 'A compact ferry bonus that is attempted only when live operations make the timing obviously safe.',
                   steps: [
-                    { label: 'Direct to Tamsui', detail: 'Finish Beitou lunch around 2:40 PM and take the Red Line north to Tamsui. Do not stop at Guandu Temple.' },
-                    { label: 'Ferry', detail: 'Walk to Tamsui Ferry Wharf and board the next Tamsui–Bali ferry. Current operator fare is NT$40 per adult each way; typical headways are about 10–15 min on weekdays, subject to weather/tide.' },
-                    { label: 'Left Bank Walk', detail: 'From Bali Ferry Pier, power-walk the flat waterfront promenade for ~30–40 minutes total. Prioritize river views, public art, snack stalls, and the open left-bank path; turn around early if ferry timing tightens.' },
-                    { label: 'Hard Turnaround', detail: 'Be back at Bali ferry pier around ~4:05–4:10 PM. Take the next ferry back and walk directly to the Tamsui waterfront.' },
-                    { label: 'Weather Rule', detail: 'If ferry service is disrupted or the river is rough, skip Bali completely. Tamsui waterfront + Old Street still works with zero damage to the core day.' }
+                    { label: 'Direct to Tamsui', detail: 'Finish Beitou lunch around 2:40 PM and take the Red Line north to Tamsui. Walk straight toward the ferry pier; do not add an intermediate attraction.' },
+                    { label: 'Go / No-Go at the Pier', detail: 'Check the actual queue and next departure. Cross only if the next Bali boat is about to leave / clearly within roughly 10 minutes and service is moving normally. Current city guidance allows substantially longer waits/crossings depending on tide, so do not assume a best-case headway.' },
+                    { label: 'Bali Micro-Loop', detail: 'If you cross, keep the Left Bank to roughly 20–25 minutes: fast waterfront walk, photos, then turn back. This is not a 40-minute outbound stroll.' },
+                    { label: 'Hard Turnaround', detail: 'Be back at Bali Ferry Pier by 3:55 PM at the latest. If you cannot meet that, do not cross in the first place.' },
+                    { label: 'Skip Rule', detail: 'If service is disrupted, the queue is unclear, or the next sailing is not imminent, stay on the Tamsui side. You lose almost nothing and gain a much safer sunset buffer.' }
                   ],
-                  exit: 'Aim to be back on the Tamsui side by ~4:25–4:30 PM; position on the open waterfront by 4:40–4:45 for sunset.',
-                  recheck: 'Recheck ferry operations/weather the same day; current operator says Tamsui⇄Bali runs daily, conditions permitting.'
+                  exit: 'Aim to be back on the Tamsui side by ~4:20–4:25 PM; walk directly to the open waterfront for golden hour.',
+                  recheck: 'Same day: verify ferry operations/weather and make the decision from the live queue, not an assumed timetable.'
                 }
               },
               {
-                time: '~4:30 PM – 5:15 PM',
+                time: '~4:25 PM – 5:15 PM',
                 title: 'Tamsui Waterfront Sunset',
                 titleTc: '淡水老街',
                 icon: 'eye',
@@ -4159,7 +4155,7 @@
             },
             foodRecommendation: 'Wu Beef Noodles 吳家牛肉麵 → Old Tamsui Fish Ball & A-Gei 老店淡水魚丸阿給',
             proteinPlan: 'Target ~150 g: choose a meat/egg/tofu-forward Beitou lunch, then lean hard into Tamsui seafood, fish-ball soup, eggs/tofu and A-Gei at dinner. After the gym, add milk/soy milk or another lean-protein convenience-store item only if the day is still short. · 目標約150g：北投午餐優先肉、蛋、豆腐；淡水晚餐把海鮮、魚丸湯、蛋／豆腐與阿給當主體。健身後若仍不足，再用牛奶／豆漿或便利商店瘦肉補。',
-            insiderTip: 'The Bali ferry + Left Bank power walk is the default active add-on. If timing/weather is imperfect, skip it instantly and protect the Tamsui sunset.'
+            insiderTip: 'The Bali ferry is optional, not an anchor. Cross only when the next boat is visibly imminent and the 3:55 PM Bali-pier turnaround is easy; otherwise Tamsui sunset wins.'
           },
 
           {
@@ -4350,38 +4346,72 @@
             city: 'Taipei / 台北',
             dateString: 'Thu, Dec 03, 2026',
             timeZone: 'Asia/Taipei',
-            title: 'CookInn Class → Taipei 101 → Elephant Mountain',
-            titleTc: '台灣料理課・台北101・象山夜景',
+            title: 'Archery → Air Rifle → Taipei 101 → Elephant Mountain',
+            titleTc: '射箭・空氣步槍・台北101・象山夜景',
             hotelRef: 'taipei',
-            transitSummary: 'MRT Red Line (Taipei Main -> 101 -> Xiangshan)',
+            transitSummary: 'MRT Red Line + short walks (Zhongzheng → 101 → Xiangshan)',
             weatherExpected: '~21°C • Mild seasonal conditions',
             rainBackupAvailable: true,
-            easyPlan: "If tired, skip CKS Memorial Hall. Preserve CookInn and Taipei 101. Elephant Mountain steps can be dropped if legs are tired.",
-            leaveByTime: '9:00 AM from hotel',
+            easyPlan: "If tired, keep archery and Taipei 101. Drop CKS first; skip the air-rifle session if same-day capacity is poor, and drop Elephant Mountain if legs are genuinely cooked.",
+            leaveByTime: '9:30 AM from hotel',
             timeline: [
               {
-                time: '9:30 AM – 12:30 PM',
-                title: 'CookInn: XLB, Beef Noodles & Boba Class',
-                titleTc: 'CookInn Taiwan 旅人料理教室',
-                icon: 'utensils',
-                notes: '3-hour culinary session: Xiao Long Bao from scratch, braised beef noodles, smashed cucumber salad, and bubble milk tea. Minimum 4 participants total; our group is 3. Use classroom address in CookInn\'s confirmation email.',
-                noMap: true,
+                time: '9:30 AM – 11:00 AM',
+                title: 'Zhongzheng Sports Center — Archery',
+                titleTc: '臺北市中正運動中心・射箭',
+                icon: 'target',
+                notes: 'Leave Via at 9:30 AM and target the 10:00 AM opening-area session. Current local pricing is NT$300 for the first hour including bow, arrows, equipment and a short first-timer safety/form introduction — dramatically better value than a tourist workshop.',
+                navigateTo: '台北市中正區信義路一段1號',
+                addressTc: '台北市中正區信義路一段1號',
                 guide: {
-                  intro: 'Hands-on Taiwanese culinary masterclass preparing four signature specialties.',
+                  intro: 'Low-friction local sports activity in the exact CKS / Red Line corridor.',
                   steps: [
-                    { label: 'Classroom Location', detail: 'Check CookInn pre-class confirmation email for exact classroom address. Arrive by 9:20 AM to check in.' },
-                    { label: 'Class Minimum', detail: 'Check that class minimum has been satisfied with fellow participants.' },
-                    { label: 'Xiao Long Bao', detail: 'Learn the Xiao Long Bao wrapper and filling process from the instructor, making wrappers from scratch.' },
-                    { label: 'Braised Beef Noodles', detail: 'Prepare the braised beef noodle soup under chef guidance.' },
-                    { label: 'Smashed Cucumber Salad', detail: 'Prepare the smashed cucumber salad under chef guidance.' },
-                    { label: 'Bubble Milk Tea', detail: 'Prepare and shake the bubble milk tea with the instructor.' },
-                    { label: 'Lunch Feast', detail: 'Sit down and eat the four freshly prepared dishes together for lunch.' },
-                    { label: 'Recipes', detail: 'Save the provided recipe card/email for recreating the dishes at home.' }
+                    { label: 'Transit', detail: 'Leave Via Hotel around 9:30 AM and walk / take the simplest short MRT connection to Zhongzheng Sports Center, 信義路一段1號.' },
+                    { label: 'Check-In', detail: 'Ask for the first-hour archery option and tell staff you are first-time users if applicable. Current setup includes equipment and roughly 10–15 minutes of basic safety/form instruction.' },
+                    { label: 'Session', detail: 'Shoot for about one hour. Focus on form and a friendly 3-person score challenge rather than turning this into a training session.' },
+                    { label: 'Exit', detail: 'Finish around 11:00 AM and walk toward Jin Feng for lunch. Do not add a paid English-language package.' }
+                  ],
+                  recheck: '48–72h before: reconfirm Thursday hours, walk-in policy and same-day capacity.'
+                }
+              },
+              {
+                time: '11:10 AM – 12:15 PM',
+                title: 'Jin Feng Braised Pork Rice — Local Lunch',
+                titleTc: '金峰魯肉飯・中正區午餐',
+                icon: 'utensils',
+                notes: 'A specific, high-volume local lunch beside the same CKS corridor. Keep it efficient because the 10m air-rifle range opens in the early afternoon.',
+                navigateTo: '台北市中正區羅斯福路一段10號',
+                addressTc: '台北市中正區羅斯福路一段10號',
+                guide: {
+                  intro: 'Named lunch between two local sports sessions — no cross-city detour.',
+                  steps: [
+                    { label: 'Order', detail: 'Use braised pork rice as the base and add braised egg, tofu, pork / meat side and vegetables so lunch is more protein-forward than a snack crawl.' },
+                    { label: 'Queue Rule', detail: 'If the visible wait is >10–15 minutes, use a nearby simple rice/noodle shop or convenience-store protein meal rather than risking the 1:00 PM range opening.' },
+                    { label: 'Reset', detail: 'Finish by ~12:15 PM, hydrate and walk back toward Zhongzheng Sports Center. Use the spare buffer for restroom / a short CKS-plaza preview, not another attraction.' }
                   ]
                 }
               },
               {
-                time: '1:35 PM – 2:25 PM',
+                time: '1:00 PM – 1:40 PM',
+                title: '10m Air-Rifle Shooting — Local Sports Session',
+                titleTc: '10公尺空氣步槍射擊・中正運動中心',
+                icon: 'crosshair',
+                notes: 'Current local session price is NT$350/person including 30 pellets, target, air rifle and coach. It pairs naturally with the morning archery without buying a tourist shooting package.',
+                navigateTo: '台北市中正區信義路一段1號',
+                addressTc: '台北市中正區信義路一段1號',
+                guide: {
+                  intro: 'Short coached 10m air-rifle experience before the CKS first-timer pass.',
+                  steps: [
+                    { label: 'Check-In', detail: 'Return to the sports center around 12:50 PM and ask for the 10m air-rifle session. Follow staff safety / handling instructions exactly.' },
+                    { label: 'Included Setup', detail: 'Current session includes the rifle, target, coach and 30 pellets per person. No need to buy additional rounds unless everyone is genuinely enjoying it and the next block remains safe.' },
+                    { label: 'Friendly Competition', detail: 'Use the final targets for a simple 3-person score comparison. Keep the block to roughly 35–40 minutes.' },
+                    { label: 'Exit', detail: 'Leave by ~1:40 PM and walk directly to the CKS plaza for the fast pass.' }
+                  ],
+                  recheck: '48–72h before: reconfirm Thursday 1:00 PM opening, walk-in rules and current session price.'
+                }
+              },
+              {
+                time: '1:45 PM – 2:25 PM',
                 title: 'Chiang Kai-shek Memorial Hall — Fast Pass',
                 titleTc: '中正紀念堂',
                 icon: 'landmark',
@@ -4391,7 +4421,7 @@
                 guide: {
                   intro: 'Fast first-timer pass focused on the 2:00 PM honor guard and monumental plaza, not the museum/history exhibits.',
                   steps: [
-                    { label: 'Transit', detail: 'Take MRT Red Line to Chiang Kai-shek Memorial Hall Station Exit 5.' },
+                    { label: 'Transit', detail: 'Walk directly from Zhongzheng Sports Center to the CKS plaza; the two blocks are adjacent. Position yourselves around 1:50 PM for the 2:00 PM ceremony if it is operating.' },
                     { label: 'Drill Location', detail: 'Military honor guard ceremonial patrol and precision rifle drill is held outdoors on Democracy Boulevard (民主大道) directly in front of Memorial Hall stairs (not inside upper statue hall).' },
                     { label: '2:00 PM Ceremony', detail: 'Position yourselves along perimeter rope by 1:52 PM. Watch 15-minute silent synchronization drill and rifle inspection.' },
                     { label: 'Rain Rule', detail: 'If raining, outdoor military ceremonial drill is officially canceled.' },
@@ -4420,7 +4450,7 @@
               },
               {
                 time: '~6:00 PM – 7:15 PM',
-                title: 'Elephant Mountain Twilight Hike',
+                title: 'Elephant Mountain Night Hike',
                 titleTc: '象山步道',
                 icon: 'footprints',
                 notes: 'Walk from 101 area or Xiangshan MRT Exit 2. 600 paved steps to Six Giant Rocks for iconic skyline view.',
@@ -4473,7 +4503,7 @@
                 }
               }
             ],
-            rainPlan: 'If raining, skip Elephant Mountain steps and remain on Taipei 101 89F indoor deck, then head to Songshan Cultural Park.',
+            rainPlan: 'Archery and the air-rifle session are indoors and survive rain. If conditions are wet, skip Elephant Mountain steps, keep Taipei 101 indoors, and use Songshan Cultural Park only if the group still wants an extra covered stop.',
             backups: {
               activity: {
                 title: 'Songshan Cultural and Creative Park',
@@ -4483,9 +4513,9 @@
                 addressTc: '台北市信義區光復南路133號'
               }
             },
-            foodRecommendation: 'CookInn XLB / beef noodles → Red Flower Queen 紅花麻辣鹽水雞 → Yu Pin Yuan 御品元冰火湯圓',
-            proteinPlan: "Target ~150 g: the CookInn beef noodles/XLB count as a real meal, but don't assume the class alone gets you there. At Linjiang prioritize grilled chicken, beef/pork skewers, squid/seafood, eggs and tofu; share tangyuan and other sweets. · 目標約150g：CookInn的牛肉麵／小籠包算正式一餐，但別假設光靠料理課就夠。臨江夜市優先烤雞、牛／豬肉串、魷魚海鮮、蛋與豆腐；湯圓甜食分食即可。",
-            insiderTip: 'Reserve CookInn early to confirm the 4-person class threshold is reached.'
+            foodRecommendation: 'Jin Feng Braised Pork Rice 金峰魯肉飯 → Red Flower Queen 紅花麻辣鹽水雞 → Yu Pin Yuan 御品元冰火湯圓',
+            proteinPlan: "Target ~150 g: make Jin Feng lunch meat/egg/tofu-forward, then use Red Flower Queen salted chicken as the main dinner protein. Add beef/pork, eggs or tofu at Linjiang before dessert; share tangyuan rather than using sweets as the meal. · 目標約150g：金峰午餐把肉、蛋、豆腐點足；晚餐以紅花鹽水雞作蛋白主力，再補牛／豬、蛋或豆腐，湯圓甜食分食即可。",
+            insiderTip: 'The timing is deliberate: archery first, lunch during the midday gap, then the 1:00 PM air-rifle session. If the rifle range is full or delayed, skip it immediately rather than compressing CKS / Taipei 101.'
           },
 
           {
@@ -4579,7 +4609,7 @@
                 navigateTo: 'Boulder Space 圓石空間攀岩場 左營店, Global Mall New Zuoying Station, Kaohsiung',
                 addressTc: '高雄市左營區站前北路1號 環球購物中心新左營車站3樓',
                 guide: {
-                  intro: 'Route-perfect active replacement: two hours of indoor bouldering instead of a weather-sensitive water sport.',
+                  intro: 'Route-perfect active block: two hours of indoor bouldering inside the station complex with essentially no routing penalty.',
                   steps: [
                     { label: 'Check-In', detail: 'Go to Boulder Space on the 3F Global Mall / New Zuoying Station complex. Ask staff for the adult single-entry option with climbing-shoe rental; recheck current hours/pricing before travel.' },
                     { label: 'Safety First', detail: 'Tell staff if anyone is new. Do the gym safety/fall briefing and start on the easiest bouldering problems. Use bouldering only; no rope/auto-belay component is needed for this itinerary.' },
@@ -4975,17 +5005,18 @@
                 title: 'Shenmu Forest Train Back + Bus Buffer',
                 titleTc: '神木線林鐵返回・預留公車緩衝',
                 icon: 'train',
-                notes: 'Target the currently listed 3:40 PM Shenmu → Alishan train (arrives ~3:47 PM). If unavailable, walk back early enough to reach the Alishan Transit Station by ~4:20 PM. Do not gamble on a last-minute connection.',
+                notes: 'Target the currently listed 3:40 PM Shenmu → Alishan train (arrives ~3:47 PM). For the Sun Dec 6 ride, start checking Fri Nov 20 at 6:00 AM Taiwan time because Friday sales can open the following weekend. Branch-line travel requires a physical paper ticket; no branch e-ticket. If unavailable, walk back early enough to reach the Alishan Transit Station by ~4:20 PM.',
                 navigateTo: 'Shenmu Station, Alishan Township, Chiayi County',
                 addressTc: '嘉義縣阿里山鄉神木車站',
                 guide: {
                   intro: 'Short heritage-rail finish with a protected mountain-bus connection.',
                   steps: [
-                    { label: 'Preferred Train', detail: 'Current timetable lists Shenmu 3:40 PM → Alishan 3:47 PM. Use it if operating and seats/tickets are available.' },
+                    { label: 'Ticket Rule', detail: 'Start checking Fri Nov 20 at 6:00 AM Taiwan time for the Dec 6 branch ride. Branch-line travel requires a physical paper ticket; follow the current Forest Railway / 7-ELEVEN ibon collection process rather than relying on an e-ticket.' },
+                    { label: 'Preferred Train', detail: 'Current timetable lists Shenmu 3:40 PM → Alishan 3:47 PM. Use it if operating and the paper tickets are secured.' },
                     { label: 'No-Wait Rule', detail: 'If the train is delayed, full, or uncertain, walk back. The 4:40 PM reserved bus is much more important than squeezing in a second railway ride.' },
                     { label: 'Final Buffer', detail: 'Be back near Alishan Transit Station around 4:20 PM. Restroom and water first; if genuinely needed, use the 7-ELEVEN in the Alishan service area for a quick named snack/protein top-up, then queue for the reserved bus.' }
                   ],
-                  recheck: 'Check current Shenmu branch operation/status that morning.'
+                  recheck: 'Start ticket check Fri Nov 20 at 6:00 AM Taiwan time; then recheck Shenmu branch operation/status the morning of Dec 6.'
                 }
               },
               {
@@ -5202,8 +5233,14 @@
                 }
               }
             ],
-            rainPlan: 'Heavy rain: skip the Cijin morning and sleep in after Alishan. Use an indoor café / department-store / hotel-rest block, but preserve the fixed 2:15 PM Left Foot / Right Foot massage. Continue to dinner and shrimp fishing unless severe weather or transport disruption makes that impractical.',
+            rainPlan: 'Heavy rain or a deliberately shortened Cijin morning: use Taroko Sports at SKM Park as the primary indoor swap. Monday hours start at 11:00 AM; target roughly 11:00 AM–12:15 PM for a small walk-in batting-cage session, then take the Red Line from Caoya toward Central Park so the fixed 2:15 PM massage remains comfortably protected. If everyone is exhausted after Alishan, skip the cages too and simply rest.',
             backups: {
+              activity: {
+                title: 'Taroko Sports SKM Park — Batting Cages',
+                titleTc: '大魯閣棒壘球打擊場・高雄草衙道',
+                note: 'Primary rain / shortened-Cijin backup. Monday opens at 11:00 AM; target ~11:00–12:15 for a small walk-in session. Multiple baseball lanes run roughly 80–120 km/h plus pitching machines. It is by Caoya MRT Exit 2; leave by ~12:15 and ride the Red Line toward Central Park so the 2:15 PM massage stays safe. Buy only a small play amount — no membership/package.',
+                navigateTo: 'Taroko Sports SKM Park, Kaohsiung'
+              },
               services: [
                 {
                   title: '腳酸小狗按摩會館 (Sore Dog Foot Massage)',
@@ -5230,7 +5267,7 @@
             },
             foodRecommendation: '旗后海產 → 汕頭泉成沙茶潮鍋（backup: 老四川中山店）→ 新大和樂現烤蝦',
             proteinPlan: 'Target ~150 g is easy today: make the Cijin lunch ~45–60 g from fish/prawns/clams/oysters, dinner another ~40–50 g from duck/chicken/beef/seafood, and count the prawns actually eaten at shrimp fishing. Use soy milk/eggs/chicken only if the total is still short. · 今日約150g很好達成：旗津午餐用魚、蝦、蛤蜊／蚵仔抓45–60g，晚餐鴨／雞／牛／海鮮再40–50g，釣蝦現烤吃掉的蝦也算。若仍不足，再用豆漿／蛋／雞胸補。',
-            insiderTip: 'Do not add a Monday gym. Alishan Sunday + Cijin walking already provide plenty of activity, and removing the lift keeps the fixed 2:15 PM massage comfortably protected.'
+            insiderTip: 'Do not add a Monday gym. If Cijin weather is poor, the batting cages are the useful indoor swap; otherwise keep Cijin. In either case, the fixed 2:15 PM massage stays protected.'
           },
 
           {
@@ -5490,7 +5527,25 @@
                 }
               },
               {
-                time: '~7:10 PM – 9:45 PM',
+                time: '5:55 PM – 6:50 PM',
+                title: 'Peak ➔ Happy Valley — Hard Transfer Window',
+                titleTc: '太平山 → 跑馬地・硬性轉場',
+                icon: 'navigation',
+                notes: 'Leave the Peak immediately after twilight. With 3 people, compare the live red-taxi ETA against Peak Tram / Bus 15 + onward transit; take the taxi whenever it meaningfully saves time. Target Happy Valley around 6:50–7:00 PM rather than treating the descent as invisible.',
+                navigateTo: 'Happy Valley Racecourse, Hong Kong',
+                addressTc: '香港跑馬地黃泥涌道',
+                guide: {
+                  intro: 'A protected transfer block so sunset and the race night cannot collide.',
+                  steps: [
+                    { label: 'Hard Exit', detail: 'At ~5:55 PM, stop sightseeing and start descending immediately. Do not add Peak Tower shopping / dinner.' },
+                    { label: 'Compare Live ETAs', detail: 'Check red taxi versus Peak Tram / Bus 15. With 3 people, use a taxi when the live ETA materially beats public transport; otherwise take the first sensible transit option.' },
+                    { label: 'Arrival Target', detail: 'Aim to be at the Happy Valley visitor entrance around 6:50–7:00 PM. Use the buffer for passport entry / programme pickup rather than arriving after the evening is underway.' }
+                  ],
+                  exit: 'Treat 5:55 PM as the Peak hard exit.'
+                }
+              },
+              {
+                time: '~6:50/7:00 PM – 9:45 PM',
                 title: 'Happy Valley Races: International Jockeys’ Championship',
                 titleTc: '跑馬地馬場',
                 icon: 'sparkles',
@@ -5543,7 +5598,7 @@
             },
             foodRecommendation: 'Tsim Chai Kee 沾仔記 → One Dim Sum Central 一點心中環 only if needed → Yung’s Tangerine Peel Roast Goose 榕哥陳皮燒鵝',
             proteinPlan: "Target ~150 g: make the Tsim Chai Kee bowl protein-forward with wonton + beef and/or fish balls, then use Yung’s roast goose/char siu as the real post-race dinner. Carry only a small emergency protein top-up if useful; the plan no longer depends on random race-night snacks. · 目標約150g：沾仔記午餐用雲吞＋牛肉／魚蛋加強蛋白；賽馬後以榕哥陳皮燒鵝／叉燒作正式晚餐。只需視需要帶少量備用蛋白，不再依賴隨機賽場零食。",
-            insiderTip: 'Sunset is 5:39 PM. Stay on Lugard Road through dusk before heading down to Happy Valley. If uphill Peak Tram queue exceeds ~20 min, use Bus 15 first; taxi only when it meaningfully saves time.'
+            insiderTip: 'Sunset is 5:39 PM; 5:55 PM is the hard Peak exit. Use a red taxi down whenever its live ETA meaningfully beats transit so Happy Valley starts around 6:50–7:00 PM, not after an invisible one-hour transfer.'
           },
 
           {
@@ -5553,13 +5608,13 @@
             city: 'Hong Kong / 香港',
             dateString: 'Thu, Dec 10, 2026',
             timeZone: 'Asia/Hong_Kong',
-            title: 'M+ Fast Pass → Sham Shui Po → Oi Man Sang → WestK Night Walk',
-            titleTc: 'M+ 快逛・深水埗・愛文生・西九海濱夜走',
+            title: 'LOST Mong Kok → Sham Shui Po → Oi Man Sang → WestK Night Walk',
+            titleTc: '旺角密室逃脫・深水埗・愛文生・西九海濱夜走',
             hotelRef: 'hk',
-            transitSummary: 'All-Kowloon Day (MTR Red Line)',
+            transitSummary: 'WestK / TST → Mong Kok → Sham Shui Po → WestK',
             weatherExpected: '~20°C • Mild seasonal conditions',
             rainBackupAvailable: true,
-            easyPlan: "If tired, shorten Sham Shui Po by ~30 minutes. Preserve M+, the dai-pai-dong dinner and at least a short WestK waterfront walk; cut the last stretch of the park first.",
+            easyPlan: "If the gym is not free/cheap, skip it. If LOST cannot confirm Mandarin/English support for the selected room, skip the escape room. Preserve the Sham Shui Po street hunt, Oi Man Sang dinner and at least a short WestK waterfront walk.",
             leaveByTime: '9:30 AM for gym',
             timeline: [
               {
@@ -5567,7 +5622,7 @@
                 title: 'Routine Gym — Private 60-min Pod',
                 titleTc: 'The Gym Pod @ 戲曲中心',
                 icon: 'dumbbell',
-                notes: 'Private 1–3 pax gym pod at Xiqu Centre. Book two consecutive 30-min slots. The official Xiqu page points to the app for live pricing; HKFIT100 currently advertises the first eligible hour free and must be rechecked.',
+                notes: 'Optional maintenance lift only if HKFIT100 / the live checkout makes the 60-minute 3-person pod free or genuinely cheap. Otherwise skip it — routine lifting has less travel value than the rest of this day.',
                 navigateTo: '88 Austin Road West, West Kowloon, Hong Kong',
                 addressTc: '香港九龍西九文化區柯士甸道西88號 戲曲中心',
                 guide: {
@@ -5575,26 +5630,28 @@
                     { label: 'Booking & Arrival', detail: 'Book TWO consecutive 30-minute sessions in The Gym Pod app. Select/declare 3 pax correctly. Check the live booking window around a week ahead. Leave Sasa around 9:30 AM; walk if routing is clean, otherwise split a short red metered taxi.' },
                     { label: 'Price & Access', detail: 'The official Xiqu page currently directs users to live app pricing rather than publishing a fixed base rate. Promo code HKFIT100 currently advertises the first eligible hour free. VERIFY eligibility and the exact 3-person checkout total before confirming.' },
                     { label: 'Training', detail: 'Use the private Smith machine, cable station, dumbbells and adjustable bench. Rotate among stations efficiently for 60 minutes. Keep 2–3 reps in reserve and avoid unnecessary cardio/leg fatigue.' },
-                    { label: 'Shower & M+', detail: 'Train roughly 9:45–10:45 AM. The Gym Pod Xiqu page does not advertise showers, so return briefly to Sasa for a quick shower/change, then head to M+ for noon. No need for the old 9:00 departure.' }
+                    { label: 'Shower & Mong Kok', detail: 'Train roughly 9:45–10:45 AM. The Gym Pod Xiqu page does not advertise showers, so return briefly to Sasa for a quick shower/change, then head to Mong Kok. If the gym is skipped, simply leave the hotel later and keep the noon LOST target.' }
                   ]
                 }
               },
               {
-                time: '12:00 PM – 1:15 PM',
-                title: 'M+ Fast Pass: Design Ah! + Myths and Monsters',
-                titleTc: 'M+ 快逛：設計啊！＋神話與怪獸',
-                icon: 'sparkles',
-                notes: 'Hard cap ~75 min. Spend most time on the interactive Design Ah! exhibition, then sample Myths and Monsters (anime/manga/film/game/fantasy material). Skip generic gallery completionism. / 約75分鐘：主攻互動式「設計啊！」，再快看「神話與怪獸」。',
-                navigateTo: '香港西九文化區博物館道38號',
-                addressTc: '香港西九文化區博物館道38號',
+                time: '12:00 PM – 1:25 PM',
+                title: 'LOST HK Mong Kok — 3-Person Escape Room',
+                titleTc: 'LOST HK 旺角・三人密室逃脫',
+                icon: 'key-round',
+                notes: 'Weekday local price is currently HK$170/person — roughly half typical NYC private-room pricing. Book only after the branch confirms the selected room can be briefed/supported in Mandarin or English; avoid Cantonese-only wordplay. / 先確認普通話或英文支援，再付款。',
+                navigateTo: '3/F, 67–71 Argyle Street, Mong Kok, Hong Kong',
+                addressTc: '香港旺角亞皆老街67–71號3樓',
                 guide: {
-                  intro: 'A targeted M+ visit built around the two 2026 exhibitions that best match an interactive/visual group rather than a conventional museum crawl.',
+                  intro: 'Hands-on local leisure at a sensible weekday price, with language fit treated as a hard requirement.',
                   steps: [
-                    { label: 'Entry & Lockers', detail: 'Enter using the 12:00 PM AFTERNOON-session ticket. Use lockers on the ground floor if carrying backpacks.' },
-                    { label: 'Design Ah! First (~40–45 min)', detail: 'Go directly to Main Hall Gallery, G. Prioritize hands-on games, participatory installations and immersive audiovisual pieces. If an individual interaction has a >5–10 min queue, skip it—there are many others.' },
-                    { label: 'Myths and Monsters (~20–25 min)', detail: 'Move to West Gallery, L2 for a selective pass through fantasy in Asian visual culture: manga/anime, film, video-game and contemporary fantasy material. Do not read every label.' },
-                    { label: 'Optional Roof / Exit', detail: 'If you still have ~5–10 min, use the Roof Garden for a harbor reset. Be out around 1:15 PM so M+ does not eat the Sham Shui Po afternoon.' }
-                  ]
+                    { label: 'Language Check Before Booking', detail: 'Message the Mong Kok branch and name the exact room. Confirm the briefing and any clue assistance can be handled in Mandarin or English. Do not book a Cantonese-language wordplay-heavy room just because it is available.' },
+                    { label: 'Arrival', detail: 'Target the Mong Kok branch around 11:50 AM, near MTR Exit D2. Allow time for briefing / lockers before the noon game.' },
+                    { label: 'Room Choice', detail: 'Choose a room designed for roughly 2–5 / 3–5 players rather than a large-team room. Three people should stay actively involved throughout.' },
+                    { label: 'Time Box', detail: 'Allow about 60 minutes of gameplay plus briefing/debrief, roughly 80–90 minutes total. Do not add a second escape room.' },
+                    { label: 'Exit to Sham Shui Po', detail: 'Finish around 1:20–1:25 PM and take the MTR north one short hop to Sham Shui Po, targeting Exit C2 around ~1:45 PM.' }
+                  ],
+                  recheck: 'Before paying: confirm the exact room supports Mandarin or English briefing / clue assistance.'
                 }
               },
               {
@@ -5608,7 +5665,7 @@
                 guide: {
                   intro: 'Street-by-street hunt through Kowloon’s authentic working-class trade district.',
                   steps: [
-                    { label: 'Orient', detail: 'Target Sham Shui Po MTR Exit C2 around ~1:45–2:00 PM directly onto Apliu Street (鴨寮街), depending on the fastest live route from M+.' },
+                    { label: 'Orient', detail: 'From LOST Mong Kok, ride one short MTR hop north and target Sham Shui Po Exit C2 around ~1:45 PM directly onto Apliu Street (鴨寮街).' },
                     { label: 'Apliu Street Electronics', detail: 'Explore phone accessories, audio cables, vintage film cameras, LEDs, and hand tools. Inspect used items carefully before paying; optional HK$100 weird-useful-item challenge.' },
                     { label: 'Ki Lung Street (Button Street)', detail: 'Turn onto Ki Lung Street (基隆街). Browse open bins of bone/ceramic buttons, buckles, and garment notions.' },
                     { label: 'Nam Cheong Street', detail: 'Walk along Nam Cheong Street to observe wholesale ribbons, lace, and sewing hardware shops.' },
@@ -5657,7 +5714,7 @@
                 }
               }
             ],
-            rainPlan: 'M+ remains the indoor anchor. In steady evening rain, skip the WestK lawn/waterfront and return to TST for a covered K11 MUSEA / Nathan Road walk; do not force an exposed harbor stroll.',
+            rainPlan: 'LOST is indoors and works well in rain. In steady evening rain, skip the WestK lawn/waterfront and return to TST for a covered K11 MUSEA / Nathan Road walk; do not force an exposed harbour stroll.',
             backups: {
               activity: {
                 title: 'K11 MUSEA / TST Covered Night Walk',
@@ -5693,7 +5750,7 @@
             },
             foodRecommendation: 'Kung Wo 公和荳品廠 (small snack) → Oi Man Sang 愛文生; >15-min queue → Let\'s Yum Cha',
             proteinPlan: 'Target ~150 g: after the gym, use Sham Shui Po for a real protein meal—beef, chicken, tofu/soy or fish-ball snacks—then make Oi Man Sang dinner meat/seafood first. Kung Wo is a small tasting stop, not the meal base. · 目標約150g：健身後在深水埗以牛、雞、豆腐／豆品或魚蛋補蛋白；愛文生晚餐以肉／海鮮為主。公和荳品只是小份嚐鮮，不當主餐。',
-            insiderTip: 'This day now stays entirely in Kowloon but no longer dies at 6:30 PM: the Art Park/waterfront gives you a high-value, open-space night finish and still gets you back around 10 PM.'
+            insiderTip: 'This day is now hands-on rather than museum-led: one local-price escape room, a working-neighborhood street hunt, dai-pai-dong dinner and WestK night walk. If language support for LOST is weak, skip it rather than compromising the day.'
           },
 
           {
@@ -5779,7 +5836,7 @@
                 }
               },
                             {
-                time: '~1:20 PM – 4:05 PM',
+                time: '1:20 PM – 4:10 PM',
                 title: 'Tai O Fishing Village + Tai O Bakery',
                 titleTc: '大澳漁村＋大澳餅店沙翁',
                 icon: 'ship',
@@ -5793,23 +5850,23 @@
                     { label: 'Stilt Lanes', detail: 'Walk the canals, stilt-house lanes and quieter side paths beyond the first visitor cluster.' },
                     { label: 'Optional Boat', detail: 'Take a ~20-minute local sampan only if weather is good, price is clear and the queue is short. Dolphin sightings are a bonus, never the reason to book.' },
                     { label: 'Named Snack', detail: 'At Tai O Bakery 大澳餅店, 吉慶街66號, share a freshly fried sugar doughnut / 沙翁. It is strongly reviewed across independent platforms; skip if the queue is >10–15 min.' },
-                    { label: 'Exit', detail: 'Start returning to Tai O Bus Terminus with at least a 15-minute buffer for the target Bus 11.' }
+                    { label: 'Exit', detail: 'Start returning early enough to be at Tai O Bus Terminus by ~4:10 PM. The target Bus 11 is 4:25 PM; do not use that 15-minute buffer for one more snack or boat loop.' }
                   ],
                   recheck: 'Night before: recheck Bus 21/11 schedules and Tai O Bakery Friday hours.'
                 }
               },
               {
-                time: '~4:25 PM – 5:15 PM',
+                time: '4:25 PM – ~5:15 PM',
                 title: 'Direct Bus 11 from Tai O back to Tung Chung MTR',
                 titleTc: '新大嶼山巴士11號：大澳 → 東涌',
                 icon: 'bus',
-                notes: 'Target practical ~4:25–4:35 PM departure if supported by current New Lantao Bus schedule. Do not backtrack to cable car. Walk to Tai O terminus with ~15-min buffer; timetable is planning guidance, not a guaranteed slot.',
+                notes: 'Friday target is Bus 11 at 4:25 PM. Treat 4:35 PM as the first backup and 4:45 PM as the second — not as planned later departures. Do not backtrack to the cable car.',
                 navigateTo: 'Tai O Bus Terminus, Lantau Island, Hong Kong',
                 addressTc: '大澳巴士總站',
                 guide: {
                   intro: 'Loop route return: direct mountain highway bus bypassing cable car queue.',
                   steps: [
-                    { label: 'Timetable Verification', detail: 'Check current New Lantao Bus 11 schedule the night before. Target departure around ~4:25–4:35 PM.' },
+                    { label: 'Timetable Verification', detail: 'Recheck the Friday New Lantao Bus 11 schedule the night before. Target 4:25 PM; use 4:35 PM only if you miss it, then 4:45 PM as the second fallback.' },
                     { label: 'Boarding Buffer', detail: 'Begin walking toward Tai O terminus 15 minutes ahead. Do not allow a boat ride or snack line to jeopardize this connection.' },
                     { label: 'Board Bus 11', detail: 'Tap Octopus on New Lantao Bus 11 at Tai O Terminus. Do NOT backtrack to cable car; Bus 11 takes you directly to Tung Chung MTR.' },
                     { label: 'Ride', detail: 'Enjoy 45-minute coastal drive along South Lantau Road.' },
@@ -5873,7 +5930,7 @@
             },
             foodRecommendation: 'Packed 7-ELEVEN protein lunch → Tai O Bakery 大澳餅店 → Australia Dairy Company 澳洲牛奶公司',
             proteinPlan: "Target ~150 g: front-load breakfast with eggs + milk/soy milk + chicken/lean protein, then use the packed 7-ELEVEN lunch as a deliberate protein meal at Ngong Ping. At Australia Dairy Company prioritize eggs/ham/meat and milk-based items; Tai O Bakery is just a shared sweet. · 目標約150g：早餐先用蛋＋牛奶／豆漿＋雞胸／瘦肉打底；昂坪直接吃事先準備的7-ELEVEN高蛋白午餐。澳洲牛奶公司以蛋、火腿／肉類與奶類為主；大澳餅店沙翁只是分食甜點。",
-            insiderTip: 'A 9:30 AM hotel departure works: weekday Ngong Ping 360 opens at 10:00, and the current Bus 21 schedule still gives you the 1:20 PM Ngong Ping → Tai O departure. There is enough time for a 10:30–10:45 Crystal Cabin, a focused Big Buddha/Po Lin pass and the packed lunch without creating an unnecessary early start. The night walk then uses Kowloon Park and the TST harbourfront naturally on the way back.'
+            insiderTip: 'A 9:30 AM hotel departure works. Protect the 1:20 PM Bus 21, then be back at Tai O terminus by ~4:10 PM for the 4:25 PM Bus 11; 4:35 and 4:45 are backups, not the plan.'
           },
 
           {
@@ -5890,27 +5947,10 @@
             weatherExpected: '~20°C • Mild evening conditions',
             rainBackupAvailable: true,
             easyPlan: "If tired, shorten time at Brands Expo. Preserve 5:30 PM Aqua Luna sunset sail.",
-            leaveByTime: '9:30 AM for gym',
+            leaveByTime: '10:25 AM from hotel',
             timeline: [
               {
-                time: '9:30 AM – 11:25 AM',
-                title: 'Routine Gym — Private 60-min Pod',
-                titleTc: 'The Gym Pod @ 戲曲中心',
-                icon: 'dumbbell',
-                notes: 'Second HK maintenance session. Check the live app price; do not assume the first-hour HKFIT100 promo can be reused.',
-                navigateTo: '88 Austin Road West, West Kowloon, Hong Kong',
-                addressTc: '香港九龍西九文化區柯士甸道西88號 戲曲中心',
-                guide: {
-                  steps: [
-                    { label: 'Arrival', detail: 'Leave Sasa around 9:30 AM. Target a 9:45–10:45 AM two-slot reservation for the 60-minute workout.' },
-                    { label: 'Price', detail: 'Verify the live 60-minute / 3-person checkout total in the app. Do NOT assume HKFIT100 is reusable for this second session.' },
-                    { label: 'Training', detail: 'Approximately 9:45–10:45 AM. Moderate 60-minute maintenance session. Smith/cable/dumbbell rotation. 2–3 reps in reserve. No failure or high-volume legs.' },
-                    { label: 'Shower & Central', detail: 'Return to Sasa immediately afterward because Gym Pod does not advertise showers. Quick shower/change, then continue to Central for the noon dim-sum target.' }
-                  ]
-                }
-              },
-                            {
-                time: '12:00 PM – 1:00 PM',
+                time: '11:00 AM – 12:00 PM',
                 title: "Maxim's Palace City Hall (backup: One Dim Sum Central) — Trolley Dim Sum",
                 titleTc: '美心皇宮大會堂（備案：一點心中環）・推車點心',
                 icon: 'utensils',
@@ -5920,7 +5960,7 @@
                 guide: {
                   intro: 'Experience-first dim sum with a hard queue guardrail.',
                   steps: [
-                    { label: 'Arrival', detail: 'After the gym/shower, head to City Hall for 11:00 AM opening-area lunch.' },
+                    { label: 'Arrival', detail: 'Leave Sasa around 10:25 AM and head straight to City Hall using the fastest sensible MTR / harbour-crossing route. Target the 11:00 AM opening-area lunch without manufacturing an early morning activity.' },
                     { label: 'Primary', detail: "At Maxim's Palace City Hall 美心皇宮, use the trolley service for har gow, siu mai, char siu bao, steamed ribs and one dessert. Share 4–6 baskets across 3." },
                     { label: 'Queue Rule', detail: 'Weekend lines can be substantial. If the quoted/visible wait is >15 minutes, DO NOT wait 30–60 minutes for nostalgia.' },
                     { label: 'Backup', detail: 'Walk to One Dim Sum Central 一點心中環, 44 Lyndhurst Terrace, for fast dim sum. It is the explicit high-rated fallback.' },
@@ -5930,23 +5970,23 @@
                 }
               },
               {
-                time: '1:10 PM – 1:50 PM',
+                time: '12:10 PM – 12:50 PM',
                 title: 'Ding-Ding Tram to Causeway Bay',
-                titleTc: '香港電車：上環 → 銅鑼灣',
+                titleTc: '香港電車：中環 → 銅鑼灣',
                 icon: 'train',
                 notes: 'Board historic double-decker Ding-Ding tram on Des Voeux Rd Central and enjoy an unhurried ride across HK Island to Victoria Park.',
-                navigateTo: 'Des Voeux Road Central, Sheung Wan, Hong Kong',
+                navigateTo: 'Des Voeux Road Central, Central, Hong Kong',
                 guide: {
                   intro: 'Upper-deck ride on world’s only fully double-decker tram fleet.',
                   steps: [
-                    { label: 'Boarding', detail: 'Board at eastbound tram stop on Des Voeux Rd Central through rear gate (pay only upon exiting at front).' },
+                    { label: 'Boarding', detail: 'From City Hall / Central, walk to a convenient eastbound stop on Des Voeux Road Central and board through the rear gate (pay only upon exiting at front).' },
                     { label: 'Upper Deck Front', detail: 'Climb spiral stairs to upper deck; sit in front rows for unobstructed view through street signboards.' },
                     { label: 'Alight', detail: 'Alight at Paterson Street / Victoria Park stop in Causeway Bay. Tap Octopus at front turnstile.' }
                   ]
                 }
               },
               {
-                time: '2:00 PM – 3:30 PM',
+                time: '1:00 PM – 3:30 PM',
                 title: '60th Brands Expo at Victoria Park',
                 titleTc: '維多利亞公園 (第60屆香港工展會)',
                 icon: 'sparkles',
@@ -6048,7 +6088,7 @@
             },
             foodRecommendation: 'Maxim\'s Palace City Hall → Yat Tung Heen 逸東軒 → Kai Kai Dessert 佳佳甜品',
             proteinPlan: 'Target ~150 g: trolley dim sum can be high-protein if you prioritize shrimp dumplings, siu mai, beef balls, steamed ribs and roast meats. At the finale dinner go seafood/meat-heavy; treat expo samples, egg tarts and tong sui as shared extras. · 目標約150g：推車點心可很高蛋白，先吃蝦餃、燒賣、牛肉丸、蒸排骨與燒味。最後晚餐以海鮮／肉為主；展銷會試吃、蛋撻、糖水當分食加碼。',
-            insiderTip: 'The old 8:30 AM gym departure was unnecessary. A 9:30 AM start still fits gym → noon dim sum → Brands Expo → 5:10 PM Aqua Luna check-in; keep the strict dim-sum queue fallback so the fixed harbour sail remains protected.'
+            insiderTip: 'The second Hong Kong gym session is gone. Leave around 10:25 AM for 11:00 dim sum, then Ding-Ding → Brands Expo; this protects the 5:10 PM Aqua Luna check-in without wasting the final morning on routine lifting.'
           },
 
           {
@@ -6081,7 +6121,6 @@
                     { label: 'Carry-On Check', detail: 'Before leaving hotel, ensure all power banks, lithium batteries, passports, medication, and fragile goods stay in carry-on daypacks.' },
                     { label: 'Taxi to Kowloon Station', detail: 'For luggage, use a ~5-minute red metered taxi from the hotel to Kowloon Station In-Town Check-In Hall. Street/stand taxi first; DiDi Taxi / Uber Meter Taxi only if dispatch is more convenient.' },
                     { label: 'Airport Express Turnstile', detail: 'Enter check-in area using valid Airport Express ticket or Octopus (fare deducted upon entering; tap same payment at platform later).' },
-                    { label: 'Octopus 9-Transaction Rule', detail: 'If using Octopus to enter the In-town Check-in area, the same Octopus must later be used at the Airport Express platform and there should not be more than 9 Octopus transaction records in between. Use another payment method for incidental shopping before returning if convenient.' },
                     { label: 'Smart Check-in Kiosk', detail: 'Scan passport, confirm flight details, select seats, and print physical boarding passes and luggage tags.' },
                     { label: 'Self Bag Drop', detail: 'Attach bag tags, place luggage onto self bag-drop belt, scan tag barcode, and collect bag claim receipts.' },
                     { label: 'Hands-Free Freedom', detail: 'Once bags are accepted, walk out of station completely luggage-free.' }
@@ -6508,6 +6547,38 @@
             body.setAttribute('data-day-changing', '');
             this._dayChangeTimer = window.setTimeout(() => body.removeAttribute('data-day-changing'), 700);
           });
+        },
+
+        /*
+          Swipe the hero left/right to step days. Scoped to the hero card only — a
+          full-page horizontal handler steals vertical scroll, and the day rail below is
+          itself a horizontal scroller that must keep its own gestures.
+
+          Horizontal intent is enforced by CSS (`touch-action: pan-y` on the hero) rather
+          than preventDefault: the browser keeps vertical panning native and only hands
+          over sideways movement, so a diagonal thumb-scroll can never be swallowed. The
+          thresholds below are a second guard for slow or ambiguous drags.
+
+          Additive, never the only way: the day rail stays the visible control, which is
+          what both the HIG and the swipe-affordance guidance require of any gesture.
+        */
+        onHeroTouchStart(event) {
+          if (!event.touches || event.touches.length !== 1) { this._heroSwipe = null; return; }
+          const touch = event.touches[0];
+          this._heroSwipe = { x: touch.clientX, y: touch.clientY, at: Date.now() };
+        },
+
+        onHeroTouchEnd(event) {
+          const start = this._heroSwipe;
+          this._heroSwipe = null;
+          if (!start || !event.changedTouches || !event.changedTouches.length) return;
+          const touch = event.changedTouches[0];
+          const dx = touch.clientX - start.x;
+          const dy = touch.clientY - start.y;
+          if (Math.abs(dx) < 56) return;              // too short to be deliberate
+          if (Math.abs(dx) < Math.abs(dy) * 1.6) return; // too diagonal — treat as a scroll
+          if (Date.now() - start.at > 600) return;    // too slow — treat as a drag, not a flick
+          this.switchRelativeDay(dx < 0 ? 1 : -1);    // drag left reveals the next day
         },
 
         switchRelativeDay(delta) {

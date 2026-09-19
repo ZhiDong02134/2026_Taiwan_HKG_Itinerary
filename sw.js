@@ -10,12 +10,15 @@
   Bump CACHE when older cache namespaces must be evicted.
 */
 const CACHE_PREFIX = 'twhk-2026-';
-const CACHE = `${CACHE_PREFIX}v10`;
+const CACHE = `${CACHE_PREFIX}v13`;
 const SHELL = [
   './index.html',
   './manifest.webmanifest',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './icon-maskable-192.png',
+  './icon-maskable-512.png',
+  './apple-touch-icon.png'
 ];
 
 // Every navigation is stored and retrieved under this one key. The app writes its current
@@ -27,10 +30,21 @@ const SHELL_KEY = new URL('./index.html', self.location).href;
 const keyFor = request =>
   request.mode === 'navigate' ? new Request(SHELL_KEY, { credentials: 'same-origin' }) : request;
 
+// cache.add() rejects on a 404, so a single missing file in SHELL used to reject the
+// whole Promise.all, fail waitUntil, and make the browser discard the worker entirely —
+// leaving the app with no offline copy at all. Verified by accident: a deploy whose
+// icons lagged its sw.js registered zero workers while still creating an empty cache.
+// Only the shell document is worth failing over; every other entry is best-effort, so a
+// forgotten icon degrades one asset instead of the entire offline story.
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE)
-      .then(cache => Promise.all(SHELL.map(url => cache.add(url))))
+      .then(async cache => {
+        await cache.add(SHELL[0]);
+        await Promise.all(
+          SHELL.slice(1).map(url => cache.add(url).catch(() => {}))
+        );
+      })
       .then(() => self.skipWaiting())
   );
 });
