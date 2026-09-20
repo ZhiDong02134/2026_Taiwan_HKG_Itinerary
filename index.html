@@ -2854,6 +2854,8 @@
       reads as coming forward from the header that summoned it.
     */
     .global-search-backdrop {
+      inset: 0;
+      z-index: 90;
       background: color-mix(in oklab, var(--bg) 82%, transparent);
       -webkit-backdrop-filter: blur(14px) saturate(120%);
       backdrop-filter: blur(14px) saturate(120%);
@@ -3002,6 +3004,9 @@
       .global-search-panel { max-height: min(78vh, 600px); border-radius: 20px; }
       .global-search-backdrop { padding-left: 10px; padding-right: 10px; }
     }
+    @media (min-width: 768px) {
+      .today-pane { padding-bottom: calc(100dvh - 120px); }
+    }
   </style>
 
 </head>
@@ -3148,7 +3153,7 @@
     <h1 class="visually-hidden">Taiwan + Hong Kong 2026</h1>
 
     <!-- TAB 1: TODAY -->
-    <section x-show="activeTab === 'today'" x-cloak class="tab-pane space-y-5">
+    <section x-show="activeTab === 'today'" x-cloak class="today-pane tab-pane space-y-5">
       <template x-if="isPreTrip && nextPlanAction">
         <button type="button" class="pretrip-command" @click="openPlan(nextPlanAction.kind)">
           <span class="pretrip-icon"><i data-lucide="sparkles"></i></span>
@@ -4253,7 +4258,7 @@
                 navigateTo: '台北市萬華區貴陽街二段218號',
                 addressTc: '台北市萬華區貴陽街二段218號',
                 guide: {
-                  intro: 'Treat this as a high-energy street spectacle, not a temple visit. The group is not expected to watch repetitive procession cycles for hours.',
+                  intro: 'Treat this as a high-energy street spectacle, not a temple visit; one strong procession cycle is enough.',
                   steps: [
                     { label: 'Live Route First', detail: '48–72h before Nov 30, check the official Qingshan Temple route/posting and identify where the main procession will be around late afternoon. Go to the action; do not camp at the temple for hours.' },
                     { label: 'Target Window', detail: 'Aim for about 90–120 minutes of actual viewing. If the first 60–90 minutes already includes 八家將, deity figures, palanquins, pyrotechnics and several troupe types, you have seen the high-value part.' },
@@ -5130,7 +5135,7 @@
                   intro: 'Fast retro-shopping/architecture stop before using a short metered taxi to Anping.',
                   steps: [
                     { label: 'Hayashi First', detail: 'Spend ~25–30 min inside Hayashi: ride the vintage elevator, browse Taiwan-made goods, and do the rooftop/view quickly. Do not turn it into a shopping marathon.' },
-                    { label: 'Confucius District', detail: 'Walk the surrounding Fuzhong Street / Confucius Temple cultural block for ~15–20 min. Because the group is not temple-focused, skip a long interior religious/history visit.' },
+                    { label: 'Confucius District', detail: 'Walk the surrounding Fuzhong Street / Confucius Temple cultural block for ~15–20 min, then skip a long interior religious/history visit.' },
                     { label: 'Taxi Out', detail: 'Leave around 1:55 PM and use a metered taxi directly to Anping Tree House / Fort area. For 3 people, the small split fare is worth the large bus-time saving; use Uber / 55688 / LINE GO dispatch rather than waiting around for a street cab.' }
                   ],
                   exit: 'Metered taxi toward Anping by ~1:55 PM.'
@@ -5147,7 +5152,7 @@
                 guide: {
                   intro: 'Taiwan’s oldest Dutch settlement fortress and an overgrown colonial warehouse.',
                   steps: [
-                    { label: 'Tree House First', detail: 'Go straight to Anping Tree House for ~25 min: banyan roots, upper walkways, photos. This is the most visually distinctive stop for your group.' },
+                    { label: 'Tree House First', detail: 'Go straight to Anping Tree House for ~25 min: banyan roots, upper walkways and photos. This is the area’s most visually distinctive stop.' },
                     { label: 'Fort Quick Pass', detail: 'Move to Anping Fort for ~15–20 min. Do the key rampart/viewpoint/photo stop only; skip deep exhibit reading.' },
                     { label: 'Old Street Snacks', detail: 'Use the remaining ~20–25 min for Anping Old Street: one snack/drink, quick browse, then leave. No souvenir-store crawl.' },
                     { label: 'Taxi Rule', detail: 'At ~3:25–3:30 PM, use a metered taxi back toward Shennong / Haian. Split 3 ways, this is a high-value time saver versus slow local buses.' }
@@ -5247,7 +5252,7 @@
             },
             foodRecommendation: '友愛牛肉湯（late-day backup: 阿財牛肉湯）→ 八寶彬圓仔惠 → 阿誠牛肉湯 / 阿堯師雞蛋糕',
             proteinPlan: 'Target ~150 g: Tainan is easy if you use fresh beef soup as the lunch anchor—order extra beef and add eggs/tofu or another meat dish. At Wusheng prioritize grilled chicken, squid, oysters/seafood and meat skewers; share danzai noodles, wa kuih and sweets. · 目標約150g：台南最簡單的做法是把溫體牛肉湯當午餐主角，可加牛肉，再配蛋／豆腐或另一份肉。武聖夜市優先烤雞、魷魚、蚵仔／海鮮與肉串；擔仔麵、碗粿、甜食分食。',
-            insiderTip: 'Tainan transport rule for 3 Chinese-speaking travelers: walk within each cluster; between distant clusters use a metered/app-dispatched taxi (Uber / 55688 / LINE GO) when it saves ~15+ minutes or an awkward transfer. Check Uber only as a fare/pickup comparison. Do not optimize the day around slow local buses.'
+            insiderTip: 'Tainan transport rule: walk within each cluster; between distant clusters use a metered/app-dispatched taxi (Uber / 55688 / LINE GO) when it saves ~15+ minutes or an awkward transfer. Check Uber only as a fare/pickup comparison. Do not optimize the day around slow local buses.'
           },
 
           {
@@ -5330,7 +5335,7 @@
                 navigateTo: 'Zhaoping Park, Alishan Township, Chiayi County',
                 addressTc: '嘉義縣阿里山鄉沼平公園',
                 guide: {
-                  intro: 'Continuous high-mountain forest walk tailored to a fit group that values nature over temples/museums.',
+                  intro: 'Continuous high-mountain forest walk focused on scenery and steady movement.',
                   steps: [
                     { label: 'Zhaoping & Forest', detail: 'Start through Zhaoping Park and the signed forest boardwalks. Keep a steady walking pace rather than lingering at every photo platform.' },
                     { label: 'Sister Ponds', detail: 'Pass Sister Ponds (姊妹潭) as a short scenic stop. Photos, quick loop, continue.' },
@@ -5452,7 +5457,7 @@
                 navigateTo: 'Kaohsiung Lighthouse, Qijin District, Kaohsiung',
                 addressTc: '高雄市旗津區旗下巷34號',
                 guide: {
-                  intro: 'Efficient active coastal loop using the group’s walking capacity instead of spending half a day on the island.',
+                  intro: 'Efficient active coastal loop covering the headland without spending half a day on the island.',
                   steps: [
                     { label: 'Headland Climb', detail: 'Walk from the ferry area toward the Cihou headland. Take the signed uphill path to the fort/lighthouse viewpoints.' },
                     { label: 'Fort', detail: 'Treat Cihou Fort as a quick architecture/viewpoint stop, not a history lesson. Spend roughly 15–20 minutes.' },
@@ -5816,7 +5821,7 @@
                 title: 'Sheung Wan ➔ Central High-Mileage Urban Walk',
                 titleTc: '上環 → 中環高密度街區步行',
                 icon: 'footprints',
-                notes: 'Replaces the forced mahjong workshop. Walk a dense local route: dried-seafood streets, market lanes, Cat Street if interesting, Central Market and Mid-Levels escalator. Free, flexible and much better aligned with your group. / 不為了手作而手作。',
+                notes: 'Replaces the forced mahjong workshop. Walk a dense local route: dried-seafood streets, market lanes, Cat Street if interesting, Central Market and Mid-Levels escalator. Free, flexible and easy to shorten or extend. / 不為了手作而手作。',
                 navigateTo: 'Sheung Wan, Hong Kong',
                 addressTc: '香港上環／中環',
                 guide: {
@@ -6889,12 +6894,12 @@
           this.playDayChange();
         },
 
-        selectDayFromStrip(dayId) {
+        selectDayFromStrip(dayId, positionPlan = { targetKind: 'day-summary' }) {
           if (!dayId || !this.days.some(day => day.id === dayId)) return;
           if (dayId === this.activeDayId) this.smartLaunchActive = false;
           else this.switchDay(dayId);
           this.$nextTick(() => requestAnimationFrame(() => {
-            this.positionRelevantPlan({ targetKind: 'day-summary' }, 'auto');
+            this.positionRelevantPlan(positionPlan, 'auto');
           }));
         },
 
@@ -7121,13 +7126,9 @@
         openGlobalSearchResult(result) {
           if (!result) return;
           this.closeGlobalSearch();
-          this.selectDayFromStrip(result.dayId);
-          // Reuses the existing positioner, which measures whatever chrome is currently
-          // sticky rather than assuming a fixed height — so a result lands below the pinned
-          // rail instead of underneath it.
-          this.$nextTick(() => window.setTimeout(() => {
-            this.positionRelevantPlan({ targetKind: result.targetKind, eventIndex: result.eventIndex }, 'auto');
-          }, 260));
+          const positionPlan = { targetKind: result.targetKind, eventIndex: result.eventIndex };
+          this.selectDayFromStrip(result.dayId, positionPlan);
+          this.$nextTick(() => window.setTimeout(() => this.positionRelevantPlan(positionPlan, 'auto'), 100));
         },
 
         switchRelativeDay(delta) {
@@ -7314,7 +7315,11 @@
           if (!target) return;
           const stickyBottom = [...document.querySelectorAll('.app-chrome, .day-strip-wrap')]
             .filter(element => getComputedStyle(element).position === 'sticky')
-            .reduce((bottom, element) => Math.max(bottom, element.getBoundingClientRect().bottom), 0);
+            .reduce((bottom, element) => {
+              const top = parseFloat(getComputedStyle(element).top);
+              const pinnedBottom = (Number.isFinite(top) ? top : 0) + element.getBoundingClientRect().height;
+              return Math.max(bottom, pinnedBottom);
+            }, 0);
           const targetTop = target.getBoundingClientRect().top + window.scrollY;
           const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
           const root = document.documentElement;
