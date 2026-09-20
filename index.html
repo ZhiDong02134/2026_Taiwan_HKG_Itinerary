@@ -1067,7 +1067,9 @@
       --radius-md: 18px;
       --radius-lg: 24px;
       --radius-xl: 30px;
-      --ease-ui: cubic-bezier(.2,.8,.2,1);
+      /* 109 call sites. Apple's .smooth (zeta=1.0) is the exact analogue of this
+         no-overshoot decel, and settles like a real spring rather than stopping dead. */
+      --ease-ui: var(--ease-spring-smooth);
       --ease-emphasized: cubic-bezier(.16,1,.3,1);
       --ease-spring: cubic-bezier(.2,.86,.25,1);
       --ambient-city: oklch(76% .105 190);
@@ -1083,7 +1085,20 @@
     }
     @supports (transition-timing-function: linear(0, 1)) {
       :root {
-        --ease-spring: linear(0, .012, .048, .108, .205, .35, .535, .735, .9, 1.025, 1.065, 1.058, 1.034, 1.013, 1.003, 1);
+        /* The hand-drawn spring this replaces was a good approximation — it overshot to
+           1.065 and settled — but it was drawn by eye. These are the actual damped
+           harmonic oscillators behind SwiftUI's presets, sampled into linear():
+           .smooth (ζ=1.0), .snappy (ζ=0.85), .bouncy (ζ=0.70). Apple publishes `bounce`,
+           and its own worked example — Spring(duration:0.5, bounce:0.3) resolving to
+           stiffness 157.9, damping 17.6 — confirms ζ = 1 − bounce and that `duration` is
+           the undamped natural period, which makes the conversion exact.
+
+           --ease-spring keeps its name and stays the default "pops" curve so every
+           existing call site inherits the corrected physics unchanged. */
+        --ease-spring-smooth: linear(0, 0.0249, 0.0852, 0.1645, 0.252, 0.3404, 0.4253, 0.5041, 0.5756, 0.6393, 0.6952, 0.7437, 0.7854, 0.821, 0.8512, 0.8767, 0.8981, 0.916, 0.9309, 0.9433, 0.9536, 0.962, 0.969, 0.9747, 0.9794, 0.9833, 1);
+        --ease-spring-snappy: linear(0, 0.0255, 0.0888, 0.1742, 0.2702, 0.3686, 0.464, 0.5528, 0.633, 0.7036, 0.7646, 0.8163, 0.8593, 0.8945, 0.9229, 0.9454, 0.9629, 0.9763, 0.9863, 0.9936, 0.9987, 1.0022, 1.0044, 1.0056, 1.0062, 1.0063, 1);
+        --ease-spring-bouncy: linear(0, 0.026, 0.0926, 0.1848, 0.2908, 0.4013, 0.5096, 0.611, 0.7025, 0.7823, 0.85, 0.9057, 0.95, 0.9841, 1.0092, 1.0266, 1.0377, 1.0438, 1.0459, 1.0452, 1.0425, 1.0384, 1.0336, 1.0286, 1.0235, 1.0188, 1);
+        --ease-spring: var(--ease-spring-snappy);
       }
     }
 
@@ -2778,6 +2793,215 @@
     @media (prefers-reduced-motion: reduce) {
       .leave-by-chip-urgent { animation: none !important; }
     }
+
+    /* ---------- Scroll-driven timeline settling ----------
+       Cards settle as they enter the viewport instead of being fully present before you
+       reach them, which is what makes a long day feel like it is being revealed rather
+       than simply scrolled past. Costs no JavaScript and no scroll listener: the browser
+       drives it off the scroll position directly (animation-timeline landed in Safari 26).
+
+       Transform and opacity only, so it stays on the compositor. @supports means older
+       iOS renders the cards normally with nothing missing, and the no-preference gate
+       means reduced-motion users never see it at all. */
+    @supports (animation-timeline: view()) {
+      @media (prefers-reduced-motion: no-preference) {
+        /* !important because an earlier layer sets `.timeline-card { animation: none }` as
+           the resting state — day-change staggering re-enables it situationally. Without
+           this the scroll-driven reveal parses, registers, and silently never runs. */
+        .timeline-card {
+          animation: timeline-settle linear both !important;
+          animation-timeline: view() !important;
+          animation-range: entry 4% entry 26% !important;
+        }
+        @keyframes timeline-settle {
+          from { opacity: .5; transform: translate3d(0, 10px, 0); }
+          to   { opacity: 1; transform: none; }
+        }
+      }
+    }
+
+    /* ---------- Global itinerary search ---------- */
+    /* Locks the page behind the overlay so a scroll gesture inside the results list cannot
+       chain through to the itinerary underneath it. */
+    html.global-search-open, html.global-search-open body { overflow: hidden; }
+
+    /*
+      The trigger is painted to match this header rather than to announce itself: the brand
+      button is transparent at rest and the status pill is a soft capsule, so a bordered box
+      would be the only hard-edged control in the row. Full 44px hit area, 11px radius to
+      echo .brand-mark, and the same hover wash .brand-button uses.
+    */
+    .global-search-trigger {
+      width: 44px; min-width: 44px; height: 44px;
+      border: 0;
+      border-radius: 11px;
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      background: transparent;
+      transition: color var(--motion-fast) var(--ease-ui), background-color var(--motion-fast) var(--ease-ui), transform var(--motion-press) var(--ease-ui);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .global-search-trigger:hover { color: var(--text); background: rgb(255 255 255 / .035); }
+    .global-search-trigger:active { transform: scale(.94); background: rgb(255 255 255 / .06); }
+    .global-search-trigger svg { width: 16px; height: 16px; }
+
+    /*
+      Entry/exit animation. Toasts in this document already prove the pattern:
+      @starting-style supplies the entry state, and `display … allow-discrete` keeps the
+      element alive long enough to animate out, so x-show's display flip becomes a real
+      presentation rather than a cut. The panel eases down and up from just under 1 so it
+      reads as coming forward from the header that summoned it.
+    */
+    .global-search-backdrop {
+      background: color-mix(in oklab, var(--bg) 82%, transparent);
+      -webkit-backdrop-filter: blur(14px) saturate(120%);
+      backdrop-filter: blur(14px) saturate(120%);
+      padding-top: max(calc(env(safe-area-inset-top, 0px) + 56px), 68px);
+      opacity: 0;
+      transition:
+        opacity 200ms var(--ease-ui),
+        display 200ms allow-discrete;
+    }
+    .global-search-backdrop.is-open { opacity: 1; }
+    .global-search-backdrop.is-open .global-search-panel { opacity: 1; transform: none; }
+    /*
+      Both mechanisms, deliberately. The class alone gives a symmetric exit but races on
+      entry — Alpine flips x-show's display and adds the class in the same tick, so the
+      element can reach its open state before the browser ever paints a start frame, and
+      the entry silently doesn't animate. @starting-style names that first frame explicitly,
+      so arrival no longer depends on class-application timing.
+    */
+    @starting-style {
+      .global-search-backdrop.is-open { opacity: 0; }
+      .global-search-backdrop.is-open .global-search-panel { opacity: 0; transform: translateY(-10px) scale(.975); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .global-search-backdrop, .global-search-panel { transition: none !important; }
+    }
+    .global-search-panel {
+      width: 100%; max-width: 560px;
+      max-height: min(72vh, 620px);
+      display: flex; flex-direction: column;
+      border: 1px solid var(--stroke);
+      border-radius: 24px;
+      background: var(--surface);
+      box-shadow: 0 32px 80px rgb(0 0 0 / .55), inset 0 1px 0 rgb(255 255 255 / .04);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-10px) scale(.975);
+      transition:
+        opacity 220ms var(--ease-emphasized),
+        transform 260ms var(--ease-emphasized);
+    }
+    .global-search-head { padding: 12px 12px 10px; border-bottom: 1px solid var(--stroke); }
+    .global-search-head-row { display: flex; align-items: center; gap: 8px; }
+    .global-search-input-shell {
+      flex: 1; min-width: 0;
+      display: grid; grid-template-columns: 20px minmax(0, 1fr) 44px;
+      align-items: center;
+      min-height: 50px;
+      padding-left: 12px;
+      border: 1px solid color-mix(in oklab, var(--teal) 20%, var(--stroke));
+      border-radius: 16px;
+      background: rgb(0 0 0 / .22);
+      color: var(--muted);
+      transition: border-color var(--motion-fast) var(--ease-ui), box-shadow var(--motion-fast) var(--ease-ui), background-color var(--motion-fast) var(--ease-ui);
+    }
+    /*
+      Focus indicator lives on the shell, not the input. The global `input:focus-visible`
+      rule is a 2px outline at offset 3px; this input is borderless and square inside a
+      rounded shell, so that ring would draw as a hard rectangle across the field.
+      box-shadow follows border-radius, so the indicator traces the field instead.
+    */
+    .global-search-input-shell:focus-within {
+      border-color: color-mix(in oklab, var(--teal) 44%, var(--stroke));
+      box-shadow: 0 0 0 2px var(--stroke-focus), 0 0 0 6px color-mix(in oklab, var(--teal) 12%, transparent);
+      background: rgb(0 0 0 / .30);
+    }
+    .global-search-input {
+      width: 100%; min-width: 0; min-height: 48px;
+      padding: 0 8px 0 10px;
+      border: 0 !important;
+      background: transparent !important;
+      color: var(--text) !important;
+      /* 16px is the floor that stops iOS zooming the viewport on focus. */
+      font-size: 16px !important;
+      -webkit-appearance: none; appearance: none;
+    }
+    /* Must match the pseudo-class: the global rule is `input:focus-visible` (0,1,1), which
+       a bare class cannot override even with !important. */
+    .global-search-input:focus,
+    .global-search-input:focus-visible { outline: none !important; box-shadow: none !important; }
+    .global-search-input::-webkit-search-cancel-button { display: none; }
+    .global-search-input::placeholder { color: var(--muted); opacity: .72; }
+    /* 44px, not 40 — this is a real tap target inside a field people use one-handed. */
+    .global-search-clear, .global-search-close {
+      width: 44px; height: 44px; min-width: 44px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 0; border-radius: 12px;
+      background: transparent; color: var(--muted);
+      transition: color var(--motion-fast) var(--ease-ui), background-color var(--motion-fast) var(--ease-ui);
+    }
+    .global-search-close { width: 44px; height: 44px; min-width: 44px; border: 1px solid var(--stroke); background: rgb(255 255 255 / .03); }
+    .global-search-clear:hover, .global-search-close:hover { color: var(--text); background: rgb(255 255 255 / .07); }
+
+    .global-search-body { padding: 12px; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+    .global-search-meta {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 0 2px 10px; font-size: 11.5px; color: var(--muted);
+    }
+    .global-search-shortcut {
+      padding: 3px 7px; border-radius: 7px; border: 1px solid var(--stroke);
+      background: rgb(255 255 255 / .03); font-size: 10px; font-family: ui-monospace, SFMono-Regular, monospace;
+    }
+    .search-suggestion-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+    .search-suggestion {
+      display: inline-flex; align-items: center; gap: 6px;
+      min-height: 40px; padding: 0 12px;
+      border: 1px solid var(--stroke); border-radius: 999px;
+      background: rgb(255 255 255 / .03); color: var(--text-2);
+      font-size: 12.5px; font-weight: 600;
+      transition: color var(--motion-fast) var(--ease-ui), border-color var(--motion-fast) var(--ease-ui), background-color var(--motion-fast) var(--ease-ui), transform var(--motion-press) var(--ease-ui);
+    }
+    .search-suggestion:hover { color: var(--text); border-color: color-mix(in oklab, var(--teal) 34%, var(--stroke)); background: color-mix(in oklab, var(--teal) 9%, var(--surface)); }
+    .search-suggestion:active { transform: scale(.96); }
+
+    .global-search-results { display: flex; flex-direction: column; gap: 8px; }
+    .global-search-result {
+      width: 100%;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      min-height: 44px; padding: 12px 13px;
+      text-align: left;
+      border: 1px solid var(--stroke); border-radius: 16px;
+      background: var(--surface-2); color: var(--text);
+      transition: border-color var(--motion-fast) var(--ease-ui), background-color var(--motion-fast) var(--ease-ui), transform var(--motion-press) var(--ease-ui);
+    }
+    .global-search-result:hover { border-color: color-mix(in oklab, var(--teal) 34%, var(--stroke)); background: color-mix(in oklab, var(--teal) 7%, var(--surface-2)); }
+    .global-search-result:active { transform: scale(.985); }
+    .search-result-dayline { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 10.5px; color: var(--muted); font-weight: 650; }
+    .search-result-day {
+      padding: 2px 6px; border-radius: 6px;
+      background: color-mix(in oklab, var(--teal) 16%, transparent);
+      color: color-mix(in oklab, var(--teal) 80%, white 20%);
+      font-family: ui-monospace, SFMono-Regular, monospace; font-size: 10px;
+    }
+    .search-result-title { margin-top: 4px; font-size: 13.5px; font-weight: 680; line-height: 1.3; }
+    .search-result-matches { display: flex; flex-direction: column; gap: 3px; margin-top: 6px; }
+    .search-result-match { display: flex; align-items: flex-start; gap: 5px; font-size: 11.5px; color: var(--text-2); line-height: 1.35; }
+    .search-result-arrow { flex: 0 0 auto; color: var(--muted); }
+    .search-empty {
+      display: flex; flex-direction: column; gap: 5px;
+      padding: 22px 16px; text-align: center;
+      border: 1px dashed var(--stroke); border-radius: 16px;
+      color: var(--muted); font-size: 12.5px;
+    }
+    .search-empty strong { color: var(--text); font-size: 13.5px; font-weight: 700; }
+
+    @media (max-width: 420px) {
+      .global-search-panel { max-height: min(78vh, 600px); border-radius: 20px; }
+      .global-search-backdrop { padding-left: 10px; padding-right: 10px; }
+    }
   </style>
 
 </head>
@@ -2814,12 +3038,111 @@
         <button type="button" @click="switchTab('toolkit')" :class="activeTab === 'toolkit' ? 'is-active' : ''" :aria-current="activeTab === 'toolkit' ? 'page' : null" class="nav-item"><i data-lucide="briefcase" class="w-3.5 h-3.5"></i><span>Toolkit</span></button>
       </nav>
 
+      <button id="global-search-trigger" type="button" class="global-search-trigger shrink-0"
+              @click="openGlobalSearch()"
+              aria-label="Search itinerary activities and places"
+              title="Search itinerary (Ctrl/⌘ K)">
+        <i data-lucide="search" class="w-4 h-4" aria-hidden="true"></i>
+      </button>
+
       <div class="status-pill font-mono shrink-0" title="Trip status">
         <span class="status-dot" aria-hidden="true"></span>
         <span class="status-full truncate" x-text="countdownText"></span><span class="status-short" x-text="countdownShortText"></span>
       </div>
     </div>
   </header>
+
+  <!-- GLOBAL ITINERARY SEARCH -->
+  <div x-show="showGlobalSearch" x-cloak
+       :class="{ 'is-open': showGlobalSearch }"
+       class="global-search-backdrop fixed inset-0 z-[90] bg-slate-950/80 flex items-start justify-center p-4"
+       @keydown.escape.window="closeGlobalSearch()"
+       @keydown.tab="trapSearchFocus($event)">
+    <div data-modal-panel="search" role="dialog" aria-modal="true" aria-labelledby="global-search-title"
+         class="global-search-panel" @click.outside="closeGlobalSearch()">
+      <div class="global-search-head">
+        <div class="global-search-head-row">
+          <div class="global-search-input-shell">
+            <i data-lucide="search" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
+            <label id="global-search-title" for="global-itinerary-search" class="visually-hidden">Search the Taiwan and Hong Kong itinerary</label>
+            <input id="global-itinerary-search" class="global-search-input"
+                   type="search" inputmode="search" enterkeyhint="search" autocomplete="off" autocapitalize="off" spellcheck="false"
+                   x-model="globalSearchQuery"
+                   @keydown.enter.prevent="globalSearchResults[0] && openGlobalSearchResult(globalSearchResults[0])"
+                   placeholder="Search Jiufen, 九份, night market..."
+                   aria-describedby="global-search-help">
+            <button x-show="globalSearchQuery" type="button" class="global-search-clear"
+                    @click="globalSearchQuery = ''; $nextTick(() => document.getElementById('global-itinerary-search')?.focus())"
+                    aria-label="Clear itinerary search">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+          <button type="button" class="global-search-close" @click="closeGlobalSearch()" aria-label="Close itinerary search">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <p id="global-search-help" class="visually-hidden">Searches every planned day in English or Chinese. Open a result to jump to the matching activity.</p>
+      </div>
+
+      <div class="global-search-body">
+        <template x-if="!globalSearchQuery.trim()">
+          <div>
+            <div class="global-search-meta">
+              <span>Find any activity, place, meal or neighbourhood</span>
+              <span class="global-search-shortcut">⌘/Ctrl K</span>
+            </div>
+            <div class="search-suggestion-grid" aria-label="Quick itinerary searches">
+              <template x-for="term in globalSearchSuggestions" :key="term">
+                <button type="button" class="search-suggestion" @click="setGlobalSearch(term)">
+                  <i data-lucide="search" class="w-3.5 h-3.5"></i><span x-text="term"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <template x-if="globalSearchQuery.trim()">
+          <div>
+            <div class="global-search-meta" aria-live="polite" aria-atomic="true">
+              <span x-text="globalSearchResults.length ? (globalSearchResults.length + (globalSearchResults.length === 1 ? ' matching day' : ' matching days')) : 'No matching planned day'"></span>
+              <span x-show="globalSearchResults.length" class="font-mono" x-text="'for “' + globalSearchQuery.trim() + '”'"></span>
+            </div>
+
+            <div x-show="globalSearchResults.length" class="global-search-results">
+              <template x-for="result in globalSearchResults" :key="result.dayId">
+                <button type="button" class="global-search-result" @click="openGlobalSearchResult(result)"
+                        :aria-label="'Open Day ' + result.dayNum + ', ' + result.dateString + ', ' + result.title">
+                  <span class="min-w-0">
+                    <span class="search-result-dayline">
+                      <span class="search-result-day" x-text="'D' + result.dayNum"></span>
+                      <span x-text="result.dateString"></span>
+                      <span aria-hidden="true">·</span>
+                      <span x-text="result.locationLabel || result.city"></span>
+                    </span>
+                    <span class="search-result-title block" x-text="result.title"></span>
+                    <span class="search-result-matches">
+                      <template x-for="(match, matchIndex) in result.matches" :key="matchIndex">
+                        <span class="search-result-match">
+                          <i class="w-3 h-3 shrink-0 mt-0.5" :data-lucide="match.kind === 'event' ? 'map-pin' : (match.kind === 'food' ? 'utensils' : 'search')"></i>
+                          <span x-text="match.label"></span>
+                        </span>
+                      </template>
+                    </span>
+                  </span>
+                  <span class="search-result-arrow" aria-hidden="true"><i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                </button>
+              </template>
+            </div>
+
+            <div x-show="!globalSearchResults.length" class="search-empty">
+              <strong>Nothing planned under that term</strong>
+              <span>Try a place, activity, restaurant or neighbourhood — in English or Chinese.</span>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
 
   <main id="app-main" class="app-shell flex-1 max-w-5xl w-full mx-auto px-4 pt-3 md:pt-5 pb-28 md:pb-12">
     <h1 class="visually-hidden">Taiwan + Hong Kong 2026</h1>
@@ -3361,6 +3684,19 @@
       }
     }
 
+    // Flattens any field shape — string, array, or nested object — into searchable text.
+    // Day records mix all three (a plain title, an array of notes, a backups object), so the
+    // corpus builder cannot assume a shape.
+    function extractSearchText(val) {
+      if (val === null || val === undefined) return '';
+      if (typeof val === 'string' || typeof val === 'number' || typeof val === 'boolean') {
+        return String(val) + ' ';
+      }
+      if (Array.isArray(val)) return val.map(item => extractSearchText(item)).join(' ');
+      if (typeof val === 'object') return Object.values(val).map(item => extractSearchText(item)).join(' ');
+      return '';
+    }
+
     function travelOS() {
       return {
         activeTab: (() => {
@@ -3390,6 +3726,11 @@
         toasts: [],
         storageWarningShown: false,
         nowTick: Date.now(),
+        showGlobalSearch: false,
+        globalSearchQuery: '',
+        // Deliberately mixed-script: the quick picks double as a hint that Chinese queries
+        // work, which is not otherwise discoverable.
+        globalSearchSuggestions: ['Jiufen', '九份', 'Alishan', 'Tainan', '夜市', 'Hong Kong'],
 
         currencyRates: (() => {
           const cached = getStorage('twhk_fx_rates_v1', null);
@@ -6400,6 +6741,18 @@
               setTimeout(() => this.showToast('Updated to the latest version'), 900);
             }
           } catch (_) {}
+          // ⌘/Ctrl+K anywhere, and bare `/` only when not already typing — otherwise the
+          // slash key would be unusable inside the search field itself.
+          window.addEventListener('keydown', event => {
+            const target = event.target;
+            const editable = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target?.isContentEditable;
+            const commandSearch = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
+            const slashSearch = event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !editable;
+            if (!commandSearch && !slashSearch) return;
+            event.preventDefault();
+            this.openGlobalSearch();
+          });
+
           this.sanitizePersistentState();
           this.determineCurrentDay();
           this.nowTick = Date.now();
@@ -6588,6 +6941,193 @@
           if (Math.abs(dx) < Math.abs(dy) * 1.6) return; // too diagonal — treat as a scroll
           if (Date.now() - start.at > 600) return;    // too slow — treat as a drag, not a flick
           this.switchRelativeDay(dx < 0 ? 1 : -1);    // drag left reveals the next day
+        },
+
+        /* ---------- Global itinerary search ----------
+           Answers "which day is this on?" without scrolling sixteen days by hand.
+
+           Every record here is bilingual, so the corpus must carry the *Tc fields or a
+           Chinese query silently finds nothing. normalizeSearchValue is NFKC + lowercase +
+           whitespace collapse, all of which leave CJK untouched, so one code path serves
+           both scripts. */
+        normalizeSearchValue(value) {
+          return String(value ?? '').normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
+        },
+
+        getSearchLocationLabel(day) {
+          // Unlike the sibling build, which scrapes place names out of a title, these
+          // records already carry clean bilingual labels.
+          return String(day?.shortLabel || day?.city || '').trim();
+        },
+
+        buildDaySearchSources(day) {
+          // The itinerary is static for the lifetime of the page, so a day's corpus only
+          // ever needs building once.
+          if (!this._searchSourceCache) this._searchSourceCache = new Map();
+          const cached = this._searchSourceCache.get(day.id);
+          if (cached) return cached;
+
+          const sources = [];
+          const push = (kind, label, text, weight, targetKind = 'day-summary', eventIndex = null, primary = true) => {
+            const cleanLabel = String(label || '').trim();
+            const cleanText = extractSearchText(text || label).trim();
+            if (!cleanText) return;
+            sources.push({ kind, label: cleanLabel || cleanText.slice(0, 100), text: cleanText, weight, targetKind, eventIndex, primary });
+          };
+
+          push('day', day.title, [day.title, day.titleTc, day.city, day.shortLabel, day.dateString], 112);
+          push('hotel', `Base · ${day.hotelRef || day.city}`, [day.hotelRef, day.city], 80);
+          push('transit', 'Transit', day.transitSummary, 70);
+          push('food', 'Food', [day.foodRecommendation, day.proteinPlan], 68);
+
+          (day.timeline || []).forEach((item, index) => {
+            const label = `${item.time ? item.time + ' · ' : ''}${item.title || 'Timeline activity'}`;
+            push('event', label,
+              [item.time, item.title, item.titleTc, item.navigateTo, item.addressTc, item.guide, item.notes],
+              96, 'event', index);
+          });
+
+          // Prose stays searchable but secondary, so a passing mention in a rain plan never
+          // outranks the day something is actually scheduled on.
+          push('note', 'Insider tip', day.insiderTip, 52, 'day-summary', null, false);
+          push('note', 'Easy plan', day.easyPlan, 48, 'day-summary', null, false);
+          push('note', 'Rain plan', day.rainPlan, 46, 'day-summary', null, false);
+          push('note', 'Backups', day.backups, 44, 'day-summary', null, false);
+          push('note', 'Weather', day.weatherExpected, 40, 'day-summary', null, false);
+
+          this._searchSourceCache.set(day.id, sources);
+          return sources;
+        },
+
+        searchItinerary(query) {
+          const normalized = this.normalizeSearchValue(query);
+          if (!normalized) return [];
+          const tokens = normalized.split(' ').filter(Boolean);
+          const results = [];
+
+          this.days.forEach(day => {
+            const sources = this.buildDaySearchSources(day);
+            const wholeDay = this.normalizeSearchValue(sources.map(s => s.text).join(' '));
+            if (!tokens.every(token => wholeDay.includes(token))) return;
+
+            const scored = sources.map(source => {
+              const text = this.normalizeSearchValue(source.text);
+              const label = this.normalizeSearchValue(source.label);
+              const hits = tokens.filter(token => text.includes(token)).length;
+              if (!hits) return null;
+              const matchedAll = tokens.every(token => text.includes(token));
+              let score = source.weight + hits * 9;
+              if (matchedAll) score += 34;
+              if (label.includes(normalized)) score += 54;
+              if (text.includes(normalized)) score += 28;
+              if (tokens.every(token => label.includes(token))) score += 18;
+              return { ...source, score, matchedAll };
+            }).filter(Boolean).sort((a, b) => b.score - a.score);
+
+            if (!scored.length) return;
+            const direct = scored.filter(s => s.matchedAll);
+            const primaryMatch = direct.some(s => s.primary);
+            const ranked = direct.length ? direct : scored;
+            const best = ranked[0];
+            const matches = [];
+            const seen = new Set();
+            ranked.forEach(source => {
+              if (matches.length >= 2) return;
+              const key = this.normalizeSearchValue(source.label);
+              if (!key || seen.has(key)) return;
+              seen.add(key);
+              matches.push({ kind: source.kind, label: source.label });
+            });
+
+            results.push({
+              dayId: day.id,
+              dayNum: day.dayNum,
+              dateString: day.dateString,
+              city: day.city,
+              locationLabel: this.getSearchLocationLabel(day),
+              title: day.title,
+              score: best.score + (primaryMatch ? 30 : 0),
+              primaryMatch,
+              targetKind: best.targetKind,
+              eventIndex: best.eventIndex,
+              matches
+            });
+          });
+
+          const hasPrimary = results.some(r => r.primaryMatch);
+          return results
+            .filter(r => !hasPrimary || r.primaryMatch)
+            .sort((a, b) => b.score - a.score || String(a.dayNum).localeCompare(String(b.dayNum)))
+            .slice(0, 12);
+        },
+
+        get globalSearchResults() {
+          // Alpine getters are not memoised and the overlay template reads this six times
+          // per render. Unmemoised, that is seven full scans per keystroke — the exact
+          // defect the sibling build shipped with. The itinerary never changes at runtime,
+          // so the query string is a complete cache key.
+          const query = this.globalSearchQuery;
+          if (this._searchResultsKey !== query) {
+            this._searchResultsKey = query;
+            this._searchResultsValue = this.searchItinerary(query);
+          }
+          return this._searchResultsValue;
+        },
+
+        openGlobalSearch(seed = '') {
+          if (typeof seed === 'string' && seed.trim()) this.globalSearchQuery = seed;
+          this.showGlobalSearch = true;
+          document.documentElement.classList.add('global-search-open');
+          this.$nextTick(() => {
+            this.refreshIcons();
+            // $nextTick alone is too early: x-show has flipped the style but the element
+            // has not painted yet, and focus() on a not-yet-visible node is a no-op.
+            requestAnimationFrame(() => {
+              const input = document.getElementById('global-itinerary-search');
+              if (!input) return;
+              input.focus({ preventScroll: true });
+              const end = input.value.length;
+              try { input.setSelectionRange(end, end); } catch (_) {}
+            });
+          });
+        },
+
+        closeGlobalSearch() {
+          this.showGlobalSearch = false;
+          document.documentElement.classList.remove('global-search-open');
+          this.$nextTick(() => document.getElementById('global-search-trigger')?.focus({ preventScroll: true }));
+        },
+
+        setGlobalSearch(term) {
+          this.globalSearchQuery = term;
+          this.$nextTick(() => document.getElementById('global-itinerary-search')?.focus({ preventScroll: true }));
+        },
+
+        // This is the only modal in the build, so there is no shared trap to reuse. Keeping
+        // Tab inside the panel is what makes it a real dialog rather than an overlay that
+        // quietly hands focus to the page behind it.
+        trapSearchFocus(event) {
+          const panel = document.querySelector('[data-modal-panel="search"]');
+          if (!panel) return;
+          const focusable = [...panel.querySelectorAll('button, input, a[href], [tabindex]:not([tabindex="-1"])')]
+            .filter(el => !el.disabled && el.getBoundingClientRect().height > 0);
+          if (!focusable.length) return;
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+          else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        },
+
+        openGlobalSearchResult(result) {
+          if (!result) return;
+          this.closeGlobalSearch();
+          this.selectDayFromStrip(result.dayId);
+          // Reuses the existing positioner, which measures whatever chrome is currently
+          // sticky rather than assuming a fixed height — so a result lands below the pinned
+          // rail instead of underneath it.
+          this.$nextTick(() => window.setTimeout(() => {
+            this.positionRelevantPlan({ targetKind: result.targetKind, eventIndex: result.eventIndex }, 'auto');
+          }, 260));
         },
 
         switchRelativeDay(delta) {
