@@ -5,12 +5,12 @@
   A cached shell is served immediately for reliable offline use. When online,
   successful same-origin responses refresh the current cache in the background.
   The page's bypass check stores a detected HTML update under the canonical shell
-  key and reloads automatically.
+  key and offers a user-controlled reload.
 
   Bump CACHE when older cache namespaces must be evicted.
 */
 const CACHE_PREFIX = 'twhk-2026-';
-const CACHE = `${CACHE_PREFIX}v22`;
+const CACHE = `${CACHE_PREFIX}v24`;
 const SHELL = [
   './index.html',
   './manifest.webmanifest',
@@ -18,7 +18,10 @@ const SHELL = [
   './icon-512.png',
   './icon-maskable-192.png',
   './icon-maskable-512.png',
-  './apple-touch-icon.png'
+  './apple-touch-icon.png',
+  './assets/taipei.webp',
+  './assets/kaohsiung.webp',
+  './assets/hk.webp'
 ];
 
 // Every navigation is stored and retrieved under this one key. The app writes its current
