@@ -3391,14 +3391,8 @@ html.rail-scrolled .day-strip-wrap {
 .toast-card { border-radius: 17px !important; }
 
 /* ---------- Modern progressive enhancements ---------- */
-.index-card,
-.plan-card,
-.prep-card,
-.hotel-card,
-.rule-tile {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 180px;
-}
+/* No content-visibility on cards: Safari can leave skipped content blank (WebKit bug 321501),
+   and estimated sizes make jumps to a search result land in the wrong place. */
 
 @supports (corner-shape: squircle) {
   .destination-photo, .timeline-card, .index-card, .plan-card, .prep-card, .hotel-card,
@@ -3471,7 +3465,42 @@ html[data-day-transition='backward']::view-transition-new(trip-content) { animat
   }
   .global-search-backdrop.is-open .global-search-panel { transform: none !important; }
   @starting-style { .global-search-backdrop.is-open .global-search-panel { opacity: 0; transform: translateY(22px) scale(.99) !important; } }
+  /* The iPhone keyboard covers the bottom of the layout viewport but does not resize it, so a
+     sheet pinned to the bottom ends up under the keyboard. While search is open the backdrop
+     follows the visual viewport (set from visualViewport in fitSearchToViewport), which keeps
+     the field and the results in the visible space above the keyboard. */
+  .global-search-backdrop {
+    top: var(--search-vv-top, 0px) !important;
+    bottom: auto !important;
+    height: var(--search-vv-height, 100dvh) !important;
+  }
+  .global-search-panel { max-height: min(calc(var(--search-vv-height, 100dvh) - 24px), 720px) !important; }
+  .global-search-backdrop.has-keyboard { padding-bottom: 8px !important; }
 }
+
+/* Only reachable with a hardware keyboard. */
+@media (hover: none) and (pointer: coarse) {
+  .global-search-shortcut { display: none !important; }
+}
+
+/* Focus lands here inside the Search tap so iOS raises the keyboard, then moves to the real
+   field once the sheet has painted. It must stay focusable: no display:none or visibility. */
+.search-focus-proxy {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* Two-line city filters: English over Chinese, so a narrow phone never splits 全部. */
+.city-filter { flex: 1 1 0; min-width: 0; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; line-height: 1.15; white-space: nowrap; }
+.city-filter-tc { font-size: 11px; opacity: .78; }
 
 @media (max-width: 374px) {
   main { padding-inline: max(10px, env(safe-area-inset-left, 0px)) !important; }

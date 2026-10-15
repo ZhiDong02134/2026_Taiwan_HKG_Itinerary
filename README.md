@@ -50,7 +50,8 @@ There are no runtime CDN dependencies. The only normal network request made by t
 - Local static assets use **stale-while-revalidate**.
 - Query-string routes such as `?tab=plan` share one canonical cached shell, avoiding fragmented/stale navigation entries.
 - Navigation preload is enabled when supported.
-- A new deployment installs into a content-hashed cache and removes the legacy `twhk-2026-*` cache namespace. The running app exposes an explicit **Update** action when the next worker is waiting, so a user is never reloaded in the middle of a trip task.
+- `index.html` loads its stylesheet and scripts by content-hashed URLs (`app.js?v=…`), stamped by `finalize.py`. Because assets are stale-while-revalidate, fixed URLs used to pair a freshly deployed page with the previous build's CSS and JS on the first launch after a deploy.
+- A new deployment installs into a content-hashed cache, removes the legacy `twhk-2026-*` cache namespace, and takes over as soon as it is cached. The open page is never reloaded; the next launch is the new build. The **Update** action only appears if a worker is somehow left waiting.
 - Icons, destination artwork, startup screens, and manifest screenshots are precached for offline use.
 
 ## Make changes
@@ -100,6 +101,12 @@ BASE_URL=http://127.0.0.1:8000/ python3 scripts/smoke-test.py
 ```
 
 The test runs dark and light appearance at 320, 375, 390, and 430 CSS pixels. It checks the in-app semantic QA result, horizontal overflow, visible 44×44 minimum touch targets, runtime errors, and console errors. Screenshots and JSON results are written under `output/playwright/`.
+
+## iPhone specifics
+
+- Search raises the keyboard from the Search tap itself (iOS ignores a later `focus()`), and the sheet follows `visualViewport` so the field and results stay above the keyboard.
+- In the Home Screen app, the backup and calendar exports open the share sheet. A download there opens a preview the app cannot leave (WebKit bug 290847); Safari tabs still download.
+- No `content-visibility` (Safari can leave skipped cards blank) and no `interactive-widget` viewport token.
 
 ## Accessibility and resilience
 

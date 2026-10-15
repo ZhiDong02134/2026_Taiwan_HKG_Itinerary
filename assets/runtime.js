@@ -40,9 +40,14 @@ window.addEventListener('load', () => {
   let registration = null;
   let updateReloadStarted = false;
 
+  // New builds activate themselves once cached (sw.js calls skipWaiting), passing through
+  // 'installed' on the way. Only a worker that is still waiting a moment later needs the
+  // Update action; otherwise the action would linger with nothing left to install.
   const announceWaitingWorker = reg => {
-    if (!reg?.waiting || !navigator.serviceWorker.controller) return;
-    window.dispatchEvent(new Event('twhk-update-ready'));
+    setTimeout(() => {
+      if (!reg?.waiting || !navigator.serviceWorker.controller) return;
+      window.dispatchEvent(new Event('twhk-update-ready'));
+    }, 1500);
   };
 
   addEventListener('load', async () => {
@@ -70,7 +75,12 @@ window.addEventListener('load', () => {
   });
 
   serviceWorkers.addEventListener('controllerchange', () => {
-    if (!updateReloadStarted) return;
+    if (!updateReloadStarted) {
+      // A new build took over by itself. This page already runs a matching set of files and
+      // the next launch opens the new build, so retire the Update action without reloading.
+      window.dispatchEvent(new Event('twhk-update-applied'));
+      return;
+    }
     location.reload();
   });
 

@@ -2,7 +2,7 @@
 <html lang="en" class="h-full bg-slate-950 text-slate-100 antialiased selection:bg-rose-500 selection:text-white">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#090a0f">
   <meta name="color-scheme" content="light dark">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -50,7 +50,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2718%27%20fill%3D%27%230d0f17%27%2F%3E%3Cg%20fill%3D%27%2351c6c0%27%3E%3Cpath%20d%3D%27M31.2%2018L31.6%209H32.4L32.8%2018Z%27%2F%3E%3Cpath%20d%3D%27M28.6%2018L35.4%2018L36.2%2021.5L27.8%2021.5Z%27%2F%3E%3Cpath%20d%3D%27M27.4%2023.6L25.8%2018.0L38.2%2018.0L36.6%2023.6Z%27%2F%3E%3Cpath%20d%3D%27M26.9%2029.8L25.3%2024.2L38.7%2024.2L37.1%2029.8Z%27%2F%3E%3Cpath%20d%3D%27M26.4%2036.0L24.8%2030.4L39.2%2030.4L37.6%2036.0Z%27%2F%3E%3Cpath%20d%3D%27M25.9%2042.2L24.3%2036.6L39.7%2036.6L38.1%2042.2Z%27%2F%3E%3Cpath%20d%3D%27M25.4%2042.8L38.6%2042.8L41.4%2050L22.6%2050Z%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 <!-- The pinned Alpine runtime fails visibly instead of leaving a blank interactive shell. -->
   <!-- Tailwind CSS v4.1.10 compiled locally at build time; zero browser-time Tailwind runtime. -->
-    <link rel="stylesheet" href="./assets/app.css">
+    <link rel="stylesheet" href="./assets/app.css?v=94b220dc69">
 
   
   <!-- Local runtime bundles are deferred and cached independently for faster repeat launches. -->
@@ -463,10 +463,10 @@
         </div>
 
         <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-          <button type="button" @click="selectedCityFilter = 'all'" :class="selectedCityFilter === 'all' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'all'" class="city-filter city-filter-all px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">All · 全部</button>
-          <button type="button" @click="selectedCityFilter = 'taipei'" :class="selectedCityFilter === 'taipei' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'taipei'" class="city-filter city-filter-taipei px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Taipei · 台北</button>
-          <button type="button" @click="selectedCityFilter = 'kaohsiung'" :class="selectedCityFilter === 'kaohsiung' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'kaohsiung'" class="city-filter city-filter-kaohsiung px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Kaohsiung · 高雄</button>
-          <button type="button" @click="selectedCityFilter = 'hk'" :class="selectedCityFilter === 'hk' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'hk'" class="city-filter city-filter-hk px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Hong Kong · 香港</button>
+          <button type="button" @click="selectedCityFilter = 'all'" :class="selectedCityFilter === 'all' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'all'" class="city-filter city-filter-all px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">All<span class="city-filter-tc" lang="zh-TW">全部</span></button>
+          <button type="button" @click="selectedCityFilter = 'taipei'" :class="selectedCityFilter === 'taipei' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'taipei'" class="city-filter city-filter-taipei px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Taipei<span class="city-filter-tc" lang="zh-TW">台北</span></button>
+          <button type="button" @click="selectedCityFilter = 'kaohsiung'" :class="selectedCityFilter === 'kaohsiung' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'kaohsiung'" class="city-filter city-filter-kaohsiung px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Kaohsiung<span class="city-filter-tc" lang="zh-TW">高雄</span></button>
+          <button type="button" @click="selectedCityFilter = 'hk'" :class="selectedCityFilter === 'hk' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'hk'" class="city-filter city-filter-hk px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Hong Kong<span class="city-filter-tc" lang="zh-HK">香港</span></button>
         </div>
       </div>
 
@@ -732,6 +732,8 @@
 
   </main>
 
+  <input id="search-focus-proxy" class="search-focus-proxy" type="search" inputmode="search" tabindex="-1" aria-hidden="true" autocomplete="off">
+
   <!-- Mobile Bottom Navigation Bar -->
   <div class="mobile-dock-shell md:hidden fixed z-40 left-0 right-0 bottom-0" :inert="showGlobalSearch">
     <template x-if="liveTripDayId && relevantPlan && activeTab !== 'today'">
@@ -761,11 +763,11 @@
     </template>
   </div>
 
-    <script defer src="./assets/app.js"></script>
+    <script defer src="./assets/app.js?v=e6fe0e7cf3"></script>
   <!-- Lucide 1.43.0 (ISC) and Alpine.js 3.17.2 (MIT), pinned and embedded for single-file reliability. -->
-    <script defer src="./assets/vendor/lucide.js"></script>
-    <script defer src="./assets/vendor/alpine.js"></script>
-    <script defer src="./assets/runtime.js"></script>
+    <script defer src="./assets/vendor/lucide.js?v=24c2f9652d"></script>
+    <script defer src="./assets/vendor/alpine.js?v=abe5b75652"></script>
+    <script defer src="./assets/runtime.js?v=0e151154ba"></script>
   
 
 

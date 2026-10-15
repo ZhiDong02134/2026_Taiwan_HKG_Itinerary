@@ -1,16 +1,16 @@
 /* Offline-first application shell for Taiwan + Hong Kong 2026. */
 const CACHE_PREFIX = 'twhk-field-';
 const LEGACY_CACHE_PREFIXES = ['twhk-2026-'];
-const CACHE = `${CACHE_PREFIX}49f2be3ad34f11cb`;
+const CACHE = `${CACHE_PREFIX}0b715780e3439195`;
 const SHELL_KEY = new URL('./index.html', self.location).href;
 const PRECACHE = [
   "./index.html",
   "./manifest.webmanifest",
-  "./assets/app.css",
-  "./assets/app.js",
-  "./assets/runtime.js",
-  "./assets/vendor/lucide.js",
-  "./assets/vendor/alpine.js",
+  "./assets/app.css?v=94b220dc69",
+  "./assets/app.js?v=e6fe0e7cf3",
+  "./assets/runtime.js?v=0e151154ba",
+  "./assets/vendor/lucide.js?v=24c2f9652d",
+  "./assets/vendor/alpine.js?v=abe5b75652",
   "./icon-192.png",
   "./icon-512.png",
   "./icon-maskable-192.png",
@@ -47,7 +47,10 @@ self.addEventListener('install', event => {
       PRECACHE.filter(url => url !== './index.html')
         .map(url => cache.add(reloadRequest(url)).catch(() => null))
     );
-    if (!self.registration.active) await self.skipWaiting();
+    // Take over as soon as the new build is fully cached. Asset URLs are content-hashed, so
+    // an open page keeps the files it loaded, and the next launch is the new build without
+    // waiting for an Update tap or for every window to close.
+    await self.skipWaiting();
   })());
 });
 

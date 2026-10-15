@@ -3155,6 +3155,7 @@ function getStorage(key, fallback) {
             this.appUpdateAvailable = true;
             this.refreshIcons();
           });
+          window.addEventListener('twhk-update-applied', () => { this.appUpdateAvailable = false; });
           window.addEventListener('offline', () => this.showToast('Offline mode — the saved itinerary is still available', 'warning'));
           window.addEventListener('online', () => this.showToast('Back online'));
           this.applyAppearance();
@@ -3645,16 +3646,24 @@ function getStorage(key, fallback) {
 
         openGlobalSearch(seed = '') {
           if (typeof seed === 'string' && seed.trim()) this.globalSearchQuery = seed;
+          // iOS raises the keyboard only for a focus() made inside the tap itself, and the real
+          // field is still display:none here. Focus a stand-in now; moving focus from one text
+          // field to another below keeps the keyboard up.
+          const proxy = document.getElementById('search-focus-proxy');
+          try { proxy?.focus({ preventScroll: true }); } catch (_) {}
           this.showGlobalSearch = true;
           document.documentElement.classList.add('global-search-open');
+          this.watchSearchViewport(true);
           this.$nextTick(() => {
             this.refreshIcons();
             // $nextTick alone is too early: x-show has flipped the style but the element
             // has not painted yet, and focus() on a not-yet-visible node is a no-op.
             requestAnimationFrame(() => {
-              if (!this.showGlobalSearch) return;
               const input = document.getElementById('global-itinerary-search');
-              if (!input) return;
+              if (!this.showGlobalSearch || !input) {
+                if (document.activeElement === proxy) proxy.blur();
+                return;
+              }
               input.focus({ preventScroll: true });
               const end = input.value.length;
               try { input.setSelectionRange(end, end); } catch (_) {}
@@ -3662,10 +3671,44 @@ function getStorage(key, fallback) {
           });
         },
 
+        // The keyboard shrinks the visual viewport, not the layout viewport that fixed elements
+        // use, so the sheet is fitted to visualViewport while search is open.
+        watchSearchViewport(active) {
+          const viewport = window.visualViewport;
+          if (!viewport) return;
+          if (this._searchViewportFit) {
+            viewport.removeEventListener('resize', this._searchViewportFit);
+            viewport.removeEventListener('scroll', this._searchViewportFit);
+            this._searchViewportFit = null;
+          }
+          const backdrop = document.querySelector('.global-search-backdrop');
+          if (!active) {
+            backdrop?.style.removeProperty('--search-vv-top');
+            backdrop?.style.removeProperty('--search-vv-height');
+            backdrop?.classList.remove('has-keyboard');
+            return;
+          }
+          this._searchViewportFit = () => this.fitSearchToViewport();
+          viewport.addEventListener('resize', this._searchViewportFit);
+          viewport.addEventListener('scroll', this._searchViewportFit);
+          this.fitSearchToViewport();
+        },
+
+        fitSearchToViewport() {
+          const viewport = window.visualViewport;
+          const backdrop = document.querySelector('.global-search-backdrop');
+          if (!viewport || !backdrop) return;
+          backdrop.style.setProperty('--search-vv-top', `${Math.max(0, Math.round(viewport.offsetTop))}px`);
+          backdrop.style.setProperty('--search-vv-height', `${Math.round(Math.min(viewport.height, window.innerHeight))}px`);
+          // The home-indicator inset sits behind the keyboard while it is up.
+          backdrop.classList.toggle('has-keyboard', window.innerHeight - viewport.height > 120);
+        },
+
         closeGlobalSearch() {
           if (!this.showGlobalSearch) return;
           this.showGlobalSearch = false;
           document.documentElement.classList.remove('global-search-open');
+          this.watchSearchViewport(false);
           this.$nextTick(() => {
             const phoneTrigger = window.matchMedia('(max-width: 767px)').matches ? document.querySelector('.mobile-search-item') : null;
             (phoneTrigger || document.getElementById('global-search-trigger'))?.focus({ preventScroll: true });
@@ -4082,15 +4125,7 @@ function getStorage(key, fallback) {
             `SUMMARY:${esc(this.getBookingActionVerb(item) + ': ' + item.title)}`, `DESCRIPTION:${esc(description)}`, 'BEGIN:VALARM', 'TRIGGER:-PT15M', 'ACTION:DISPLAY', `DESCRIPTION:${esc(this.getBookingActionVerb(item) + ': ' + item.title)}`, 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'
           ].join('\r\n');
           const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `taiwan_hong_kong_2026_${item.id}_booking_reminder.ics`;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          window.setTimeout(() => URL.revokeObjectURL(url), 600);
-          this.showToast('Calendar reminder exported');
+          this.deliverFile(blob, `taiwan_hong_kong_2026_${item.id}_booking_reminder.ics`, 'Calendar reminder exported', 'Calendar reminder ready');
         },
 
         getPrepCategory(task) {
@@ -4503,15 +4538,32 @@ function getStorage(key, fallback) {
             adminPrepDoneIds: this.sanitizeIdList(this.adminPrepDoneIds, this.adminPrepList.map(item => item.id))
           };
           const blob = new Blob([JSON.stringify(statePayload, null, 2)], { type: 'application/json' });
+          this.deliverFile(blob, `taiwan_hong_kong_2026_user_state_${new Date().toISOString().slice(0,10)}.json`, 'Backup downloaded', 'Backup ready to save');
+        },
+
+        // A download in a Home Screen app opens a preview with no way back except force-quitting
+        // the app (WebKit bug 290847). There, hand the file to the share sheet instead, from
+        // inside the tap and as a file only. Safari tabs and desktops keep the download.
+        deliverFile(blob, filename, downloadedMessage, sharedMessage) {
+          const installed = navigator.standalone === true;
+          if (installed && typeof navigator.share === 'function' && typeof File === 'function') {
+            const file = new File([blob], filename, { type: blob.type });
+            if (!navigator.canShare || navigator.canShare({ files: [file] })) {
+              navigator.share({ files: [file] })
+                .then(() => this.showToast(sharedMessage))
+                .catch(error => { if (error?.name !== 'AbortError') this.showToast('Unable to share the file', 'warning'); });
+              return;
+            }
+          }
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = `taiwan_hong_kong_2026_user_state_${new Date().toISOString().slice(0,10)}.json`;
+          a.download = filename;
           document.body.appendChild(a);
           a.click();
           a.remove();
           window.setTimeout(() => URL.revokeObjectURL(url), 600);
-          this.showToast('Backup downloaded');
+          this.showToast(downloadedMessage);
         },
 
         async importStateFile(event) {

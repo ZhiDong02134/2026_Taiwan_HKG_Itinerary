@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +27,29 @@ manifest['screenshots'] = [
     }
 ]
 MANIFEST_PATH.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
+
+# Stylesheet and scripts carry a content hash in their URL. Navigations are network-first but
+# assets are stale-while-revalidate, so with fixed URLs the first launch after a deploy paired
+# the new index.html with the previous build's CSS and JS. A hashed URL is a cache miss the
+# moment the file changes, so a page can only ever load the assets it was built with.
+VERSIONED_ASSETS = [
+    'assets/app.css',
+    'assets/app.js',
+    'assets/runtime.js',
+    'assets/vendor/lucide.js',
+    'assets/vendor/alpine.js',
+]
+asset_versions = {
+    name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()[:10] for name in VERSIONED_ASSETS
+}
+html_path = ROOT / 'index.html'
+html = html_path.read_text()
+for name, version in asset_versions.items():
+    pattern = re.compile(r'(["\'])\./' + re.escape(name) + r'(?:\?v=[0-9a-f]+)?\1')
+    html, count = pattern.subn(lambda m: f'{m.group(1)}./{name}?v={version}{m.group(1)}', html)
+    if count != 1:
+        raise SystemExit(f'Expected one reference to ./{name} in index.html, found {count}')
+html_path.write_text(html)
 
 precache_paths = [
     'index.html',
@@ -59,7 +83,10 @@ for name in sorted(precache_paths):
     hasher.update((ROOT / name).read_bytes())
     hasher.update(b'\0')
 build_hash = hasher.hexdigest()[:16]
-precache_urls = ['./' + name for name in precache_paths]
+precache_urls = [
+    f'./{name}?v={asset_versions[name]}' if name in asset_versions else f'./{name}'
+    for name in precache_paths
+]
 
 sw = f'''/* Offline-first application shell for Taiwan + Hong Kong 2026. */
 const CACHE_PREFIX = 'twhk-field-';
@@ -81,7 +108,10 @@ self.addEventListener('install', event => {{
       PRECACHE.filter(url => url !== './index.html')
         .map(url => cache.add(reloadRequest(url)).catch(() => null))
     );
-    if (!self.registration.active) await self.skipWaiting();
+    // Take over as soon as the new build is fully cached. Asset URLs are content-hashed, so
+    // an open page keeps the files it loaded, and the next launch is the new build without
+    // waiting for an Update tap or for every window to close.
+    await self.skipWaiting();
   }})());
 }});
 
