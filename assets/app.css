@@ -3342,15 +3342,6 @@ html.rail-scrolled .day-strip-wrap {
   border: 0 !important;
   pointer-events: none;
 }
-.dock-row {
-  width: 100%;
-  max-width: 480px;
-  margin-inline: auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 62px;
-  gap: 8px;
-  align-items: stretch;
-}
 .mobile-dock {
   min-width: 0;
   min-height: 62px !important;
@@ -3370,23 +3361,6 @@ html.rail-scrolled .day-strip-wrap {
   font-size: 10.5px !important;
 }
 .mobile-nav-item svg { width: 21px !important; height: 21px !important; }
-.dock-search {
-  width: 62px;
-  height: 62px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--stroke-strong);
-  border-radius: 50%;
-  background: var(--glass-sheen), var(--material);
-  color: var(--text-2);
-  box-shadow: var(--shadow-float);
-  -webkit-backdrop-filter: saturate(160%) blur(20px);
-  backdrop-filter: saturate(160%) blur(20px);
-  pointer-events: auto;
-  transition: transform var(--motion-press) var(--ease-ui), color var(--motion-fast) var(--ease-ui), background-color var(--motion-fast) var(--ease-ui);
-}
-.dock-search:active { transform: scale(.93); color: var(--action); }
-.dock-search svg { width: 22px; height: 22px; }
 .live-accessory {
   width: 100%;
   max-width: 480px;
@@ -3506,8 +3480,6 @@ html[data-day-transition='backward']::view-transition-new(trip-content) { animat
   .day-title { font-size: 23px !important; }
   .timeline-card { margin-left: 21px !important; padding-inline: 12px !important; }
   .timeline-card::before { left: -17px !important; }
-  .dock-row { grid-template-columns: minmax(0,1fr) 56px; gap: 7px; }
-  .dock-search { width: 56px; height: 56px; }
   .mobile-dock { min-height: 56px !important; }
   .mobile-nav-item { min-height: 50px !important; font-size: 10px !important; }
   .mobile-nav-item svg { width: 19px !important; height: 19px !important; }
@@ -3533,12 +3505,12 @@ html.data-saver .destination-photo img { filter: none; animation: none !importan
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }
-  body, body::before, .destination-photo img, .live-accessory, .dock-search { transition: none !important; animation: none !important; }
+  body, body::before, .destination-photo img, .live-accessory { transition: none !important; animation: none !important; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  .app-chrome::before, .mobile-dock, .dock-search, .live-accessory, .global-search-panel, .destination-name {
+  .app-chrome::before, .mobile-dock, .live-accessory, .global-search-panel, .destination-name {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     background: var(--material-solid) !important;
@@ -3548,16 +3520,128 @@ html.data-saver .destination-photo img { filter: none; animation: none !importan
 @media (prefers-contrast: more) {
   .destination-photo, .timeline-card, .index-card, .plan-card, .prep-card, .hotel-card,
   .surface-card, .summary-card, .backup-section, .backup-card, .fact-card { box-shadow: none !important; border-color: var(--stroke-strong) !important; }
-  .app-chrome::before, .mobile-dock, .dock-search, .live-accessory { background: var(--material-solid) !important; }
+  .app-chrome::before, .mobile-dock, .live-accessory { background: var(--material-solid) !important; }
 }
 
 @media (forced-colors: active) {
   body::before, body::after, .destination-photo::before, .destination-photo::after { display: none !important; }
   .destination-photo, .timeline-card, .index-card, .plan-card, .prep-card, .hotel-card,
-  .surface-card, .summary-card, .backup-section, .backup-card, .fact-card, .mobile-dock, .dock-search, .live-accessory {
+  .surface-card, .summary-card, .backup-section, .backup-card, .fact-card, .mobile-dock, .live-accessory {
     forced-color-adjust: auto;
     border: 1px solid CanvasText !important;
     background: Canvas !important;
     box-shadow: none !important;
   }
+}
+
+
+/* ================= INTERACTION RELIABILITY + UNIFIED PHONE DOCK ================= */
+/* The day rail is a scrollable control, not a carousel that should keep moving after a tap. */
+.day-strip {
+  scroll-behavior: auto !important;
+  scroll-snap-type: x proximity !important;
+  touch-action: pan-x pan-y;
+}
+.day-chip {
+  position: relative;
+  z-index: 1;
+  min-height: 52px !important;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  scroll-snap-stop: normal;
+}
+.day-chip:active { transform: scale(.97) !important; }
+
+/* One balanced tab bar: search is a peer action, not a detached oversized bubble. */
+.mobile-dock-shell {
+  --phone-dock-height: 68px;
+  padding-inline: max(10px, env(safe-area-inset-left, 0px)) !important;
+  isolation: isolate;
+}
+.mobile-dock-shell::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(100% + 38px);
+  background: linear-gradient(to top,
+    var(--bg) 0%,
+    color-mix(in oklab, var(--bg) 92%, transparent) 42%,
+    transparent 100%);
+}
+.mobile-dock,
+.live-accessory { position: relative; z-index: 1; }
+.mobile-dock {
+  width: 100%;
+  max-width: 480px !important;
+  min-height: var(--phone-dock-height) !important;
+  margin-inline: auto;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  padding: 5px !important;
+  border-radius: 25px !important;
+}
+.mobile-nav-lens {
+  top: 5px !important;
+  bottom: 5px !important;
+  left: 5px !important;
+  width: calc((100% - 10px) / 5) !important;
+  border-radius: 20px !important;
+}
+.mobile-nav-item {
+  min-width: 0 !important;
+  min-height: 58px !important;
+  width: 100%;
+  border-radius: 20px !important;
+  gap: 3px !important;
+  font-size: 10.5px !important;
+  touch-action: manipulation;
+}
+.mobile-nav-item svg { width: 21px !important; height: 21px !important; }
+.mobile-search-item { color: var(--muted); }
+.mobile-search-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 13px;
+  bottom: 13px;
+  width: 1px;
+  background: var(--stroke);
+  opacity: .72;
+}
+.mobile-search-item:active,
+.mobile-search-item[aria-expanded='true'] { color: var(--action); }
+
+/* Today only needs the dock; live-context pages also reserve room for the accessory above it. */
+@media (max-width: 767px),
+       (pointer: coarse) and (min-width: 768px) and (max-width: 1024px) and (max-height: 600px) {
+  main {
+    padding-bottom: calc(var(--phone-dock-height, 68px) + 34px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  body:has(.mobile-dock-shell .live-accessory) main {
+    padding-bottom: calc(var(--phone-dock-height, 68px) + 92px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .mobile-toast {
+    bottom: calc(var(--phone-dock-height, 68px) + 20px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+@media (max-width: 359px) {
+  .mobile-dock-shell { padding-inline: max(7px, env(safe-area-inset-left, 0px)) !important; }
+  .mobile-dock { min-height: 62px !important; padding: 4px !important; }
+  .mobile-nav-lens { top: 4px !important; bottom: 4px !important; left: 4px !important; width: calc((100% - 8px) / 5) !important; }
+  .mobile-nav-item { min-height: 54px !important; font-size: 9.75px !important; }
+  .mobile-nav-item svg { width: 19px !important; height: 19px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .day-chip, .mobile-nav-item, .mobile-nav-lens { transition: none !important; }
+}
+
+@media (forced-colors: active) {
+  .mobile-search-item::before { background: CanvasText; }
 }

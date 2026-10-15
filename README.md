@@ -39,8 +39,10 @@ There are no runtime CDN dependencies. The only normal network request made by t
 - **Days** is a searchable overview of all 16 days.
 - **Plan** combines bookings and administrative preparation without accordions.
 - **Tools** contains hotel bases, operating rules, budget/FX, appearance, and data backup/restore.
-- Global English/Traditional Chinese search is available from the header and the phone dock.
-- The phone dock, sticky day rail, keyboard behavior, and safe-area spacing are tuned for one-handed use.
+- Global English/Traditional Chinese search is available from the header and as the fifth item in the unified phone tab bar.
+- The phone dock is one balanced five-cell material bar—Today, Days, Plan, Tools, Search—rather than a narrow tab capsule plus a detached search bubble.
+- Day chips commit on pointer-up for stationary taps, retain click/keyboard fallback, and keep drags as horizontal scrolling. Mobile day changes avoid full-document View Transition overlays, and the rail never starts a smooth centering animation that can consume the next iOS tap.
+- The sticky day rail, keyboard behavior, safe-area spacing, and bottom scroll-edge fade are tuned for one-handed use.
 
 ## PWA behavior
 
@@ -58,11 +60,12 @@ Most itinerary content is in `assets/app.js`; layout lives in `index.html`; the 
 After editing deployable files:
 
 ```bash
+python3 scripts/interaction-test.py
 python3 scripts/finalize.py
 python3 scripts/verify.py
 ```
 
-`finalize.py` refreshes manifest screenshot metadata and regenerates the content-hashed service worker. `verify.py` checks local references, duplicate IDs, manifest integrity, PNG dimensions, JavaScript syntax when Node is available, offline strategy markers, and the no-accordion requirement.
+`interaction-test.py` inlines the local production assets into Chromium and exercises real Alpine touch/pointer behavior without needing a dev server. It checks rapid day switching, tap-vs-drag discrimination, keyboard fallback, dock hit testing, search focus return, phone/landscape/desktop layouts, and screenshots. `finalize.py` refreshes manifest screenshot metadata and regenerates the content-hashed service worker. `verify.py` checks local references, duplicate IDs, manifest integrity, PNG dimensions, JavaScript syntax when Node is available, offline strategy markers, and the no-accordion requirement.
 
 ### Rebuild the icon subset
 
@@ -119,11 +122,12 @@ GitHub Pages repositories and deployed pages may be public. This itinerary conta
 
 - 233/233 in-app semantic checks
 - 53/53 static artifact checks
-- dark and light rendering at 320, 375, 390, and 430 CSS-pixel widths
-- no horizontal overflow at tested phone widths
-- no visible interactive target below 44×44 at tested phone widths
-- JavaScript syntax validation
-- manifest and image-dimension validation
-- installed service-worker control and offline reload of a query route
+- touch interaction runs at 320×700, 375×812, 390×844, and 430×932, plus 844×390 coarse-pointer landscape and 1280×800 desktop
+- full rapid Day 03 → Day 16 tap sequence in dark and light appearance with zero dropped selections
+- pointer-up + synthesized-click de-duplication, drag rejection, and keyboard activation
+- all five bottom actions hit-test to their own button centers; no detached search control remains
+- no horizontal overflow and no visible interactive target below 44×44 at tested phone widths
+- worst measured automated day-selection latency: under 350 ms including Playwright input overhead
+- JavaScript syntax validation, manifest validation, image-dimension validation, and content-hashed service-worker regeneration
 
-Chromium was used for automated runtime testing. Safari-specific enhancements are guarded by feature queries and have functional fallbacks; final device acceptance testing should still be done on the iPhones that will be used during the trip.
+Chromium with touch emulation was used for automated runtime testing. The previous build's dropped-tap behavior was reproduced in that harness before the fix and no longer reproduces. Safari-specific enhancements remain feature-gated; a final real-device pass on the actual iPhones is still the last acceptance step.

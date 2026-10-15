@@ -5,7 +5,8 @@
   "scripts": {
     "icons": "node scripts/build-icons.mjs",
     "verify": "python3 scripts/verify.py",
-    "finalize": "python3 scripts/finalize.py"
+    "finalize": "python3 scripts/finalize.py",
+    "test:interaction": "python3 scripts/interaction-test.py"
   },
   "devDependencies": {
     "esbuild": "0.25.10",

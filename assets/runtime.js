@@ -113,7 +113,10 @@ window.addEventListener('load', () => {
     const boot = () => {
       const host = document.querySelector('[x-data]');
       const app = window.Alpine && host && Alpine.$data(host);
-      if (!app) return false;
+      // Alpine.$data can return a proxy shell one microtask before x-data has populated
+      // its own properties. Writing through that half-ready proxy throws inside the
+      // reactivity layer on fast mobile launches, so wait until the itinerary model exists.
+      if (!app || !Array.isArray(app.days) || !app.days.length || typeof app.$watch !== 'function') return false;
       const restoresSmartLaunch = history.state?.smartLaunchGenerated === true;
       app.smartLaunchActive = restoresSmartLaunch || (app.smartLaunchActive && location.search === '');
 

@@ -234,7 +234,10 @@
           <template x-for="day in days" :key="day.id">
             <button type="button"
                     :id="'chip-' + day.id"
-                    @click="selectDayFromStrip(day.id)"
+                    @pointerdown="beginDayChipPress($event, day.id)"
+                    @pointerup="endDayChipPress($event, day.id)"
+                    @pointercancel="cancelDayChipPress($event)"
+                    @click="activateDayChipClick($event, day.id)"
                     @keydown.arrow-right.prevent="switchRelativeDay(1)"
                     @keydown.arrow-left.prevent="switchRelativeDay(-1)"
                     @keydown.home.prevent="selectDayFromStrip(days[0].id)"
@@ -738,18 +741,14 @@
         <i data-lucide="chevron-right" aria-hidden="true"></i>
       </button>
     </template>
-    <div class="dock-row">
-      <nav class="mobile-dock max-w-md mx-auto" aria-label="Primary navigation" :style="'--nav-shift:' + (activeTabIndex * 100) + '%'">
-        <span class="mobile-nav-lens" aria-hidden="true"></span>
-        <button type="button" @click="switchTab('today')" :class="activeTab === 'today' ? 'is-active' : ''" :aria-current="activeTab === 'today' ? 'page' : null" class="mobile-nav-item"><i data-lucide="compass"></i><span>Today</span></button>
-        <button type="button" @click="switchTab('itinerary')" :class="activeTab === 'itinerary' ? 'is-active' : ''" :aria-current="activeTab === 'itinerary' ? 'page' : null" class="mobile-nav-item"><i data-lucide="calendar"></i><span>Days</span></button>
-        <button type="button" @click="switchTab('plan')" :class="activeTab === 'plan' ? 'is-active' : ''" :aria-current="activeTab === 'plan' ? 'page' : null" class="mobile-nav-item"><i data-lucide="clipboard-check"></i><span>Plan</span></button>
-        <button type="button" @click="switchTab('toolkit')" :class="activeTab === 'toolkit' ? 'is-active' : ''" :aria-current="activeTab === 'toolkit' ? 'page' : null" class="mobile-nav-item"><i data-lucide="briefcase"></i><span>Tools</span></button>
-      </nav>
-      <button type="button" class="dock-search" @click="openGlobalSearch()" aria-label="Search the itinerary">
-        <i data-lucide="search" aria-hidden="true"></i>
-      </button>
-    </div>
+    <nav class="mobile-dock max-w-md mx-auto" aria-label="Primary navigation" :style="'--nav-shift:' + (activeTabIndex * 100) + '%'">
+      <span class="mobile-nav-lens" aria-hidden="true"></span>
+      <button type="button" @click="switchTab('today')" :class="activeTab === 'today' ? 'is-active' : ''" :aria-current="activeTab === 'today' ? 'page' : null" class="mobile-nav-item"><i data-lucide="compass"></i><span>Today</span></button>
+      <button type="button" @click="switchTab('itinerary')" :class="activeTab === 'itinerary' ? 'is-active' : ''" :aria-current="activeTab === 'itinerary' ? 'page' : null" class="mobile-nav-item"><i data-lucide="calendar"></i><span>Days</span></button>
+      <button type="button" @click="switchTab('plan')" :class="activeTab === 'plan' ? 'is-active' : ''" :aria-current="activeTab === 'plan' ? 'page' : null" class="mobile-nav-item"><i data-lucide="clipboard-check"></i><span>Plan</span></button>
+      <button type="button" @click="switchTab('toolkit')" :class="activeTab === 'toolkit' ? 'is-active' : ''" :aria-current="activeTab === 'toolkit' ? 'page' : null" class="mobile-nav-item"><i data-lucide="briefcase"></i><span>Tools</span></button>
+      <button type="button" class="mobile-nav-item mobile-search-item" @click="openGlobalSearch()" aria-haspopup="dialog" :aria-expanded="showGlobalSearch" aria-label="Search the itinerary"><i data-lucide="search" aria-hidden="true"></i><span>Search</span></button>
+    </nav>
   </div>
 <!-- Toast Notification Overlay -->
   <div role="status" aria-live="polite" aria-atomic="true" class="mobile-toast fixed bottom-20 md:bottom-6 z-50 pointer-events-none space-y-2">

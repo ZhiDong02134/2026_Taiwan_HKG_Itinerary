@@ -1,7 +1,7 @@
 /* Offline-first application shell for Taiwan + Hong Kong 2026. */
 const CACHE_PREFIX = 'twhk-field-';
 const LEGACY_CACHE_PREFIXES = ['twhk-2026-'];
-const CACHE = `${CACHE_PREFIX}e1d12fd3e6f08fed`;
+const CACHE = `${CACHE_PREFIX}49f2be3ad34f11cb`;
 const SHELL_KEY = new URL('./index.html', self.location).href;
 const PRECACHE = [
   "./index.html",

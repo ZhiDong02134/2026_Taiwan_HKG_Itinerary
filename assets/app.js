@@ -3238,8 +3238,9 @@ function getStorage(key, fallback) {
             this.rainPlanActive = false;
             this.syncThemeColor();
             this.refreshIcons();
-            // Keep the selected chip centred so adjacent days remain reachable.
-            this.$nextTick(() => this.scrollActiveDayChip(true));
+            // Keep the rail still when the selected chip is already visible. A moving
+            // horizontal scroller makes iOS consume the next tap merely to stop motion.
+            this.$nextTick(() => this.scrollActiveDayChip(false));
           });
 
           this.$watch('takeItEasyActive', () => this.refreshIcons());
@@ -3311,6 +3312,17 @@ function getStorage(key, fallback) {
           this.switchTab('plan', true);
         },
 
+        canUseDayViewTransition() {
+          // Full-document view-transition snapshots are lovely with a mouse, but their
+          // temporary overlay can consume the next tap on iOS while the 420ms animation
+          // is still settling. Day selection is a high-frequency control, so coarse
+          // pointers get the immediate DOM update + lightweight content animation.
+          return !this.prefersReducedMotion()
+            && document.visibilityState === 'visible'
+            && typeof document.startViewTransition === 'function'
+            && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        },
+
         switchDay(dayId) {
           if (!dayId || dayId === this.activeDayId || !this.days.some(day => day.id === dayId)) return;
           this.smartLaunchActive = false;
@@ -3324,14 +3336,65 @@ function getStorage(key, fallback) {
             this.$nextTick(resolve);
           });
 
-          if (!this.prefersReducedMotion() && typeof document.startViewTransition === 'function') {
+          if (this.canUseDayViewTransition()) {
+            // A rapid second selection should replace the animation, never be ignored.
+            try { this._dayTransition?.skipTransition?.(); } catch (_) {}
             document.documentElement.dataset.dayTransition = this.motionDirection;
-            const transition = document.startViewTransition(commit);
-            transition.finished.finally(() => delete document.documentElement.dataset.dayTransition);
+            try {
+              const transition = document.startViewTransition(commit);
+              this._dayTransition = transition;
+              transition.finished.finally(() => {
+                if (this._dayTransition === transition) this._dayTransition = null;
+                delete document.documentElement.dataset.dayTransition;
+              });
+            } catch (_) {
+              this.activeDayId = dayId;
+              this.playDayChange();
+            }
           } else {
+            // Synchronous on touch devices: the selected chip responds in the same frame.
             this.activeDayId = dayId;
             this.playDayChange();
           }
+        },
+
+        beginDayChipPress(event, dayId) {
+          if (!event || event.isPrimary === false) return;
+          this._dayChipPress = {
+            dayId,
+            pointerId: event.pointerId,
+            x: event.clientX,
+            y: event.clientY,
+            at: performance.now()
+          };
+        },
+
+        cancelDayChipPress(event) {
+          if (!this._dayChipPress) return;
+          if (!event || event.pointerId === this._dayChipPress.pointerId) this._dayChipPress = null;
+        },
+
+        endDayChipPress(event, dayId) {
+          const press = this._dayChipPress;
+          this._dayChipPress = null;
+          if (!press || press.dayId !== dayId || press.pointerId !== event.pointerId) return;
+          const dx = event.clientX - press.x;
+          const dy = event.clientY - press.y;
+          const elapsed = performance.now() - press.at;
+          // A real rail drag remains a scroll. A stationary tap commits on pointer-up,
+          // before WebKit decides whether to synthesize the later click event.
+          if (Math.hypot(dx, dy) > 14 || elapsed > 900) return;
+          this._dayChipTapGuard = { dayId, until: performance.now() + 650 };
+          this.selectDayFromStrip(dayId);
+        },
+
+        activateDayChipClick(event, dayId) {
+          const guard = this._dayChipTapGuard;
+          if (guard?.dayId === dayId && performance.now() < guard.until) {
+            this._dayChipTapGuard = null;
+            return;
+          }
+          this.selectDayFromStrip(dayId);
         },
 
         selectDayFromStrip(dayId, positionPlan = { targetKind: 'day-summary' }) {
@@ -3604,7 +3667,7 @@ function getStorage(key, fallback) {
           this.showGlobalSearch = false;
           document.documentElement.classList.remove('global-search-open');
           this.$nextTick(() => {
-            const phoneTrigger = window.matchMedia('(max-width: 767px)').matches ? document.querySelector('.dock-search') : null;
+            const phoneTrigger = window.matchMedia('(max-width: 767px)').matches ? document.querySelector('.mobile-search-item') : null;
             (phoneTrigger || document.getElementById('global-search-trigger'))?.focus({ preventScroll: true });
           });
         },
@@ -4103,25 +4166,17 @@ function getStorage(key, fallback) {
           const strip = document.getElementById('day-strip');
           if (!el || !strip) return;
 
-          if (!forceCenter) {
-            const itemRect = el.getBoundingClientRect();
-            const stripRect = strip.getBoundingClientRect();
-            if (itemRect.left >= stripRect.left + 8 && itemRect.right <= stripRect.right - 8) return;
-          }
+          const itemRect = el.getBoundingClientRect();
+          const stripRect = strip.getBoundingClientRect();
+          const fullyVisible = itemRect.left >= stripRect.left + 8 && itemRect.right <= stripRect.right - 8;
+          if (!forceCenter && fullyVisible) return;
 
-          // Centre by computing the scroll position directly rather than via
-          // scrollIntoView({inline:'center'}). scrollIntoView walks every scrollable
-          // ancestor (so it can nudge the page vertically too) and its interpretation of
-          // `inline` interacts with scroll-padding and scroll-snap differently across
-          // engines — on iOS Safari it frequently settles a chip off-centre. This maths is
-          // deterministic and only ever moves the strip.
-          const delta = el.getBoundingClientRect().left - strip.getBoundingClientRect().left;
+          const delta = itemRect.left - stripRect.left;
           const target = strip.scrollLeft + delta - (strip.clientWidth - el.offsetWidth) / 2;
           const max = strip.scrollWidth - strip.clientWidth;
-          strip.scrollTo({
-            left: Math.max(0, Math.min(target, max)),
-            behavior: this.prefersReducedMotion() ? 'auto' : 'smooth'
-          });
+          // Never leave the rail in a programmatic smooth-scroll state after a tap.
+          // On iOS, the next tap first stops that motion and is therefore discarded.
+          strip.scrollTo({ left: Math.max(0, Math.min(target, max)), behavior: 'auto' });
         },
 
         toggleDayCompleted(dayId) {
