@@ -1,20 +1,26 @@
 {
+  "id": "./",
   "name": "Taiwan + Hong Kong 2026",
-  "short_name": "TW · HK '26",
-  "description": "Offline day-by-day field guide for the Taiwan and Hong Kong 2026 trip.",
-  "start_url": "./",
+  "short_name": "TW · HK",
+  "description": "Offline-first field guide for a 16-day Taiwan and Hong Kong trip.",
+  "start_url": "./?tab=today",
   "scope": "./",
-  "id": "/taiwan-pwa/",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "any",
-  "background_color": "#090a0f",
-  "theme_color": "#090a0f",
+  "background_color": "#101414",
+  "theme_color": "#101414",
   "lang": "en",
   "dir": "ltr",
   "categories": [
     "travel",
-    "navigation"
+    "navigation",
+    "productivity"
   ],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "./icon-192.png",
@@ -39,6 +45,76 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Today",
+      "short_name": "Today",
+      "description": "Open the selected or live trip day",
+      "url": "./?tab=today",
+      "icons": [
+        {
+          "src": "./icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Trip days",
+      "short_name": "Days",
+      "description": "Browse all 16 trip days",
+      "url": "./?tab=itinerary",
+      "icons": [
+        {
+          "src": "./icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Plan",
+      "short_name": "Plan",
+      "description": "Open bookings and preparation",
+      "url": "./?tab=plan",
+      "icons": [
+        {
+          "src": "./icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Toolkit",
+      "short_name": "Tools",
+      "description": "Open hotels, budget, rules and data tools",
+      "url": "./?tab=toolkit",
+      "icons": [
+        {
+          "src": "./icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./screenshots/today-dark.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Today view in dark appearance"
+    },
+    {
+      "src": "./screenshots/today-light.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Today view in light appearance"
     }
   ]
 }

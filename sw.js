@@ -1,123 +1,151 @@
-/*
-  Offline service worker for Taiwan + Hong Kong 2026.
-
-  Strategy: cache-first with background revalidation.
-  A cached shell is served immediately for reliable offline use. When online,
-  successful same-origin responses refresh the current cache in the background.
-  The page's bypass check stores a detected HTML update under the canonical shell
-  key and offers a user-controlled reload.
-
-  Bump CACHE when older cache namespaces must be evicted.
-*/
-const CACHE_PREFIX = 'twhk-2026-';
-const CACHE = `${CACHE_PREFIX}v24`;
-const SHELL = [
-  './index.html',
-  './manifest.webmanifest',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-maskable-192.png',
-  './icon-maskable-512.png',
-  './apple-touch-icon.png',
-  './assets/taipei.webp',
-  './assets/kaohsiung.webp',
-  './assets/hk.webp'
-];
-
-// Every navigation is stored and retrieved under this one key. The app writes its current
-// tab and day into the query string, so without normalising, `?tab=plan` and `?tab=today`
-// become separate cache entries — the worker then reads one key and writes another, and the
-// cached copy can never be replaced. That silently freezes an installed app on whatever
-// version it first cached.
+/* Offline-first application shell for Taiwan + Hong Kong 2026. */
+const CACHE_PREFIX = 'twhk-field-';
+const LEGACY_CACHE_PREFIXES = ['twhk-2026-'];
+const CACHE = `${CACHE_PREFIX}e1d12fd3e6f08fed`;
 const SHELL_KEY = new URL('./index.html', self.location).href;
-const keyFor = request =>
-  request.mode === 'navigate' ? new Request(SHELL_KEY, { credentials: 'same-origin' }) : request;
+const PRECACHE = [
+  "./index.html",
+  "./manifest.webmanifest",
+  "./assets/app.css",
+  "./assets/app.js",
+  "./assets/runtime.js",
+  "./assets/vendor/lucide.js",
+  "./assets/vendor/alpine.js",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./icon-maskable-192.png",
+  "./icon-maskable-512.png",
+  "./apple-touch-icon.png",
+  "./assets/taipei.webp",
+  "./assets/kaohsiung.webp",
+  "./assets/hk.webp",
+  "./screenshots/today-dark.png",
+  "./screenshots/today-light.png",
+  "./splash-1080x2340.png",
+  "./splash-1125x2436.png",
+  "./splash-1170x2532.png",
+  "./splash-1179x2556.png",
+  "./splash-1206x2622.png",
+  "./splash-1242x2688.png",
+  "./splash-1284x2778.png",
+  "./splash-1290x2796.png",
+  "./splash-1320x2868.png",
+  "./splash-750x1334.png",
+  "./splash-828x1792.png"
+];
+const STATIC_DESTINATIONS = new Set(['style', 'script', 'image', 'font', 'manifest']);
 
-// cache.add() rejects on a 404, so a single missing file in SHELL used to reject the
-// whole Promise.all, fail waitUntil, and make the browser discard the worker entirely —
-// leaving the app with no offline copy at all. Verified by accident: a deploy whose
-// icons lagged its sw.js registered zero workers while still creating an empty cache.
-// Only the shell document is worth failing over; every other entry is best-effort, so a
-// forgotten icon degrades one asset instead of the entire offline story.
+const canonicalNavigationKey = () => new Request(SHELL_KEY, { credentials: 'same-origin' });
+const reloadRequest = url => new Request(url, { cache: 'reload', credentials: 'same-origin' });
+const timeout = ms => new Promise(resolve => setTimeout(() => resolve(null), ms));
+
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE)
-      .then(async cache => {
-        await cache.add(SHELL[0]);
-        await Promise.all(
-          SHELL.slice(1).map(url => cache.add(url).catch(() => {}))
-        );
-      })
-      .then(() => self.skipWaiting())
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE);
+    await cache.add(reloadRequest('./index.html'));
+    await Promise.all(
+      PRECACHE.filter(url => url !== './index.html')
+        .map(url => cache.add(reloadRequest(url)).catch(() => null))
+    );
+    if (!self.registration.active) await self.skipWaiting();
+  })());
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(keys
-        .filter(key => key.startsWith(CACHE_PREFIX) && key !== CACHE)
-        .map(key => caches.delete(key))))
-      .then(() => self.clients.claim())
-  );
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(
+      keys.filter(key =>
+        (key.startsWith(CACHE_PREFIX) && key !== CACHE) ||
+        LEGACY_CACHE_PREFIXES.some(prefix => key.startsWith(prefix))
+      ).map(key => caches.delete(key))
+    );
+    if (self.registration.navigationPreload) {
+      try { await self.registration.navigationPreload.enable(); } catch {}
+    }
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener('message', event => {
-  if (event.data === 'SKIP_WAITING') self.skipWaiting();
+  if (event.data?.type === 'SKIP_WAITING' || event.data === 'SKIP_WAITING') self.skipWaiting();
 });
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  event.waitUntil((async () => {
+    const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    const existing = clients.find(client => client.url.startsWith(self.registration.scope));
+    if (existing) return existing.focus();
+    return self.clients.openWindow('./?tab=today');
+  })());
+});
+
+async function networkFirstNavigation(event) {
+  const cache = await caches.open(CACHE);
+  const key = canonicalNavigationKey();
+  const networkTask = (async () => {
+    try {
+      const response = await event.preloadResponse || await fetch(event.request);
+      if (response?.ok) {
+        try { await cache.put(key, response.clone()); } catch {}
+        return response;
+      }
+    } catch {}
+    return null;
+  })();
+
+  const quick = await Promise.race([networkTask, timeout(2600)]);
+  if (quick) return quick;
+
+  const cached = await cache.match(key) || await cache.match('./index.html');
+  if (cached) {
+    event.waitUntil(networkTask);
+    return cached;
+  }
+
+  const eventual = await networkTask;
+  return eventual || Response.error();
+}
+
+async function staleWhileRevalidate(event) {
+  const cache = await caches.open(CACHE);
+  const cached = await cache.match(event.request);
+  const refresh = fetch(event.request).then(async response => {
+    if (response?.ok) {
+      try { await cache.put(event.request, response.clone()); } catch {}
+    }
+    return response;
+  }).catch(() => null);
+
+  if (cached) {
+    event.waitUntil(refresh);
+    return cached;
+  }
+  return await refresh || Response.error();
+}
 
 self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET') return;
 
-  // The page's automatic version check needs a real network round trip. Persist that
-  // response under the canonical shell key so its reload displays the detected version.
-  if (new URL(request.url).searchParams.has('swBypass')) {
-    event.respondWith((async () => {
-      const response = await fetch(request);
-      if (response && response.ok) {
-        try {
-          const cache = await caches.open(CACHE);
-          await cache.put(SHELL_KEY, response.clone());
-        } catch {}
-      }
-      return response;
-    })());
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  if (url.searchParams.has('swBypass')) {
+    event.respondWith(fetch(request, { cache: 'no-store' }));
     return;
   }
 
-  // Leave cross-origin requests alone — this is what keeps the Frankfurter FX call going
-  // straight to the network, so its own 6s abort and cached-rate fallback still govern it.
-  if (new URL(request.url).origin !== self.location.origin) return;
+  if (request.mode === 'navigate') {
+    event.respondWith(networkFirstNavigation(event));
+    return;
+  }
 
-  event.respondWith((async () => {
-    const cache = await caches.open(CACHE);
-    const key = keyFor(request);
-    const cached = await cache.match(key);
-
-    // The page owns automatic version checking and reload because a navigation client is not
-    // guaranteed to be discoverable via clients.matchAll() until shortly after this resolves.
-    const fromNetwork = fetch(request).then(async response => {
-      if (response && response.ok) {
-        // Storage pressure must not turn a valid network response into a failed request.
-        try { await cache.put(key, response.clone()); } catch {}
-      }
-      return response;
-    }).catch(() => null);
-
-    if (cached) {
-      event.waitUntil(fromNetwork);
-      return cached;
-    }
-
-    const network = await fromNetwork;
-    if (network) return network;
-
-    // Cold cache and no network: still answer a navigation with the app shell if we have it.
-    if (request.mode === 'navigate') {
-      const shell = await cache.match(SHELL_KEY);
-      if (shell) return shell;
-    }
-    return Response.error();
-  })());
+  if (
+    STATIC_DESTINATIONS.has(request.destination) ||
+    PRECACHE.some(item => new URL(item, self.location).href === request.url)
+  ) {
+    event.respondWith(staleWhileRevalidate(event));
+  }
 });

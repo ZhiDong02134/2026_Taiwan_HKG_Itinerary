@@ -1,132 +1,129 @@
-# Taiwan + Hong Kong PWA
+# Taiwan + Hong Kong 2026 PWA
 
-A static, phone-first travel guide. The itinerary, Alpine runtime, selected Lucide icons, and compiled Tailwind styles are embedded in [index.html](index.html). GitHub Pages does not need a build step.
+A phone-first, offline-capable field guide for a 16-day Taiwan and Hong Kong trip. It is a static web app designed for GitHub Pages and iPhone Home Screen use. The complete itinerary, booking tracker, preparation checklist, live day execution tools, search, hotels, budget, and backup plans are local to the bundle.
 
-## Preview and Deployment
+## Deploy to GitHub Pages
 
-The local Pages-style preview is at <http://127.0.0.1:8789/taiwan-pwa/> while its preview server is running. This localhost address is accessible on this computer, not on a separate phone.
+1. Copy **the contents of this directory** into the root of the repository. Do not add an extra wrapper folder unless that folder is the configured Pages publishing root.
+2. Commit and push.
+3. In **Repository Settings → Pages**, publish from the repository root or the appropriate branch/folder.
+4. Keep HTTPS enabled. Service workers and installation require a secure context; localhost is the development exception.
+5. Open the deployed page once online, then use Safari’s **Share → Add to Home Screen**.
 
-Deploy the updated [index.html](index.html), [sw.js](sw.js), and the complete [assets](assets/) directory alongside the existing manifest, icons, and startup images. Publish over HTTPS. The manifest identity and all application paths remain compatible with `/taiwan-pwa/` project hosting. No Git commit, push, or deployment was performed in this downloaded folder.
+Every runtime URL is relative, so the same bundle works at either a user-site root or a project path such as `https://account.github.io/taiwan-pwa/`.
 
-The service worker caches the application and three destination images. A new version is downloaded after a throttled version check; the visible Update action lets the user choose when to reload. Browser storage can still be evicted, so the existing Backup data action remains important.
+## Production layout
 
-## UI/UX Pass: September 25, 2026
-
-### Direction
-
-A practical travel field guide with clear destination identity, readable open sections, and calm controls. Apple-inspired hierarchy and interaction principles, not a reproduction of native Liquid Glass. No accordions, new framework, animation dependency, remote font requirement, or runtime CDN dependency.
-
-- System appearance by default, with accessible Auto / Light / Dark controls in Tools and saved preferences.
-- Neutral light and dark surfaces, jade for Taipei, amber for Kaohsiung, coral for Hong Kong, and blue for flight context. Color supplements labels and icons.
-- Destination photography is local, optimized, dimension-reserved, and cached offline. It is illustrative, not a current/live view.
-- Open day and planning summaries, flat fact rows, fewer nested frames, quieter eight-pixel itinerary cards, and more readable prose.
-- Native system typography is retained for the existing Apple-oriented interface and Traditional Chinese support. Reading prose uses scalable units, with balanced/pretty wrapping and progressive CJK text spacing.
-- Navigation remains visible. Brief 220ms native Web Animations respond to intentional view/day changes and are cancellable. Scrolling itself does not animate cards.
-- Reduced motion, higher contrast, safe areas, and reduced transparency remain supported. Effects are enhancements, not prerequisites for using the app.
-
-### Defects Fixed
-
-| Issue | Resolution |
-| --- | --- |
-| Tab restoration inherited smooth scrolling and could jump after rapid taps | Immediate restoration, guarded against stale callbacks |
-| A later scroll-driven reveal overrode the intended stationary timeline | Removed the competing scroll animation and obsolete day choreography |
-| Dark-only surfaces were unsuitable for some outdoor reading conditions | Added independently checked light and dark themes |
-| Secondary labels could become low contrast in light mode | Corrected rendered foreground/background pairs |
-| Automatic update reloads could interrupt reading or typing | User-controlled Update action after download |
-| Search left background content accessible while the modal was open | Inert background, guarded focus scheduling, and non-disruptive Escape handling |
-| Opening a global search result outside Today selected a hidden day | Navigate to Today before positioning the matching activity |
-| The complete icon catalog added unnecessary download and parsing work | Bundle only 71 referenced/recognized icons with Lucide's documented API |
-
-### Performance
-
-Measured locally, before and after this pass; values below are approximate and exclude unchanged installation icons/startup images.
-
-| Resource | Before | After |
-| --- | ---: | ---: |
-| HTML, uncompressed | 1,004,593 bytes | about 606 KB |
-| HTML, locally gzip-compressed | 253,148 bytes | about 159 KB |
-| Embedded Lucide runtime | about 432 KB | 29,367 bytes |
-| Destination WebP images | none | 245,210 bytes combined |
-
-The HTML is about 40% smaller uncompressed and 37% smaller with gzip. Photos add a one-time cacheable download, so total compressed first-load bytes are higher than the old text-only guide. Do not interpret the HTML reduction as a measured 40% improvement in loading time. Real-device Core Web Vitals and energy use were not measured.
-
-## Research and Technology Decisions
-
-Primary sources were checked online on September 25, 2026. The requested UI/UX Pro Max skill was also consulted. Its broad design-system searches returned marketing-oriented Aurora/storytelling recommendations that were not a good fit for an operational travel guide; those recommendations were not adopted. Its focused accessibility and mobile guidance informed the checks.
-
-| Source | Applied Finding |
-| --- | --- |
-| [Apple: Materials](https://developer.apple.com/design/human-interface-guidelines/materials) | Translucency belongs primarily in navigation; long-form content needs stable, readable surfaces |
-| [Apple: Color](https://developer.apple.com/design/human-interface-guidelines/color) | Semantic color, light/dark parity, contrast, and restrained emphasis |
-| [Apple: Motion](https://developer.apple.com/design/human-interface-guidelines/motion) | Brief, purposeful, optional and interruptible feedback; avoid unnecessary motion during frequent actions |
-| [Apple: Typography](https://developer.apple.com/design/human-interface-guidelines/typography) | Preserve hierarchy, support larger text, avoid excessive truncation, and retain legible CJK/system fonts |
-| [Apple: Tab Bars](https://developer.apple.com/design/human-interface-guidelines/tab-bars) | Stable labeled destinations, persistent navigation, preserved state |
-| [WebKit: Safari 27.0, September 17, 2026](https://webkit.org/blog/18325/webkit-features-for-safari-27-0/) | Reviewed current scroll anchoring, CJK spacing, image sizing, CSS and PWA capabilities and rendering fixes |
-| [WebKit: Safari 26](https://webkit.org/blog/16993/news-from-wwdc25-web-technology-coming-this-fall-in-safari-26-beta/) | Established compatibility context for pretty wrapping, scroll-driven animations and Home Screen web apps |
-| [MDN: View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API) | Considered snapshot transitions; local animations better preserve responsiveness and avoid duplicating a long itinerary |
-| [MDN: startViewTransition](https://developer.mozilla.org/en-US/docs/Web/API/Document/startViewTransition) | Reviewed update timing and fallbacks; no dependency on newer transition variants was added |
-| [MDN: @starting-style](https://developer.mozilla.org/en-US/docs/Web/CSS/@starting-style) | Retained progressive entry styling where appropriate, without relying on it for state correctness |
-| [Alpine: $nextTick](https://alpinejs.dev/magics/nextTick) | Wait for DOM updates before scroll restoration and local animation |
-| [Lucide: Getting Started](https://lucide.dev/guide/lucide/getting-started) | Selective imports and the documented `createIcons({ icons })` interface reduce the embedded payload |
-| [Lucide: Global Styling](https://lucide.dev/guide/lucide/advanced/global-styling) | Reuse the established icon family and styling API |
-| [W3C: Focus Not Obscured](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html) | Account for fixed navigation and modal focus; do not confuse minimum AA with enhanced AAA requirements |
-| [web.dev: PWA Updates](https://web.dev/learn/pwa/update) | Updates should not interrupt active work; preserve the installed app's identity |
-| [GitHub: GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) | Keep deployment static and project-relative |
-
-### Newer Features Considered
-
-- Safari 27 scroll anchoring benefits the page without a polyfill. Reserved image dimensions remain necessary for older versions.
-- `text-autospace: normal`, `text-wrap: pretty`, existing container queries and guarded corner shaping are progressive enhancements.
-- Native Web Animations provide the required cancellation and timing without adding GSAP or a framework.
-- Scroll-driven animation was deliberately removed from reading content. Browser support does not make it useful for every interaction.
-- Customizable selects, 3D/model elements, WebGPU, and service-worker static routing do not solve a current need here. A three-choice appearance control works better as native radio inputs, and existing cache routing is already small.
-- Alpine 3.17.3 and Lucide 1.47.0 were current in the package registry during the check. Existing Alpine 3.17.2 and Lucide 1.43.0 were retained; no required feature justified a runtime-version migration.
-
-## Verification
-
-Performed with Playwright-driven Chrome and WebKit 26.6. WebKit is a useful engine check, not a substitute for Safari 27 on a physical iPhone.
-
-| Check | Result |
-| --- | --- |
-| Four tabs in both appearances, axe-core 4.13.0 WCAG A/AA rules through 2.2 | No automated violations in the checked views |
-| All 16 days in both appearances: contrast, control names, image alternatives | 32 combinations passed |
-| 320, 360, 375, 390, 430, 768, 844, 1440 and 1920px layouts across four tabs | 36 combinations passed without horizontal overflow or clipped key text |
-| WebKit phone layout with measured 32px root font | Four tabs passed; verified actual computed size |
-| Rapid tab/day changes and reduced motion | Correct final state, restored scroll, cancellable motion |
-| Global Chinese search from every tab | Correct day opens in Today |
-| Search modal | Focus trap/return passed; native focus blocked from background; Chrome accessibility tree exposes only modal search |
-| Real appearance and currency controls | Preferences persisted across reload |
-| Interactive touch targets in four tabs | At least 44px; inline photo-credit text links use the standard inline-text exception |
-| Offline navigation under `/taiwan-pwa/`, with the actual test server stopped | Chrome and WebKit loaded a new query URL, retained completion state, and displayed cached imagery/icons |
-| Simulated newer deployment | Active search survived detection; explicit Update caused reload |
-| Original data integrity | All days, bookings, prep items and hotel records unchanged |
-| Static integrity | All inline scripts parse, service worker parses, cache assets exist, manifest identity preserved |
-
-Screenshots are in [output/playwright](output/playwright/), including [light phone](output/playwright/webkit-light-today.png), [dark phone](output/playwright/webkit-dark-today.png), and [desktop](output/playwright/webkit-desktop.png).
-
-### Limits and Device Checklist
-
-Automated checks do not establish complete WCAG conformance. The following still need a physical phone:
-
-1. Install from the final HTTPS Pages URL and check launch artwork, status bar, notch and Home Indicator in both appearances.
-2. Verify VoiceOver reading order, Larger Text, Reduce Motion and Reduce Transparency using actual iOS settings.
-3. Open once online, enable airplane mode, terminate and reopen the installed PWA, then visit a different day and confirm completion state.
-4. Check search with the software keyboard, Safari toolbar expansion/collapse, landscape rotation, and real scrolling inertia.
-5. Confirm perceived smoothness, sunlight legibility and startup performance on the oldest phone used by the group.
-
-Playwright WebKit's `setOffline(true)` reload produced an internal engine error in a touch-emulated context. The separate server-disconnected test passed in WebKit and Chrome. The emulation failure was not silently counted as a pass. Percentage-based root-font emulation also did not produce the expected size in WebKit, so enlarged-text verification used a measured explicit 32px root.
-
-## Maintenance
-
-The app is ready to serve as-is. Rebuild the embedded icon subset only when icon names change:
-
-```sh
-npm install --prefix /tmp/taiwan-pwa-build --no-save --package-lock=false esbuild@0.25.10 lucide@1.43.0 parse5@7.3.0
-node scripts/build-icons.mjs /tmp/taiwan-pwa-build/node_modules
+```text
+index.html                  Semantic shell and rendered UI
+manifest.webmanifest        Install metadata, icons, shortcuts, screenshots
+sw.js                       Offline shell and update lifecycle
+assets/
+  app.css                   Compiled visual system
+  app.js                    Itinerary data and application behavior
+  runtime.js                PWA registration, update hand-off, chrome state
+  vendor/alpine.js          Local reactive runtime
+  vendor/lucide.js          Pruned local icon runtime
+  taipei.webp               Local destination artwork
+  kaohsiung.webp
+  hk.webp
+screenshots/                Manifest install screenshots
+scripts/                    Maintenance and verification tools
 ```
 
-[scripts/build-icons.mjs](scripts/build-icons.mjs) replaces only the generated Lucide runtime. It inventories quoted icon names in authored HTML/JavaScript and verifies static names against the pinned library. Keep data-driven icon names literal; synthesized names need an explicit inventory and browser verification. Deploy a changed service-worker cache version when cached assets change.
+There are no runtime CDN dependencies. The only normal network request made by the application is the optional exchange-rate refresh; cached/fallback rates keep the budget usable offline.
 
-All three image sources, authors, license links and transformation notices are available in the app under Tools > Photography. The resized image derivatives retain their original licenses; they do not change the licensing of the app code.
+## Interaction model
 
-The original downloaded files were preserved outside the app as `/tmp/taiwan-pwa-before-20260925.html`, `/tmp/taiwan-pwa-sw-before-20260925.js`, and `/tmp/taiwan-pwa-manifest-before-20260925.webmanifest` during this pass. These are temporary local backups, not a replacement for version control.
+- **Today** is the execution surface: selected-day hero, leave-by timing, timeline, protein cue, practical note, and always-visible backups.
+- **Days** is a searchable overview of all 16 days.
+- **Plan** combines bookings and administrative preparation without accordions.
+- **Tools** contains hotel bases, operating rules, budget/FX, appearance, and data backup/restore.
+- Global English/Traditional Chinese search is available from the header and the phone dock.
+- The phone dock, sticky day rail, keyboard behavior, and safe-area spacing are tuned for one-handed use.
+
+## PWA behavior
+
+- Navigation uses a **network-first** strategy with a 2.6-second cached-shell fallback.
+- Local static assets use **stale-while-revalidate**.
+- Query-string routes such as `?tab=plan` share one canonical cached shell, avoiding fragmented/stale navigation entries.
+- Navigation preload is enabled when supported.
+- A new deployment installs into a content-hashed cache and removes the legacy `twhk-2026-*` cache namespace. The running app exposes an explicit **Update** action when the next worker is waiting, so a user is never reloaded in the middle of a trip task.
+- Icons, destination artwork, startup screens, and manifest screenshots are precached for offline use.
+
+## Make changes
+
+Most itinerary content is in `assets/app.js`; layout lives in `index.html`; the visual system is in `assets/app.css`.
+
+After editing deployable files:
+
+```bash
+python3 scripts/finalize.py
+python3 scripts/verify.py
+```
+
+`finalize.py` refreshes manifest screenshot metadata and regenerates the content-hashed service worker. `verify.py` checks local references, duplicate IDs, manifest integrity, PNG dimensions, JavaScript syntax when Node is available, offline strategy markers, and the no-accordion requirement.
+
+### Rebuild the icon subset
+
+The shipped icon file is already complete. When a new Lucide icon name is introduced:
+
+```bash
+npm install
+npm run icons
+python3 scripts/finalize.py
+python3 scripts/verify.py
+```
+
+The helper scans both markup and dynamic itinerary data, then writes a pruned browser bundle to `assets/vendor/lucide.js`.
+
+### Regenerate artwork, icons, and iPhone startup screens
+
+```bash
+python3 -m pip install Pillow
+python3 scripts/generate-assets.py
+python3 scripts/finalize.py
+python3 scripts/verify.py
+```
+
+### Optional browser smoke test
+
+```bash
+python3 -m pip install playwright
+playwright install chromium
+python3 -m http.server 8000
+# In another terminal:
+BASE_URL=http://127.0.0.1:8000/ python3 scripts/smoke-test.py
+```
+
+The test runs dark and light appearance at 320, 375, 390, and 430 CSS pixels. It checks the in-app semantic QA result, horizontal overflow, visible 44×44 minimum touch targets, runtime errors, and console errors. Screenshots and JSON results are written under `output/playwright/`.
+
+## Accessibility and resilience
+
+- 44×44 minimum phone targets and 16px editable controls
+- Dynamic viewport and safe-area support
+- keyboard-accessible tabs, search focus trapping, skip link, and visible focus treatment
+- Reduced Motion, Reduced Transparency, Increased Contrast, and forced-colors fallbacks
+- semantic labels for live timing and route state
+- no disclosure accordions; the information hierarchy remains visible
+- state export/import for moving progress between devices
+- offline launch and query-route reload support
+
+Modern CSS features—OKLCH color mixing, registered custom properties, `@starting-style`, View Transitions, scroll-state/container queries, `corner-shape`, `text-box-trim`, and scroll-driven effects—are progressive enhancements. Core navigation and itinerary rendering do not depend on them.
+
+## Privacy note
+
+GitHub Pages repositories and deployed pages may be public. This itinerary contains hotel names/addresses and detailed travel dates. `robots.txt` and the page’s `noindex` metadata discourage indexing but are **not access control**. Use a private deployment product or authentication layer if public availability is unacceptable.
+
+## Release checks performed on this bundle
+
+- 233/233 in-app semantic checks
+- 53/53 static artifact checks
+- dark and light rendering at 320, 375, 390, and 430 CSS-pixel widths
+- no horizontal overflow at tested phone widths
+- no visible interactive target below 44×44 at tested phone widths
+- JavaScript syntax validation
+- manifest and image-dimension validation
+- installed service-worker control and offline reload of a query route
+
+Chromium was used for automated runtime testing. Safari-specific enhancements are guarded by feature queries and have functional fallbacks; final device acceptance testing should still be done on the iPhones that will be used during the trip.
