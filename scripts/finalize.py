@@ -64,9 +64,9 @@ precache_paths = [
     'icon-maskable-192.png',
     'icon-maskable-512.png',
     'apple-touch-icon.png',
-    'assets/taipei.webp',
-    'assets/kaohsiung.webp',
-    'assets/hk.webp',
+    'assets/taipei-photo.webp',
+    'assets/kaohsiung-photo.webp',
+    'assets/hk-photo.webp',
     'screenshots/today-dark.png',
     'screenshots/today-light.png',
 ]

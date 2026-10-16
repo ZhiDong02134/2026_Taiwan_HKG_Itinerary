@@ -32,7 +32,7 @@
        this PNG, Add to Home Screen falls back to a screenshot of the page. -->
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="preload" href="./assets/taipei.webp" as="image" type="image/webp">
+  <link rel="preload" href="./assets/taipei-photo.webp" as="image" type="image/webp">
   <!-- iOS launch screens. Without these, opening the home-screen app shows a blank
        white frame until the document paints; iOS does not honour the manifest's
        background_color, so apple-touch-startup-image is the only mechanism. -->
@@ -47,10 +47,10 @@
   <link rel="apple-touch-startup-image" href="./splash-1284x2778.png" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
   <link rel="apple-touch-startup-image" href="./splash-1290x2796.png" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
   <link rel="apple-touch-startup-image" href="./splash-1320x2868.png" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2718%27%20fill%3D%27%230d0f17%27%2F%3E%3Cg%20fill%3D%27%2351c6c0%27%3E%3Cpath%20d%3D%27M31.2%2018L31.6%209H32.4L32.8%2018Z%27%2F%3E%3Cpath%20d%3D%27M28.6%2018L35.4%2018L36.2%2021.5L27.8%2021.5Z%27%2F%3E%3Cpath%20d%3D%27M27.4%2023.6L25.8%2018.0L38.2%2018.0L36.6%2023.6Z%27%2F%3E%3Cpath%20d%3D%27M26.9%2029.8L25.3%2024.2L38.7%2024.2L37.1%2029.8Z%27%2F%3E%3Cpath%20d%3D%27M26.4%2036.0L24.8%2030.4L39.2%2030.4L37.6%2036.0Z%27%2F%3E%3Cpath%20d%3D%27M25.9%2042.2L24.3%2036.6L39.7%2036.6L38.1%2042.2Z%27%2F%3E%3Cpath%20d%3D%27M25.4%2042.8L38.6%2042.8L41.4%2050L22.6%2050Z%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+  <link rel="icon" href="./icon-192.png" type="image/png">
 <!-- The pinned Alpine runtime fails visibly instead of leaving a blank interactive shell. -->
   <!-- Tailwind CSS v4.1.10 compiled locally at build time; zero browser-time Tailwind runtime. -->
-    <link rel="stylesheet" href="./assets/app.css?v=94b220dc69">
+    <link rel="stylesheet" href="./assets/app.css?v=ef61f991fc">
 
   
   <!-- Local runtime bundles are deferred and cached independently for faster repeat launches. -->
@@ -88,7 +88,7 @@
   <header class="app-chrome sticky top-0 z-40 border-b px-3.5 md:px-5 py-2" :inert="showGlobalSearch">
     <div class="app-header-inner app-shell max-w-5xl mx-auto flex items-center justify-between gap-3">
       <button type="button" class="brand-button flex items-center gap-2.5 shrink-0" @click="switchTab('today', true)" aria-label="Open Today">
-        <span class="brand-mark"><i data-lucide="map" class="w-4 h-4"></i></span>
+        <span class="brand-mark" aria-hidden="true"><img src="./icon-192.png" alt="" width="30" height="30" decoding="async"></span>
         <span class="brand-title font-semibold text-[13px] md:text-sm text-slate-100 hidden sm:inline">Taiwan + Hong Kong <span class="text-slate-500 font-medium">2026</span></span>
         <span class="brand-title font-semibold text-[13px] text-slate-100 sm:hidden">TW · HK 2026</span>
       </button>
@@ -724,9 +724,13 @@
         </button>
       </div>
       <section id="photo-credits" class="photo-credits" tabindex="-1" aria-labelledby="photo-credits-title">
-        <h3 id="photo-credits-title">Destination artwork</h3>
-        <p>The Taipei, Kaohsiung and Hong Kong banners are original vector-style illustrations created for this itinerary. They are stored locally as compressed WebP assets so the visual identity remains available offline.</p>
-        <p>The landmark silhouettes are intentionally interpretive rather than navigational. Use each itinerary card’s map and copy controls for the actual destination.</p>
+        <h3 id="photo-credits-title">Photo credits</h3>
+        <p>Destination photos from Wikimedia Commons, cropped and compressed and stored with the app so they work offline. Each links to its source page and license.</p>
+        <ul class="photo-credit-list">
+          <li><a href="https://commons.wikimedia.org/wiki/File:Taipei_Skyline_2022.06.29.jpg" target="_blank" rel="noopener noreferrer"><strong>Taipei skyline</strong> · 毛貓大少爺 · CC BY-SA 2.0</a></li>
+          <li><a href="https://commons.wikimedia.org/wiki/File:Cityscape_of_Kaohsiung,_Taiwan_202303.jpg" target="_blank" rel="noopener noreferrer"><strong>Kaohsiung harbour</strong> · 臺灣港務股份有限公司高雄港務分公司 · Attribution</a></li>
+          <li><a href="https://commons.wikimedia.org/wiki/File:Hong_Kong_Skyline_Panorama_-_Dec_2008.jpg" target="_blank" rel="noopener noreferrer"><strong>Hong Kong skyline</strong> · Diliff · CC BY-SA 3.0</a></li>
+        </ul>
       </section>
     </section>
 
@@ -763,7 +767,7 @@
     </template>
   </div>
 
-    <script defer src="./assets/app.js?v=e6fe0e7cf3"></script>
+    <script defer src="./assets/app.js?v=5d62791a0c"></script>
   <!-- Lucide 1.43.0 (ISC) and Alpine.js 3.17.2 (MIT), pinned and embedded for single-file reliability. -->
     <script defer src="./assets/vendor/lucide.js?v=24c2f9652d"></script>
     <script defer src="./assets/vendor/alpine.js?v=abe5b75652"></script>

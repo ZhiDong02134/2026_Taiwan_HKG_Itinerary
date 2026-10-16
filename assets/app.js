@@ -72,9 +72,10 @@ function getStorage(key, fallback) {
         // work, which is not otherwise discoverable.
         globalSearchSuggestions: ['Jiufen', '九份', 'Alishan', 'Tainan', '夜市', 'Hong Kong'],
         destinationPhotos: {
-          taipei: { src: './assets/taipei.webp', label: 'Taipei · 台北', alt: 'Illustrated Taipei skyline with Taipei 101, layered hills and warm city light' },
-          kaohsiung: { src: './assets/kaohsiung.webp', label: 'Kaohsiung · 高雄', alt: 'Illustrated Kaohsiung harbour with waterfront towers, cranes and golden water' },
-          hk: { src: './assets/hk.webp', label: 'Hong Kong · 香港', alt: 'Illustrated Hong Kong skyline and Victoria Harbour beneath the Peak' }
+          // Real photos from Wikimedia Commons (credited in Tools → Photo credits).
+          taipei: { src: './assets/taipei-photo.webp', label: 'Taipei · 台北', alt: 'Taipei skyline with Taipei 101 seen from Elephant Mountain', credit: {"author": "毛貓大少爺", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Taipei_Skyline_2022.06.29.jpg"} },
+          kaohsiung: { src: './assets/kaohsiung-photo.webp', label: 'Kaohsiung · 高雄', alt: 'Aerial view of Kaohsiung city and harbour with the 85 Sky Tower', credit: {"author": "臺灣港務股份有限公司高雄港務分公司", "license": "Attribution", "page": "https://commons.wikimedia.org/wiki/File:Cityscape_of_Kaohsiung,_Taiwan_202303.jpg"} },
+          hk: { src: './assets/hk-photo.webp', label: 'Hong Kong · 香港', alt: 'Hong Kong Island skyline across Victoria Harbour at dusk', credit: {"author": "Diliff", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Hong_Kong_Skyline_Panorama_-_Dec_2008.jpg"} }
         },
 
         get destinationPhoto() {
@@ -3456,6 +3457,7 @@ function getStorage(key, fallback) {
           check(serialized.includes('5:30 PM') && serialized.includes('Aqua Luna'), 'Aqua Luna sailing anchor is missing.');
           check(this.bookings.some(item => item.id === 'b-23'), 'Taiwan repeat-visitor draw eligibility check is missing.');
           check(!document.querySelector('details, summary'), 'Accordions are not allowed.');
+          check(Object.values(this.destinationPhotos).every(p => p.src && p.credit?.author && p.credit?.license && /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(p.credit.page)), 'A destination photo is missing its author, license or source page.');
 
           for (const day of this.days) {
             let lastStart = -1;

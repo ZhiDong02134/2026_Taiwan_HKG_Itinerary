@@ -24,9 +24,9 @@ assets/
   runtime.js                PWA registration, update hand-off, chrome state
   vendor/alpine.js          Local reactive runtime
   vendor/lucide.js          Pruned local icon runtime
-  taipei.webp               Local destination artwork
-  kaohsiung.webp
-  hk.webp
+  taipei-photo.webp         Destination photos (Wikimedia Commons, credited in Tools)
+  kaohsiung-photo.webp
+  hk-photo.webp
 screenshots/                Manifest install screenshots
 scripts/                    Maintenance and verification tools
 ```
@@ -81,7 +81,9 @@ python3 scripts/verify.py
 
 The helper scans both markup and dynamic itinerary data, then writes a pruned browser bundle to `assets/vendor/lucide.js`.
 
-### Regenerate artwork, icons, and iPhone startup screens
+### Regenerate icons and iPhone startup screens
+
+Icons are full-bleed and opaque (iOS paints transparent corners black and rounds the icon itself); only the startup-screen badge is rounded. The destination banners are real photos and are not regenerated.
 
 ```bash
 python3 -m pip install Pillow

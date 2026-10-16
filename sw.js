@@ -1,13 +1,13 @@
 /* Offline-first application shell for Taiwan + Hong Kong 2026. */
 const CACHE_PREFIX = 'twhk-field-';
 const LEGACY_CACHE_PREFIXES = ['twhk-2026-'];
-const CACHE = `${CACHE_PREFIX}0b715780e3439195`;
+const CACHE = `${CACHE_PREFIX}8514bf329682b53d`;
 const SHELL_KEY = new URL('./index.html', self.location).href;
 const PRECACHE = [
   "./index.html",
   "./manifest.webmanifest",
-  "./assets/app.css?v=94b220dc69",
-  "./assets/app.js?v=e6fe0e7cf3",
+  "./assets/app.css?v=ef61f991fc",
+  "./assets/app.js?v=5d62791a0c",
   "./assets/runtime.js?v=0e151154ba",
   "./assets/vendor/lucide.js?v=24c2f9652d",
   "./assets/vendor/alpine.js?v=abe5b75652",
@@ -16,9 +16,9 @@ const PRECACHE = [
   "./icon-maskable-192.png",
   "./icon-maskable-512.png",
   "./apple-touch-icon.png",
-  "./assets/taipei.webp",
-  "./assets/kaohsiung.webp",
-  "./assets/hk.webp",
+  "./assets/taipei-photo.webp",
+  "./assets/kaohsiung-photo.webp",
+  "./assets/hk-photo.webp",
   "./screenshots/today-dark.png",
   "./screenshots/today-light.png",
   "./splash-1080x2340.png",

@@ -210,12 +210,12 @@ def make_hk():
 
 
 def tower_mark(size=1024, maskable=False):
-    image=Image.new('RGBA',(size,size),(0,0,0,0))
+    # Full-bleed and opaque. iOS fills transparency in apple-touch-icon with black and applies
+    # its own rounded mask, so a pre-rounded icon showed a black ring on the Home Screen, and
+    # the glows used to spill into the transparent corners. The launch-screen badge is rounded
+    # separately in rounded_badge().
+    image=Image.new('RGBA',(size,size),(0x0D,0x15,0x14,255))
     draw=ImageDraw.Draw(image)
-    pad=0 if maskable else int(size*.035)
-    radius=int(size*.225)
-    # deep layered background
-    draw.rounded_rectangle((pad,pad,size-pad,size-pad),radius=radius,fill='#0D1514')
     overlay_glow(image,(size*.64,size*.30),size*.34,'#2DC7A1',115)
     overlay_glow(image,(size*.28,size*.72),size*.34,'#EA8069',85)
     draw=ImageDraw.Draw(image)
@@ -233,9 +233,25 @@ def tower_mark(size=1024, maskable=False):
     x=size*.50; base=size*.75; s=size/1024
     taipei101(draw,x,base,1.55*s)
     # tiny harbour underline
-    draw.rounded_rectangle((size*.28,size*.79,size*.72,size*.815),radius=size*.012,fill='#9CE4D0')
-    draw.rounded_rectangle((size*.39,size*.825,size*.61,size*.842),radius=size*.008,fill='#F0A58E')
+    draw.rounded_rectangle((round(size*.28),round(size*.79),round(size*.72),round(size*.815)),radius=round(size*.012),fill='#9CE4D0')
+    draw.rounded_rectangle((round(size*.39),round(size*.825),round(size*.61),round(size*.842)),radius=round(size*.008),fill='#F0A58E')
+    if maskable:
+        # Android crops maskable icons to the centre circle: shrink the art onto its own ground.
+        ground=Image.new('RGBA',(size,size),(0x0D,0x15,0x14,255))
+        overlay_glow(ground,(size*.64,size*.30),size*.34,'#2DC7A1',115)
+        overlay_glow(ground,(size*.28,size*.72),size*.34,'#EA8069',85)
+        art=image.resize((int(size*.8),int(size*.8)),Image.Resampling.LANCZOS)
+        ground.alpha_composite(art,((size-art.width)//2,(size-art.height)//2))
+        return ground
     return image
+
+
+def rounded_badge(mark, size):
+    badge=mark.resize((size,size),Image.Resampling.LANCZOS)
+    big=Image.new('L',(size*4,size*4),0)
+    ImageDraw.Draw(big).rounded_rectangle((0,0,size*4-1,size*4-1),radius=int(size*4*.225),fill=255)
+    badge.putalpha(big.resize((size,size),Image.Resampling.LANCZOS))
+    return badge
 
 
 def save_icons():
@@ -246,10 +262,12 @@ def save_icons():
         ('icon-maskable-192.png',192,True),('icon-maskable-512.png',512,True)
     ]:
         img=tower_mark(1024,mask).resize((size,size),Image.Resampling.LANCZOS)
-        img.save(ROOT/name,optimize=True)
+        img.convert('RGB').save(ROOT/name,optimize=True)
 
 
 def get_font(size,bold=False):
+    if Path('/System/Library/Fonts/HelveticaNeue.ttc').exists():
+        return ImageFont.truetype('/System/Library/Fonts/HelveticaNeue.ttc', size, index=1 if bold else 0)
     candidates = [
         '/usr/share/fonts/opentype/inter/InterDisplay-SemiBold.otf' if bold else '/usr/share/fonts/opentype/inter/InterDisplay-Regular.otf',
         '/usr/share/fonts/truetype/lato/Lato-Semibold.ttf' if bold else '/usr/share/fonts/truetype/lato/Lato-Regular.ttf',
@@ -266,7 +284,7 @@ def make_splash(width,height):
     overlay_glow(img,(width*.30,height*.68),min(width,height)*.42,'#EA8069',50)
     draw=ImageDraw.Draw(img)
     icon_size=int(width*.25)
-    icon=tower_mark(1024,False).resize((icon_size,icon_size),Image.Resampling.LANCZOS)
+    icon=rounded_badge(tower_mark(1024,False),icon_size)
     x=(width-icon_size)//2; y=int(height*.34-icon_size*.5)
     img.alpha_composite(icon,(x,y))
     title='TAIWAN + HONG KONG'
@@ -295,6 +313,8 @@ def save_splashes():
 
 
 if __name__=='__main__':
-    make_taipei(); make_kaohsiung(); make_hk(); save_icons(); save_splashes()
-    for p in sorted([*ASSETS.glob('*.webp'),*ROOT.glob('icon*.png'),ROOT/'apple-touch-icon.png',*ROOT.glob('splash-*.png')]):
+    # The destination banners are real photos now (assets/*-photo.webp, credited in the app);
+    # make_taipei/make_kaohsiung/make_hk are kept only as a fallback and are not run.
+    save_icons(); save_splashes()
+    for p in sorted([*ROOT.glob('icon*.png'),ROOT/'apple-touch-icon.png',*ROOT.glob('splash-*.png')]):
         print(p.relative_to(ROOT), p.stat().st_size)
