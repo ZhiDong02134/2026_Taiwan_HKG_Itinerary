@@ -1,13 +1,13 @@
 /* Offline-first application shell for Taiwan + Hong Kong 2026. */
 const CACHE_PREFIX = 'twhk-field-';
 const LEGACY_CACHE_PREFIXES = ['twhk-2026-'];
-const CACHE = `${CACHE_PREFIX}8514bf329682b53d`;
+const CACHE = `${CACHE_PREFIX}a1aa51f082363582`;
 const SHELL_KEY = new URL('./index.html', self.location).href;
 const PRECACHE = [
   "./index.html",
   "./manifest.webmanifest",
-  "./assets/app.css?v=ef61f991fc",
-  "./assets/app.js?v=5d62791a0c",
+  "./assets/app.css?v=af877b2053",
+  "./assets/app.js?v=7531a8a0c0",
   "./assets/runtime.js?v=0e151154ba",
   "./assets/vendor/lucide.js?v=24c2f9652d",
   "./assets/vendor/alpine.js?v=abe5b75652",
@@ -19,8 +19,19 @@ const PRECACHE = [
   "./assets/taipei-photo.webp",
   "./assets/kaohsiung-photo.webp",
   "./assets/hk-photo.webp",
+  "./assets/day-01-photo.webp",
+  "./assets/day-03-photo.webp",
+  "./assets/day-04-photo.webp",
+  "./assets/day-05-photo.webp",
+  "./assets/day-07-photo.webp",
+  "./assets/day-08-photo.webp",
+  "./assets/day-09-photo.webp",
+  "./assets/day-12-photo.webp",
+  "./assets/day-13-photo.webp",
+  "./assets/day-14-photo.webp",
+  "./assets/day-15-photo.webp",
   "./screenshots/today-dark.png",
-  "./screenshots/today-light.png",
+  "./screenshots/days-dark.png",
   "./splash-1080x2340.png",
   "./splash-1125x2436.png",
   "./splash-1170x2532.png",

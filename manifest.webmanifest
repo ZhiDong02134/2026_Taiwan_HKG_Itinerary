@@ -110,11 +110,11 @@
       "label": "Today view in dark appearance"
     },
     {
-      "src": "./screenshots/today-light.png",
+      "src": "./screenshots/days-dark.png",
       "sizes": "390x844",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Today view in light appearance"
+      "label": "All sixteen days"
     }
   ]
 }

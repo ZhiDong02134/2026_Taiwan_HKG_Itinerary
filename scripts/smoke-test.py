@@ -94,7 +94,7 @@ async def main():
         )
         results = [
             await one(browser, appearance, width, height)
-            for appearance in ('dark', 'light')
+            for appearance in ('dark',)  # dark only
             for width, height in VIEWPORTS
         ]
         await browser.close()

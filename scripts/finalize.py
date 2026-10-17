@@ -19,11 +19,11 @@ manifest['screenshots'] = [
         'label': 'Today view in dark appearance'
     },
     {
-        'src': './screenshots/today-light.png',
+        'src': './screenshots/days-dark.png',
         'sizes': '390x844',
         'type': 'image/png',
         'form_factor': 'narrow',
-        'label': 'Today view in light appearance'
+        'label': 'All sixteen days'
     }
 ]
 MANIFEST_PATH.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
@@ -67,8 +67,19 @@ precache_paths = [
     'assets/taipei-photo.webp',
     'assets/kaohsiung-photo.webp',
     'assets/hk-photo.webp',
+    'assets/day-01-photo.webp',
+    'assets/day-03-photo.webp',
+    'assets/day-04-photo.webp',
+    'assets/day-05-photo.webp',
+    'assets/day-07-photo.webp',
+    'assets/day-08-photo.webp',
+    'assets/day-09-photo.webp',
+    'assets/day-12-photo.webp',
+    'assets/day-13-photo.webp',
+    'assets/day-14-photo.webp',
+    'assets/day-15-photo.webp',
     'screenshots/today-dark.png',
-    'screenshots/today-light.png',
+    'screenshots/days-dark.png',
 ]
 precache_paths += sorted(path.name for path in ROOT.glob('splash-*.png'))
 

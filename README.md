@@ -35,6 +35,11 @@ There are no runtime CDN dependencies. The only normal network request made by t
 
 ## Interaction model
 
+- **Dark only.** There is no light theme or appearance setting.
+- During the trip, **Today opens on a Now card**: the current or next stop, a progress bar, the leave-by time and what comes next. The live capsule above the dock uses the same data.
+- Colour roles: neutrals; jade for actions and selection; rose for live (now, current, leave-by); amber for caution. City colours only identify places.
+- Days whose city photo would mislead (Jiufen, Tainan, Alishan, the flight day and others) have their own photo; all are credited in Tools.
+
 - **Today** is the execution surface: selected-day hero, leave-by timing, timeline, protein cue, practical note, and always-visible backups.
 - **Days** is a searchable overview of all 16 days.
 - **Plan** combines bookings and administrative preparation without accordions.

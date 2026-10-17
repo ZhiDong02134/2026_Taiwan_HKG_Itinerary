@@ -308,7 +308,6 @@ async def main() -> None:
             args=['--no-sandbox', '--disable-dev-shm-usage'],
         )
         runs = [('dark', width, height, width == 390) for width, height in MOBILE_VIEWPORTS]
-        runs.append(('light', 390, 844, True))
         for appearance, width, height, full in runs:
             print(f'[interaction] {appearance} {width}x{height} full={full}', flush=True)
             results['mobile'].append(await mobile_run(browser, html, appearance, width, height, full))

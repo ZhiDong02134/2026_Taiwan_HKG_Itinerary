@@ -44,10 +44,7 @@ function getStorage(key, fallback) {
         })(),
         tabScrollPositions: { today: 0, itinerary: 0, plan: 0, toolkit: 0 },
         motionDirection: 'forward',
-        appearance: (() => {
-          const saved = getStorage('twhk_appearance_v1', 'system');
-          return ['system', 'light', 'dark'].includes(saved) ? saved : 'system';
-        })(),
+        appearance: 'dark',
         selectedCityFilter: 'all',
         activeDayId: 'day-02',
         lastLiveTripDayId: null,
@@ -78,9 +75,35 @@ function getStorage(key, fallback) {
           hk: { src: './assets/hk-photo.webp', label: 'Hong Kong · 香港', alt: 'Hong Kong Island skyline across Victoria Harbour at dusk', credit: {"author": "Diliff", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Hong_Kong_Skyline_Panorama_-_Dec_2008.jpg"} }
         },
 
+        // A photo of the day's own place where the city photo would mislead (Taipei 101 on the
+        // Jiufen day, Kaohsiung harbour for Alishan). Other days keep their city photo.
+        dayPhotos: {
+          'day-01': { src: './assets/day-01-photo.webp', label: "Flight · 飛行", alt: "Cathay Pacific Airbus A350 taking off", subject: "Cathay Pacific A350", credit: {"author": "BriYYZ from Toronto, Canada", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Cathay_Pacific_A350-900_(B-LRJ)_@_DUS,_Dec_2017.jpg"} },
+          'day-03': { src: './assets/day-03-photo.webp', label: "Dadaocheng · 大稻埕", alt: "Baroque shophouse facades on Dihua Street, Dadaocheng", subject: "Dihua Street", credit: {"author": "lumoplank", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Dadaocheng,_Taipei_-_Dadaocheng5109.jpg"} },
+          'day-04': { src: './assets/day-04-photo.webp', label: "Tamsui · 淡水", alt: "Sunset over the Tamsui River", subject: "Tamsui sunset", credit: {"author": "Minghong", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Sunset_of_Tamsui_1.jpg"} },
+          'day-05': { src: './assets/day-05-photo.webp', label: "Jiufen · 九份", alt: "Lantern-lit stairs of Jiufen at night", subject: "Jiufen lanterns", credit: {"author": "Sunkenbean", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Jiufen_at_night_lantern_glow.jpg"} },
+          'day-07': { src: './assets/day-07-photo.webp', label: "Lotus Pond · 蓮池潭", alt: "Dragon and Tiger Pagodas on Lotus Pond, Kaohsiung", subject: "Dragon and Tiger Pagodas", credit: {"author": "CEphoto, Uwe Aranas", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Kaohsiung_Taiwan_Dragon-and-Tiger-Pagodas-01.jpg"} },
+          'day-08': { src: './assets/day-08-photo.webp', label: "Tainan · 台南", alt: "Chihkan Tower lit at dusk, Tainan", subject: "Chihkan Tower", credit: {"author": "Koika", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Chihkan_Tower_night.JPG"} },
+          'day-09': { src: './assets/day-09-photo.webp', label: "Alishan · 阿里山", alt: "Alishan Forest Railway train among cedars", subject: "Alishan Forest Railway", credit: {"author": "CEphoto, Uwe Aranas", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Alishan_Taiwan_Alishan-Forest-Railway-01.jpg"} },
+          'day-12': { src: './assets/day-12-photo.webp', label: "Victoria Peak · 山頂", alt: "Hong Kong skyscrapers and harbour from Victoria Peak", subject: "View from Victoria Peak", credit: {"author": "Estial", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Hong_Kong_Skyscrapers.jpg"} },
+          'day-13': { src: './assets/day-13-photo.webp', label: "Mong Kok · 旺角", alt: "Street corner in Mong Kok, Kowloon", subject: "Mong Kok street", credit: {"author": "Wing1990hk", "license": "CC BY 3.0", "page": "https://commons.wikimedia.org/wiki/File:Bute_Street_201112.jpg"} },
+          'day-14': { src: './assets/day-14-photo.webp', label: "Ngong Ping · 昂坪", alt: "Tian Tan Buddha on Lantau Island", subject: "Tian Tan Buddha", credit: {"author": "Béria Lima de Rodríguez", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Tian_Tan_Buddha_by_Beria.jpg"} },
+          'day-15': { src: './assets/day-15-photo.webp', label: "Victoria Harbour · 維港", alt: "Aqua Luna junk with red sails in Victoria Harbour", subject: "Aqua Luna junk", credit: {"author": "Tsugiko", "license": "CC BY 3.0", "page": "https://commons.wikimedia.org/wiki/File:Junk_at_victoria_harbour.jpg"} }
+        },
+
         get destinationPhoto() {
+          const own = this.dayPhotos[this.currentDay?.id];
+          if (own) return own;
           const city = this.currentCityTheme === 'flight' ? (Number(this.currentDay.dayNum) > 8 ? 'hk' : 'taipei') : this.currentCityTheme;
           return this.destinationPhotos[city] || this.destinationPhotos.taipei;
+        },
+
+        get photoCredits() {
+          const city = { taipei: 'Taipei skyline', kaohsiung: 'Kaohsiung harbour', hk: 'Hong Kong skyline' };
+          return [
+            ...Object.entries(this.destinationPhotos).map(([key, p]) => ({ subject: city[key] || p.label, ...p.credit })),
+            ...Object.values(this.dayPhotos).map(p => ({ subject: p.subject, ...p.credit }))
+          ];
         },
 
         openPhotoCredits() {
@@ -209,7 +232,7 @@ function getStorage(key, fallback) {
           },
           {
             id: 'b-02',
-            title: 'THSR Bullet Train: Taipei ➔ Zuoying',
+            title: 'THSR Bullet Train: Taipei → Zuoying',
             titleTc: '台灣高鐵：台北站 → 左營站',
             eventDate: 'Fri, Dec 04 (10:15 AM target)',
             openDate: '2026-11-06',
@@ -219,7 +242,7 @@ function getStorage(key, fallback) {
           },
           {
             id: 'b-03',
-            title: 'THSR Bullet Train: Zuoying ➔ Taoyuan Bypass',
+            title: 'THSR Bullet Train: Zuoying → Taoyuan Bypass',
             titleTc: '台灣高鐵：左營站 → 桃園站',
             eventDate: 'Tue, Dec 08 (~10:45–10:55 AM target)',
             openDate: '2026-11-10',
@@ -434,7 +457,7 @@ function getStorage(key, fallback) {
             timeline: [
               {
                 time: '2:05 PM – 3:45 PM',
-                title: 'Hong Kong Connection: CX841 Arrival ➔ CX472 Boarding (~1h40 Transit)',
+                title: 'Hong Kong Connection: CX841 Arrival → CX472 Boarding (~1h40 Transit)',
                 titleTc: '香港國際機場轉機（CX472）',
                 icon: 'plane',
                 notes: 'CX841 lands ~2:05 PM. Connection CX472 departs 3:45 PM for 5:35 PM Taipei arrival. If bags were tagged through to TPE at JFK, do not collect them in HKG; follow Flight Connections. Do not enter Hong Kong immigration.',
@@ -1263,7 +1286,7 @@ function getStorage(key, fallback) {
             timeline: [
               {
                 time: '9:30 AM – 10:15 AM',
-                title: 'Checkout ➔ Taipei Main ➔ THSR Boarding',
+                title: 'Checkout → Taipei Main → THSR Boarding',
                 titleTc: '退房 → 台北車站 → 高鐵上車',
                 icon: 'train',
                 notes: 'A normal 9:30 AM departure still gives enough margin for the 10:15 AM train because the hotel is close to Taipei Main. No artificial early gym today.',
@@ -1280,7 +1303,7 @@ function getStorage(key, fallback) {
               },
               {
                 time: '10:15 AM – 11:55 AM',
-                title: 'THSR: Taipei ➔ Zuoying',
+                title: 'THSR: Taipei → Zuoying',
                 titleTc: '台灣高鐵：台北 → 左營',
                 icon: 'train',
                 notes: 'Use the 1h40 ride to hydrate and rest. This is deliberately not another meal or activity block.',
@@ -1348,7 +1371,7 @@ function getStorage(key, fallback) {
               },
               {
                 time: '3:50 PM – 4:55 PM',
-                title: 'Retrieve Bags ➔ Airline Inn Check-In',
+                title: 'Retrieve Bags → Airline Inn Check-In',
                 titleTc: '取行李 → 頭等艙飯店入住',
                 icon: 'luggage',
                 notes: 'Do the luggage chore now, before the evening. For 3 people, a tactical taxi from Zuoying to Airline Inn is reasonable if it saves the MRT + suitcase friction.',
@@ -1435,7 +1458,7 @@ function getStorage(key, fallback) {
             timeline: [
               {
                 time: '~10:00 AM – 10:35 AM',
-                title: '~10:00 AM Target TRA Express: Kaohsiung ➔ Tainan',
+                title: '~10:00 AM Target TRA Express: Kaohsiung → Tainan',
                 titleTc: '台鐵：高雄站 → 台南站',
                 icon: 'train',
                 notes: 'Take regular TRA train directly to downtown Tainan station, not HSR. Confirm exact TRA timetable closer to trip.',
@@ -1654,7 +1677,7 @@ function getStorage(key, fallback) {
             timeline: [
               {
                 time: '7:50 AM – ~9:10 AM',
-                title: 'Kaohsiung ➔ THSR Zuoying ➔ THSR Chiayi',
+                title: 'Kaohsiung → THSR Zuoying → THSR Chiayi',
                 titleTc: '高雄 → 高鐵左營站 → 高鐵嘉義站',
                 icon: 'train',
                 notes: 'This is still an early exception, but 6:50 AM was unnecessary. Leave around 7:50 AM and use MRT/taxi + THSR to reach Chiayi by ~9:10 AM, protecting the official 9:30 AM reserved 7329 bus.',
@@ -1672,7 +1695,7 @@ function getStorage(key, fallback) {
               },
               {
                 time: '9:30 AM – 12:00 PM',
-                title: 'Reserved Bus 7329: THSR Chiayi ➔ Alishan',
+                title: 'Reserved Bus 7329: THSR Chiayi → Alishan',
                 titleTc: '台灣好行 7329：高鐵嘉義站 → 阿里山',
                 icon: 'bus',
                 notes: 'Current official A-line timetable includes 9:30 AM THSR Chiayi departure → 12:00 PM Alishan arrival. Current one-way fare NT$283. Reserve actual seats for the Sunday round trip.',
@@ -1709,7 +1732,7 @@ function getStorage(key, fallback) {
               },
               {
                 time: '~12:35 PM – 3:20 PM',
-                title: 'Zhaoping ➔ Sister Ponds ➔ Giant Tree Forest Walk',
+                title: 'Zhaoping → Sister Ponds → Giant Tree Forest Walk',
                 titleTc: '沼平 → 姊妹潭 → 巨木群森林健行',
                 icon: 'footprints',
                 notes: 'This is the point of the day: roughly 2h45 of cedar/cypress forest, elevated trails and giant trees after the compact lunch. Move efficiently, skip religious detours, and begin positioning for Shenmu Station before the 3:40 PM train.',
@@ -1748,7 +1771,7 @@ function getStorage(key, fallback) {
               },
               {
                 time: '4:40 PM – ~8:15 PM',
-                title: 'Reserved 7329 ➔ THSR Chiayi ➔ Kaohsiung',
+                title: 'Reserved 7329 → THSR Chiayi → Kaohsiung',
                 titleTc: '7329下山 → 高鐵嘉義站 → 高雄',
                 icon: 'train',
                 notes: 'Current official return: 4:40 PM Alishan → 7:10 PM THSR Chiayi. Take the first practical reserved/non-reserved THSR south to Zuoying, then MRT to the hotel. Exact final arrival depends on the released HSR timetable.',
@@ -1814,7 +1837,7 @@ function getStorage(key, fallback) {
             timeline: [
               {
                 time: '9:25 AM – ~10:15 AM',
-                title: 'Hotel ➔ Gushan Ferry ➔ Cijin',
+                title: 'Hotel → Gushan Ferry → Cijin',
                 titleTc: '飯店 → 鼓山輪渡站 → 旗津',
                 icon: 'ship',
                 notes: 'Use MRT as the cheap default: Kaohsiung Main → Formosa Boulevard → Sizihwan, then walk to Gushan Ferry. Take a metered taxi only if late, raining hard or the group wants to protect the compressed morning.',
@@ -2007,13 +2030,13 @@ function getStorage(key, fallback) {
             title: 'THSR to TPE → Flight CX400 → Jordan Night Wander',
             titleTc: '高鐵往桃園・CX400赴港・佐敦夜遊',
             hotelRef: 'hk',
-            transitSummary: 'THSR -> Airport MRT -> CX400 (3:50 PM)',
+            transitSummary: 'THSR → Airport MRT → CX400 (3:50 PM)',
             weatherExpected: '~20°C • Cool evening conditions',
             leaveByTime: '9:30 AM from hotel',
             timeline: [
               {
                 time: '9:30 AM – 10:20 AM',
-                title: 'Depart Hotel ➔ THSR Zuoying Station',
+                title: 'Depart Hotel → THSR Zuoying Station',
                 titleTc: '飯店 → 高鐵左營站',
                 icon: 'train',
                 notes: 'Check out at 9:30 AM and use the best practical route to THSR Zuoying based on confirmed hotel location.',
@@ -2028,7 +2051,7 @@ function getStorage(key, fallback) {
               },
               {
                 time: '~10:45 AM – 12:25 PM',
-                title: 'THSR Train: Zuoying ➔ THSR Taoyuan Station',
+                title: 'THSR Train: Zuoying → THSR Taoyuan Station',
                 titleTc: '台灣高鐵：左營站 → 桃園站',
                 icon: 'train',
                 notes: 'Direct bullet train (~10:45–10:55 target departure) bypasses Taipei Main Station, saving 1+ hours of transit.',
@@ -2043,7 +2066,7 @@ function getStorage(key, fallback) {
               },
               {
                 time: '12:40 PM – 1:00 PM',
-                title: 'Taoyuan Airport MRT: THSR ➔ TPE Terminal 1',
+                title: 'Taoyuan Airport MRT: THSR → TPE Terminal 1',
                 titleTc: '桃園機場捷運：高鐵桃園站 A18 → 第一航廈 A12',
                 icon: 'train',
                 notes: '~15-minute commuter shuttle directly into airport departure terminal. Recheck Taoyuan Airport MRT timetable ~3 days before travel.',
@@ -2192,7 +2215,7 @@ function getStorage(key, fallback) {
             title: 'Central Urban Walk → Victoria Peak → Happy Valley Races',
             titleTc: '中上環城市步行・太平山・跑馬地夜馬',
             hotelRef: 'hk',
-            transitSummary: 'Star Ferry -> Peak Tram -> Tram',
+            transitSummary: 'Star Ferry → Peak Tram → Tram',
             weatherExpected: '~19°C • Mild; cool evening breeze',
             rainBackupAvailable: true,
             easyPlan: "If tired, shorten the Central/Sheung Wan walking loop. Preserve Peak sunset and Happy Valley races.",
@@ -2200,7 +2223,7 @@ function getStorage(key, fallback) {
             timeline: [
               {
                 time: '9:30 AM – 10:10 AM',
-                title: 'Depart Hotel & Star Ferry Crossing (TST ➔ Central)',
+                title: 'Depart Hotel & Star Ferry Crossing (TST → Central)',
                 titleTc: '尖沙咀天星碼頭',
                 icon: 'ship',
                 notes: 'Walk to pier and ride historic ferry upper deck (HK$5) for morning harbor views.',
@@ -2217,7 +2240,7 @@ function getStorage(key, fallback) {
               },
               {
                 time: '10:10 AM – 12:15 PM',
-                title: 'Sheung Wan ➔ Central High-Mileage Urban Walk',
+                title: 'Sheung Wan → Central High-Mileage Urban Walk',
                 titleTc: '上環 → 中環高密度街區步行',
                 icon: 'footprints',
                 notes: 'Replaces the forced mahjong workshop. Walk a dense local route: dried-seafood streets, market lanes, Cat Street if interesting, Central Market and Mid-Levels escalator. Free, flexible and easy to shorten or extend. / 不為了手作而手作。',
@@ -2273,7 +2296,7 @@ function getStorage(key, fallback) {
               },
               {
                 time: '5:55 PM – 6:50 PM',
-                title: 'Peak ➔ Happy Valley — Hard Transfer Window',
+                title: 'Peak → Happy Valley — Hard Transfer Window',
                 titleTc: '太平山 → 跑馬地・硬性轉場',
                 icon: 'navigation',
                 notes: 'Leave the Peak immediately after twilight. With 3 people, compare the live red-taxi ETA against Peak Tram / Bus 15 + onward transit; take the taxi whenever it meaningfully saves time. Target Happy Valley around 6:50–7:00 PM rather than treating the descent as invisible.',
@@ -2508,7 +2531,7 @@ function getStorage(key, fallback) {
             title: 'Ngong Ping 360 → Tai O Loop → Kowloon Harbour Night Walk',
             titleTc: '昂坪360・大澳環線・九龍維港夜走',
             hotelRef: 'hk',
-            transitSummary: 'MTR -> Cable Car -> Bus 21 -> Bus 11 loop',
+            transitSummary: 'MTR → Cable Car → Bus 21 → Bus 11 loop',
             weatherExpected: '~19°C • Mountain & coastal breeze',
             rainBackupAvailable: true,
             easyPlan: null,
@@ -2516,7 +2539,7 @@ function getStorage(key, fallback) {
             timeline: [
               {
                 time: '9:30 AM – 10:20 AM',
-                title: 'Hotel ➔ Kowloon Station ➔ Tung Chung',
+                title: 'Hotel → Kowloon Station → Tung Chung',
                 titleTc: '飯店 → 九龍站 → 東涌站',
                 icon: 'train',
                 notes: 'With 3 people, use a short red metered taxi to Kowloon Station only if it meaningfully simplifies the transfer; otherwise walk/MTR. Then take the Tung Chung Line to Tung Chung.',
@@ -2637,7 +2660,7 @@ function getStorage(key, fallback) {
               },
               {
                 time: '~7:25 PM – 9:45 PM',
-                title: 'Kowloon Park ➔ Tsim Sha Tsui Promenade Night Walk',
+                title: 'Kowloon Park → Tsim Sha Tsui Promenade Night Walk',
                 titleTc: '九龍公園 → 尖沙咀海濱夜走',
                 icon: 'footprints',
                 notes: 'A natural southbound walk from Jordan to the hotel area: greenery first, then the harbour skyline. Kowloon Park is open until midnight; the TST promenade is the official 8 PM Symphony of Lights vantage area.',
@@ -2658,7 +2681,7 @@ function getStorage(key, fallback) {
             rainPlan: 'Light / moderate rain: Keep Lantau if Ngong Ping 360 and buses are operating; wear rain jackets/umbrellas (expect misty views). Cable car suspended or excessive queue: take Bus 23 from Tung Chung to Ngong Ping to preserve Big Buddha → Tai O → Bus 11 loop. Severe weather: use an indoor HK flex day instead. Keep Saturday’s Brands Expo + 5:30 PM Aqua Luna plan intact.',
             backups: {
               activity: {
-                title: 'Bus 23 directly Tung Chung ➔ Ngong Ping',
+                title: 'Bus 23 directly Tung Chung → Ngong Ping',
                 titleTc: '新大嶼山巴士23號',
                 note: 'Cable-car closure/queue fallback that preserves the Buddha → Tai O → Bus 11 loop.',
                 navigateTo: 'Tung Chung Station Bus Terminus, Lantau Island'
@@ -2846,7 +2869,7 @@ function getStorage(key, fallback) {
             title: 'Kowloon In-Town Check-in → Bakehouse → Flight to NYC',
             titleTc: '九龍市區預辦登機・Bakehouse・返紐約',
             hotelRef: 'hk',
-            transitSummary: 'In-Town Check-in -> Express -> CX840',
+            transitSummary: 'In-Town Check-in → Express → CX840',
             weatherExpected: '~19°C • Mild daytime conditions',
             rainBackupAvailable: false,
             easyPlan: null,
@@ -2931,7 +2954,7 @@ function getStorage(key, fallback) {
                 title: 'Cathay Pacific CX840 Non-Stop Flight to JFK',
                 titleTc: '國泰航空 CX840：香港 → 紐約甘迺迪',
                 icon: 'plane-takeoff',
-                notes: 'Cathay Pacific CX840: HKG ➔ JFK. Current published winter schedule for your date is 4:35 PM departure and 7:05 PM arrival same calendar day in NYC (~15h30 duration). Manage Booking / boarding pass is final authority.',
+                notes: 'Cathay Pacific CX840: HKG → JFK. Current published winter schedule for your date is 4:35 PM departure and 7:05 PM arrival same calendar day in NYC (~15h30 duration). Manage Booking / boarding pass is final authority.',
                 noMap: true,
                 guide: {
                   intro: 'Transpacific flight home crossing International Date Line.',
@@ -3137,7 +3160,57 @@ function getStorage(key, fallback) {
           const item = this.relevantPlan.targetKind === 'event'
             ? this.relevantPlan.day.timeline?.[this.relevantPlan.eventIndex]
             : null;
-          return [this.relevantPlan.label, item?.time || this.relevantPlan.day.shortLabel].filter(Boolean).join(' · ');
+          if (!item) return this.relevantPlan.day.shortLabel || '';
+          const { start, end } = this.clockBounds(item.time);
+          // Short, as Japan's capsule: the state, then the one time that matters.
+          return this.relevantPlan.state === 'current'
+            ? (end ? `Now · until ${end}` : 'Now')
+            : (start ? `Next · ${start}` : 'Next');
+        },
+
+        // First and last clock times in a free-text time ("5:10 PM check-in · 5:30 PM – 6:15 PM
+        // sail" → 5:10 PM / 6:15 PM). Splitting on dashes cut at the hyphen in "check-in".
+        clockBounds(text) {
+          const times = String(text || '').match(/~?\d{1,2}:\d{2}(?:\s*[AP]M)?/gi) || [];
+          return { start: times[0] || '', end: times.length > 1 ? times[times.length - 1] : '' };
+        },
+
+        // The Now card: the same plan object the capsule reads, so the two can never disagree.
+        get nowCard() {
+          const plan = this.relevantPlan;
+          if (!this.liveTripDayId || !plan?.day || plan.targetKind !== 'event') return null;
+          const items = plan.day.timeline || [];
+          const item = items[plan.eventIndex];
+          if (!item) return null;
+          const next = items[plan.eventIndex + 1] || null;
+          let progress = null;
+          if (plan.state === 'current') {
+            const startAt = Date.parse(item.startAt), endAt = Date.parse(item.endAt);
+            if (Number.isFinite(startAt) && Number.isFinite(endAt) && endAt > startAt) {
+              progress = (this.nowTick - startAt) / (endAt - startAt);
+            } else {
+              const now = this.getScheduleMinutes(this.nowTick, plan.day.timeZone);
+              const start = this.parseTimelineStartMinutes(item.time);
+              const explicitEnd = this.parseTimelineEndMinutes(item.time);
+              const nextStart = next ? this.parseTimelineStartMinutes(next.time) : NaN;
+              const end = Number.isFinite(explicitEnd) ? explicitEnd : Number.isFinite(nextStart) ? nextStart : start + 120;
+              if ([now, start, end].every(Number.isFinite) && end > start) progress = (now - start) / (end - start);
+            }
+            if (progress !== null) progress = Math.max(0, Math.min(1, progress));
+          }
+          const leave = plan.day.id === this.liveTripDayId ? this.computeLeaveByCountdownForDay(plan.day) : null;
+          const nextStartText = next ? this.clockBounds(next.time).start : '';
+          return {
+            state: plan.state === 'current' ? 'now' : 'next',
+            time: item.time,
+            title: item.title,
+            titleTc: item.titleTc || '',
+            lang: plan.day.hotelRef === 'hk' ? 'zh-HK' : 'zh-TW',
+            progress,
+            leave: leave ? leave.label : '',
+            leaveUrgent: Boolean(leave && (leave.urgency === 'now' || leave.urgency === 'urgent')),
+            next: next ? `${plan.state === 'current' ? 'Next' : 'Then'} ${nextStartText} · ${next.title}` : ''
+          };
         },
 
         get fxSummary() {
@@ -3160,7 +3233,6 @@ function getStorage(key, fallback) {
           window.addEventListener('offline', () => this.showToast('Offline mode — the saved itinerary is still available', 'warning'));
           window.addEventListener('online', () => this.showToast('Back online'));
           this.applyAppearance();
-          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => this.applyAppearance());
           // Confirms a requested update after the fact. The flag is set immediately
           // before the reload, so this is the first chance to say anything about it;
           // delayed so the toast lands after the UI has settled rather than during boot.
@@ -3204,7 +3276,11 @@ function getStorage(key, fallback) {
           this.syncThemeColor();
           this.$nextTick(() => this.scrollActiveDayChip(true));
           if (this.smartLaunchActive) {
-            window.setTimeout(() => requestAnimationFrame(() => this.positionRelevantPlan({ targetKind: 'day-summary' }, 'auto')), 120);
+            // With a Now card the top of Today is the live context; otherwise land on the day.
+            window.setTimeout(() => requestAnimationFrame(() => {
+              if (this.nowCard) window.scrollTo({ top: 0, behavior: 'instant' });
+              else this.positionRelevantPlan({ targetKind: 'day-summary' }, 'auto');
+            }), 120);
           }
 
           document.addEventListener('visibilitychange', () => {
@@ -3248,6 +3324,8 @@ function getStorage(key, fallback) {
           this.$watch('takeItEasyActive', () => this.refreshIcons());
           this.$watch('rainPlanActive', () => this.refreshIcons());
           this.$watch('selectedCityFilter', () => this.refreshIcons());
+          // Results render new <i data-lucide> nodes; without this they stayed as empty dots.
+          this.$watch('globalSearchQuery', () => this.$nextTick(() => this.refreshIcons()));
         },
 
         sanitizeIdList(value, validIds) {
@@ -3267,9 +3345,11 @@ function getStorage(key, fallback) {
 
         get countdownShortText() {
           const text = String(this.countdownText || '');
-          const countdown = text.match(/^T-(\d+)d/i);
-          if (countdown) return `T-${countdown[1]}d`;
-          if (/^Day\s+/i.test(text)) return text;
+          const countdown = text.match(/^(\d+) days? to go/i);
+          if (countdown) return `${countdown[1]}d`;
+          if (/^Departs today/i.test(text)) return 'Today';
+          const live = text.match(/^Day (\d+) of (\d+)/i);
+          if (live) return `Day ${live[1]}`;
           if (/Trip Live/i.test(text)) return 'Live';
           if (/Trip Complete/i.test(text)) return 'Done';
           return text;
@@ -3297,6 +3377,12 @@ function getStorage(key, fallback) {
           this.activeTab = tab;
           this.$nextTick(() => requestAnimationFrame(() => {
             if (this.activeTab === tab) window.scrollTo({ top: targetY, behavior: 'instant' });
+            // A short cross-fade, so a tab change reads as a change of place rather than a cut.
+            // Opacity and a 6px rise only: no view transition (its overlay can eat the next tap on iOS).
+            const pane = document.querySelector(`[data-tab-pane="${tab}"]`) || [...document.querySelectorAll('main .tab-pane')].find(el => el.offsetParent !== null);
+            if (pane && pane.animate && !this.prefersReducedMotion()) {
+              pane.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 180, easing: 'ease-out' });
+            }
           }));
         },
 
@@ -3410,6 +3496,11 @@ function getStorage(key, fallback) {
 
         playDayChange() {
           this.animateContent('.hero-head, .today-content-grid');
+          // The new day's photo fades up in place instead of cutting.
+          this.$nextTick(() => {
+            const img = document.querySelector('.destination-photo img');
+            if (img && img.animate && !this.prefersReducedMotion()) img.animate([{ opacity: .5 }, { opacity: 1 }], { duration: 260, easing: 'ease-out' });
+          });
         },
 
         animateContent(selector) {
@@ -3457,7 +3548,9 @@ function getStorage(key, fallback) {
           check(serialized.includes('5:30 PM') && serialized.includes('Aqua Luna'), 'Aqua Luna sailing anchor is missing.');
           check(this.bookings.some(item => item.id === 'b-23'), 'Taiwan repeat-visitor draw eligibility check is missing.');
           check(!document.querySelector('details, summary'), 'Accordions are not allowed.');
-          check(Object.values(this.destinationPhotos).every(p => p.src && p.credit?.author && p.credit?.license && /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(p.credit.page)), 'A destination photo is missing its author, license or source page.');
+          check(document.documentElement.dataset.appearance === 'dark' && this.appearance === 'dark', 'The app is dark only, but it resolved to another appearance.');
+          check([...Object.values(this.destinationPhotos), ...Object.values(this.dayPhotos)].every(p => p.src && p.credit?.author && p.credit?.license && /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(p.credit.page)), 'A destination photo is missing its author, license or source page.');
+          check(this.days.every(day => this.dayPhotos[day.id] || ['taipei', 'kaohsiung', 'hk', 'flight'].includes(this.getDayTheme(day))), 'A day has no hero photo.');
 
           for (const day of this.days) {
             let lastStart = -1;
@@ -3969,12 +4062,13 @@ function getStorage(key, fallback) {
 
           if (now < tripStartEpoch) {
             const diffDays = Math.ceil((tripStartEpoch - now) / (1000 * 60 * 60 * 24));
-            this.countdownText = `T-${diffDays}d to JFK`;
+            const nyDay = ms => new Date(ms).toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+            this.countdownText = nyDay(now) === nyDay(tripStartEpoch) ? 'Departs today' : `${diffDays} ${diffDays === 1 ? 'day' : 'days'} to go`;
           } else if (now <= tripEndEpoch) {
             const liveId = this.liveTripDayId;
             if (liveId) {
               const day = this.days.find(d => d.id === liveId);
-              this.countdownText = `Day ${day ? day.dayNum : 'Live'}`;
+              this.countdownText = day ? `Day ${Number(day.dayNum)} of ${this.days.length}` : 'Trip live';
             } else {
               this.countdownText = 'Trip Live';
             }
@@ -3994,7 +4088,9 @@ function getStorage(key, fallback) {
 
         formatHeroTitle(value) {
           return this.escapeDisplayHtml(value)
-            .replace(/\s*(?:➔|→)\s*/g, '<span class="route-arrow" aria-hidden="true">→</span>&nbsp;')
+            // The no-break space goes before the arrow, so a wrapped line ends with "→" and never
+            // starts with it (or with a stray space). ASCII "->" arrives escaped as "-&gt;".
+            .replace(/\s*(?:\u2794|→|-&gt;)\s*/g, '&nbsp;<span class="route-arrow" aria-hidden="true">→</span> ')
             .replace(/\s+&amp;\s+/g, '<span class="title-separator" aria-hidden="true">·</span>');
         },
 
@@ -4140,10 +4236,9 @@ function getStorage(key, fallback) {
           return 'Prep';
         },
 
-        setAppearance(preference) {
-          if (!['system', 'light', 'dark'].includes(preference)) return;
-          this.appearance = preference;
-          setStorage('twhk_appearance_v1', JSON.stringify(preference));
+        // Dark only. Kept so older backups that carry an appearance preference still import.
+        setAppearance() {
+          this.appearance = 'dark';
           this.applyAppearance();
         },
 
@@ -4152,9 +4247,7 @@ function getStorage(key, fallback) {
         },
 
         applyAppearance() {
-          const dark = this.appearance === 'dark' || (this.appearance === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-          document.documentElement.dataset.appearance = dark ? 'dark' : 'light';
-          document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').content = dark ? 'black-translucent' : 'default';
+          document.documentElement.dataset.appearance = 'dark';
           this.syncThemeColor();
         },
 
@@ -4423,8 +4516,9 @@ function getStorage(key, fallback) {
           if (!Number.isFinite(nowMinutes)) return null;
           const minutesLeft = targetMinutes - nowMinutes;
 
-          // More than 90 minutes out: the static fact-card value is enough.
-          if (minutesLeft > 90) return null;
+          // More than 90 minutes out: the static fact-card value is enough. More than 15 minutes
+          // past it the moment has gone (it used to read "600m past leave-by" all evening).
+          if (minutesLeft > 90 || minutesLeft < -15) return null;
 
           let urgency = 'calm';
           if (minutesLeft <= 0) urgency = 'now';
@@ -4432,8 +4526,8 @@ function getStorage(key, fallback) {
           else if (minutesLeft <= 30) urgency = 'soon';
 
           const label = minutesLeft <= 0
-            ? (minutesLeft === 0 ? 'Leave now' : `${Math.abs(minutesLeft)}m past leave-by`)
-            : (minutesLeft >= 60 ? `${Math.floor(minutesLeft / 60)}h ${minutesLeft % 60}m` : `${minutesLeft}m`);
+            ? (minutesLeft === 0 ? 'Leave now' : `${Math.abs(minutesLeft)} min late`)
+            : (minutesLeft >= 60 ? `Leave in ${Math.floor(minutesLeft / 60)} h ${String(minutesLeft % 60).padStart(2, '0')}` : `Leave in ${minutesLeft} min`);
 
           return { minutesLeft, urgency, label, key: `${day.id}:${targetMinutes}` };
         },
@@ -4453,7 +4547,7 @@ function getStorage(key, fallback) {
           this._notifiedLeaveByKey = countdown.key;
           if (!('Notification' in window) || Notification.permission !== 'granted') return;
           try {
-            const body = countdown.minutesLeft <= 0 ? `Leave now — ${liveDay.leaveByTime}` : `Leave in ${countdown.label} — ${liveDay.leaveByTime}`;
+            const body = countdown.minutesLeft <= 0 ? `Leave now — ${liveDay.leaveByTime}` : `${countdown.label} — ${liveDay.leaveByTime}`;
             if (navigator.serviceWorker && navigator.serviceWorker.controller) {
               navigator.serviceWorker.ready.then(reg => reg.showNotification("Taiwan & HK '26", { body, tag: 'leave-by', icon: './icon-192.png' })).catch(() => {});
             } else {

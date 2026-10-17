@@ -1096,7 +1096,7 @@
       body[data-city-theme='hk'] { --ambient-city: oklch(72% .13 305); }
     }
     .font-mono {
-      font-family: "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace !important;
+      font-family: inherit !important;
       font-variant-numeric: tabular-nums;
     }
     h1, h2, h3, h4 { text-wrap: balance; }
@@ -2193,46 +2193,7 @@
       --shadow-card: var(--shadow-raised);
       --shadow-float: 0 1px 0 rgb(255 255 255 / .08) inset, 0 24px 72px rgb(0 0 0 / .48);
     }
-    :root[data-appearance='light'] {
-      color-scheme: light;
-      --bg: #f4f7f6;
-      --bg-raised: #f8faf9;
-      --surface: #ffffff;
-      --surface-2: #eaf1ed;
-      --surface-3: #f2f6f3;
-      --surface-soft: #e9f0ec;
-      --stroke: #d1ddd5;
-      --stroke-strong: #80978a;
-      --stroke-focus: #18664f;
-      --text: #192b24;
-      --text-2: #344d42;
-      --muted: #50665a;
-      --muted-2: #506357;
-      --accent: #984432;
-      --accent-strong: #ad4b35;
-      --accent-soft: #98443212;
-      --action: #18664f;
-      --action-soft: #18664f10;
-      --teal: #18664f;
-      --success: #24673e;
-      --warning: #805211;
-      --info: #285e84;
-      --violet: #79518e;
-      --city-taipei: #226850;
-      --city-kaohsiung: #805211;
-      --city-hk: #984432;
-      --city-flight: #285e84;
-      --tone-l: 49%;
-      --tone-c: .08;
-      --browser-chrome: #f4f7f6;
-      --shadow-base: 0 1px 2px #192b2404;
-      --shadow-raised: 0 4px 18px #192b2409;
-      --shadow-float: 0 8px 32px #192b241c, inset 0 1px 0 #ffffff;
-      --color-amber-400: var(--warning);
-      --color-emerald-400: var(--success);
-      --color-emerald-500: var(--success);
-      --color-rose-400: var(--accent);
-    }
+    
     @property --ambient-tertiary { syntax:'<color>'; inherits:true; initial-value:oklch(79% .11 92); }
 
     body[data-city-theme='flight'] {
@@ -2981,15 +2942,7 @@
   --route-line: color-mix(in oklab, var(--ambient-city) 42%, var(--stroke));
 }
 
-:root[data-appearance='light'] {
-  --material: color-mix(in oklab, white 84%, transparent);
-  --material-solid: color-mix(in oklab, white 96%, var(--bg));
-  --surface-highlight: inset 0 1px 0 rgb(255 255 255 / .9);
-  --shadow-soft: 0 1px 2px rgb(25 43 36 / .04), 0 12px 32px rgb(25 43 36 / .075);
-  --shadow-card: var(--surface-highlight), 0 8px 26px rgb(25 43 36 / .07);
-  --shadow-float: inset 0 1px 0 rgb(255 255 255 / .95), 0 18px 52px rgb(25 43 36 / .16), 0 3px 10px rgb(25 43 36 / .08);
-  --glass-sheen: linear-gradient(180deg, rgb(255 255 255 / .78), rgb(255 255 255 / .22) 52%, transparent 78%);
-}
+
 
 html {
   overflow-x: clip;
@@ -3017,6 +2970,7 @@ body::before {
   height: min(900px, 105lvh);
   pointer-events: none;
   background:
+    linear-gradient(180deg, var(--bg) 0, var(--bg) calc(env(safe-area-inset-top, 0px) + 4px), transparent calc(env(safe-area-inset-top, 0px) + 28px)),
     radial-gradient(105% 62% at 8% 0%, color-mix(in oklab, var(--ambient-city) 18%, transparent), transparent 63%),
     radial-gradient(94% 58% at 96% 3%, color-mix(in oklab, var(--ambient-secondary) 11%, transparent), transparent 66%),
     linear-gradient(180deg, color-mix(in oklab, var(--bg-raised) 90%, transparent), transparent 76%);
@@ -3024,9 +2978,10 @@ body::before {
   transition: --ambient-city var(--motion-ambient) var(--ease-ui), --ambient-secondary var(--motion-ambient) var(--ease-ui), opacity var(--motion-standard) var(--ease-ui);
 }
 
-:root[data-appearance='light'] body::before { opacity: .58; }
 
-/* A barely-visible route grid gives the page depth without becoming wallpaper. */
+
+/* The route grid read as wallpaper under the photo; removed. */
+body::after { display: none !important; }
 body::after {
   content: '';
   position: absolute;
@@ -3061,18 +3016,19 @@ main.app-shell { position: relative; }
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    linear-gradient(var(--glass-sheen), var(--glass-sheen)),
-    var(--material);
-  -webkit-backdrop-filter: saturate(150%) blur(18px);
-  backdrop-filter: saturate(150%) blur(18px);
-  box-shadow: 0 .5px 0 var(--chrome-edge);
-  opacity: .12;
+  /* Opaque with a 14px soft edge (iOS 26's dark scroll edge dims rather than blurs). The old
+     value wrapped a gradient inside linear-gradient(), which is invalid, so the header had no
+     background at all and page text ran through the title. */
+  bottom: -14px;
+  background: linear-gradient(var(--material-solid) 0 calc(100% - 14px), transparent);
+  opacity: 0;
   transition: opacity var(--motion-standard) var(--ease-ui), background-color var(--motion-standard) var(--ease-ui);
 }
 
 html.is-scrolled .app-chrome::before,
 html.global-search-open .app-chrome::before { opacity: 1; }
+/* With the rail pinned, header and rail are one opaque bar with one hairline under the rail. */
+html.rail-scrolled .app-chrome::before { bottom: 0; background: var(--material-solid); }
 
 .brand-button { border-radius: 16px !important; }
 .brand-mark {
@@ -3167,9 +3123,11 @@ html.rail-scrolled .day-strip-wrap {
   box-shadow: inset 0 1px 0 rgb(255 255 255 / .12), 0 8px 20px rgb(0 0 0 / .18);
   font-size: 13px !important;
 }
+/* Dark glass, not a bright disc: it was the brightest thing on every Today screen. */
 .photo-credit {
   border: 1px solid rgb(255 255 255 / .16);
-  background: rgb(255 255 255 / .84) !important;
+  background: rgb(8 16 15 / .55) !important;
+  color: rgb(255 255 255 / .92) !important;
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   box-shadow: 0 8px 20px rgb(0 0 0 / .16);
@@ -3681,3 +3639,85 @@ html.data-saver .destination-photo img { filter: none; animation: none !importan
 /* The header logo is the app icon itself, so the Home Screen, the header and the tab icon match. */
 .brand-mark { overflow: hidden; padding: 0 !important; background: none !important; box-shadow: none !important; }
 .brand-mark img { width: 100%; height: 100%; display: block; }
+
+/* Day kicker: separators are drawn before items, so a line can never end on an orphaned dot. */
+.day-kicker { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: .45em; }
+.day-kicker > span[aria-hidden='true'] { display: none; }
+.day-kicker { column-gap: .9em; }
+/* Route arrows end their line instead of starting the next one. */
+.day-title .route-arrow { display: inline !important; transform: none !important; margin-inline: .12em .06em; color: var(--muted); }
+.day-title .route-arrow::after { content: none !important; }
+
+/* ======================= Colour roles (dark only) =======================
+   Four roles, as in the Japan app: neutrals; jade for actions and selection; one live rose for
+   now, current and leave-by; amber for caution. City hues only locate a place (photo glow, rail
+   dot, chip number) and never double as a status: Taipei had been the action jade, Kaohsiung
+   the warning amber and Hong Kong the alert coral, so an HK day turned every signal coral. */
+:root {
+  --city-taipei: oklch(80% .06 205);     /* harbour teal-grey */
+  --city-kaohsiung: oklch(81% .065 72);  /* sand */
+  --city-hk: oklch(76% .075 318);        /* plum */
+  --city-flight: oklch(79% .035 245);    /* slate */
+  --live: #f0ac98;
+  --live-soft: #f0ac981f;
+  --tone-food: var(--muted); --tone-transit: var(--muted); --tone-wellness: var(--muted); --tone-culture: var(--muted);
+}
+body[data-city-theme] { --selection: var(--action) !important; }
+.status-dot { background: var(--action) !important; box-shadow: 0 0 0 4px var(--action-soft) !important; }
+.timeline-card.tone-food, .timeline-card.tone-transit, .timeline-card.tone-active, .timeline-card.tone-wellness, .timeline-card.tone-culture { --item-accent: var(--muted) !important; }
+/* Live: the current stop is rose, not the caution amber. */
+.timeline-card.is-now { --item-accent: var(--live) !important;
+  background: radial-gradient(95% 72% at 0 0, color-mix(in oklab, var(--live) 7%, transparent), transparent 68%), var(--surface) !important;
+  border-color: color-mix(in oklab, var(--live) 30%, var(--stroke)) !important;
+  box-shadow: var(--surface-highlight), inset 0 0 0 1px color-mix(in oklab, var(--live) 8%, transparent) !important; }
+.timeline-card.is-now::before { background: var(--live) !important; box-shadow: 0 0 0 5px var(--bg), 0 0 14px color-mix(in oklab, var(--live) 30%, transparent) !important; }
+.now-badge { color: color-mix(in oklab, var(--live) 80%, white 20%) !important; background: color-mix(in oklab, var(--live) 10%, var(--surface)) !important; border-color: color-mix(in oklab, var(--live) 24%, transparent) !important; }
+.now-badge-dot { background: var(--live) !important; }
+/* Bookings: colour only where it means something. */
+.plan-card.state-now { --plan-accent: var(--action) !important; }
+.plan-card.state-soon, .plan-card.state-check { --plan-accent: var(--warning) !important; }
+.plan-card.state-upcoming { --plan-accent: var(--muted) !important; }
+.plan-card.state-done { --plan-accent: var(--success) !important; }
+.booking-status { background: color-mix(in oklab, var(--plan-accent) 9%, var(--surface)) !important; border-color: color-mix(in oklab, var(--plan-accent) 26%, transparent) !important; }
+/* One solid underline for the active day instead of a two-hue gradient that read as a glitch. */
+.day-chip.is-active::after { background: var(--action) !important; }
+
+/* ======================= Now card (during the trip) =======================
+   The Japan app's live activity: what is happening now, at the top of Today. Rose marks "now"
+   only; "up next" is neutral. Progress is a clip-path reveal, so the gradient never squashes. */
+.now-card {
+  width: 100%; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; text-align: left;
+  padding: 14px 16px 12px; border-radius: 20px;
+  background: var(--surface) !important;
+  box-shadow: inset 0 0 0 1px var(--stroke), inset 0 1px 0 rgb(255 255 255 / .05);
+  color: var(--text);
+  transition: transform var(--motion-press) var(--ease-ui);
+}
+.now-card:active { transform: scale(.985); }
+.now-card.is-now { box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--live) 34%, var(--stroke)), inset 0 1px 0 rgb(255 255 255 / .05); }
+.now-card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
+.now-card > * { min-width: 0; }
+.now-card-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; letter-spacing: .02em; color: var(--text-2); white-space: nowrap; flex: none; }
+.now-card-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+.now-card.is-now .now-card-badge { color: color-mix(in oklab, var(--live) 82%, white 18%); }
+.now-card.is-now .now-card-dot { background: var(--live); box-shadow: 0 0 0 3px var(--live-soft); }
+.now-card-time { font-size: 13px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; overflow-wrap: anywhere; }
+.now-card-title { font-size: 19px; font-weight: 700; line-height: 1.25; text-wrap: balance; }
+.now-card-local { font-size: 14px; color: var(--text-2); }
+.now-card-progress { position: relative; height: 3px; margin-top: 4px; border-radius: 99px; background: rgb(255 255 255 / .08); overflow: hidden; }
+.now-card-progress::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--live); clip-path: inset(0 calc((1 - var(--p, 0)) * 100%) 0 0 round 99px); transition: clip-path 1s var(--ease-ui); }
+.now-card-foot { display: flex; align-items: center; gap: 10px; min-height: 24px; margin-top: 2px; }
+.now-card-leave { flex: 0 0 auto; padding: 3px 9px; border-radius: 99px; font-size: 12px; font-weight: 700; background: color-mix(in oklab, var(--warning) 14%, var(--surface)); color: var(--warning); font-variant-numeric: tabular-nums; }
+.now-card-leave.is-urgent { background: var(--live); color: #2a0f08; }
+.now-card-next { flex: 1 1 auto; min-width: 0; font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.now-card-chevron { width: 16px; height: 16px; margin-left: auto; color: var(--muted); flex: 0 0 auto; }
+@media (prefers-reduced-motion: reduce) { .now-card, .now-card-progress::after { transition: none !important; } }
+/* The live capsule sits on a solid surface above the dock, not translucent over translucent. */
+.live-accessory { background: var(--material-solid) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; border-color: rgb(255 255 255 / .1) !important; }
+
+/* Reading text at a phone reading size (it was 13.5–15px); the timeline note is the main text. */
+.timeline-note { font-size: 16px !important; line-height: 1.55 !important; }
+.step-copy { font-size: 15px !important; line-height: 1.5 !important; }
+.timeline-head { min-height: 44px; margin-top: -6px; }
+.timeline-title { font-size: 17px !important; }
+@media (max-width: 374px) { .timeline-note { font-size: 15px !important; } }
