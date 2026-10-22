@@ -43,7 +43,21 @@ There are no runtime CDN dependencies. The only normal network request made by t
 - **Today** is the execution surface: selected-day hero, leave-by timing, timeline, protein cue, practical note, and always-visible backups.
 - **Days** is a searchable overview of all 16 days.
 - **Plan** combines bookings and administrative preparation without accordions.
-- **Tools** contains hotel bases, operating rules, budget/FX, appearance, and data backup/restore.
+- **Tools** contains hotel bases, emergency numbers, settings, operating rules, budget/FX, and data backup/restore.
+
+### Field tools (shared with the Japan app)
+
+- **Show card.** The expand button on a hotel, a timeline stop or a booking opens a full-screen, paper-white card: the Chinese name and address (or the booking code) at counter size, with "請帶我到這裡" / "我有預約" above it. The screen is kept awake while it is open.
+- **Booking codes.** Any booking can hold its confirmation code; saving one marks the booking booked. Codes copy with one tap and appear on the Show card.
+- **Your own bookings and tasks.** Plan → Add booking / Add task. Your bookings carry a day, time, code and notes, show on their day, count in Plan and the app badge, can be removed, and travel in backups.
+- **Today's bookings** sit between the day hero and the timeline (the arrival-day eligibility check is a pre-trip task and stays in Plan).
+- **Directions** open in Apple Maps or Google Maps (Tools → Settings); every navigate button follows the choice.
+- **Tomorrow at night.** When the day's plan is done, the Now card shows tomorrow's first stop, any hotel move and the sunrise.
+- **Sunrise and sunset** for each day in the weather card, at the day's place (Tamsui and Jiufen for the Day 4 and Day 5 sunsets). NOAA formula, within a minute of the Hong Kong Observatory's published times.
+- **Search** highlights the matched words in results and briefly outlines the card a result opens.
+- **Emergency & help** in Tools: Taiwan 110 / 119 and the 24-hour travel information hotline, Hong Kong 999 and the police hotline, as tap-to-call rows with their official sources.
+- **Offline copy** status in Settings, and a persistent-storage request for the Home Screen app so iOS is less likely to evict the offline copy.
+- **Preview a moment** (Tools → Settings): pick a Taipei date and time to see the Now card, countdowns and bookings as they will look then. The header says Preview; it is never saved, ends when you leave the app, and never sends alerts or changes the badge.
 - Global English/Traditional Chinese search is available from the header and as the fifth item in the unified phone tab bar.
 - The phone dock is one balanced five-cell material bar—Today, Days, Plan, Tools, Search—rather than a narrow tab capsule plus a detached search bubble.
 - Day chips commit on pointer-up for stationary taps, retain click/keyboard fallback, and keep drags as horizontal scrolling. Mobile day changes avoid full-document View Transition overlays, and the rail never starts a smooth centering animation that can consume the next iOS tap.
@@ -134,8 +148,8 @@ GitHub Pages repositories and deployed pages may be public. This itinerary conta
 
 ## Release checks performed on this bundle
 
-- 233/233 in-app semantic checks
-- 53/53 static artifact checks
+- 247/247 in-app semantic checks
+- 55/55 static artifact checks
 - touch interaction runs at 320×700, 375×812, 390×844, and 430×932, plus 844×390 coarse-pointer landscape and 1280×800 desktop
 - full rapid Day 03 → Day 16 tap sequence in dark and light appearance with zero dropped selections
 - pointer-up + synthesized-click de-duplication, drag rejection, and keyboard activation

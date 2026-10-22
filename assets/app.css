@@ -3721,3 +3721,145 @@ body[data-city-theme] { --selection: var(--action) !important; }
 .timeline-head { min-height: 44px; margin-top: -6px; }
 .timeline-title { font-size: 17px !important; }
 @media (max-width: 374px) { .timeline-note { font-size: 15px !important; } }
+
+/* ======================= Japan-parity round =======================
+   Show card, booking codes, today's bookings, your own bookings/tasks, settings, emergency numbers,
+   sunrise/sunset, search highlights. Appended last so it settles the cascade without !important. */
+
+/* Today's bookings */
+.day-passes { display: grid; gap: 10px; }
+.day-pass-list { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.day-pass { display: grid; gap: 6px; padding: 13px 14px; border-radius: var(--radius-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--stroke), var(--shadow-base); }
+.day-pass.is-booked { box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--success) 22%, var(--stroke)), var(--shadow-base); }
+.day-pass-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
+.day-pass-time { min-width: 0; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.day-pass-title { font-size: 15px; font-weight: 700; line-height: 1.3; color: var(--text); text-wrap: balance; }
+.day-pass-local { font-size: 13px; color: var(--muted); }
+.day-pass-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 4px; }
+.day-pass-ref { display: grid; gap: 1px; min-width: 0; }
+.day-pass-ref span { font-size: 10px; font-weight: 760; letter-spacing: .055em; text-transform: uppercase; color: var(--muted-2); }
+.day-pass-ref strong { font-size: 17px; letter-spacing: .04em; color: var(--text); overflow-wrap: anywhere; }
+.day-pass-actions { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+.booking-status.status-done { color: color-mix(in oklab, var(--success) 72%, white 28%); background: color-mix(in oklab, var(--success) 9%, var(--surface)); border-color: color-mix(in oklab, var(--success) 28%, transparent); }
+
+/* Booking code on Plan cards */
+.booking-ref-row { position: relative; z-index: 1; margin-top: 10px; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 9px 10px; border-radius: 12px; border: 1px solid color-mix(in oklab, var(--success) 22%, var(--stroke)); background: color-mix(in oklab, var(--success) 6%, var(--surface)); }
+.booking-ref-row span { font-size: 10px; font-weight: 760; letter-spacing: .055em; text-transform: uppercase; color: var(--muted-2); }
+.booking-ref-row strong { font-size: 16px; letter-spacing: .04em; color: var(--text); overflow-wrap: anywhere; }
+.plan-card-actions .flex { flex-wrap: wrap; }
+.plan-icon-action.is-danger:hover, .plan-icon-action.is-danger:focus-visible { color: var(--accent); }
+
+/* Add rows + your own prep tasks */
+.plan-add-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 2px 2px 0; }
+.plan-add-row p { font-size: 13px; line-height: 1.45; color: var(--muted); }
+.plan-add-row .data-action { flex: none; }
+.prep-item { position: relative; display: grid; }
+.prep-item.is-custom .prep-card { padding-right: 56px; }
+.prep-remove { position: absolute; top: 8px; right: 8px; z-index: 2; }
+.data-action.is-primary { color: var(--bg); background: var(--action, var(--teal)); border-color: transparent; }
+.data-action.is-primary:hover { color: var(--bg); background: color-mix(in oklab, var(--action, var(--teal)) 88%, white); }
+
+/* Sunrise / sunset in the weather card */
+.fact-sun { display: flex; align-items: flex-start; gap: 6px; margin-top: 6px; font-size: 12.5px; line-height: 1.45; color: var(--muted); }
+.fact-sun-part { display: block; }
+.fact-sun svg, .fact-sun i { width: 14px; height: 14px; flex: none; margin-top: 2px; color: var(--warning); }
+
+/* Header pill while previewing */
+.status-pill.is-preview { border-color: color-mix(in oklab, var(--warning) 40%, transparent); background: color-mix(in oklab, var(--warning) 12%, var(--surface)); color: color-mix(in oklab, var(--warning) 80%, white 20%); }
+.status-pill.is-preview .status-dot { background: var(--warning); }
+
+/* Now card, day done: the tomorrow line may wrap */
+.now-card.is-done .now-card-next { white-space: normal; overflow: visible; }
+.now-card.is-done .now-card-dot { background: var(--success); }
+
+/* Emergency + settings */
+.help-groups { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.help-group { display: grid; gap: 6px; }
+.help-group-title { font-size: 11px; font-weight: 760; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-2); }
+.help-row { min-height: 52px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 14px; border: 1px solid var(--stroke); background: rgb(255 255 255 / .025); color: var(--text); text-decoration: none; transition: background-color var(--motion-fast) var(--ease-ui); }
+.help-row:hover { background: rgb(255 255 255 / .05); }
+.help-number { font-size: 17px; font-weight: 700; color: var(--text); white-space: nowrap; }
+.help-label { font-size: 13px; line-height: 1.35; color: var(--muted); }
+.help-row svg, .help-row i { width: 16px; height: 16px; color: var(--action, var(--teal)); }
+.settings-footnote { font-size: 12px; line-height: 1.55; color: var(--muted-2); }
+.settings-footnote a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+.settings-row { min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 0; border-top: 1px solid var(--stroke); }
+.settings-row:first-of-type { border-top: 0; }
+.settings-row.is-stacked { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 0; }
+.settings-label { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--text); }
+.settings-label svg, .settings-label i { width: 16px; height: 16px; color: var(--muted); }
+.settings-value { font-size: 13px; color: var(--muted); text-align: right; }
+.settings-value.is-good { color: var(--success); }
+.settings-segmented { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: 14px; border: 1px solid var(--stroke); background: var(--bg); }
+.settings-segmented button { min-height: 44px; border-radius: 10px; font-size: 13px; font-weight: 650; color: var(--muted); transition: background-color var(--motion-fast) var(--ease-ui), color var(--motion-fast) var(--ease-ui); }
+.settings-segmented button.is-active { color: var(--text); background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--stroke-strong); }
+.sim-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.sim-controls .sheet-input { flex: 1 1 210px; }
+
+/* Sheets */
+.sheet-backdrop { position: fixed; inset: 0; z-index: 95; display: flex; align-items: flex-end; justify-content: center;
+  padding: 12px max(10px, env(safe-area-inset-right, 0px)) max(10px, env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px));
+  background: color-mix(in oklab, var(--bg) 70%, transparent); -webkit-backdrop-filter: blur(16px) saturate(125%); backdrop-filter: blur(16px) saturate(125%);
+  opacity: 0; transition: opacity 200ms var(--ease-ui), display 200ms allow-discrete; }
+.sheet-backdrop.is-open { opacity: 1; }
+@starting-style { .sheet-backdrop.is-open { opacity: 0; } }
+.sheet-panel { width: 100%; max-width: 560px; max-height: min(calc(100dvh - 24px), 720px); overflow: auto; overscroll-behavior: contain;
+  border: 1px solid var(--stroke); border-radius: 28px 28px 22px 22px; background: var(--material-solid, var(--surface));
+  box-shadow: 0 32px 90px rgb(0 0 0 / .52), inset 0 1px 0 rgb(255 255 255 / .06);
+  transform: translateY(18px) scale(.99); transition: transform 260ms var(--ease-emphasized); }
+.sheet-backdrop.is-open .sheet-panel { transform: none; }
+@starting-style { .sheet-backdrop.is-open .sheet-panel { transform: translateY(18px) scale(.99); } }
+@media (min-width: 768px) { .sheet-backdrop { align-items: center; } .sheet-panel { border-radius: 24px; } }
+.sheet-form { display: grid; gap: 12px; padding: 20px 18px 18px; }
+.sheet-title { font-size: 18px; font-weight: 700; color: var(--text); }
+.sheet-sub { margin-top: -6px; font-size: 13px; color: var(--muted); }
+.sheet-field { display: grid; gap: 6px; min-width: 0; }
+.sheet-field > span { font-size: 12px; font-weight: 650; color: var(--muted); }
+.sheet-field-row { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 10px; }
+.sheet-input { width: 100%; min-height: 44px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--stroke); background: var(--bg); color: var(--text); font-size: 16px; color-scheme: dark; }
+.sheet-input:focus-visible { outline: 2px solid var(--stroke-focus); outline-offset: 1px; }
+textarea.sheet-input { resize: vertical; min-height: 66px; line-height: 1.45; }
+.sheet-note { font-size: 12px; line-height: 1.5; color: var(--muted-2); }
+.sheet-actions { display: flex; justify-content: flex-end; gap: 8px; padding-top: 4px; }
+.sheet-actions .data-action { min-width: 88px; font-size: 13px; }
+
+/* Show card: paper white, Gothic Chinese, counter-size type. Fills the screen. */
+.sheet-backdrop.is-show { padding: 0; align-items: stretch; background: rgb(0 0 0 / .6); }
+.sheet-panel.show-card { max-width: none; max-height: none; height: 100dvh; border: 0; border-radius: 0; background: #f7f5ef; color: #141414; box-shadow: none; }
+@media (min-width: 768px) { .sheet-backdrop.is-show { padding: 24px; align-items: center; } .sheet-panel.show-card { max-width: 720px; height: auto; min-height: 60vh; border-radius: 28px; } }
+.show-card-body { min-height: 100%; display: flex; flex-direction: column; gap: 14px;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(22px, env(safe-area-inset-right, 0px)) max(28px, env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px));
+  font-family: "PingFang TC", "PingFang HK", "Hiragino Sans", "Noto Sans TC", system-ui, sans-serif; }
+.show-card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.show-card-kicker { font-size: 13px; font-weight: 700; letter-spacing: .04em; color: #5b5a55; }
+.show-card-close { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; background: rgb(0 0 0 / .06); color: #141414; }
+.show-card-close svg, .show-card-close i { width: 20px; height: 20px; }
+/* The global ring is `button:focus-visible { … !important }`; on paper it must be ink, not the dark theme's jade. */
+.show-card-close:focus-visible { outline: 2px solid #141414 !important; outline-offset: 2px; }
+.show-card-phrase { margin-top: auto; font-size: 22px; font-weight: 600; color: #3d3c38; }
+.show-card-local { font-size: clamp(34px, 10vw, 56px); font-weight: 800; line-height: 1.18; letter-spacing: .01em; overflow-wrap: anywhere; text-wrap: balance; }
+.show-card-address { font-size: clamp(22px, 6.4vw, 34px); font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; }
+.show-card-ref-wrap { display: grid; gap: 4px; padding: 14px 16px; border-radius: 18px; background: #fff; box-shadow: inset 0 0 0 2px #141414; }
+.show-card-ref-wrap span:first-child { font-size: 14px; font-weight: 700; color: #5b5a55; }
+.show-card-ref { font-size: clamp(32px, 10vw, 52px); font-weight: 800; letter-spacing: .08em; overflow-wrap: anywhere; color: #141414; }
+.show-card-when { font-size: 18px; font-weight: 600; color: #3d3c38; }
+.show-card-en { font-size: 16px; color: #5b5a55; }
+.show-card-hint { margin-top: auto; font-size: 13px; line-height: 1.45; color: #6e6c66; }
+
+/* Search: matched text in results, and the card a result lands on */
+::highlight(search-hit) { background-color: color-mix(in oklab, var(--action, var(--teal)) 34%, transparent); color: var(--text); }
+@keyframes search-hit-flash { 0%, 100% { box-shadow: inset 0 0 0 1px var(--stroke); } 25%, 60% { box-shadow: inset 0 0 0 2px var(--action, var(--teal)), 0 0 0 4px color-mix(in oklab, var(--action, var(--teal)) 22%, transparent); } }
+.search-hit-flash { animation: search-hit-flash 1.6s var(--ease-ui); }
+@media (prefers-reduced-motion: reduce) {
+  .search-hit-flash { animation: none; box-shadow: inset 0 0 0 2px var(--action, var(--teal)); }
+  .sheet-backdrop, .sheet-panel { transition: none; }
+}
+/* WebKit draws a native <select> at its own 35px height; take over the box so it meets the 44px target. */
+select.sheet-input { -webkit-appearance: none; appearance: none; height: 44px; padding-right: 34px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23b1c2b7' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; }
+/* Review fixes: no taps land on a backdrop that is fading out; with the keyboard up the form sheet sits in the
+   visual viewport (the keyboard shrinks that, not the layout viewport fixed elements use). */
+.sheet-backdrop:not(.is-open) { pointer-events: none; }
+.sheet-backdrop:not(.is-show) { top: var(--sheet-vv-top, 0px); bottom: auto; height: var(--sheet-vv-height, 100dvh); }
+.sheet-backdrop:not(.is-show) .sheet-panel { max-height: min(calc(var(--sheet-vv-height, 100dvh) - 24px), 720px); }

@@ -39,7 +39,7 @@
   <link rel="icon" href="./icon-192.png" type="image/png">
 <!-- The pinned Alpine runtime fails visibly instead of leaving a blank interactive shell. -->
   <!-- Tailwind CSS v4.1.10 compiled locally at build time; zero browser-time Tailwind runtime. -->
-    <link rel="stylesheet" href="./assets/app.css?v=af877b2053">
+    <link rel="stylesheet" href="./assets/app.css?v=859b781e63">
 
   
   <!-- Local runtime bundles are deferred and cached independently for faster repeat launches. -->
@@ -64,7 +64,7 @@
       :data-motion-direction="motionDirection">
 
 
-  <a class="skip-link" href="#app-main" :inert="showGlobalSearch">Skip to trip content</a>
+  <a class="skip-link" href="#app-main" :inert="anyModalOpen">Skip to trip content</a>
 
   <noscript><div role="alert" class="runtime-warning"><i aria-hidden="true">!</i><div><strong>JavaScript is disabled</strong><span>Enable JavaScript to use day switching, Plan tracking, live FX and saved progress.</span></div></div></noscript>
 
@@ -74,7 +74,7 @@
   </div>
 
   <!-- Top Persistent Header -->
-  <header class="app-chrome sticky top-0 z-40 border-b px-3.5 md:px-5 py-2" :inert="showGlobalSearch">
+  <header class="app-chrome sticky top-0 z-40 border-b px-3.5 md:px-5 py-2" :inert="anyModalOpen">
     <div class="app-header-inner app-shell max-w-5xl mx-auto flex items-center justify-between gap-3">
       <button type="button" class="brand-button flex items-center gap-2.5 shrink-0" @click="switchTab('today', true)" aria-label="Open Today">
         <span class="brand-mark" aria-hidden="true"><img src="./icon-192.png" alt="" width="30" height="30" decoding="async"></span>
@@ -97,9 +97,9 @@
         <i data-lucide="search" class="w-4 h-4" aria-hidden="true"></i>
       </button>
 
-      <div x-show="!appUpdateAvailable" class="status-pill font-mono shrink-0" title="Trip status">
+      <div x-show="!appUpdateAvailable" class="status-pill font-mono shrink-0" :class="isSimulated ? 'is-preview' : ''" :title="isSimulated ? 'Preview mode: simulated Taipei time (Tools)' : 'Trip status'">
         <span class="status-dot" aria-hidden="true"></span>
-        <span class="status-full truncate" x-text="countdownText"></span><span class="status-short" x-text="countdownShortText"></span>
+        <span class="status-full truncate" x-text="(isSimulated ? 'Preview · ' : '') + countdownText"></span><span class="status-short" x-text="isSimulated ? 'Preview' : countdownShortText"></span>
       </div>
       <button x-show="appUpdateAvailable" x-cloak type="button" class="status-pill update-action shrink-0"
               @click="applyAppUpdate()" aria-label="Install app update" title="Install the downloaded update">
@@ -200,7 +200,7 @@
     </div>
   </div>
 
-  <main id="app-main" class="app-shell flex-1 max-w-5xl w-full mx-auto px-4 pt-3 md:pt-5 pb-28 md:pb-12" :inert="showGlobalSearch">
+  <main id="app-main" class="app-shell flex-1 max-w-5xl w-full mx-auto px-4 pt-3 md:pt-5 pb-28 md:pb-12" :inert="anyModalOpen">
     <h1 class="visually-hidden">Taiwan + Hong Kong 2026</h1>
 
     <!-- TAB 1: TODAY -->
@@ -208,9 +208,9 @@
       <!-- During the trip Today opens on what is happening now, as the Japan app does. -->
       <template x-if="nowCard">
         <button type="button" class="now-card" :class="'is-' + nowCard.state" @click="openLiveContext()"
-                :aria-label="(nowCard.state === 'now' ? 'Now: ' : 'Up next: ') + nowCard.title + ', ' + nowCard.time + '. Open the timeline.'">
+                :aria-label="(nowCard.state === 'now' ? 'Now: ' : (nowCard.state === 'done' ? 'Today: ' : 'Up next: ')) + nowCard.title + (nowCard.time ? ', ' + nowCard.time : '') + (nowCard.state === 'done' ? '. ' + nowCard.next : '') + '. Open the timeline.'">
           <span class="now-card-head">
-            <span class="now-card-badge"><span class="now-card-dot" aria-hidden="true"></span><span x-text="nowCard.state === 'now' ? 'Now · 現在' : 'Up next · 下一站'"></span></span>
+            <span class="now-card-badge"><span class="now-card-dot" aria-hidden="true"></span><span x-text="nowCard.state === 'now' ? 'Now · 現在' : (nowCard.state === 'done' ? 'Today · 今天' : 'Up next · 下一站')"></span></span>
             <span class="now-card-time tabular" x-text="nowCard.time"></span>
           </span>
           <strong class="now-card-title" x-text="nowCard.title"></strong>
@@ -333,6 +333,9 @@
             <div class="fact-card">
               <span class="fact-label"><i data-lucide="cloud-sun" class="w-3.5 h-3.5"></i>Weather · 天氣</span>
               <div class="fact-value" x-text="currentDay.weatherExpected"></div>
+              <template x-if="sunForDay(currentDay)">
+                <p class="fact-sun" :aria-label="sunText(currentDay)"><i data-lucide="sunrise" aria-hidden="true"></i><span aria-hidden="true"><span class="fact-sun-part" x-text="sunText(currentDay).split(' · ')[0]"></span><span class="fact-sun-part" x-text="sunText(currentDay).split(' · ')[1]"></span></span></p>
+              </template>
             </div>
             <div class="fact-card">
               <span class="fact-label"><i data-lucide="bed-double" class="w-3.5 h-3.5"></i>Hotel · 住宿</span>
@@ -340,8 +343,9 @@
                 <span class="truncate" x-text="getHotelLabel(currentDay)"></span>
                 <template x-if="currentDay.hotelRef && hotels[currentDay.hotelRef] && !hotels[currentDay.hotelRef].verificationRequired">
                   <span class="flex items-center gap-1 shrink-0">
+                    <button type="button" @click="openShowCard(placeShowData(hotels[currentDay.hotelRef], currentDay.hotelRef === 'hk' ? 'zh-HK' : 'zh-TW'), $event.currentTarget)" class="icon-action" title="Show the address to a driver" aria-label="Show hotel address full screen"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></button>
                     <button type="button" @click="copyText(getLocalCopyText(hotels[currentDay.hotelRef]), getLocalCopyToast(hotels[currentDay.hotelRef]))" class="icon-action" title="Copy local destination" aria-label="Copy hotel destination"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
-                    <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(hotels[currentDay.hotelRef].addressTc)" target="_blank" rel="noopener" class="icon-action" title="Hotel directions" aria-label="Hotel directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a>
+                    <a :href="mapUrl(hotels[currentDay.hotelRef].addressTc)" target="_blank" rel="noopener" class="icon-action" title="Hotel directions" aria-label="Hotel directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a>
                   </span>
                 </template>
               </div>
@@ -356,6 +360,32 @@
           </template>
         </div>
       </article>
+
+      <template x-if="bookingsForDay(currentDay).length">
+        <section class="day-passes" aria-labelledby="day-passes-title">
+          <div class="section-heading"><div><h3 id="day-passes-title" class="section-title">Bookings · 預訂</h3></div></div>
+          <div class="day-pass-list">
+            <template x-for="item in bookingsForDay(currentDay)" :key="'pass-' + item.id">
+              <article class="day-pass" :class="bookedIds.includes(item.id) ? 'is-booked' : ''">
+                <div class="day-pass-top">
+                  <span class="booking-status" :class="getBookingStatusClass(item)" x-text="bookedIds.includes(item.id) ? 'Booked' : getBookingStatusLabel(item)"></span>
+                  <span class="day-pass-time font-mono" x-text="bookingTimeText(item)"></span>
+                </div>
+                <strong class="day-pass-title" x-text="item.title"></strong>
+                <template x-if="item.titleTc"><span class="day-pass-local" lang="zh-Hant" x-text="item.titleTc"></span></template>
+                <div class="day-pass-foot">
+                  <template x-if="bookingRef(item)"><span class="day-pass-ref"><span>Code</span><strong class="font-mono" x-text="bookingRef(item)"></strong></span></template>
+                  <span class="day-pass-actions">
+                    <template x-if="bookingRef(item)"><button type="button" class="plan-icon-action" @click="copyText(bookingRef(item), 'Booking code copied')" title="Copy booking code" :aria-label="'Copy booking code for ' + item.title"><i data-lucide="copy"></i></button></template>
+                    <button type="button" class="plan-icon-action" @click="openRefSheet(item, $event.currentTarget)" :title="bookingRef(item) ? 'Edit booking code' : 'Add booking code'" :aria-label="(bookingRef(item) ? 'Edit booking code for ' : 'Add booking code for ') + item.title"><i :data-lucide="bookingRef(item) ? 'pencil' : 'key-round'"></i></button>
+                    <button type="button" class="plan-icon-action" @click="openShowCard(bookingShowData(item), $event.currentTarget)" title="Show at the counter" :aria-label="'Show ' + item.title + ' full screen'"><i data-lucide="maximize-2"></i></button>
+                  </span>
+                </div>
+              </article>
+            </template>
+          </div>
+        </section>
+      </template>
 
       <div class="today-content-grid">
       <section class="space-y-3">
@@ -384,8 +414,9 @@
                   <span class="timeline-time font-mono" x-text="item.time"></span><template x-if="isCurrentTimelineItem(idx)"><span class="now-badge"><span class="now-badge-dot"></span><span x-text="timelineItemLabel(idx)"></span></span></template>
                 </div>
                 <div class="flex items-center gap-1 shrink-0">
+                  <template x-if="canShowPlace(item)"><button type="button" @click="openShowCard(placeShowData(item, currentDay.hotelRef === 'hk' ? 'zh-HK' : 'zh-TW'), $event.currentTarget)" class="icon-action" title="Show to a driver or staff" aria-label="Show this place full screen"><i data-lucide="maximize-2" class="w-4 h-4"></i></button></template>
                   <template x-if="getLocalCopyText(item)"><button type="button" @click="copyText(getLocalCopyText(item), getLocalCopyToast(item))" class="icon-action" title="Copy local destination" aria-label="Copy local destination"><i data-lucide="copy" class="w-4 h-4"></i></button></template>
-                  <template x-if="!item.noMap && item.navigateTo"><a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(item.navigateTo)" target="_blank" rel="noopener" class="icon-action" title="Directions" aria-label="Directions"><i data-lucide="navigation-2" class="w-4 h-4"></i></a></template>
+                  <template x-if="!item.noMap && item.navigateTo"><a :href="mapUrl(item.navigateTo)" target="_blank" rel="noopener" class="icon-action" title="Directions" aria-label="Directions"><i data-lucide="navigation-2" class="w-4 h-4"></i></a></template>
                 </div>
               </div>
               <div class="flex items-start gap-2 mt-1">
@@ -432,13 +463,13 @@
           <div class="section-heading"><div><h3 class="section-title">Backups · 備案</h3></div></div>
           <div class="backup-grid">
             <template x-if="currentDay.backups.activity">
-              <article class="backup-card"><div class="min-w-0"><div class="backup-card-title"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose-400 shrink-0"></i><span x-text="currentDay.backups.activity.title"></span></div><p class="backup-card-note" x-text="withUsdConversion(currentDay.backups.activity.note)"></p></div><template x-if="currentDay.backups.activity.navigateTo"><a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(currentDay.backups.activity.navigateTo)" target="_blank" rel="noopener" class="icon-action shrink-0" title="Directions" aria-label="Backup directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a></template></article>
+              <article class="backup-card"><div class="min-w-0"><div class="backup-card-title"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose-400 shrink-0"></i><span x-text="currentDay.backups.activity.title"></span></div><p class="backup-card-note" x-text="withUsdConversion(currentDay.backups.activity.note)"></p></div><template x-if="currentDay.backups.activity.navigateTo"><a :href="mapUrl(currentDay.backups.activity.navigateTo)" target="_blank" rel="noopener" class="icon-action shrink-0" title="Directions" aria-label="Backup directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a></template></article>
             </template>
             <template x-for="(service, sIdx) in (currentDay.backups.services || [])" :key="'srv-' + sIdx">
-              <article class="backup-card"><div class="min-w-0"><div class="backup-card-title"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-rose-400 shrink-0"></i><span x-text="service.title"></span></div><p class="backup-card-note" x-text="withUsdConversion(service.note)"></p></div><template x-if="service.navigateTo"><a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(service.navigateTo)" target="_blank" rel="noopener" class="icon-action shrink-0" title="Directions" aria-label="Backup service directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a></template></article>
+              <article class="backup-card"><div class="min-w-0"><div class="backup-card-title"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-rose-400 shrink-0"></i><span x-text="service.title"></span></div><p class="backup-card-note" x-text="withUsdConversion(service.note)"></p></div><template x-if="service.navigateTo"><a :href="mapUrl(service.navigateTo)" target="_blank" rel="noopener" class="icon-action shrink-0" title="Directions" aria-label="Backup service directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a></template></article>
             </template>
             <template x-for="(food, fIdx) in (currentDay.backups.foods || [])" :key="'food-' + fIdx">
-              <article class="backup-card"><div class="min-w-0"><div class="backup-card-title"><i data-lucide="utensils" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i><span x-text="food.title"></span></div><p class="backup-card-note" x-text="withUsdConversion(food.note)"></p></div><template x-if="food.navigateTo"><a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(food.navigateTo)" target="_blank" rel="noopener" class="icon-action shrink-0" title="Directions" aria-label="Backup food directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a></template></article>
+              <article class="backup-card"><div class="min-w-0"><div class="backup-card-title"><i data-lucide="utensils" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i><span x-text="food.title"></span></div><p class="backup-card-note" x-text="withUsdConversion(food.note)"></p></div><template x-if="food.navigateTo"><a :href="mapUrl(food.navigateTo)" target="_blank" rel="noopener" class="icon-action shrink-0" title="Directions" aria-label="Backup food directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a></template></article>
             </template>
           </div>
         </section>
@@ -539,6 +570,10 @@
 
       <div class="plan-content">
         <section id="plan-panel-bookings" x-show="planView === 'bookings'" x-cloak role="tabpanel" aria-labelledby="plan-tab-bookings" class="plan-panel space-y-4">
+          <div class="plan-add-row">
+            <p>Made a booking of your own? Add it with its code and it shows on its day.</p>
+            <button type="button" class="data-action" @click="openAddBooking($event.currentTarget)"><i data-lucide="plus" class="w-3.5 h-3.5"></i><span>Add booking</span></button>
+          </div>
           <template x-if="nextBookingAction">
             <div class="next-action-card">
               <span class="next-action-icon"><i data-lucide="zap"></i></span>
@@ -565,9 +600,12 @@
 
                 <div class="booking-meta-grid">
                   <div><span>Action date</span><strong x-text="item.openDate"></strong></div>
-                  <div><span>Est. cost</span><strong x-text="withUsdConversion(item.cost)"></strong></div>
+                  <div x-show="item.cost"><span>Est. cost</span><strong x-text="withUsdConversion(item.cost)"></strong></div>
                 </div>
-                <p class="plan-card-note" x-text="withUsdConversion(item.notes)"></p>
+                <p class="plan-card-note" x-show="item.notes" x-text="withUsdConversion(item.notes)"></p>
+                <template x-if="bookingRef(item)">
+                  <div class="booking-ref-row"><span>Booking code · 訂位代號</span><strong class="font-mono" x-text="bookingRef(item)"></strong></div>
+                </template>
 
                 <div class="plan-card-actions">
                   <div class="flex items-center gap-1.5">
@@ -575,6 +613,9 @@
                       <button type="button" class="plan-icon-action" @click="exportBookingReminder(item)" title="Add booking reminder to calendar" aria-label="Add booking reminder to calendar"><i data-lucide="calendar-plus"></i></button>
                     </template>
                     <template x-if="item.url"><a :href="item.url" target="_blank" rel="noopener" class="plan-icon-action" title="Open official booking page" aria-label="Open official booking page"><i data-lucide="external-link"></i></a></template>
+                    <button type="button" class="plan-icon-action" @click="openRefSheet(item, $event.currentTarget)" :title="bookingRef(item) ? 'Edit booking code' : 'Add booking code'" :aria-label="(bookingRef(item) ? 'Edit booking code for ' : 'Add booking code for ') + item.title"><i :data-lucide="bookingRef(item) ? 'pencil' : 'key-round'"></i></button>
+                    <button type="button" class="plan-icon-action" @click="openShowCard(bookingShowData(item), $event.currentTarget)" title="Show at the counter" :aria-label="'Show ' + item.title + ' full screen'"><i data-lucide="maximize-2"></i></button>
+                    <template x-if="item.custom"><button type="button" class="plan-icon-action is-danger" @click="removeCustomBooking(item.id)" title="Remove this booking" :aria-label="'Remove ' + item.title"><i data-lucide="trash-2"></i></button></template>
                   </div>
                   <button type="button" class="plan-done-action" :class="bookedIds.includes(item.id) ? 'is-done' : ''" @click="toggleBooked(item.id)" :aria-pressed="bookedIds.includes(item.id)">
                     <i data-lucide="check-circle-2"></i><span x-text="bookedIds.includes(item.id) ? 'Booked' : 'Mark booked'"></span>
@@ -590,8 +631,13 @@
             <span><i data-lucide="check-square"></i></span>
             <div><h3>Admin &amp; setup</h3><p>Entry forms, connectivity, transit wallets, apps and access checks.</p></div>
           </div>
+          <div class="plan-add-row">
+            <p>Anything else to sort before you fly?</p>
+            <button type="button" class="data-action" @click="openAddPrep($event.currentTarget)"><i data-lucide="plus" class="w-3.5 h-3.5"></i><span>Add task</span></button>
+          </div>
           <div class="plan-card-grid prep-grid">
             <template x-for="task in adminPrepList" :key="task.id">
+              <div class="prep-item" :class="task.custom ? 'is-custom' : ''">
               <button type="button" class="prep-card" :class="adminPrepDoneIds.includes(task.id) ? 'is-done' : ''" @click="toggleAdminPrep(task.id)" :aria-pressed="adminPrepDoneIds.includes(task.id)">
                 <span class="prep-check"><i :data-lucide="adminPrepDoneIds.includes(task.id) ? 'check' : 'circle'"></i></span>
                 <span class="prep-copy">
@@ -600,6 +646,8 @@
                   <small x-text="withUsdConversion(task.note)"></small>
                 </span>
               </button>
+              <template x-if="task.custom"><button type="button" class="plan-icon-action prep-remove is-danger" @click="removeCustomPrep(task.id)" title="Remove this task" :aria-label="'Remove ' + task.title"><i data-lucide="trash-2"></i></button></template>
+              </div>
             </template>
           </div>
         </section>
@@ -627,10 +675,13 @@
               <p class="text-xs text-slate-300 mt-2 font-mono" lang="zh-TW" x-text="hotels.taipei.addressTc"></p>
             </div>
             <div class="pt-2 border-t border-slate-800/80 flex items-center justify-end gap-1">
+              <button type="button" @click="openShowCard(placeShowData(hotels.taipei, 'zh-TW'), $event.currentTarget)" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Show the address to a driver" aria-label="Show hotel address full screen">
+                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+              </button>
               <button type="button" @click="copyText(getLocalCopyText(hotels.taipei), getLocalCopyToast(hotels.taipei))" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Copy local destination" aria-label="Copy local destination">
                 <i data-lucide="copy" class="w-4 h-4"></i>
               </button>
-              <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(hotels.taipei.addressTc)" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Directions" aria-label="Hotel directions">
+              <a :href="mapUrl(hotels.taipei.addressTc)" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Directions" aria-label="Hotel directions">
                 <i data-lucide="navigation-2" class="w-4 h-4"></i>
               </a>
             </div>
@@ -645,10 +696,13 @@
               <p class="text-xs text-slate-300 mt-2 font-mono" lang="zh-TW" x-text="hotels.kaohsiung.addressTc"></p>
             </div>
             <div class="pt-2 border-t border-slate-800/80 flex items-center justify-end gap-1">
+              <button type="button" @click="openShowCard(placeShowData(hotels.kaohsiung, 'zh-TW'), $event.currentTarget)" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Show the address to a driver" aria-label="Show hotel address full screen">
+                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+              </button>
               <button type="button" @click="copyText(getLocalCopyText(hotels.kaohsiung), getLocalCopyToast(hotels.kaohsiung))" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Copy local destination" aria-label="Copy local destination">
                 <i data-lucide="copy" class="w-4 h-4"></i>
               </button>
-              <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(hotels.kaohsiung.addressTc)" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Directions" aria-label="Hotel directions">
+              <a :href="mapUrl(hotels.kaohsiung.addressTc)" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Directions" aria-label="Hotel directions">
                 <i data-lucide="navigation-2" class="w-4 h-4"></i>
               </a>
             </div>
@@ -663,16 +717,69 @@
               <p class="text-xs text-slate-300 mt-2 font-mono" lang="zh-HK" x-text="hotels.hk.addressTc"></p>
             </div>
             <div class="pt-2 border-t border-slate-800/80 flex items-center justify-end gap-1">
+              <button type="button" @click="openShowCard(placeShowData(hotels.hk, 'zh-HK'), $event.currentTarget)" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Show the address to a driver" aria-label="Show hotel address full screen">
+                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+              </button>
               <button type="button" @click="copyText(getLocalCopyText(hotels.hk), getLocalCopyToast(hotels.hk))" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Copy local destination" aria-label="Copy local destination">
                 <i data-lucide="copy" class="w-4 h-4"></i>
               </button>
-              <a :href="'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(hotels.hk.addressTc)" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Directions" aria-label="Hotel directions">
+              <a :href="mapUrl(hotels.hk.addressTc)" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Directions" aria-label="Hotel directions">
                 <i data-lucide="navigation-2" class="w-4 h-4"></i>
               </a>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Emergency + help (numbers from the National Police Agency, National Fire Agency, Taiwan Tourism
+           Administration and Hong Kong Tourism Board sites, checked Oct 2026). -->
+      <section class="surface-card help-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3" aria-labelledby="help-title">
+        <h3 id="help-title" class="text-sm font-semibold text-white">Emergency &amp; help · 緊急求助</h3>
+        <div class="help-groups">
+          <div class="help-group">
+            <p class="help-group-title">Taiwan · 台灣</p>
+            <a class="help-row" href="tel:110"><span class="help-number font-mono">110</span><span class="help-label">Police · 警察</span><i data-lucide="phone" aria-hidden="true"></i></a>
+            <a class="help-row" href="tel:119"><span class="help-number font-mono">119</span><span class="help-label">Fire &amp; ambulance · 消防救護</span><i data-lucide="phone" aria-hidden="true"></i></a>
+            <a class="help-row" href="tel:0800011765"><span class="help-number font-mono">0800-011-765</span><span class="help-label">Travel information hotline, 24 h, toll-free · 旅遊諮詢</span><i data-lucide="phone" aria-hidden="true"></i></a>
+          </div>
+          <div class="help-group">
+            <p class="help-group-title">Hong Kong · 香港</p>
+            <a class="help-row" href="tel:999"><span class="help-number font-mono">999</span><span class="help-label">Police, fire &amp; ambulance · 緊急服務</span><i data-lucide="phone" aria-hidden="true"></i></a>
+            <a class="help-row" href="tel:+85225277177"><span class="help-number font-mono">+852 2527 7177</span><span class="help-label">Police hotline, not an emergency · 警察熱線</span><i data-lucide="phone" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <p class="settings-footnote">For a driver or a hospital desk, the Show button on each hotel puts its address on screen in Chinese. Sources: <a href="https://www.npa.gov.tw/en/" target="_blank" rel="noopener noreferrer">National Police Agency</a>, <a href="https://www.nfa.gov.tw/cht/index.php" target="_blank" rel="noopener noreferrer">National Fire Agency</a>, <a href="https://eng.taiwan.net.tw/" target="_blank" rel="noopener noreferrer">Taiwan Tourism Administration</a>, <a href="https://www.discoverhongkong.com/eng/travel-guide/traveller-essentials.html" target="_blank" rel="noopener noreferrer">Hong Kong Tourism Board</a>.</p>
+      </section>
+
+      <!-- Settings -->
+      <section class="surface-card settings-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3" aria-labelledby="settings-title">
+        <h3 id="settings-title" class="text-sm font-semibold text-white">Settings · 設定</h3>
+        <div class="settings-row is-stacked">
+          <span class="settings-label" id="maps-label"><i data-lucide="map" aria-hidden="true"></i>Directions open in</span>
+          <div class="settings-segmented" role="radiogroup" aria-labelledby="maps-label">
+            <button type="button" role="radio" :aria-checked="mapProvider === 'apple'" :class="mapProvider === 'apple' ? 'is-active' : ''" @click="setMapProvider('apple')">Apple Maps</button>
+            <button type="button" role="radio" :aria-checked="mapProvider === 'google'" :class="mapProvider === 'google' ? 'is-active' : ''" @click="setMapProvider('google')">Google Maps</button>
+          </div>
+        </div>
+        <div class="settings-row">
+          <span class="settings-label"><i data-lucide="bell" aria-hidden="true"></i>Leave-by alerts</span>
+          <template x-if="notificationState === 'default'"><button type="button" class="data-action" @click="enableLeaveByAlerts()">Turn on</button></template>
+          <span class="settings-value" x-show="notificationState !== 'default'" x-text="notificationState === 'granted' ? 'On' : (notificationState === 'denied' ? 'Blocked in iOS Settings' : 'Not supported here')"></span>
+        </div>
+        <div class="settings-row">
+          <span class="settings-label"><i data-lucide="cloud-off" aria-hidden="true"></i>Offline copy</span>
+          <span class="settings-value" :class="offlineReady ? 'is-good' : ''" x-text="offlineReady ? 'Saved on this device' : 'Open once online to save'"></span>
+        </div>
+        <div class="settings-row is-stacked">
+          <span class="settings-label"><i data-lucide="timer" aria-hidden="true"></i><label for="sim-input">Preview a moment (Taipei time)</label></span>
+          <div class="sim-controls">
+            <input id="sim-input" type="datetime-local" class="sheet-input font-mono" x-model="simInput" min="2026-11-27T00:00" max="2026-12-14T23:59">
+            <button type="button" class="data-action" @click="applySimulatedTime()">Preview</button>
+            <button type="button" class="data-action" x-show="isSimulated" @click="resetToLiveTime()">Live</button>
+          </div>
+        </div>
+        <p class="settings-footnote">Alerts fire once when the live day’s leave-by time is 10 minutes away; iPhone needs the app on the Home Screen. Preview shows the Now card, countdowns and bookings as they will look at that moment; it turns off when you leave the app and never sends alerts.</p>
+      </section>
 
       <!-- Core operating rules -->
       <div class="surface-card operating-rules-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
@@ -738,7 +845,7 @@
   <input id="search-focus-proxy" class="search-focus-proxy" type="search" inputmode="search" tabindex="-1" aria-hidden="true" autocomplete="off">
 
   <!-- Mobile Bottom Navigation Bar -->
-  <div class="mobile-dock-shell md:hidden fixed z-40 left-0 right-0 bottom-0" :inert="showGlobalSearch">
+  <div class="mobile-dock-shell md:hidden fixed z-40 left-0 right-0 bottom-0" :inert="anyModalOpen">
     <template x-if="liveTripDayId && relevantPlan && activeTab !== 'today'">
       <button type="button" class="live-accessory" @click="openLiveContext()" :aria-label="'Open ' + liveAccessoryMeta + ': ' + liveAccessoryTitle">
         <span class="live-accessory-badge"><span class="status-dot" aria-hidden="true"></span><span x-text="liveAccessoryMeta"></span></span>
@@ -755,6 +862,67 @@
       <button type="button" class="mobile-nav-item mobile-search-item" @click="openGlobalSearch()" aria-haspopup="dialog" :aria-expanded="showGlobalSearch" aria-label="Search the itinerary"><i data-lucide="search" aria-hidden="true"></i><span>Search</span></button>
     </nav>
   </div>
+  <!-- Sheets: the Show card, booking codes and your own bookings / tasks -->
+  <div x-show="showSheet" x-cloak class="sheet-backdrop" :class="{ 'is-open': showSheet, 'is-show': sheetView === 'show' }"
+       @keydown.escape.window="showSheet && closeSheet()" @keydown.tab="trapSheetFocus($event)" @click.self="closeSheet()">
+    <div data-modal-panel="sheet" role="dialog" aria-modal="true" :aria-labelledby="'sheet-title-' + (sheetView || 'none')" class="sheet-panel" :class="sheetView === 'show' ? 'show-card' : ''">
+      <template x-if="sheetView === 'show' && showCardData">
+        <div class="show-card-body">
+          <div class="show-card-head">
+            <span id="sheet-title-show" class="show-card-kicker">Show this · 請看這裡</span>
+            <button type="button" class="show-card-close" data-autofocus @click="closeSheet()" aria-label="Close"><i data-lucide="x"></i></button>
+          </div>
+          <p class="show-card-phrase" :lang="showCardData.lang" x-text="showCardData.kind === 'booking' ? '我有預約' : '請帶我到這裡'"></p>
+          <strong class="show-card-local" :lang="showCardData.local ? showCardData.lang : 'en'" x-text="showCardData.local || showCardData.title"></strong>
+          <template x-if="showCardData.address"><p class="show-card-address" :lang="showCardData.lang" x-text="showCardData.address"></p></template>
+          <template x-if="showCardData.ref">
+            <div class="show-card-ref-wrap"><span lang="zh-Hant">訂位代號 · Booking code</span><span class="show-card-ref font-mono" x-text="showCardData.ref"></span></div>
+          </template>
+          <template x-if="showCardData.when"><p class="show-card-when" x-text="showCardData.when"></p></template>
+          <p class="show-card-en" x-show="showCardData.local" x-text="showCardData.title"></p>
+          <p class="show-card-hint" x-text="showCardData.kind === 'booking' ? 'I have a reservation. The screen stays on while this is open.' : 'Please take me here. The screen stays on while this is open.'"></p>
+        </div>
+      </template>
+
+      <template x-if="sheetView === 'ref'">
+        <form class="sheet-form" @submit.prevent="saveBookingRef()">
+          <h2 id="sheet-title-ref" class="sheet-title">Booking code · 訂位代號</h2>
+          <p class="sheet-sub" x-text="sheetForm.title"></p>
+          <label class="sheet-field"><span>Code or confirmation number</span>
+            <input class="sheet-input font-mono" type="text" x-model="sheetForm.ref" data-autofocus autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="80" enterkeyhint="done"></label>
+          <p class="sheet-note">Saving a code also marks the booking as booked. Leave it empty to remove the code.</p>
+          <div class="sheet-actions"><button type="button" class="data-action" @click="closeSheet()">Cancel</button><button type="submit" class="data-action is-primary">Save</button></div>
+        </form>
+      </template>
+
+      <template x-if="sheetView === 'booking'">
+        <form class="sheet-form" @submit.prevent="saveCustomBooking()">
+          <h2 id="sheet-title-booking" class="sheet-title">Add a booking · 新增預訂</h2>
+          <label class="sheet-field"><span>What</span><input class="sheet-input" type="text" x-model="sheetForm.title" data-autofocus maxlength="120" placeholder="Dinner at …, tour, ticket" enterkeyhint="next"></label>
+          <div class="sheet-field-row">
+            <label class="sheet-field"><span>Day</span>
+              <select class="sheet-input" x-model="sheetForm.dayId">
+                <template x-for="day in days" :key="'opt-' + day.id"><option :value="day.id" :selected="day.id === sheetForm.dayId" x-text="'Day ' + day.dayNum + ' · ' + ((day.dateString.match(/[A-Z][a-z]{2} \d{1,2}/) || [''])[0])"></option></template>
+              </select></label>
+            <label class="sheet-field"><span>Time (optional)</span><input class="sheet-input" type="text" x-model="sheetForm.time" maxlength="40" placeholder="7:30 PM"></label>
+          </div>
+          <label class="sheet-field"><span>Booking code (optional)</span><input class="sheet-input font-mono" type="text" x-model="sheetForm.ref" maxlength="80" autocomplete="off" autocapitalize="characters" spellcheck="false"></label>
+          <label class="sheet-field"><span>Notes (optional)</span><textarea class="sheet-input" rows="2" x-model="sheetForm.notes" maxlength="600"></textarea></label>
+          <div class="sheet-actions"><button type="button" class="data-action" @click="closeSheet()">Cancel</button><button type="submit" class="data-action is-primary">Add</button></div>
+        </form>
+      </template>
+
+      <template x-if="sheetView === 'prep'">
+        <form class="sheet-form" @submit.prevent="saveCustomPrep()">
+          <h2 id="sheet-title-prep" class="sheet-title">Add a task · 新增事項</h2>
+          <label class="sheet-field"><span>Task</span><input class="sheet-input" type="text" x-model="sheetForm.title" data-autofocus maxlength="120" enterkeyhint="next"></label>
+          <label class="sheet-field"><span>Note (optional)</span><textarea class="sheet-input" rows="2" x-model="sheetForm.note" maxlength="400"></textarea></label>
+          <div class="sheet-actions"><button type="button" class="data-action" @click="closeSheet()">Cancel</button><button type="submit" class="data-action is-primary">Add</button></div>
+        </form>
+      </template>
+    </div>
+  </div>
+
 <!-- Toast Notification Overlay -->
   <div role="status" aria-live="polite" aria-atomic="true" class="mobile-toast fixed bottom-20 md:bottom-6 z-50 pointer-events-none space-y-2">
     <template x-for="t in toasts" :key="t.id">
@@ -766,9 +934,9 @@
     </template>
   </div>
 
-    <script defer src="./assets/app.js?v=7531a8a0c0"></script>
+    <script defer src="./assets/app.js?v=cafcc0a846"></script>
   <!-- Lucide 1.43.0 (ISC) and Alpine.js 3.17.2 (MIT), pinned and embedded for single-file reliability. -->
-    <script defer src="./assets/vendor/lucide.js?v=24c2f9652d"></script>
+    <script defer src="./assets/vendor/lucide.js?v=89781d5b12"></script>
     <script defer src="./assets/vendor/alpine.js?v=abe5b75652"></script>
     <script defer src="./assets/runtime.js?v=0e151154ba"></script>
   

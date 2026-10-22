@@ -31,6 +31,42 @@ function getStorage(key, fallback) {
       return '';
     }
 
+    // Where each day's sunrise and sunset happen: [morning place, evening place]. Tamsui and Jiufen are the
+    // sunset stops on Days 4 and 5; Day 11 wakes in Kaohsiung and ends in Hong Kong. The flight day has none.
+    const SUN_COORDS = {
+      taipei: [25.048, 121.517, 'Taipei'], tamsui: [25.170, 121.441, 'Tamsui'], jiufen: [25.109, 121.845, 'Jiufen'],
+      kaohsiung: [22.639, 120.302, 'Kaohsiung'], tainan: [22.997, 120.213, 'Tainan'], alishan: [23.511, 120.803, 'Alishan'],
+      hk: [22.299, 114.172, 'Hong Kong']
+    };
+    const SUN_PLACES = {
+      'day-02': ['taipei', 'taipei'], 'day-03': ['taipei', 'taipei'], 'day-04': ['taipei', 'tamsui'], 'day-05': ['taipei', 'jiufen'],
+      'day-06': ['taipei', 'taipei'], 'day-07': ['taipei', 'kaohsiung'], 'day-08': ['kaohsiung', 'tainan'], 'day-09': ['alishan', 'alishan'],
+      'day-10': ['kaohsiung', 'kaohsiung'], 'day-11': ['kaohsiung', 'hk'], 'day-12': ['hk', 'hk'], 'day-13': ['hk', 'hk'],
+      'day-14': ['hk', 'hk'], 'day-15': ['hk', 'hk'], 'day-16': ['hk', 'hk']
+    };
+
+    // NOAA sunrise/sunset (zenith 90.833°) in minutes after local midnight. Within a minute of the Hong Kong
+    // Observatory's published December 2026 times. Taiwan and Hong Kong are both UTC+8 with no daylight saving.
+    function sunMinutes(year, month, day, lat, lon, rising, tzHours = 8) {
+      const rad = Math.PI / 180;
+      const N = Math.floor(275 * month / 9) - Math.floor((month + 9) / 12) * (1 + Math.floor((year - 4 * Math.floor(year / 4) + 2) / 3)) + day - 30;
+      const lngHour = lon / 15;
+      const t = N + ((rising ? 6 : 18) - lngHour) / 24;
+      const M = 0.9856 * t - 3.289;
+      const L = (M + 1.916 * Math.sin(M * rad) + 0.020 * Math.sin(2 * M * rad) + 282.634 + 360) % 360;
+      let RA = (Math.atan(0.91764 * Math.tan(L * rad)) / rad + 360) % 360;
+      RA = (RA + Math.floor(L / 90) * 90 - Math.floor(RA / 90) * 90) / 15;
+      const sinDec = 0.39782 * Math.sin(L * rad);
+      const cosDec = Math.cos(Math.asin(sinDec));
+      const cosH = (Math.cos(90.833 * rad) - sinDec * Math.sin(lat * rad)) / (cosDec * Math.cos(lat * rad));
+      if (cosH > 1 || cosH < -1) return NaN;
+      const H = (rising ? 360 - Math.acos(cosH) / rad : Math.acos(cosH) / rad) / 15;
+      const UT = (((H + RA - 0.06571 * t - 6.622 - lngHour) % 24) + 24) % 24;
+      return Math.round(((((UT + tzHours) % 24) + 24) % 24) * 60);
+    }
+
+    const hasCjk = value => /[㐀-鿿豈-﫿]/.test(String(value || ''));
+
     function travelOS() {
       return {
         activeTab: (() => {
@@ -59,6 +95,18 @@ function getStorage(key, fallback) {
           return ['USD', 'TWD', 'HKD'].includes(saved) ? saved : 'USD';
         })(),
         toasts: [],
+        mapProvider: getStorage('twhk_map_provider_v1', 'google') === 'apple' ? 'apple' : 'google',
+        bookingRefs: getStorage('twhk_booking_refs_v1', {}),
+        offlineReady: false,
+        notificationState: typeof Notification === 'undefined' ? 'unsupported' : Notification.permission,
+        // Preview mode: an offset on the clock, never saved, so a forgotten preview can't follow the
+        // travellers onto the real trip. Live alerts and the app badge ignore it.
+        simOffsetMs: 0,
+        simInput: '2026-12-03T10:30',
+        showSheet: null,
+        showCardData: null,
+        sheetForm: {},
+        sheetView: null,
         storageWarningShown: false,
         nowTick: Date.now(),
         appUpdateAvailable: false,
@@ -213,6 +261,7 @@ function getStorage(key, fallback) {
         bookings: [
           {
             id: 'b-23',
+            onDay: false,
             title: 'Return to Taiwan, Double Your Luck — Eligibility Check',
             titleTc: '重遊臺灣・福氣加倍・資格確認與登錄',
             eventDate: 'Taiwan arrival: Sun, Nov 29',
@@ -3178,7 +3227,14 @@ function getStorage(key, fallback) {
         // The Now card: the same plan object the capsule reads, so the two can never disagree.
         get nowCard() {
           const plan = this.relevantPlan;
-          if (!this.liveTripDayId || !plan?.day || plan.targetKind !== 'event') return null;
+          if (!this.liveTripDayId || !plan?.day) return null;
+          const lang = plan.day.hotelRef === 'hk' ? 'zh-HK' : 'zh-TW';
+          // Once the day's plan is done the card hands over to tomorrow, as the Japan app does at night.
+          if (plan.targetKind === 'complete') {
+            const tomorrow = this.tomorrowPreview(plan.day);
+            return { state: 'done', time: '', title: 'That’s the plan for today', titleTc: '今日行程完成', lang, progress: null, leave: '', leaveUrgent: false, next: tomorrow ? tomorrow.text : 'Last day of the trip' };
+          }
+          if (plan.targetKind !== 'event') return null;
           const items = plan.day.timeline || [];
           const item = items[plan.eventIndex];
           if (!item) return null;
@@ -3209,7 +3265,7 @@ function getStorage(key, fallback) {
             progress,
             leave: leave ? leave.label : '',
             leaveUrgent: Boolean(leave && (leave.urgency === 'now' || leave.urgency === 'urgent')),
-            next: next ? `${plan.state === 'current' ? 'Next' : 'Then'} ${nextStartText} · ${next.title}` : ''
+            next: next ? `${plan.state === 'current' ? 'Next' : 'Then'} ${nextStartText} · ${next.title}` : (this.tomorrowPreview(plan.day)?.text || '')
           };
         },
 
@@ -3249,16 +3305,17 @@ function getStorage(key, fallback) {
             const editable = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target?.isContentEditable;
             const commandSearch = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
             const slashSearch = event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !editable;
-            if (!commandSearch && !slashSearch) return;
+            if (this.showSheet || (!commandSearch && !slashSearch)) return;
             event.preventDefault();
             this.openGlobalSearch();
           });
 
+          this.mergeCustomItems(getStorage('twhk_custom_bookings_v1', []), getStorage('twhk_custom_prep_v1', []));
           this.sanitizePersistentState();
           this.runSemanticQa();
           document.documentElement.classList.toggle('data-saver', Boolean(navigator.connection?.saveData));
           this.determineCurrentDay();
-          this.nowTick = Date.now();
+          this.nowTick = this.clockNow();
           this.relevantPlan = this.resolveRelevantPlan(this.nowTick);
           this.smartLaunchActive = this.shouldSmartLaunch();
           if (this.smartLaunchActive) {
@@ -3274,6 +3331,10 @@ function getStorage(key, fallback) {
           this.refreshExchangeRates();
           this.refreshIcons();
           this.syncThemeColor();
+          this.checkOfflineReady();
+          navigator.serviceWorker?.addEventListener?.('controllerchange', () => this.checkOfflineReady());
+          window.setTimeout(() => this.checkOfflineReady(), 8000);
+          this.requestPersistentStorage();
           this.$nextTick(() => this.scrollActiveDayChip(true));
           if (this.smartLaunchActive) {
             // With a Now card the top of Today is the live context; otherwise land on the day.
@@ -3284,7 +3345,11 @@ function getStorage(key, fallback) {
           }
 
           document.addEventListener('visibilitychange', () => {
+            if (document.hidden && this.isSimulated) this.resetToLiveTime(true);
             if (!document.hidden) {
+              this.checkOfflineReady();
+              // WebKit drops a screen wake lock whenever the page is hidden; take it back for an open Show card.
+              if (this.showSheet === 'show') this.requestWakeLock();
               this.refreshLiveContext(true);
               this.refreshExchangeRates();
               this.$nextTick(() => this.scrollActiveDayChip());
@@ -3311,7 +3376,7 @@ function getStorage(key, fallback) {
           });
 
           this.$watch('activeDayId', (val) => {
-            setStorage('twhk_active_day_v10', JSON.stringify(val));
+            if (!this.isSimulated) setStorage('twhk_active_day_v10', JSON.stringify(val));
             this.takeItEasyActive = false;
             this.rainPlanActive = false;
             this.syncThemeColor();
@@ -3325,7 +3390,8 @@ function getStorage(key, fallback) {
           this.$watch('rainPlanActive', () => this.refreshIcons());
           this.$watch('selectedCityFilter', () => this.refreshIcons());
           // Results render new <i data-lucide> nodes; without this they stayed as empty dots.
-          this.$watch('globalSearchQuery', () => this.$nextTick(() => this.refreshIcons()));
+          this.$watch('globalSearchQuery', () => this.$nextTick(() => { this.refreshIcons(); this.paintSearchHighlights(); }));
+          this.$watch('showSheet', value => this.refreshIcons(value));
         },
 
         sanitizeIdList(value, validIds) {
@@ -3341,6 +3407,7 @@ function getStorage(key, fallback) {
           if (!['today', 'itinerary', 'plan', 'toolkit'].includes(this.activeTab)) this.activeTab = 'today';
           if (!['bookings', 'prep'].includes(this.planView)) this.planView = 'bookings';
           if (!['USD', 'TWD', 'HKD'].includes(this.selectedCurrency)) this.selectedCurrency = 'USD';
+          this.bookingRefs = this.sanitizeBookingRefs(this.bookingRefs);
         },
 
         get countdownShortText() {
@@ -3564,6 +3631,19 @@ function getStorage(key, fallback) {
               check(!Number.isFinite(end) || end >= start, `${day.id} has an end before its start near ${item.title}.`);
             }
           }
+
+          // Japan-parity features.
+          check(Object.values(this.hotels).every(hotel => hasCjk(hotel.nameTc) && hasCjk(hotel.addressTc)), 'A hotel has no Chinese name or address for the Show card.');
+          check(this.days.every(day => day.id === 'day-01' || (this.sunForDay(day) && this.sunForDay(day).riseMin > 6 * 60 && this.sunForDay(day).riseMin < 7 * 60 + 10 && this.sunForDay(day).setMin > 16 * 60 + 55 && this.sunForDay(day).setMin < 17 * 60 + 50)), 'A day is missing a plausible sunrise/sunset.');
+          check(!this.sunForDay(this.days[0]) && this.sunForDay(this.days.find(d => d.id === 'day-04'))?.setPlace === 'Tamsui', 'Sun places are wrong (flight day, or the Tamsui sunset).');
+          check(this.sunForDay(this.days.find(d => d.id === 'day-12'))?.rise === '6:51 AM' && this.sunForDay(this.days.find(d => d.id === 'day-12'))?.set === '5:40 PM', 'Hong Kong Dec 9 sun times drifted from the Observatory table (6:51 / 17:40).');
+          check(this.bookingsForDay(this.days.find(d => d.id === 'day-07')).some(b => b.id === 'b-02') && !this.bookingsForDay(this.days.find(d => d.id === 'day-02')).some(b => b.id === 'b-23'), 'Bookings are not matched to their day.');
+          check(/Airline Inn/.test(this.tomorrowPreview(this.days.find(d => d.id === 'day-06'))?.text || '') && this.tomorrowPreview(this.days[this.days.length - 1]) === null, 'Tomorrow preview is missing the hotel move, or runs past the last day.');
+          check(this.mapUrlFor('google', '台北 101') === 'https://www.google.com/maps/dir/?api=1&destination=%E5%8F%B0%E5%8C%97%20101' && this.mapUrlFor('apple', 'A&B') === 'https://maps.apple.com/?daddr=A%26B', 'Directions links are malformed.');
+          check(this.sanitizeCustomBookings([{ id: 'custom-a', title: 'X', eventDate: 'Thu, Dec 03' }, { id: 'b-02', title: 'spoof' }, { id: 'custom-b', title: '' }, 'junk', { id: 'custom-a', title: 'dup' }]).length === 1 && this.sanitizeCustomPrep([{ id: 'custom-prep-a', title: 'Y' }, { id: 'ap-1', title: 'spoof' }]).length === 1, 'Your own bookings/tasks are not sanitised.');
+          check(Object.keys(this.sanitizeBookingRefs({ 'b-02': ' ABC123 ', 'nope': 'X', 'b-03': 5 })).join() === 'b-02' && this.sanitizeBookingRefs({ 'b-02': ' ABC123 ' })['b-02'] === 'ABC123', 'Booking codes are not sanitised.');
+          check(['tel:110', 'tel:119', 'tel:0800011765', 'tel:999'].every(href => document.querySelector(`a[href="${href}"]`)), 'Emergency numbers are missing from Tools.');
+          check(!this.isSimulated && this.clockNow() - Date.now() < 1000, 'Preview mode is on at launch.');
 
           const duplicateIds = [...document.querySelectorAll('[id]')]
             .map(element => element.id)
@@ -3836,7 +3916,10 @@ function getStorage(key, fallback) {
           this.switchTab('today', true);
           const positionPlan = { targetKind: result.targetKind, eventIndex: result.eventIndex };
           this.selectDayFromStrip(result.dayId, positionPlan);
-          this.$nextTick(() => window.setTimeout(() => this.positionRelevantPlan(positionPlan, 'auto'), 100));
+          this.$nextTick(() => window.setTimeout(() => {
+            this.positionRelevantPlan(positionPlan, 'auto');
+            this.flashSearchTarget(positionPlan.targetKind === 'event' ? `timeline-item-${positionPlan.eventIndex}` : 'day-summary');
+          }, 100));
         },
 
         switchRelativeDay(delta) {
@@ -3881,7 +3964,7 @@ function getStorage(key, fallback) {
           return this.parseTimelineClock(matches[matches.length - 1][0]);
         },
 
-        resolveRelevantPlan(nowValue = Date.now()) {
+        resolveRelevantPlan(nowValue = this.clockNow()) {
           const now = Number(nowValue);
           const dayId = this.getLiveTripDayId(now);
           const day = this.days.find(candidate => candidate.id === dayId);
@@ -3956,7 +4039,7 @@ function getStorage(key, fallback) {
         },
 
         locateRelevantPlan() {
-          this.nowTick = Date.now();
+          this.nowTick = this.clockNow();
           const plan = this.resolveRelevantPlan(this.nowTick);
           if (!plan) return;
           this.relevantPlan = plan;
@@ -4040,7 +4123,7 @@ function getStorage(key, fallback) {
         refreshLiveContext(allowRollover = false) {
           const previousLiveId = this.lastLiveTripDayId;
           const wasFollowingLiveDay = Boolean(previousLiveId && this.activeDayId === previousLiveId && this.activeTab === 'today');
-          this.nowTick = Date.now();
+          this.nowTick = this.clockNow();
           const plan = this.resolveRelevantPlan(this.nowTick);
           const nextLiveId = plan?.day?.id || null;
           this.relevantPlan = plan;
@@ -4325,6 +4408,11 @@ function getStorage(key, fallback) {
         toggleBooked(bookingId) {
           if (!this.bookings.some(item => item.id === bookingId)) return;
           if (this.bookedIds.includes(bookingId)) {
+            if (this.bookingRefs[bookingId]) {
+              if (!window.confirm('Mark as not booked and remove its booking code?')) return;
+              const refs = { ...this.bookingRefs }; delete refs[bookingId]; this.bookingRefs = refs;
+              setStorage('twhk_booking_refs_v1', JSON.stringify(this.bookingRefs));
+            }
             this.bookedIds = this.bookedIds.filter(id => id !== bookingId);
             this.showToast('Booking marked pending');
           } else {
@@ -4483,7 +4571,7 @@ function getStorage(key, fallback) {
         // in the Plan tab (outstanding bookings + prep tasks) — reusing the existing figure
         // rather than inventing a new "critical items" concept. No permission prompt.
         updateAppBadge() {
-          if (!('setAppBadge' in navigator)) return;
+          if (this.isSimulated || !('setAppBadge' in navigator)) return;
           try {
             const tripEndEpoch = new Date('2026-12-13T19:05:00-05:00').getTime();
             if (this.isPreTrip) {
@@ -4540,6 +4628,7 @@ function getStorage(key, fallback) {
         // currently viewing — a leave-by alert exists specifically to reach you when you're
         // NOT on the relevant screen, so this always checks the LIVE day, not currentDay.
         maybeNotifyLeaveBy() {
+          if (this.isSimulated) return;
           const liveDay = this.days.find(d => d.id === this.liveTripDayId);
           const countdown = this.computeLeaveByCountdownForDay(liveDay);
           if (!countdown || (countdown.urgency !== 'now' && countdown.urgency !== 'urgent')) return;
@@ -4566,6 +4655,7 @@ function getStorage(key, fallback) {
           if (!('Notification' in window)) { this.showToast('Notifications are not supported in this browser'); return; }
           if (Notification.permission === 'granted') { this.showToast('Leave-by alerts are already on'); return; }
           Notification.requestPermission().then(perm => {
+            this.notificationState = perm;
             this.showToast(perm === 'granted' ? 'Leave-by alerts enabled' : 'Notifications permission was not granted');
           }).catch(() => {});
         },
@@ -4620,6 +4710,9 @@ function getStorage(key, fallback) {
           setStorage('twhk_active_day_v10', JSON.stringify(this.activeDayId));
           setStorage('twhk_plan_view_v20', JSON.stringify(this.planView));
           setStorage('twhk_currency_v23', JSON.stringify(this.selectedCurrency));
+          setStorage('twhk_booking_refs_v1', JSON.stringify(this.bookingRefs));
+          setStorage('twhk_map_provider_v1', JSON.stringify(this.mapProvider));
+          this.persistCustomItems();
         },
 
         exportState() {
@@ -4631,7 +4724,11 @@ function getStorage(key, fallback) {
             selectedCurrency: this.selectedCurrency,
             completedDayIds: this.sanitizeIdList(this.completedDayIds, this.days.map(day => day.id)),
             bookedIds: this.sanitizeIdList(this.bookedIds, this.bookings.map(item => item.id)),
-            adminPrepDoneIds: this.sanitizeIdList(this.adminPrepDoneIds, this.adminPrepList.map(item => item.id))
+            adminPrepDoneIds: this.sanitizeIdList(this.adminPrepDoneIds, this.adminPrepList.map(item => item.id)),
+            bookingRefs: this.sanitizeBookingRefs(this.bookingRefs),
+            customBookings: this.customBookingsForSave(),
+            customPrep: this.customPrepForSave(),
+            mapProvider: this.mapProvider
           };
           const blob = new Blob([JSON.stringify(statePayload, null, 2)], { type: 'application/json' });
           this.deliverFile(blob, `taiwan_hong_kong_2026_user_state_${new Date().toISOString().slice(0,10)}.json`, 'Backup downloaded', 'Backup ready to save');
@@ -4670,6 +4767,14 @@ function getStorage(key, fallback) {
             if (file.size > 1024 * 1024) throw new Error('Backup file is too large');
             const parsed = JSON.parse(await file.text());
             if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('Invalid backup');
+            // Your own bookings and tasks first, so their booked/done marks survive the sanitising below.
+            if (Array.isArray(parsed.customBookings) || Array.isArray(parsed.customPrep)) {
+              const keepBookings = Array.isArray(parsed.customBookings) ? parsed.customBookings : this.customBookingsForSave();
+              const keepPrep = Array.isArray(parsed.customPrep) ? parsed.customPrep : this.customPrepForSave();
+              this.mergeCustomItems(keepBookings, keepPrep);
+            }
+            if (parsed.bookingRefs && typeof parsed.bookingRefs === 'object') this.bookingRefs = this.sanitizeBookingRefs(parsed.bookingRefs);
+            if (['apple', 'google'].includes(parsed.mapProvider)) this.mapProvider = parsed.mapProvider;
 
             this.completedDayIds = this.sanitizeIdList(parsed.completedDayIds, this.days.map(day => day.id));
             this.bookedIds = this.sanitizeIdList(parsed.bookedIds, this.bookings.map(item => item.id));
@@ -4690,6 +4795,416 @@ function getStorage(key, fallback) {
           } finally {
             if (input) input.value = '';
           }
+        },
+
+        // ---------- Clock + preview mode ----------
+        clockNow() {
+          return Date.now() + (Number(this.simOffsetMs) || 0);
+        },
+
+        get isSimulated() {
+          return Number(this.simOffsetMs) !== 0;
+        },
+
+        get anyModalOpen() {
+          return this.showGlobalSearch || Boolean(this.showSheet);
+        },
+
+        applySimulatedTime() {
+          const match = String(this.simInput || '').trim().match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/);
+          const target = match ? Date.parse(`${match[1]}T${match[2]}:00+08:00`) : NaN;
+          if (!Number.isFinite(target)) { this.showToast('Pick a date and time to preview', 'warning'); return; }
+          if (!this.isSimulated) this._preSimDayId = this.activeDayId;
+          this.simOffsetMs = (target - Date.now()) || 1;
+          this.refreshLiveContext(false);
+          if (this.liveTripDayId) this.activeDayId = this.liveTripDayId;
+          this.showToast(this.liveTripDayId ? `Previewing ${this.countdownText}` : `Previewing · ${this.countdownText}`);
+        },
+
+        resetToLiveTime(quiet = false) {
+          if (!this.isSimulated) return;
+          this.simOffsetMs = 0;
+          this.refreshLiveContext(false);
+          this.updateAppBadge();
+          const restore = this.liveTripDayId || this._preSimDayId;
+          this._preSimDayId = null;
+          if (this.days.some(day => day.id === restore)) this.activeDayId = restore;
+          if (!quiet) this.showToast('Back to the real time');
+        },
+
+        // ---------- Directions ----------
+        mapUrlFor(provider, destination) {
+          const q = encodeURIComponent(String(destination || '').trim());
+          return provider === 'apple' ? `https://maps.apple.com/?daddr=${q}` : `https://www.google.com/maps/dir/?api=1&destination=${q}`;
+        },
+
+        mapUrl(destination) {
+          return this.mapUrlFor(this.mapProvider, destination);
+        },
+
+        setMapProvider(provider) {
+          this.mapProvider = provider === 'apple' ? 'apple' : 'google';
+          setStorage('twhk_map_provider_v1', JSON.stringify(this.mapProvider));
+          this.showToast(`Directions open in ${this.mapProvider === 'apple' ? 'Apple Maps' : 'Google Maps'}`);
+        },
+
+        // ---------- Sun ----------
+        formatMinutesClock(minutes) {
+          if (!Number.isFinite(minutes)) return '';
+          const h = Math.floor(minutes / 60) % 24, m = minutes % 60;
+          return `${h % 12 || 12}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
+        },
+
+        sunForDay(day) {
+          const places = SUN_PLACES[day?.id];
+          const date = this.parseMonthDay(day?.dateString);
+          if (!places || !date) return null;
+          const [morning, evening] = places.map(key => SUN_COORDS[key]);
+          const riseMin = sunMinutes(date.year, date.month, date.day, morning[0], morning[1], true);
+          const setMin = sunMinutes(date.year, date.month, date.day, evening[0], evening[1], false);
+          const base = SUN_COORDS[day.hotelRef === 'hk' ? 'hk' : day.hotelRef || 'taipei'];
+          return {
+            riseMin, setMin,
+            rise: this.formatMinutesClock(riseMin), set: this.formatMinutesClock(setMin),
+            risePlace: morning[2] !== base?.[2] ? morning[2] : '',
+            setPlace: evening[2] !== base?.[2] ? evening[2] : ''
+          };
+        },
+
+        sunText(day) {
+          const sun = this.sunForDay(day);
+          if (!sun) return '';
+          return `Sunrise ${sun.rise}${sun.risePlace ? ' in ' + sun.risePlace : ''} · Sunset ${sun.set}${sun.setPlace ? ' at ' + sun.setPlace : ''}`;
+        },
+
+        // Tomorrow's first stop, a hotel move and the sunrise: what the travellers check at night.
+        tomorrowPreview(day) {
+          const index = this.days.findIndex(candidate => candidate.id === day?.id);
+          const next = index >= 0 ? this.days[index + 1] : null;
+          if (!next) return null;
+          const first = next.timeline?.[0];
+          const start = first ? this.clockBounds(first.time).start : '';
+          const move = next.hotelRef && next.hotelRef !== day.hotelRef ? this.hotels[next.hotelRef]?.name : '';
+          const sun = this.sunForDay(next);
+          const parts = [`Tomorrow${start ? ' ' + start : ''} · ${first?.title || next.title}`];
+          if (move) parts.push(`moving to ${move}`);
+          if (sun?.rise) parts.push(`sunrise ${sun.rise}`);
+          return { text: parts.join(' · '), dayId: next.id };
+        },
+
+        // ---------- Bookings on the day ----------
+        bookingsForDay(day) {
+          const date = this.parseMonthDay(day?.dateString);
+          if (!date) return [];
+          return this.bookings.filter(item => {
+            if (item.onDay === false) return false;
+            const parts = this.parseMonthDay(item.eventDate);
+            return Boolean(parts && parts.month === date.month && parts.day === date.day);
+          }).sort((a, b) => (this.parseTimelineStartMinutes(this.bookingTimeText(a)) || 0) - (this.parseTimelineStartMinutes(this.bookingTimeText(b)) || 0));
+        },
+
+        bookingTimeText(item) {
+          const match = String(item?.eventDate || '').match(/\(([^)]*)\)/);
+          return match ? match[1].trim() : '';
+        },
+
+        bookingRef(item) {
+          return String(this.bookingRefs?.[item?.id] || '');
+        },
+
+        sanitizeBookingRefs(value) {
+          const ids = new Set(this.bookings.map(item => item.id));
+          const out = {};
+          if (value && typeof value === 'object' && !Array.isArray(value)) {
+            for (const [id, ref] of Object.entries(value)) {
+              if (ids.has(id) && typeof ref === 'string' && ref.trim()) out[id] = ref.trim().slice(0, 80);
+            }
+          }
+          return out;
+        },
+
+        // ---------- Your own bookings and tasks ----------
+        sanitizeCustomBookings(list) {
+          return (Array.isArray(list) ? list : [])
+            .filter(item => item && typeof item === 'object' && /^custom-[a-z0-9]+$/.test(String(item.id || '')) && String(item.title || '').trim())
+            .filter((item, index, all) => all.findIndex(other => other.id === item.id) === index)
+            .slice(0, 60)
+            .map(item => ({
+              id: String(item.id), custom: true, title: String(item.title).trim().slice(0, 120), titleTc: '',
+              eventDate: String(item.eventDate || '').trim().slice(0, 80), openDate: 'Added by you', cost: '',
+              notes: String(item.notes || '').trim().slice(0, 600)
+            }));
+        },
+
+        sanitizeCustomPrep(list) {
+          return (Array.isArray(list) ? list : [])
+            .filter(item => item && typeof item === 'object' && /^custom-prep-[a-z0-9]+$/.test(String(item.id || '')) && String(item.title || '').trim())
+            .filter((item, index, all) => all.findIndex(other => other.id === item.id) === index)
+            .slice(0, 60)
+            .map(item => ({ id: String(item.id), custom: true, title: String(item.title).trim().slice(0, 120), note: String(item.note || '').trim().slice(0, 400) }));
+        },
+
+        mergeCustomItems(bookings, prep) {
+          const customBookings = this.sanitizeCustomBookings(bookings);
+          const customPrep = this.sanitizeCustomPrep(prep);
+          this.bookings = [...this.bookings.filter(item => !item.custom), ...customBookings];
+          this.adminPrepList = [...this.adminPrepList.filter(item => !item.custom), ...customPrep];
+        },
+
+        customBookingsForSave() {
+          return this.bookings.filter(item => item.custom).map(({ id, title, eventDate, notes }) => ({ id, title, eventDate, notes }));
+        },
+
+        customPrepForSave() {
+          return this.adminPrepList.filter(item => item.custom).map(({ id, title, note }) => ({ id, title, note }));
+        },
+
+        persistCustomItems() {
+          setStorage('twhk_custom_bookings_v1', JSON.stringify(this.customBookingsForSave()));
+          setStorage('twhk_custom_prep_v1', JSON.stringify(this.customPrepForSave()));
+        },
+
+        newCustomId(prefix) {
+          return `${prefix}${Date.now().toString(36)}${Math.floor(Math.random() * 1296).toString(36)}`;
+        },
+
+        openAddBooking(opener = null) {
+          this.sheetForm = { title: '', dayId: this.activeDayId, time: '', ref: '', notes: '' };
+          this.openSheet('booking', opener);
+        },
+
+        saveCustomBooking() {
+          const form = this.sheetForm || {};
+          const title = String(form.title || '').trim();
+          if (!title) { this.showToast('Add a name for the booking', 'warning'); return; }
+          if (this.bookings.filter(item => item.custom).length >= 60) { this.showToast('That’s 60 of your own bookings, the most it keeps', 'warning'); return; }
+          const day = this.days.find(candidate => candidate.id === form.dayId) || this.currentDay;
+          const date = String(day?.dateString || '').replace(/,\s*\d{4}$/, '');
+          const time = String(form.time || '').trim().slice(0, 40);
+          const [item] = this.sanitizeCustomBookings([{ id: this.newCustomId('custom-'), title, eventDate: time ? `${date} (${time})` : date, notes: form.notes }]);
+          this.bookings = [...this.bookings, item];
+          this.bookedIds = [...this.bookedIds, item.id];
+          const ref = String(form.ref || '').trim();
+          if (ref) this.bookingRefs = { ...this.bookingRefs, [item.id]: ref.slice(0, 80) };
+          this.persistUserState();
+          this.updateAppBadge();
+          this.closeSheet();
+          this.showToast('Booking added');
+        },
+
+        removeCustomBooking(id) {
+          const item = this.bookings.find(candidate => candidate.id === id && candidate.custom);
+          if (!item || !window.confirm(`Remove “${item.title}”?`)) return;
+          this.bookings = this.bookings.filter(candidate => candidate.id !== id);
+          this.bookedIds = this.bookedIds.filter(candidate => candidate !== id);
+          const refs = { ...this.bookingRefs }; delete refs[id]; this.bookingRefs = refs;
+          this.persistUserState();
+          this.updateAppBadge();
+          this.showToast('Booking removed');
+          this.$nextTick(() => document.querySelector('#plan-panel-bookings .plan-add-row .data-action')?.focus({ preventScroll: true }));
+        },
+
+        openAddPrep(opener = null) {
+          this.sheetForm = { title: '', note: '' };
+          this.openSheet('prep', opener);
+        },
+
+        saveCustomPrep() {
+          const title = String(this.sheetForm?.title || '').trim();
+          if (!title) { this.showToast('Add a name for the task', 'warning'); return; }
+          if (this.adminPrepList.filter(item => item.custom).length >= 60) { this.showToast('That’s 60 of your own tasks, the most it keeps', 'warning'); return; }
+          const [item] = this.sanitizeCustomPrep([{ id: this.newCustomId('custom-prep-'), title, note: this.sheetForm.note }]);
+          this.adminPrepList = [...this.adminPrepList, item];
+          this.persistUserState();
+          this.updateAppBadge();
+          this.closeSheet();
+          this.showToast('Task added');
+        },
+
+        removeCustomPrep(id) {
+          const item = this.adminPrepList.find(candidate => candidate.id === id && candidate.custom);
+          if (!item || !window.confirm(`Remove “${item.title}”?`)) return;
+          this.adminPrepList = this.adminPrepList.filter(candidate => candidate.id !== id);
+          this.adminPrepDoneIds = this.adminPrepDoneIds.filter(candidate => candidate !== id);
+          this.persistUserState();
+          this.updateAppBadge();
+          this.showToast('Task removed');
+          this.$nextTick(() => document.querySelector('#plan-panel-prep .plan-add-row .data-action')?.focus({ preventScroll: true }));
+        },
+
+        openRefSheet(item, opener = null) {
+          if (!item) return;
+          this.sheetForm = { id: item.id, title: item.title, ref: this.bookingRef(item) };
+          this.openSheet('ref', opener);
+        },
+
+        // A saved code means the booking exists, so it is marked booked too.
+        saveBookingRef() {
+          const id = this.sheetForm?.id;
+          if (!this.bookings.some(item => item.id === id)) { this.closeSheet(); return; }
+          const ref = String(this.sheetForm.ref || '').trim().slice(0, 80);
+          const refs = { ...this.bookingRefs };
+          if (ref) refs[id] = ref; else delete refs[id];
+          this.bookingRefs = refs;
+          if (ref && !this.bookedIds.includes(id)) this.bookedIds = [...this.bookedIds, id];
+          this.persistUserState();
+          this.updateAppBadge();
+          this.closeSheet();
+          this.showToast(ref ? 'Booking code saved' : 'Booking code removed');
+        },
+
+        // ---------- Sheets + Show card ----------
+        openSheet(kind, opener = null) {
+          this._sheetOpener = opener?.isConnected ? opener : (document.activeElement instanceof HTMLElement ? document.activeElement : null);
+          // iOS raises the keyboard only for a focus() made inside the tap; the field does not exist yet.
+          const proxy = kind === 'show' ? null : document.getElementById('search-focus-proxy');
+          try { proxy?.focus({ preventScroll: true }); } catch (_) {}
+          this.sheetView = kind;
+          this.showSheet = kind;
+          this.watchSheetViewport(kind !== 'show');
+          this.$nextTick(() => requestAnimationFrame(() => {
+            const panel = document.querySelector('[data-modal-panel="sheet"]');
+            if (this.showSheet !== kind || !panel) { if (document.activeElement === proxy) proxy.blur(); return; }
+            (panel.querySelector('[data-autofocus]') || panel.querySelector('input, select, textarea, button'))?.focus({ preventScroll: true });
+          }));
+        },
+
+        watchSheetViewport(active) {
+          const viewport = window.visualViewport;
+          if (!viewport) return;
+          if (this._sheetViewportFit) {
+            viewport.removeEventListener('resize', this._sheetViewportFit);
+            viewport.removeEventListener('scroll', this._sheetViewportFit);
+            this._sheetViewportFit = null;
+          }
+          const backdrop = document.querySelector('.sheet-backdrop');
+          if (!active) {
+            backdrop?.style.removeProperty('--sheet-vv-top');
+            backdrop?.style.removeProperty('--sheet-vv-height');
+            return;
+          }
+          this._sheetViewportFit = () => {
+            if (!backdrop) return;
+            backdrop.style.setProperty('--sheet-vv-top', `${Math.max(0, Math.round(viewport.offsetTop))}px`);
+            backdrop.style.setProperty('--sheet-vv-height', `${Math.round(Math.min(viewport.height, window.innerHeight))}px`);
+          };
+          viewport.addEventListener('resize', this._sheetViewportFit);
+          viewport.addEventListener('scroll', this._sheetViewportFit);
+          this._sheetViewportFit();
+        },
+
+        closeSheet() {
+          if (!this.showSheet) return;
+          this.releaseWakeLock();
+          this.watchSheetViewport(false);
+          this.showSheet = null;
+          const opener = this._sheetOpener;
+          this._sheetOpener = null;
+          this.$nextTick(() => { if (opener?.isConnected) opener.focus({ preventScroll: true }); });
+        },
+
+        trapSheetFocus(event) {
+          const panel = document.querySelector('[data-modal-panel="sheet"]');
+          if (!panel) return;
+          const focusable = [...panel.querySelectorAll('a[href], button:not([disabled]), input, select, textarea')].filter(el => el.getClientRects().length);
+          if (!focusable.length) return;
+          const first = focusable[0], last = focusable[focusable.length - 1];
+          if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+          else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        },
+
+        canShowPlace(item) {
+          return Boolean(item && !item.noMap && (item.navigateTo || item.addressTc) && (hasCjk(item.titleTc || item.nameTc) || hasCjk(item.addressTc) || hasCjk(item.navigateTo)));
+        },
+
+        placeShowData(item, lang = 'zh-TW') {
+          const local = hasCjk(item?.titleTc || item?.nameTc) ? String(item.titleTc || item.nameTc).trim() : '';
+          const address = hasCjk(item?.addressTc) ? String(item.addressTc).trim() : (hasCjk(item?.navigateTo) ? String(item.navigateTo).trim() : '');
+          return { kind: 'place', title: String(item?.title || item?.name || '').trim(), local, address: address && address !== local ? address : '', ref: '', when: '', lang };
+        },
+
+        bookingShowData(item) {
+          return { kind: 'booking', title: item.title, local: hasCjk(item.titleTc) ? item.titleTc : '', address: '', ref: this.bookingRef(item), when: item.eventDate, lang: 'zh-Hant' };
+        },
+
+        // Show (給對方看): the local name and address, or a booking code, at counter size on a paper-white
+        // sheet, with the screen kept awake. The wake lock needs the tap itself, so it is asked for first.
+        openShowCard(data, opener = null) {
+          if (!data || !(data.local || data.address || data.ref || data.title)) return;
+          this.showCardData = data;
+          this.requestWakeLock();
+          this.openSheet('show', opener);
+        },
+
+        requestWakeLock() {
+          if (!navigator.wakeLock || typeof navigator.wakeLock.request !== 'function') return;
+          navigator.wakeLock.request('screen').then(lock => {
+            if (this.showSheet !== 'show') { lock.release().catch(() => {}); return; }
+            if (this._wakeLock && this._wakeLock !== lock) this._wakeLock.release().catch(() => {});
+            this._wakeLock = lock;
+          }).catch(() => {});
+        },
+
+        releaseWakeLock() {
+          const lock = this._wakeLock;
+          this._wakeLock = null;
+          if (lock) lock.release().catch(() => {});
+        },
+
+        // ---------- Device ----------
+        async checkOfflineReady() {
+          try {
+            if (!('caches' in window)) return;
+            const key = (await caches.keys()).find(name => name.startsWith('twhk-field-'));
+            if (!key) return;
+            this.offlineReady = Boolean(await (await caches.open(key)).match(new URL('./index.html', location.href).href));
+          } catch (_) { /* informational only */ }
+        },
+
+        // iOS may evict Cache Storage under pressure; a persisted grant (favoured for Home Screen apps)
+        // keeps the offline copy through a photo-heavy trip.
+        requestPersistentStorage() {
+          try {
+            const installed = navigator.standalone === true || Boolean(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+            if (installed && navigator.storage && navigator.storage.persist) {
+              navigator.storage.persisted().then(granted => granted || navigator.storage.persist()).catch(() => {});
+            }
+          } catch (_) {}
+        },
+
+        // ---------- Search highlights ----------
+        // Painted with the CSS Custom Highlight API (Safari 17.2+): ranges over the existing text nodes, so
+        // Alpine's DOM is never rewritten. Unsupported engines simply show plain results.
+        paintSearchHighlights() {
+          if (!(window.CSS && CSS.highlights && typeof window.Highlight === 'function')) return;
+          CSS.highlights.delete('search-hit');
+          const query = this.normalizeSearchValue(this.globalSearchQuery);
+          const tokens = query.split(' ').filter(token => token.length >= 2 || hasCjk(token));
+          const list = document.querySelector('[data-modal-panel="search"] .global-search-results');
+          if (!this.showGlobalSearch || !tokens.length || !list) return;
+          const ranges = [];
+          const walker = document.createTreeWalker(list, NodeFilter.SHOW_TEXT);
+          for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+            const text = node.data.toLowerCase();
+            for (const token of tokens) {
+              for (let at = text.indexOf(token); at !== -1; at = text.indexOf(token, at + token.length)) {
+                const range = new Range();
+                range.setStart(node, at);
+                range.setEnd(node, at + token.length);
+                ranges.push(range);
+              }
+            }
+          }
+          if (ranges.length) CSS.highlights.set('search-hit', new Highlight(...ranges));
+        },
+
+        flashSearchTarget(id) {
+          const target = document.getElementById(id);
+          if (!target) return;
+          target.classList.remove('search-hit-flash');
+          void target.offsetWidth;
+          target.classList.add('search-hit-flash');
+          window.setTimeout(() => target.classList.remove('search-hit-flash'), 1800);
         },
 
         refreshIcons() {

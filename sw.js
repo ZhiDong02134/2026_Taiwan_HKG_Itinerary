@@ -1,15 +1,15 @@
 /* Offline-first application shell for Taiwan + Hong Kong 2026. */
 const CACHE_PREFIX = 'twhk-field-';
 const LEGACY_CACHE_PREFIXES = ['twhk-2026-'];
-const CACHE = `${CACHE_PREFIX}a1aa51f082363582`;
+const CACHE = `${CACHE_PREFIX}22666b4674b28132`;
 const SHELL_KEY = new URL('./index.html', self.location).href;
 const PRECACHE = [
   "./index.html",
   "./manifest.webmanifest",
-  "./assets/app.css?v=af877b2053",
-  "./assets/app.js?v=7531a8a0c0",
+  "./assets/app.css?v=859b781e63",
+  "./assets/app.js?v=cafcc0a846",
   "./assets/runtime.js?v=0e151154ba",
-  "./assets/vendor/lucide.js?v=24c2f9652d",
+  "./assets/vendor/lucide.js?v=89781d5b12",
   "./assets/vendor/alpine.js?v=abe5b75652",
   "./icon-192.png",
   "./icon-512.png",
