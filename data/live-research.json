@@ -1,0 +1,385 @@
+{
+  "checked": "2026-11-11",
+  "lastLegs": [
+    {
+      "dayId": "day-02",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "西門 → 台北車站",
+      "last": "00:46",
+      "tz": "Asia/Taipei",
+      "note": "Sun Nov 29 (例假日). Bannan (BL) line toward 南港展覽館 Taipei Nangang Exhibition Center — direct, BL11→BL12. Official PDF prints one merged value for 平常日 and 例假日. (Green line toward 松山 last 00:27 does not serve 台北車站.) Departure is after midnight, i.e. early next calendar day.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/086.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-02",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "劍潭 → 台北車站",
+      "last": "00:33",
+      "tz": "Asia/Taipei",
+      "note": "Sun Nov 29 (例假日). Tamsui-Xinyi (R) line toward 廣慈/奉天宮 Guangci/Fengtian Temple (the PDF lists this, not 象山, as the southbound destination) — direct, R15→R10. Same value weekdays and holidays. After midnight.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/057.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-02",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "松山 → 台北車站",
+      "last": "00:00",
+      "tz": "Asia/Taipei",
+      "note": "Sun Nov 29 (例假日). No direct line. Last Green (G) train toward 新店 Xindian departs 00:00; the PDF's transfer table gives 00:00 as the last departure from 松山 that connects to the Tamsui-Xinyi line at 中山 Zhongshan, and also 00:00 for the Bannan line at 西門 Ximen — both lines serve 台北車站. Same value weekdays and holidays.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/111.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-02",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "台北橋 → 台北車站",
+      "last": "00:28",
+      "tz": "Asia/Taipei",
+      "note": "Sun Nov 29 (例假日). No direct line. Zhonghe-Xinlu (O) line toward 南勢角 Nanshijiao, last 00:28; the PDF's transfer table gives 00:28 for the Tamsui-Xinyi line at 民權西路 Minquan W. Rd. and 00:28 for the Bannan line at 忠孝新生 Zhongxiao Xinsheng — both reach 台北車站. Same value weekdays and holidays. After midnight.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/127.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-03",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "西門 → 台北車站",
+      "last": "00:46",
+      "tz": "Asia/Taipei",
+      "note": "Mon Nov 30 (平常日). Bannan (BL) line toward 南港展覽館 Taipei Nangang Exhibition Center — direct, BL11→BL12. Official PDF prints one merged value for 平常日 and 例假日. (Green line toward 松山 last 00:27 does not serve 台北車站.) Departure is after midnight, i.e. early next calendar day.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/086.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-03",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "劍潭 → 台北車站",
+      "last": "00:33",
+      "tz": "Asia/Taipei",
+      "note": "Mon Nov 30 (平常日). Tamsui-Xinyi (R) line toward 廣慈/奉天宮 Guangci/Fengtian Temple (the PDF lists this, not 象山, as the southbound destination) — direct, R15→R10. Same value weekdays and holidays. After midnight.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/057.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-03",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "松山 → 台北車站",
+      "last": "00:00",
+      "tz": "Asia/Taipei",
+      "note": "Mon Nov 30 (平常日). No direct line. Last Green (G) train toward 新店 Xindian departs 00:00; the PDF's transfer table gives 00:00 as the last departure from 松山 that connects to the Tamsui-Xinyi line at 中山 Zhongshan, and also 00:00 for the Bannan line at 西門 Ximen — both lines serve 台北車站. Same value weekdays and holidays.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/111.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-03",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "台北橋 → 台北車站",
+      "last": "00:28",
+      "tz": "Asia/Taipei",
+      "note": "Mon Nov 30 (平常日). No direct line. Zhonghe-Xinlu (O) line toward 南勢角 Nanshijiao, last 00:28; the PDF's transfer table gives 00:28 for the Tamsui-Xinyi line at 民權西路 Minquan W. Rd. and 00:28 for the Bannan line at 忠孝新生 Zhongxiao Xinsheng — both reach 台北車站. Same value weekdays and holidays. After midnight.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/127.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-04",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "西門 → 台北車站",
+      "last": "00:46",
+      "tz": "Asia/Taipei",
+      "note": "Tue Dec 1 (平常日). Bannan (BL) line toward 南港展覽館 Taipei Nangang Exhibition Center — direct, BL11→BL12. Official PDF prints one merged value for 平常日 and 例假日. (Green line toward 松山 last 00:27 does not serve 台北車站.) Departure is after midnight, i.e. early next calendar day.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/086.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-04",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "劍潭 → 台北車站",
+      "last": "00:33",
+      "tz": "Asia/Taipei",
+      "note": "Tue Dec 1 (平常日). Tamsui-Xinyi (R) line toward 廣慈/奉天宮 Guangci/Fengtian Temple (the PDF lists this, not 象山, as the southbound destination) — direct, R15→R10. Same value weekdays and holidays. After midnight.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/057.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-04",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "松山 → 台北車站",
+      "last": "00:00",
+      "tz": "Asia/Taipei",
+      "note": "Tue Dec 1 (平常日). No direct line. Last Green (G) train toward 新店 Xindian departs 00:00; the PDF's transfer table gives 00:00 as the last departure from 松山 that connects to the Tamsui-Xinyi line at 中山 Zhongshan, and also 00:00 for the Bannan line at 西門 Ximen — both lines serve 台北車站. Same value weekdays and holidays.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/111.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-04",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "台北橋 → 台北車站",
+      "last": "00:28",
+      "tz": "Asia/Taipei",
+      "note": "Tue Dec 1 (平常日). No direct line. Zhonghe-Xinlu (O) line toward 南勢角 Nanshijiao, last 00:28; the PDF's transfer table gives 00:28 for the Tamsui-Xinyi line at 民權西路 Minquan W. Rd. and 00:28 for the Bannan line at 忠孝新生 Zhongxiao Xinsheng — both reach 台北車站. Same value weekdays and holidays. After midnight.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/127.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-06",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "西門 → 台北車站",
+      "last": "00:46",
+      "tz": "Asia/Taipei",
+      "note": "Thu Dec 3 (平常日). Bannan (BL) line toward 南港展覽館 Taipei Nangang Exhibition Center — direct, BL11→BL12. Official PDF prints one merged value for 平常日 and 例假日. (Green line toward 松山 last 00:27 does not serve 台北車站.) Departure is after midnight, i.e. early next calendar day.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/086.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-06",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "劍潭 → 台北車站",
+      "last": "00:33",
+      "tz": "Asia/Taipei",
+      "note": "Thu Dec 3 (平常日). Tamsui-Xinyi (R) line toward 廣慈/奉天宮 Guangci/Fengtian Temple (the PDF lists this, not 象山, as the southbound destination) — direct, R15→R10. Same value weekdays and holidays. After midnight.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/057.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-06",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "松山 → 台北車站",
+      "last": "00:00",
+      "tz": "Asia/Taipei",
+      "note": "Thu Dec 3 (平常日). No direct line. Last Green (G) train toward 新店 Xindian departs 00:00; the PDF's transfer table gives 00:00 as the last departure from 松山 that connects to the Tamsui-Xinyi line at 中山 Zhongshan, and also 00:00 for the Bannan line at 西門 Ximen — both lines serve 台北車站. Same value weekdays and holidays.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/111.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-06",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "台北橋 → 台北車站",
+      "last": "00:28",
+      "tz": "Asia/Taipei",
+      "note": "Thu Dec 3 (平常日). No direct line. Zhonghe-Xinlu (O) line toward 南勢角 Nanshijiao, last 00:28; the PDF's transfer table gives 00:28 for the Tamsui-Xinyi line at 民權西路 Minquan W. Rd. and 00:28 for the Bannan line at 忠孝新生 Zhongxiao Xinsheng — both reach 台北車站. Same value weekdays and holidays. After midnight.",
+      "source": "https://web.metro.taipei/img/ALL/TTPDF/127.pdf",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-08",
+      "afterItemTitle": "",
+      "mode": "rail",
+      "label": "台南 → 高雄 (TRA)",
+      "last": "23:46",
+      "tz": "Asia/Taipei",
+      "note": "Sat Dec 5, 2026, direct trains: last is 自強 Tze-Chiang 281 (花蓮→屏東) dep 23:46, arr 高雄 00:21 (+1 day). Earlier: 自強 149 (基隆→潮州) 23:22→23:57; 區間 Local 3287 (后里→屏東) 22:54→23:52. TRA notes it adjusts trains occasionally and suggests re-checking a week before travel.",
+      "source": "https://tip.railway.gov.tw/tra-tip-web/tip/tip001/tip112/querybytime?rideDate=2026/12/05&startStation=4220-臺南&endStation=4400-高雄&startTime=20:00&endTime=23:59&transfer=ONE&trainTypeList=ALL&startOrEndTime=true&queryClassification=NORMAL",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-09",
+      "afterItemTitle": "",
+      "mode": "metro",
+      "label": "美麗島 → 高雄車站 (KRTC Red)",
+      "last": "00:21",
+      "tz": "Asia/Taipei",
+      "note": "Sun Dec 6: Red line 上行 toward 岡山車站 (R10→R11 高雄車站), 末班車 24:21 = 00:21 next calendar day; same for 平日/假日前一日/週六/週日. KRTC lists it as the last train that allows transfers. Advises arriving at the platform 2–3 minutes early.",
+      "source": "https://www.krtc.com.tw/Guide/first_and_last_train?KRTCStation=R10",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-14",
+      "afterItemTitle": "",
+      "mode": "bus",
+      "label": "NLB 21 昂坪 Ngong Ping → 大澳 Tai O",
+      "last": "18:15",
+      "tz": "Asia/Hong_Kong",
+      "note": "Fri Dec 11. Monday–Saturday timetable: 07:30, 10:35, 11:20, 12:20, 13:20, 14:20, 15:20, 16:20, 17:15, #17:45, 18:15 (\"#\" = Service on Sat only). Sun & public holidays last is 18:30. Journey 18 min.",
+      "source": "https://www.nlb.com.hk/route/detail/19",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-12",
+      "afterItemTitle": "",
+      "mode": "ferry",
+      "label": "Star Ferry 中環 Central → 尖沙咀 Tsim Sha Tsui",
+      "last": "23:30",
+      "tz": "Asia/Hong_Kong",
+      "note": "Wed Dec 9 (Mon–Fri timetable). \"Departure from Central\" timetable's last frequency band ends 23:30 on both Mon–Fri (20:40–23:30, every 10/12 min) and Sat/Sun/PH (22:40–23:30, every 10/12 min). The page publishes bands, not a separately labelled \"last sailing\"; it notes actual sailing times may vary.",
+      "source": "https://www.starferry.com.hk/en/service",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-12",
+      "afterItemTitle": "",
+      "mode": "ferry",
+      "label": "Star Ferry 灣仔 Wan Chai → 尖沙咀 Tsim Sha Tsui",
+      "last": "23:00",
+      "tz": "Asia/Hong_Kong",
+      "note": "Wed Dec 9. \"Departure from Wanchai\" timetable: Mon–Sat band 22:20–23:00, every 20 min. The page publishes bands, not a separately labelled \"last sailing\".",
+      "source": "https://www.starferry.com.hk/en/service",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-15",
+      "afterItemTitle": "",
+      "mode": "ferry",
+      "label": "Star Ferry 中環 Central → 尖沙咀 Tsim Sha Tsui",
+      "last": "23:30",
+      "tz": "Asia/Hong_Kong",
+      "note": "Sat Dec 12 (Sat/Sun/PH timetable). \"Departure from Central\" timetable's last frequency band ends 23:30 on both Mon–Fri (20:40–23:30, every 10/12 min) and Sat/Sun/PH (22:40–23:30, every 10/12 min). The page publishes bands, not a separately labelled \"last sailing\"; it notes actual sailing times may vary.",
+      "source": "https://www.starferry.com.hk/en/service",
+      "checked": "2026-11-11"
+    },
+    {
+      "dayId": "day-15",
+      "afterItemTitle": "",
+      "mode": "ferry",
+      "label": "Star Ferry 灣仔 Wan Chai → 尖沙咀 Tsim Sha Tsui",
+      "last": "23:00",
+      "tz": "Asia/Hong_Kong",
+      "note": "Sat Dec 12. \"Departure from Wanchai\" timetable: Mon–Sat band 22:20–23:00, every 20 min. The page publishes bands, not a separately labelled \"last sailing\".",
+      "source": "https://www.starferry.com.hk/en/service",
+      "checked": "2026-11-11"
+    }
+  ],
+  "summits": {
+    "qixing": {
+      "name": "七星山主峰 Qixing Mountain main peak",
+      "lat": 25.1707,
+      "lng": 121.55344,
+      "elev_m": 1120,
+      "note": "Coordinates from the OSM peak node (25.1707017, 121.5534401; OSM ele tag 1118.21). zh.wikipedia infobox gives 25°10′14.2″N 121°33′12.4″E = 25.170611, 121.553444 (about 10 m away), en.wikipedia gives 25°10′15″N 121°33′12″E. Both Wikipedia infoboxes give 1,120 m.",
+      "sources": [
+        "https://www.openstreetmap.org/node/4254423699",
+        "https://zh.wikipedia.org/wiki/七星山_(臺北市)",
+        "https://en.wikipedia.org/wiki/Qixing_Mountain_(Taipei)"
+      ]
+    },
+    "teapot": {
+      "name": "茶壺山 Teapot Mountain",
+      "lat": 25.10636,
+      "lng": 121.86594,
+      "elev_m": 602,
+      "note": "Coordinates from the OSM peak node (25.1063630, 121.8659350; OSM ele 599). Wikidata Q108334895 gives 25.1063955, 121.865781 (about 16 m away) and elevation 602 m; zh.wikipedia text gives 標高602公尺. The zh.wikipedia page shows no coordinates.",
+      "sources": [
+        "https://www.openstreetmap.org/node/3150162543",
+        "https://www.wikidata.org/wiki/Q108334895",
+        "https://zh.wikipedia.org/wiki/茶壺山"
+      ]
+    },
+    "lionrock": {
+      "name": "獅子山 Lion Rock",
+      "lat": 22.35301,
+      "lng": 114.18717,
+      "elev_m": 495,
+      "note": "Coordinates from the OSM peak node (22.3530064, 114.1871656; ele 495). en.wikipedia geohack gives 22.353102, 114.187067 (about 15 m away); elevation 495 m (HKPD).",
+      "sources": [
+        "https://www.openstreetmap.org/node/1167628556",
+        "https://en.wikipedia.org/wiki/Lion_Rock"
+      ]
+    },
+    "lantau": {
+      "name": "鳳凰山 Lantau Peak",
+      "lat": 22.2493,
+      "lng": 113.91994,
+      "elev_m": 934,
+      "note": "Coordinates from the OSM peak node (22.2492970, 113.9199385; ele 934, peak=main). en.wikipedia infobox gives 22°14′59.17″N 113°55′16.69″E = 22.249769, 113.921303, about 150 m east, so the two sources do NOT closely agree. The OSM node is used. Elevation is 934 m above HK Principal Datum (≈933 m above MSL per Wikipedia).",
+      "sources": [
+        "https://www.openstreetmap.org/node/1852935099",
+        "https://en.wikipedia.org/wiki/Lantau_Peak"
+      ]
+    }
+  },
+  "apis": {
+    "mtr": {
+      "url": "https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php?line=TWL&sta=TST",
+      "status": 200,
+      "cors": "*",
+      "sample": "{\"sys_time\":\"2026-11-12 01:01:54\",\"curr_time\":\"2026-11-12 01:01:47\",\"data\":{\"TWL-TST\":{\"curr_time\":\"…\",\"sys_time\":\"…\",\"UP\":[],\"DOWN\":[]}},\"isdelay\":\"N\",\"status\":1,\"message\":\"successful\"} — fetched at 01:01 HKT after service hours, so UP/DOWN were empty. Each entry has the same fields as the AEL sample: {seq,dest,plat,time,ttnt,valid,source}.",
+      "alsoChecked": {
+        "url": "https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php?line=AEL&sta=KOW",
+        "status": 200,
+        "cors": "*",
+        "sample": "{\"data\":{\"AEL-KOW\":{\"curr_time\":\"2026-11-12 01:01:54\",\"sys_time\":\"2026-11-12 01:01:54\",\"DOWN\":[{\"seq\":\"1\",\"dest\":\"HOK\",\"plat\":\"2\",\"time\":\"2026-11-12 01:07:00\",\"ttnt\":\"6\",\"valid\":\"Y\",\"source\":\"-\"}]}},\"isdelay\":\"N\",\"status\":1,\"message\":\"successful\"} (only DOWN key present at this station/time)"
+      }
+    },
+    "hko_warnsum": {
+      "url": "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=warnsum&lang=en",
+      "status": 200,
+      "cors": "*",
+      "sample": "{} (no warnings in force when checked). When warnings exist: top-level keys are warning statement codes (WFIRE, WFROST, WHOT, WCOLD, WMSGNL, WRAIN, WFNTSA, WL, WTCSGNL, WTMW, WTS), each {name, code, type?, actionCode (ISSUE|REISSUE|CANCEL|EXTEND|UPDATE), issueTime, expireTime?, updateTime}. Documented example: \"WTCSGNL\":{\"name\":\"Tropical Cyclone Warning Signal\",\"code\":\"TC3\",\"actionCode\":\"ISSUE\",\"type\":\"Strong Wind Signal No. 3\",…}; \"WRAIN\":{\"name\":\"Rainstorm Warning Signal\",\"code\":\"WRAINR\",\"type\":\"Red\",\"actionCode\":\"ISSUE\",…}."
+    },
+    "hko_fnd": {
+      "url": "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en",
+      "status": 200,
+      "cors": "*",
+      "sample": "keys: generalSituation, weatherForecast[] — each {forecastDate:\"20261112\", week, forecastWind, forecastWeather, forecastMaxtemp:{value,unit}, forecastMintemp:{value,unit}, forecastMaxrh:{value,unit}, forecastMinrh:{value,unit}, ForecastIcon, PSR} (only the first 1500 bytes were inspected)"
+    },
+    "hko_rhrread": {
+      "url": "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=en",
+      "status": 200,
+      "cors": "*",
+      "sample": "keys: rainfall{data[{unit,place,max,main}],startTime,endTime}, icon[], iconUpdateTime, uvindex, updateTime, temperature{data[{place,value,unit}],…} (only the first 1500 bytes were inspected)"
+    },
+    "openmeteo": {
+      "url": "https://api.open-meteo.com/v1/forecast?latitude=22.3&longitude=114.17&hourly=precipitation_probability&timezone=Asia%2FHong_Kong&forecast_days=1",
+      "status": 200,
+      "cors": "*",
+      "corsExtra": "access-control-allow-methods: GET, POST, OPTIONS; access-control-max-age: 600",
+      "sample": "keys: latitude, longitude, generationtime_ms, utc_offset_seconds (28800), timezone, timezone_abbreviation, elevation, hourly_units{time,precipitation_probability:\"%\"}, hourly{time[24 × \"2026-11-12T00:00\"…], precipitation_probability[24 ints]}"
+    },
+    "hkoCodes": {
+      "typhoon": [
+        "TC1",
+        "TC3",
+        "TC8NE",
+        "TC8SE",
+        "TC8NW",
+        "TC8SW",
+        "TC9",
+        "TC10",
+        "CANCEL"
+      ],
+      "rainstorm": [
+        "WRAINA",
+        "WRAINR",
+        "WRAINB"
+      ],
+      "note": "Typhoon codes appear under key WTCSGNL; rainstorm codes appear under key WRAIN with type \"Amber\"/\"Red\"/\"Black\". In the doc's code table, CANCEL is listed after TC10 in the WTCSGNL block.",
+      "source": "https://data.weather.gov.hk/weatherAPI/doc/HKO_Open_Data_API_Documentation.pdf"
+    }
+  },
+  "cathay": {
+    "olciOpensHours": 48,
+    "olciClosesMin": 60,
+    "notes": "cathaypacific.com FAQ: \"Digital boarding passes are available from 48 hours up to 60 minutes before departure.\" HKG airport counters and self-service facilities close \"punctually 60 minutes before scheduled departure\". Cathay's agent site (cxagents.com) adds that online check-in opens 48 h before departure for Cathay members and 24 h for non-members, with a 60-min close (D-60) standardised from 25 Jun 2024 incl. HKG/TPE/KHH. No 90-minute online-check-in close for US flights was found; 90 min applies to in-town check-in. For US-bound flights, Cathay says TSA rules mean boarding passes can only be issued 24 h before departure.",
+    "sources": [
+      "https://www.cathaypacific.com/cx/en_US/faqs/check-in/boarding-pass/mobile-boarding-pass/what-are-the-earliest-and-latest-times-for-collecting-my-boarding-pass.html",
+      "https://www.cathaypacific.com/cx/en_HK/destinations/airports/hong-kong-international-airport.html",
+      "https://www.cxagents.com/ta/en/news/2024/check-in-up-to-60-minutes-before-scheduled-departure.html"
+    ],
+    "inTown": {
+      "hours": "Kowloon Station: self-service check-in kiosks and bag drop daily 6:00am–3:00pm. Hong Kong Station: daily 6:00am–11:00pm.",
+      "window": "Bag drop after online check-in from 24 hours up to 90 minutes before scheduled departure (Cathay). MTR: check-in as early as 24 h in advance and up to 90 min before departure, during service hours. Cathay FAQ: arrive at the in-town counter not less than 90 minutes before departure. Requires valid electronic travel documents and a valid Airport Express ticket. Max bag 145×100×85 cm; MTR also gives a 32 kg limit.",
+      "usFlights": "Not stated as excluded. Under \"Flights to the United States\", Cathay's in-town section says only: \"Due to TSA regulations, boarding passes for flights to the US can only be issued 24 hours before departure.\" In-town cannot handle infants, upgrades, excess-baggage redemption, extra-legroom seats, group/agency bookings or special services. For codeshare flights, go to the operating carrier's counters.",
+      "sources": [
+        "https://www.cathaypacific.com/cx/en_HK/destinations/airports/hong-kong-international-airport.html",
+        "https://www.mtr.com.hk/en/customer/services/complom_checkin.html",
+        "https://www.cathaypacific.com/cx/en_HK/faqs/check-in/online-check-in/do-i-need-a-valid-airport-express-line-ticket-when-accessing-any-hong-kong-in-town-check-in.html"
+      ]
+    }
+  }
+}

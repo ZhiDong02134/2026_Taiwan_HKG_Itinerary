@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100 antialiased selection:bg-rose-500 selection:text-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#101414">
+  <meta name="color-scheme" content="dark">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- The app is dark only. -->
+  <script id="appearance-bootstrap">document.documentElement.dataset.appearance = 'dark';</script>
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Taiwan + Hong Kong 2026</title>
+  <meta name="description" content="A field-first Taiwan and Hong Kong itinerary with live booking, prep, FX and day execution tools.">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="application-name" content="Taiwan + Hong Kong 2026">
+  <meta name="apple-mobile-web-app-title" content="TW · HK '26">
+  <!-- iOS ignores the manifest for the home-screen icon and cannot use an SVG here; without
+       this PNG, Add to Home Screen falls back to a screenshot of the page. -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="preload" href="./assets/taipei-photo.webp" as="image" type="image/webp">
+  <!-- iOS launch screens. Without these, opening the home-screen app shows a blank
+       white frame until the document paints; iOS does not honour the manifest's
+       background_color, so apple-touch-startup-image is the only mechanism. -->
+  <link rel="apple-touch-startup-image" href="./splash-750x1334.png" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-828x1792.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1125x2436.png" media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1242x2688.png" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1080x2340.png" media="screen and (device-width: 360px) and (device-height: 780px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1170x2532.png" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1179x2556.png" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1206x2622.png" media="screen and (device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1284x2778.png" media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1290x2796.png" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./splash-1320x2868.png" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="icon" href="./icon-192.png" type="image/png">
+<!-- The pinned Alpine runtime fails visibly instead of leaving a blank interactive shell. -->
+  <!-- Tailwind CSS v4.1.10 compiled locally at build time; zero browser-time Tailwind runtime. -->
+    <link rel="stylesheet" href="./assets/app.css?v=222b2b493e">
+
+  
+  <!-- Local runtime bundles are deferred and cached independently for faster repeat launches. -->
+
+  
+
+  
+
+
+  
+
+
+  
+
+  
+
+</head>
+
+<body class="min-h-full bg-slate-950 text-slate-100 flex flex-col"
+      x-data="travelOS()"
+      :data-city-theme="currentCityTheme"
+      :data-motion-direction="motionDirection">
+
+
+  <div class="atmos" aria-hidden="true"><div class="atmos-layer is-on"></div><div class="atmos-layer"></div><div class="atmos-grain"></div></div>
+
+  <a class="skip-link" href="#app-main" :inert="anyModalOpen">Skip to trip content</a>
+
+  <noscript><div role="alert" class="runtime-warning"><i aria-hidden="true">!</i><div><strong>JavaScript is disabled</strong><span>Enable JavaScript to use day switching, Plan tracking, live FX and saved progress.</span></div></div></noscript>
+
+  <div id="runtime-warning" hidden role="alert" class="runtime-warning">
+    <i data-lucide="triangle-alert" aria-hidden="true"></i>
+    <div><strong id="runtime-warning-title">Interactive runtime unavailable</strong><span id="runtime-warning-copy">Reconnect and reload. A backup CDN was also attempted; the itinerary data remains in this file, but interactive tabs need Alpine.js.</span></div>
+  </div>
+
+  <!-- Top Persistent Header -->
+  <header class="app-chrome sticky top-0 z-40 border-b px-3.5 md:px-5 py-2" :inert="anyModalOpen">
+    <div class="app-header-inner app-shell max-w-5xl mx-auto flex items-center justify-between gap-3">
+      <button type="button" class="brand-button flex items-center gap-2.5 shrink-0" @click="goHome()" aria-label="Home: back to today" title="Back to today">
+        <span class="brand-mark" aria-hidden="true"><img src="./icon-192.png" alt="" width="30" height="30" decoding="async"></span>
+        <span class="brand-text">
+          <span class="brand-title font-semibold text-[13px] md:text-sm text-slate-100 hidden sm:inline">Taiwan + Hong Kong <span class="text-slate-500 font-medium">2026</span></span>
+          <span class="brand-title font-semibold text-[13px] text-slate-100 sm:hidden">TW · HK 2026</span>
+          <span class="brand-day" aria-hidden="true" x-text="condensedTitle"></span>
+        </span>
+      </button>
+
+      <nav class="desktop-tabs hidden md:grid" aria-label="Primary navigation" :style="'--nav-shift:' + (activeTabIndex * 100) + '%'">
+        <span class="nav-lens" aria-hidden="true"></span>
+        <button type="button" @click="tapTab('today')" :class="activeTab === 'today' ? 'is-active' : ''" :aria-current="activeTab === 'today' ? 'page' : null" class="nav-item"><i data-lucide="compass" class="w-3.5 h-3.5"></i><span>Today</span></button>
+        <button type="button" @click="tapTab('itinerary')" :class="activeTab === 'itinerary' ? 'is-active' : ''" :aria-current="activeTab === 'itinerary' ? 'page' : null" class="nav-item"><i data-lucide="calendar" class="w-3.5 h-3.5"></i><span>Days</span></button>
+        <button type="button" @click="tapTab('plan')" :class="activeTab === 'plan' ? 'is-active' : ''" :aria-current="activeTab === 'plan' ? 'page' : null" class="nav-item"><i data-lucide="clipboard-check" class="w-3.5 h-3.5"></i><span>Plan</span></button>
+        <button type="button" @click="tapTab('toolkit')" :class="activeTab === 'toolkit' ? 'is-active' : ''" :aria-current="activeTab === 'toolkit' ? 'page' : null" class="nav-item"><i data-lucide="briefcase" class="w-3.5 h-3.5"></i><span>Toolkit</span></button>
+      </nav>
+
+      <button id="global-search-trigger" type="button" class="global-search-trigger header-search-trigger shrink-0"
+              @click="openGlobalSearch()"
+              aria-label="Search itinerary activities and places"
+              title="Search itinerary (Ctrl/⌘ K)">
+        <i data-lucide="search" class="w-4 h-4" aria-hidden="true"></i>
+      </button>
+
+      <div x-show="!appUpdateAvailable" class="status-pill font-mono shrink-0" :class="isSimulated ? 'is-preview' : ''" :title="isSimulated ? 'Preview mode: simulated Taipei time (Tools)' : 'Trip status'">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span class="status-full truncate" x-text="(isSimulated ? 'Preview · ' : '') + countdownText"></span><span class="status-short" x-text="isSimulated ? 'Preview' : countdownShortText"></span>
+      </div>
+      <button x-show="appUpdateAvailable" x-cloak type="button" class="status-pill update-action shrink-0"
+              @click="applyAppUpdate()" aria-label="Install app update" title="Install the downloaded update">
+        <i data-lucide="refresh-cw" aria-hidden="true"></i><span>Update</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- GLOBAL ITINERARY SEARCH -->
+  <div x-show="showGlobalSearch" x-cloak
+       :class="{ 'is-open': showGlobalSearch }"
+       class="global-search-backdrop fixed inset-0 z-[90] bg-slate-950/80 flex items-start justify-center p-4"
+       @keydown.escape.window="closeGlobalSearch()"
+       @keydown.tab="trapSearchFocus($event)">
+    <div data-modal-panel="search" role="dialog" aria-modal="true" aria-labelledby="global-search-title"
+         class="global-search-panel" @click.outside="closeGlobalSearch()">
+      <div class="global-search-head">
+        <span class="sheet-grabber is-search" aria-hidden="true"></span>
+        <div class="global-search-head-row">
+          <div class="global-search-input-shell">
+            <i data-lucide="search" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
+            <label id="global-search-title" for="global-itinerary-search" class="visually-hidden">Search the Taiwan and Hong Kong itinerary</label>
+            <input id="global-itinerary-search" class="global-search-input"
+                   type="search" inputmode="search" enterkeyhint="search" autocomplete="off" autocapitalize="off" spellcheck="false"
+                   x-model="globalSearchQuery"
+                   @keydown.enter.prevent="globalSearchResults[0] && openGlobalSearchResult(globalSearchResults[0])"
+                   placeholder="Search Jiufen, 九份, night market..."
+                   aria-describedby="global-search-help">
+            <button x-show="globalSearchQuery" type="button" class="global-search-clear"
+                    @click="globalSearchQuery = ''; $nextTick(() => document.getElementById('global-itinerary-search')?.focus())"
+                    aria-label="Clear itinerary search">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+          <button type="button" class="global-search-close" @click="closeGlobalSearch()" aria-label="Close itinerary search">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <p id="global-search-help" class="visually-hidden">Searches every planned day in English or Chinese. Open a result to jump to the matching activity.</p>
+      </div>
+
+      <div class="global-search-body">
+        <template x-if="!globalSearchQuery.trim()">
+          <div>
+            <div class="global-search-meta">
+              <span>Find any activity, place, meal or neighbourhood</span>
+              <span class="global-search-shortcut">⌘/Ctrl K</span>
+            </div>
+            <div class="search-suggestion-grid" aria-label="Quick itinerary searches">
+              <template x-for="term in globalSearchSuggestions" :key="term">
+                <button type="button" class="search-suggestion" @click="setGlobalSearch(term)">
+                  <i data-lucide="search" class="w-3.5 h-3.5"></i><span x-text="term"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <template x-if="globalSearchQuery.trim()">
+          <div>
+            <div class="global-search-meta" aria-live="polite" aria-atomic="true">
+              <span x-text="globalSearchResults.length ? (globalSearchResults.length + (globalSearchResults.length === 1 ? ' matching day' : ' matching days')) : 'No matching planned day'"></span>
+              <span x-show="globalSearchResults.length" class="font-mono" x-text="'for “' + globalSearchQuery.trim() + '”'"></span>
+            </div>
+
+            <div x-show="globalSearchResults.length" class="global-search-results">
+              <template x-for="result in globalSearchResults" :key="result.dayId">
+                <button type="button" class="global-search-result" @click="openGlobalSearchResult(result)"
+                        :aria-label="'Open Day ' + result.dayNum + ', ' + result.dateString + ', ' + result.title">
+                  <span class="min-w-0">
+                    <span class="search-result-dayline">
+                      <span class="search-result-day" x-text="'D' + result.dayNum"></span>
+                      <span x-text="result.dateString"></span>
+                      <span aria-hidden="true">·</span>
+                      <span x-text="result.locationLabel || result.city"></span>
+                    </span>
+                    <span class="search-result-title block" x-text="result.title"></span>
+                    <span class="search-result-matches">
+                      <template x-for="(match, matchIndex) in result.matches" :key="matchIndex">
+                        <span class="search-result-match">
+                          <i class="w-3 h-3 shrink-0 mt-0.5" :data-lucide="match.kind === 'event' ? 'map-pin' : (match.kind === 'food' ? 'utensils' : 'search')"></i>
+                          <span x-text="match.label"></span>
+                        </span>
+                      </template>
+                    </span>
+                  </span>
+                  <span class="search-result-arrow" aria-hidden="true"><i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                </button>
+              </template>
+            </div>
+
+            <div x-show="!globalSearchResults.length" class="search-empty">
+              <strong>Nothing planned under that term</strong>
+              <span>Try a place, activity, restaurant or neighbourhood — in English or Chinese.</span>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <main id="app-main" class="app-shell flex-1 max-w-5xl w-full mx-auto px-4 pt-3 md:pt-5 pb-28 md:pb-12" :inert="anyModalOpen">
+    <h1 class="visually-hidden">Taiwan + Hong Kong 2026</h1>
+
+    <!-- TAB 1: TODAY -->
+    <section x-show="activeTab === 'today'" x-cloak class="today-pane tab-pane space-y-5">
+      <!-- During the trip Today opens on what is happening now, as the Japan app does. -->
+      <template x-if="nowCard">
+        <button type="button" class="now-card" :class="'is-' + nowCard.state" @click="openLiveContext()"
+                :aria-label="(nowCard.state === 'now' ? 'Now: ' : (nowCard.state === 'done' ? 'Today: ' : 'Up next: ')) + nowCard.title + (nowCard.time ? ', ' + nowCard.time : '') + (nowCard.left ? ', ' + nowCard.left : '') + (nowCard.state === 'done' ? '. ' + nowCard.next : '') + '. Open the timeline.'">
+          <span class="now-card-head">
+            <span class="now-card-badge"><span class="now-card-dot" aria-hidden="true"></span><span x-text="nowCard.state === 'now' ? 'Now · 現在' : (nowCard.state === 'done' ? 'Today · 今天' : 'Up next · 下一站')"></span></span>
+            <span class="now-card-time tabular" x-text="nowCard.time"></span>
+          </span>
+          <strong class="now-card-title" x-text="nowCard.title"></strong>
+          <template x-if="nowCard.titleTc"><span class="now-card-local" :lang="nowCard.lang" x-text="nowCard.titleTc"></span></template>
+          <template x-if="nowCard.progress !== null"><span class="now-card-progress-row"><span class="now-card-progress" aria-hidden="true" :style="'--p:' + nowCard.progress"></span><span class="now-card-left tabular" x-show="nowCard.left" x-text="nowCard.left"></span></span></template>
+          <span class="now-card-foot">
+            <template x-if="nowCard.leave"><span class="now-card-leave" :class="nowCard.leaveUrgent ? 'is-urgent' : ''" x-text="nowCard.leave"></span></template>
+            <span class="now-card-next" x-show="nowCard.next" x-text="nowCard.next"></span>
+            <i data-lucide="chevron-right" class="now-card-chevron" aria-hidden="true"></i>
+          </span>
+          <span class="now-card-clock tabular" x-show="nowCard.clock" x-text="nowCard.clock"></span>
+        </button>
+      </template>
+      <template x-if="nowFlightLine || nowLastLeg">
+        <div class="now-extra">
+          <template x-if="nowFlightLine">
+            <a class="now-extra-row" :class="nowFlightLine.closed ? 'is-bad' : 'is-flight'" :href="nowFlightLine.url" target="_blank" rel="noopener" :aria-label="nowFlightLine.text + '. Opens Cathay check-in'"><span class="now-extra-icon" aria-hidden="true"><i data-lucide="plane-takeoff"></i></span><span class="now-extra-copy"><strong x-text="nowFlightLine.main"></strong> <small x-text="nowFlightLine.sub"></small></span><i data-lucide="arrow-up-right" class="now-extra-go" aria-hidden="true"></i></a>
+          </template>
+          <template x-if="nowLastLeg">
+            <a class="now-extra-row" :class="nowLastLeg.tone ? 'is-' + nowLastLeg.tone : ''" :href="nowLastLeg.source" target="_blank" rel="noopener" :aria-label="nowLastLeg.text + '. Opens the timetable'"><span class="now-extra-icon" aria-hidden="true"><i data-lucide="train"></i></span><span class="now-extra-copy"><strong x-text="nowLastLeg.main"></strong> <small x-text="nowLastLeg.sub"></small></span><span class="now-extra-pill font-mono" x-text="nowLastLeg.pill"></span></a>
+          </template>
+        </div>
+      </template>
+      <template x-if="weatherBanner">
+        <section class="weather-banner" role="status" aria-label="Weather that changes today's plan">
+          <span class="weather-banner-icon" aria-hidden="true"><i data-lucide="cloud-rain-wind"></i></span>
+          <div class="weather-banner-body">
+            <template x-for="(line, lIdx) in weatherBanner.lines" :key="lIdx"><p x-text="line"></p></template>
+            <p class="live-meta"><span x-text="weatherBanner.credit"></span><a class="live-link" :href="weatherBanner.officialUrl" target="_blank" rel="noopener"><span x-text="weatherBanner.officialLabel"></span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a></p>
+            <template x-if="weatherBanner.rainButton"><button type="button" class="weather-banner-action" @click="activateRainPlan()"><i data-lucide="umbrella" aria-hidden="true"></i><span>Switch to the rain plan · 雨天備案</span></button></template>
+          </div>
+        </section>
+      </template>
+      <template x-if="isPreTrip && nextPlanAction">
+        <button type="button" class="pretrip-command" @click="openPlan(nextPlanAction.kind)">
+          <span class="pretrip-icon"><i data-lucide="sparkles"></i></span>
+          <span class="pretrip-copy">
+            <span class="pretrip-eyebrow">Next action · 下一步</span>
+            <strong x-text="nextPlanAction.title"></strong>
+            <span x-text="nextPlanAction.meta"></span>
+          </span>
+          <span class="pretrip-count font-mono" x-text="openPlanCount + ' open'"></span>
+          <i data-lucide="arrow-right" class="pretrip-arrow" aria-hidden="true"></i>
+        </button>
+      </template>
+
+      <div class="day-strip-wrap">
+        <div class="day-strip" id="day-strip" aria-label="Trip days">
+          <template x-for="day in days" :key="day.id">
+            <button type="button"
+                    :id="'chip-' + day.id"
+                    @pointerdown="beginDayChipPress($event, day.id)"
+                    @pointerup="endDayChipPress($event, day.id)"
+                    @pointercancel="cancelDayChipPress($event)"
+                    @click="activateDayChipClick($event, day.id)"
+                    @keydown.arrow-right.prevent="switchRelativeDay(1)"
+                    @keydown.arrow-left.prevent="switchRelativeDay(-1)"
+                    @keydown.home.prevent="switchRelativeDay(-days.length)"
+                    @keydown.end.prevent="switchRelativeDay(days.length)"
+                    :class="activeDayId === day.id ? 'is-active' : ''"
+                    :aria-pressed="activeDayId === day.id"
+                    :aria-current="activeDayId === day.id ? 'date' : null"
+                    class="day-chip">
+              <span class="day-chip-number font-mono" x-text="day.dayNum"></span>
+              <span class="day-chip-city" :class="'theme-' + getDayTheme(day)" aria-hidden="true"></span>
+              <span class="truncate text-[11px] font-semibold" x-text="day.shortLabel"></span>
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <!-- Preview controls: step through any moment of the trip (Tools → Preview a moment, or Play the day) -->
+      <div class="preview-bar" x-show="isSimulated" x-cloak role="group" aria-label="Preview controls">
+        <div class="preview-head">
+          <span class="preview-clock"><span class="preview-dot" aria-hidden="true"></span><span x-text="previewClockText"></span></span>
+          <button type="button" class="preview-speed" @click="previewSpeed = previewSpeed === 1 ? 2 : 1" :aria-label="'Play speed ' + previewSpeed + ' times, tap to change'" x-text="previewSpeed + '×'"></button>
+        </div>
+        <div class="preview-buttons">
+          <button type="button" class="preview-btn" @click="previewJump(-60)" aria-label="Back one hour">−1 h</button>
+          <button type="button" class="preview-btn" @click="previewStep(-1)" aria-label="Previous stop"><i data-lucide="chevron-right" class="is-flipped" aria-hidden="true"></i></button>
+          <button type="button" class="preview-btn is-primary" @click="togglePlayDay()" :aria-label="previewPlaying ? 'Pause' : 'Play the day'">
+            <svg x-show="!previewPlaying" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <svg x-show="previewPlaying" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <button type="button" class="preview-btn" @click="previewStep(1)" aria-label="Next stop"><i data-lucide="chevron-right" aria-hidden="true"></i></button>
+          <button type="button" class="preview-btn" @click="previewJump(60)" aria-label="Forward one hour">+1 h</button>
+          <button type="button" class="preview-btn is-live" @click="leavePreview()" aria-label="Back to the real time">Live</button>
+        </div>
+      </div>
+
+      <article id="day-summary" class="day-hero"
+               @touchstart.passive="onHeroTouchStart($event)"
+               @touchend.passive="onHeroTouchEnd($event)"
+               @touchcancel.passive="_heroSwipe = null"
+               :class="{
+                 'city-hk': currentDay.hotelRef === 'hk',
+                 'city-kaohsiung': currentDay.hotelRef === 'kaohsiung',
+                 'city-taipei': currentDay.hotelRef === 'taipei',
+                 'city-flight': !currentDay.hotelRef
+               }">
+        <figure class="destination-photo">
+          <img :src="destinationPhoto.src" :alt="destinationPhoto.alt" width="1440" height="560" loading="eager" decoding="async" fetchpriority="high"
+               @error="$el.style.visibility = 'hidden'" @load="$el.style.visibility = 'visible'">
+          <figcaption>
+            <span class="destination-name" x-text="destinationPhoto.label"></span>
+            <button type="button" class="photo-credit" @click="openPhotoCredits()" aria-label="Photo credits" title="Photo credits"><i data-lucide="info" aria-hidden="true"></i></button>
+          </figcaption>
+        </figure>
+        <div class="relative z-10">
+          <div class="hero-head flex items-start justify-between gap-3">
+            <div class="min-w-0 flex-1">
+              <div class="day-kicker">
+                <strong class="font-mono" x-text="'Day ' + currentDay.dayNum + ' / 16'"></strong>
+                <span aria-hidden="true">·</span>
+                <span class="font-medium" x-text="currentDay.dateString"></span>
+                <span aria-hidden="true">·</span>
+                <span x-text="currentDay.city"></span>
+              </div>
+              <h2 class="day-title mt-2.5" :aria-label="currentDay.title" x-html="formatHeroTitle(currentDay.title)"></h2>
+              <template x-if="currentDay.titleTc"><p class="day-title-local" :lang="currentDay.hotelRef === 'hk' ? 'zh-HK' : 'zh-TW'" x-text="currentDay.titleTc"></p></template>
+              <div class="journey-progress" role="progressbar" aria-label="Trip progress" aria-valuemin="1" :aria-valuemax="days.length" :aria-valuenow="Number(currentDay.dayNum)" :title="'Trip progress: day ' + Number(currentDay.dayNum) + ' of ' + days.length" :style="'--trip-progress:' + (Number(currentDay.dayNum) / days.length)">
+                <span class="journey-progress-fill"></span>
+                <span class="journey-progress-dot" aria-hidden="true"></span>
+              </div>
+            </div>
+
+            <div class="hero-actions shrink-0">
+              <template x-if="currentDay.easyPlan">
+                <button type="button" @click="takeItEasyActive = !takeItEasyActive" :class="takeItEasyActive ? 'is-easy' : ''" :aria-pressed="takeItEasyActive" class="icon-action" title="Take it easy" aria-label="Toggle take-it-easy plan"><i data-lucide="coffee" class="w-4 h-4"></i></button>
+              </template>
+              <template x-if="currentDay.rainPlan">
+                <button type="button" @click="rainPlanActive = !rainPlanActive" :class="rainPlanActive ? 'is-rain' : ''" :aria-pressed="rainPlanActive" class="icon-action" title="Rain plan" aria-label="Toggle rain plan"><i data-lucide="cloud-rain" class="w-4 h-4"></i></button>
+              </template>
+              <button type="button" @click="exportCalendar(currentDay.id)" class="icon-action" title="Add this day to Calendar" aria-label="Add this day to Calendar"><i data-lucide="calendar-plus" class="w-4 h-4"></i></button>
+              <button type="button" @click="toggleDayCompleted(currentDay.id)" :class="completedDayIds.includes(currentDay.id) ? 'is-done' : ''" :aria-pressed="completedDayIds.includes(currentDay.id)" class="icon-action" :title="completedDayIds.includes(currentDay.id) ? 'Mark day incomplete' : 'Mark day complete'" :aria-label="completedDayIds.includes(currentDay.id) ? 'Mark day incomplete' : 'Mark day complete'"><i data-lucide="check-circle-2" class="w-4 h-4"></i></button>
+            </div>
+          </div>
+
+          <div class="fact-grid">
+            <div class="fact-card">
+              <span class="fact-label"><i data-lucide="clock-3" class="w-3.5 h-3.5"></i>Leave · 出發</span>
+              <div class="fact-value leave-value flex items-center gap-2 flex-wrap">
+                <span class="leave-main"><span class="leave-time" :class="leaveSplit(currentDay.leaveByTime).plain ? 'is-plain' : ''" x-text="leaveSplit(currentDay.leaveByTime).time"></span> <span class="leave-rest" x-show="leaveSplit(currentDay.leaveByTime).rest" x-text="leaveSplit(currentDay.leaveByTime).rest"></span></span>
+                <template x-if="activeLeaveByCountdown">
+                  <span class="leave-by-chip font-mono"
+                        :class="{ 'leave-by-chip-soon': activeLeaveByCountdown.urgency === 'soon', 'leave-by-chip-urgent': activeLeaveByCountdown.urgency === 'now' || activeLeaveByCountdown.urgency === 'urgent' }"
+                        x-text="activeLeaveByCountdown.label"></span>
+                </template>
+              </div>
+              <template x-if="activeLeaveByCountdown && canOfferLeaveByAlerts()">
+                <button type="button" @click="enableLeaveByAlerts()" class="leave-by-alert-toggle mt-1.5" aria-label="Get a notification when it's time to leave">
+                  <i data-lucide="alert-triangle" class="w-3 h-3"></i>
+                  <span>Notify me</span>
+                </button>
+              </template>
+            </div>
+            <div class="fact-card">
+              <span class="fact-label"><i data-lucide="route" class="w-3.5 h-3.5"></i>Transit · 交通</span>
+              <div class="fact-value" x-text="currentDay.transitSummary"></div>
+            </div>
+            <div class="fact-card">
+              <span class="fact-label"><i data-lucide="cloud-sun" class="w-3.5 h-3.5"></i>Weather · 天氣</span>
+              <div class="fact-value" x-text="dayForecast(currentDay) ? 'Forecast ' + dayForecast(currentDay).hi + '° / ' + dayForecast(currentDay).lo + '°F' : currentDay.weatherExpected"></div>
+              <template x-if="dayForecast(currentDay)">
+                <div class="forecast-detail">
+                  <span x-text="dayForecast(currentDay).rain + '% rain chance · gusts up to ' + dayForecast(currentDay).gustMph + ' mph'"></span>
+                  <span class="forecast-cue" x-text="dayForecast(currentDay).cue"></span>
+                  <span class="forecast-usual" x-text="'Usual: ' + currentDay.weatherExpected + (dayForecast(currentDay).asOf ? ' · forecast as of ' + dayForecast(currentDay).asOf : '')"></span>
+                </div>
+              </template>
+              <template x-if="sunForDay(currentDay)">
+                <svg class="sun-arc" viewBox="0 0 120 32" aria-hidden="true" focusable="false">
+                  <path class="sun-arc-track" d="M4 28 A56 24 0 0 1 116 28"/>
+                  <path class="sun-arc-lit" d="M4 28 A56 24 0 0 1 116 28" pathLength="100" :style="{ strokeDasharray: sunArc(currentDay).lit + ' 100' }"/>
+                  <line class="sun-arc-horizon" x1="0" y1="28.5" x2="120" y2="28.5"/>
+                  <circle class="sun-arc-halo" :cx="sunArc(currentDay).x" :cy="sunArc(currentDay).y" r="7.5" :class="sunArc(currentDay).night ? 'is-night' : ''"/>
+                  <circle class="sun-arc-sun" :cx="sunArc(currentDay).x" :cy="sunArc(currentDay).y" r="3.6" :class="sunArc(currentDay).night ? 'is-night' : ''"/>
+                </svg>
+              </template>
+              <template x-if="sunForDay(currentDay)">
+                <p class="fact-sun" :aria-label="sunText(currentDay)"><i data-lucide="sunrise" aria-hidden="true"></i><span aria-hidden="true"><span class="fact-sun-part" x-text="sunText(currentDay).split(' · ')[0]"></span><span class="fact-sun-part" x-text="sunText(currentDay).split(' · ')[1]"></span></span></p>
+              </template>
+            </div>
+            <div class="fact-card">
+              <span class="fact-label"><i data-lucide="bed-double" class="w-3.5 h-3.5"></i>Hotel · 住宿</span>
+              <div class="fact-value flex items-center justify-between gap-1.5">
+                <span class="truncate" x-text="getHotelLabel(currentDay)"></span>
+                <template x-if="currentDay.hotelRef && hotels[currentDay.hotelRef] && !hotels[currentDay.hotelRef].verificationRequired">
+                  <span class="flex items-center gap-1 shrink-0">
+                    <button type="button" @click="openShowCard(placeShowData(hotels[currentDay.hotelRef], currentDay.hotelRef === 'hk' ? 'zh-HK' : 'zh-TW'), $event.currentTarget)" class="icon-action" title="Show the address to a driver" aria-label="Show hotel address full screen"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></button>
+                    <button type="button" @click="copyText(getLocalCopyText(hotels[currentDay.hotelRef]), getLocalCopyToast(hotels[currentDay.hotelRef]))" class="icon-action" title="Copy local destination" aria-label="Copy hotel destination"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+                    <a :href="mapUrl(hotels[currentDay.hotelRef].addressTc)" target="_blank" rel="noopener" class="icon-action" title="Hotel directions" aria-label="Hotel directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a>
+                  </span>
+                </template>
+              </div>
+            </div>
+          </div>
+
+          <template x-if="bringList(currentDay).length">
+            <div class="bring-list" role="group" aria-labelledby="bring-title">
+              <p id="bring-title" class="bring-title"><i data-lucide="backpack" aria-hidden="true"></i>Bring today · 今日攜帶<span class="bring-count font-mono" x-text="bringDoneCount(currentDay) + ' / ' + bringList(currentDay).length"></span></p>
+              <div class="bring-items">
+                <template x-for="entry in bringList(currentDay)" :key="currentDay.id + ':' + entry.key">
+                  <button type="button" class="bring-item" :class="bringTicked(currentDay, entry.key) ? 'is-done' : ''" :aria-pressed="bringTicked(currentDay, entry.key)" @click="toggleBring(currentDay, entry.key)"><span class="bring-check" aria-hidden="true"></span><span x-text="entry.label"></span></button>
+                </template>
+              </div>
+            </div>
+          </template>
+          <template x-if="lastLegsFor(currentDay).length || (mtrBoard && currentDay.id === liveTripDayId)">
+            <div class="last-legs">
+              <p class="bring-title"><i data-lucide="clock" aria-hidden="true"></i>Last connections · 末班</p>
+              <ul class="last-leg-list">
+                <template x-for="(leg, legIdx) in lastLegsFor(currentDay)" :key="currentDay.id + '-leg-' + legIdx">
+                  <li><a class="last-leg-row" :href="leg.source" target="_blank" rel="noopener"><span class="last-leg-time font-mono" x-text="leg.last"></span><span class="last-leg-copy"><strong x-text="leg.label"></strong><small x-text="leg.note"></small></span></a></li>
+                </template>
+              </ul>
+              <template x-if="mtrBoard && currentDay.id === liveTripDayId">
+                <div class="mtr-board">
+                  <p class="mtr-board-title" x-text="'Next trains · ' + mtrBoard.label"></p>
+                  <template x-for="row in mtrBoard.rows" :key="row.dest"><p class="mtr-board-row"><span x-text="'→ ' + row.dest"></span><strong class="font-mono" x-text="row.times"></strong></p></template>
+                  <p class="live-meta" x-text="'Live · as of ' + mtrBoard.asOf + ' · MTR open data'"></p>
+                </div>
+              </template>
+            </div>
+          </template>
+
+          <template x-if="takeItEasyActive && currentDay.easyPlan">
+            <div class="contingency-card easy"><i data-lucide="coffee" class="w-4 h-4 shrink-0 mt-0.5"></i><div><strong class="font-semibold">Easy fallback · 輕鬆備案</strong><p class="mt-0.5" x-text="withUsdConversion(currentDay.easyPlan)"></p></div></div>
+          </template>
+          <template x-if="rainPlanActive && currentDay.rainPlan">
+            <div class="contingency-card rain"><i data-lucide="cloud-rain" class="w-4 h-4 shrink-0 mt-0.5"></i><div><strong class="font-semibold">Rain contingency · 雨天備案</strong><p class="mt-0.5" x-text="withUsdConversion(currentDay.rainPlan)"></p></div></div>
+          </template>
+        </div>
+      </article>
+
+      <template x-if="isOnline">
+        <nav class="nearby-row" aria-labelledby="nearby-title">
+          <span id="nearby-title" class="nearby-label"><i data-lucide="store" aria-hidden="true"></i>Nearby · 附近</span>
+          <div class="nearby-links">
+            <template x-for="link in nearbyLinks(currentDay)" :key="link.label"><a :href="link.url" target="_blank" rel="noopener" class="nearby-link" x-text="link.label"></a></template>
+          </div>
+        </nav>
+      </template>
+
+      <template x-if="bookingsForDay(currentDay).length">
+        <section class="day-passes" aria-labelledby="day-passes-title">
+          <div class="section-heading"><div><h3 id="day-passes-title" class="section-title">Bookings · 預訂</h3></div></div>
+          <div class="day-pass-list">
+            <template x-for="item in bookingsForDay(currentDay)" :key="'pass-' + item.id">
+              <article class="day-pass" :class="bookedIds.includes(item.id) ? 'is-booked' : ''">
+                <div class="day-pass-top">
+                  <span class="booking-status" :class="getBookingStatusClass(item)" x-text="bookedIds.includes(item.id) ? 'Booked' : getBookingStatusLabel(item)"></span>
+                  <span class="day-pass-time font-mono" x-text="bookingTimeText(item)"></span>
+                </div>
+                <strong class="day-pass-title" x-text="item.title"></strong>
+                <template x-if="item.titleTc"><span class="day-pass-local" lang="zh-Hant" x-text="item.titleTc"></span></template>
+                <div class="day-pass-foot">
+                  <template x-if="bookingRef(item)"><span class="day-pass-ref"><span>Code</span><strong class="font-mono" x-text="bookingRef(item)"></strong></span></template>
+                  <span class="day-pass-actions">
+                    <template x-if="bookingRef(item)"><button type="button" class="plan-icon-action" @click="copyText(bookingRef(item), 'Booking code copied')" title="Copy booking code" :aria-label="'Copy booking code for ' + item.title"><i data-lucide="copy"></i></button></template>
+                    <button type="button" class="plan-icon-action" @click="openRefSheet(item, $event.currentTarget)" :title="bookingRef(item) ? 'Edit booking code' : 'Add booking code'" :aria-label="(bookingRef(item) ? 'Edit booking code for ' : 'Add booking code for ') + item.title"><i :data-lucide="bookingRef(item) ? 'pencil' : 'key-round'"></i></button>
+                    <button type="button" class="plan-icon-action" @click="openShowCard(bookingShowData(item), $event.currentTarget)" title="Show at the counter" :aria-label="'Show ' + item.title + ' full screen'"><i data-lucide="maximize-2"></i></button>
+                    <button type="button" class="plan-icon-action photo-action" @click="addTicketPhoto(item.id)" title="Add ticket photo" :aria-label="'Add ticket photo for ' + item.title"><i data-lucide="image-plus"></i><template x-if="photoCount(item.id)"><span class="photo-count" x-text="photoCount(item.id)"></span></template></button>
+                  </span>
+                </div>
+              </article>
+            </template>
+          </div>
+        </section>
+      </template>
+
+      <div class="today-content-grid">
+      <section class="space-y-3">
+        <div class="section-heading">
+          <div><h3 class="section-title">Timeline · 行程</h3></div>
+          <div class="flex items-center gap-1">
+            <template x-if="liveTripDayId">
+              <button type="button" @click="scrollToCurrentTimeline()" class="today-jump" title="Now" aria-label="Jump to current stop"><i data-lucide="locate-fixed" class="w-4 h-4"></i></button>
+            </template>
+            <template x-if="activeDayId !== liveTripDayId && liveTripDayId">
+              <button type="button" @click="openLiveContext()" class="today-jump" title="Back to live day" aria-label="Back to live day"><i data-lucide="calendar-check" class="w-4 h-4"></i></button>
+            </template>
+            <button type="button" @click="toggleDayMap()" class="today-jump" :class="mapOpen ? 'is-active' : ''" :aria-pressed="mapOpen" title="Map of the day's stops" aria-label="Map of the day's stops"><i data-lucide="map" class="w-4 h-4"></i></button>
+          </div>
+        </div>
+
+        <template x-if="routeLinks(currentDay)">
+          <div class="route-row" role="group" aria-labelledby="route-title">
+            <span id="route-title" class="route-label"><i data-lucide="route" aria-hidden="true"></i>Route overview · 路線總覽</span>
+            <div class="route-group">
+              <span class="route-mode"><i data-lucide="footprints" aria-hidden="true"></i><span>Walk</span></span>
+              <div class="route-links">
+                <template x-for="link in routeLinks(currentDay).walking" :key="currentDay.id + '-w' + link.part">
+                  <a :href="link.url" target="_blank" rel="noopener" class="route-link" :aria-label="'Walking route, stops ' + link.range + ', ' + link.count + ' stops'"><span class="font-mono" x-text="link.range"></span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+                </template>
+              </div>
+            </div>
+            <div class="route-group">
+              <span class="route-mode"><i data-lucide="car-front" aria-hidden="true"></i><span>Drive</span></span>
+              <div class="route-links">
+                <template x-for="link in routeLinks(currentDay).driving" :key="currentDay.id + '-d' + link.part">
+                  <a :href="link.url" target="_blank" rel="noopener" class="route-link is-car" :aria-label="'Driving route, stops ' + link.range"><span class="font-mono" x-text="link.range"></span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+                </template>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <div class="day-map" x-show="mapOpen" x-cloak :class="{ 'is-full': mapFull, 'is-vector': mapVector }" :style="'--day-color:' + dayColor(currentDay.id)" @keydown.escape="mapFull && toggleMapFull(false)">
+          <div class="day-map-bar">
+            <span class="day-map-legend"><span class="day-map-swatch" aria-hidden="true"></span><span x-text="'Day ' + currentDay.dayNum + ' · ' + dayMapPoints(currentDay).length + ' stops'"></span></span>
+            <div class="day-map-tools">
+              <button type="button" class="map-tool" :class="mapAll ? 'is-active' : ''" :aria-pressed="mapAll" @click="toggleMapAll()" title="Show the other days in this city" aria-label="Show all days in this city" x-show="mapMode === 'leaflet'"><i data-lucide="map" class="w-4 h-4"></i><span>All days</span></button>
+              <button type="button" class="map-tool" @click="locateMe()" title="Where am I" aria-label="Show my location" x-show="mapMode === 'leaflet'"><i data-lucide="crosshair" class="w-4 h-4"></i></button>
+              <button type="button" class="map-tool" x-show="!mapFull" @click="toggleMapFull(true)" aria-label="Full-screen map" title="Full screen"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
+              <button type="button" class="map-tool" x-show="mapFull" @click="toggleMapFull(false)" aria-label="Close full-screen map" title="Close"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+          </div>
+          <div id="day-map-leaflet" class="day-map-canvas" x-show="mapMode === 'leaflet'"></div>
+          <div class="day-map-svg" x-show="mapMode === 'svg'" x-html="mapOpen && mapMode === 'svg' ? dayMapSvg(currentDay) : ''" @click="onMapSvgTap($event)"></div>
+          <p class="day-map-note" x-show="mapNote || mapLocateNote" x-text="[mapNote, mapLocateNote].filter(Boolean).join(' · ')"></p>
+          <template x-if="mapCardData">
+            <div class="map-card" :style="'--pin:' + mapCardData.color" role="group" aria-label="Stop on the map">
+              <div class="map-card-head">
+                <span class="map-card-n" x-text="mapCardData.n"></span>
+                <div class="min-w-0 flex-1">
+                  <p class="map-card-time"><span x-text="mapCardData.otherDay ? mapCardData.dayLabel + ' · ' : ''"></span><span x-text="mapCardData.time"></span></p>
+                  <h4 class="map-card-title" x-text="mapCardData.title"></h4>
+                  <p class="map-card-local" lang="zh-Hant" x-show="mapCardData.titleTc" x-text="mapCardData.titleTc"></p>
+                </div>
+                <button type="button" class="map-tool" @click="closeMapCard()" aria-label="Close stop card"><i data-lucide="x" class="w-4 h-4"></i></button>
+              </div>
+              <p class="map-card-note" x-show="mapCardData.note" x-text="withUsdConversion(mapCardData.note)"></p>
+              <p class="map-card-hours" x-show="mapCardData.hours" x-text="mapCardData.hours"></p>
+              <div class="map-card-actions">
+                <button type="button" class="map-tool" @click="mapCardStep(-1)" aria-label="Previous stop"><i data-lucide="chevron-right" class="w-4 h-4 is-flipped"></i></button>
+                <span class="map-card-pos font-mono" x-text="mapCardData.pos + ' of ' + mapCardData.total"></span>
+                <button type="button" class="map-tool" @click="mapCardStep(1)" aria-label="Next stop"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                <span class="flex-1"></span>
+                <template x-if="mapCardData.url"><a class="map-tool" :href="mapCardData.url" target="_blank" rel="noopener" aria-label="Directions" title="Directions"><i data-lucide="navigation-2" class="w-4 h-4"></i></a></template>
+                <button type="button" class="map-tool is-text" @click="mapCardToTimeline()"><i data-lucide="arrow-right" class="w-4 h-4"></i><span x-text="mapCardData.otherDay ? 'Open ' + mapCardData.dayLabel : 'In timeline'"></span></button>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <template x-if="hikeCard">
+          <section class="hike-card" :class="'is-' + hikeCard.verdict" aria-labelledby="hike-title">
+            <div class="hike-card-head">
+              <span class="hike-icon" aria-hidden="true"><i data-lucide="mountain"></i></span>
+              <div class="min-w-0 flex-1"><p id="hike-title" class="hike-title" x-text="hikeCard.name"></p><p class="hike-sub"><span class="whitespace-nowrap" x-text="hikeCard.window"></span><template x-if="hikeCard.sunset"><span class="whitespace-nowrap" x-text="' · Sunset ' + hikeCard.sunset"></span></template></p></div>
+              <span class="hike-verdict"><span class="hike-verdict-dot" aria-hidden="true"></span><span x-text="hikeCard.verdictText"></span></span>
+            </div>
+            <template x-if="hikeCard.stats">
+              <dl class="hike-stats">
+                <div :class="hikeStatTone('gust', hikeCard.stats.gustMax)"><dt><i data-lucide="wind" aria-hidden="true"></i>Gusts</dt><dd x-text="fmtStat(hikeCard.stats.gustMax, ' km/h')"></dd></div>
+                <div :class="hikeStatTone('rain', hikeCard.stats.rainMax)"><dt><i data-lucide="droplets" aria-hidden="true"></i>Rain chance</dt><dd x-text="fmtStat(hikeCard.stats.rainMax, '%')"></dd></div>
+                <div :class="hikeStatTone('vis', hikeCard.stats.visMinKm)"><dt><i data-lucide="eye" aria-hidden="true"></i>Visibility</dt><dd x-text="fmtStat(hikeCard.stats.visMinKm, ' km', 1)"></dd></div>
+                <div><dt><i data-lucide="cloud" aria-hidden="true"></i>Cloud</dt><dd x-text="fmtStat(hikeCard.stats.cloudMean, '%')"></dd></div>
+              </dl>
+            </template>
+            <template x-if="hikeCard.warning"><p class="hike-fallback"><strong x-text="hikeCard.warning"></strong></p></template>
+            <template x-if="!hikeCard.stats"><p class="hike-note" x-text="hikeCard.note"></p></template>
+            <template x-if="hikeCard.fallback"><p class="hike-fallback"><strong>Fallback · 備案</strong> <span x-text="hikeCard.fallback"></span></p></template>
+            <p class="live-meta"><span x-text="(hikeCard.asOf ? 'Forecast · as of ' + hikeCard.asOf + ' · Open-Meteo at the summit' : 'Forecast · Open-Meteo at the summit')"></span><a class="live-link" :href="hikeCard.officialUrl" target="_blank" rel="noopener"><span>Official warnings</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a></p>
+            <p class="hike-thresholds" x-text="hikeCard.thresholds"></p>
+          </section>
+        </template>
+
+        <div class="timeline-stack space-y-3.5">
+          <template x-for="(item, idx) in currentDay.timeline" :key="currentDay.id + '-' + idx">
+            <article class="timeline-card"
+                     :id="'timeline-item-' + idx"
+                     :class="[isCurrentTimelineItem(idx) ? 'is-now' : '', timelineItemPast(idx) ? 'is-past' : '', getTimelineTone(item)]"
+                     :aria-label="timelineAccessibleLabel(item, idx)"
+                     :aria-current="timelineItemState(idx) === 'current' ? 'time' : null">
+              <!-- The time row carries the actions, so the title below gets the card's full width. -->
+              <div class="timeline-head flex items-center justify-between gap-3">
+                <div class="min-w-0 flex-1">
+                  <template x-if="mapPinNo(currentDay, idx)"><button type="button" class="pin-chip" :style="'--pin:' + dayColor(currentDay.id)" @click="showStopOnMap(idx)" :aria-label="'Show stop ' + mapPinNo(currentDay, idx) + ' on the map'" x-text="mapPinNo(currentDay, idx)"></button></template><span class="timeline-time font-mono" x-text="item.time"></span><template x-if="isCurrentTimelineItem(idx)"><span class="now-badge"><span class="now-badge-dot"></span><span x-text="timelineItemLabel(idx)"></span></span></template><template x-if="hoursClash(currentDay, idx)"><span class="hours-badge" :class="'is-' + hoursClash(currentDay, idx).tone" x-text="hoursClash(currentDay, idx).text"></span></template>
+                </div>
+                <div class="flex items-center gap-1 shrink-0">
+                  <template x-if="canShowPlace(item)"><button type="button" @click="openShowCard(placeShowData(item, currentDay.hotelRef === 'hk' ? 'zh-HK' : 'zh-TW'), $event.currentTarget)" class="icon-action" title="Show to a driver or staff" aria-label="Show this place full screen"><i data-lucide="maximize-2" class="w-4 h-4"></i></button></template>
+                  <template x-if="getLocalCopyText(item)"><button type="button" @click="copyText(getLocalCopyText(item), getLocalCopyToast(item))" class="icon-action" title="Copy local destination" aria-label="Copy local destination"><i data-lucide="copy" class="w-4 h-4"></i></button></template>
+                  <template x-if="!item.noMap && item.navigateTo"><a :href="mapUrl(item.navigateTo)" target="_blank" rel="noopener" class="icon-action" title="Directions" aria-label="Directions"><i data-lucide="navigation-2" class="w-4 h-4"></i></a></template>
+                </div>
+              </div>
+              <div class="flex items-start gap-2 mt-1">
+                    <span class="summary-icon timeline-icon !w-8 !h-8 !rounded-[11px] shrink-0 mt-0.5"><i :data-lucide="item.icon || 'map-pin'" class="w-3.5 h-3.5"></i></span>
+                    <div class="min-w-0">
+                      <h4 class="timeline-title !mt-0" x-text="item.title"></h4>
+                      <template x-if="item.titleTc"><span class="timeline-local" lang="zh-Hant" x-text="item.titleTc"></span></template>
+                    </div>
+                  </div>
+
+              <p class="timeline-note" x-text="withUsdConversion(item.notes)"></p>
+
+              <template x-if="item.live"><a class="live-chip" :href="item.live.url" target="_blank" rel="noopener" :aria-label="'Official page: ' + item.live.label"><i data-lucide="external-link" aria-hidden="true"></i><span x-text="'Official · ' + item.live.label"></span></a></template>
+
+              <template x-if="prevLegUrl(currentDay, idx) || tightTransfer(currentDay, idx) || legInfo(currentDay, idx)">
+                <div class="prev-leg">
+                  <template x-if="legInfo(currentDay, idx)"><span class="leg-chip" title="Approximate: straight-line distance × 1.3, at a walking pace of 80 m a minute" :aria-label="'About ' + legInfo(currentDay, idx).text"><i :data-lucide="legInfo(currentDay, idx).walk ? 'footprints' : 'car-front'" aria-hidden="true"></i><span x-text="legInfo(currentDay, idx).text"></span></span></template>
+                  <template x-if="prevLegUrl(currentDay, idx)"><a class="prev-leg-link" :href="prevLegUrl(currentDay, idx)" target="_blank" rel="noopener" :aria-label="'Transit directions ' + (prevLegFromHere(currentDay, idx) ? 'from here' : 'from the previous stop') + ' to ' + item.title"><i data-lucide="navigation" aria-hidden="true"></i><span x-text="prevLegFromHere(currentDay, idx) ? 'From here' : 'From previous stop'"></span></a></template>
+                  <template x-if="tightTransfer(currentDay, idx)"><span class="prev-leg-tight" x-text="tightTransfer(currentDay, idx).text"></span></template>
+                </div>
+              </template>
+
+              <template x-if="item.guide && (item.guide.exit || item.guide.recheck)">
+                <div class="mt-3 flex flex-wrap gap-1.5">
+                  <template x-if="item.guide.exit"><div class="op-chip border" style="color:var(--warning);border-color:color-mix(in oklab,var(--warning) 25%,transparent);background:color-mix(in oklab,var(--warning) 7%,var(--surface));"><i data-lucide="clock" class="w-3.5 h-3.5 shrink-0 mt-px"></i><span><strong class="font-semibold">Leave · 離開:</strong> <span x-text="withUsdConversion(item.guide.exit)"></span></span></div></template>
+                  <template x-if="item.guide.recheck"><div class="op-chip border" style="color:var(--warning);border-color:color-mix(in oklab,var(--warning) 25%,transparent);background:color-mix(in oklab,var(--warning) 9%,var(--surface));"><i data-lucide="triangle-alert" class="w-3.5 h-3.5 shrink-0 mt-px"></i><span><strong class="font-semibold">Recheck · 確認:</strong> <span x-text="withUsdConversion(item.guide.recheck)"></span></span></div></template>
+                </div>
+              </template>
+
+              <template x-if="item.guide">
+                <div class="guide-panel">
+                  <div class="guide-steps !mt-0">
+                    <template x-for="(step, sIdx) in (item.guide.steps || [])" :key="sIdx">
+                      <div class="guide-step"><span class="step-index font-mono" x-text="sIdx + 1"></span><div class="step-copy"><strong x-text="step.label + ' — '"></strong><span x-text="withUsdConversion(step.detail)"></span></div></div>
+                    </template>
+                  </div>
+                </div>
+              </template>
+
+              <template x-if="item.details">
+                <div class="stop-facts">
+                  <button type="button" class="stop-facts-toggle" aria-haspopup="dialog" @click="openStopSheet(currentDay, idx, $event.currentTarget)">
+                    <i data-lucide="info" aria-hidden="true"></i>
+                    <span class="stop-facts-summary" x-text="factsSummary(item.details)"></span>
+                    <i data-lucide="chevron-right" class="stop-facts-chevron" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </template>
+            </article>
+          </template>
+        </div>
+      </section>
+      <aside id="day-complete-target" class="today-side-rail" :aria-label="summaryTargetLabel">
+      <section class="space-y-3">
+        <div class="section-heading"><div><h3 class="section-title">Day notes · 今日重點</h3></div><template x-if="summaryTargetLabel"><span class="now-badge"><span class="now-badge-dot"></span><span x-text="summaryTargetLabel"></span></span></template></div>
+        <div class="daily-summary">
+          <article class="summary-card protein"><span class="summary-icon"><i data-lucide="dumbbell" class="w-3.5 h-3.5"></i></span><p class="summary-label">Protein cue · 蛋白質</p><p class="summary-headline" x-show="currentDay.proteinHeadline" x-text="currentDay.proteinHeadline"></p><p class="summary-copy" x-text="withUsdConversion(currentDay.proteinPlan)"></p></article>
+          <article class="summary-card tip"><span class="summary-icon"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i></span><p class="summary-label">Useful note · 提示</p><p class="summary-copy" x-text="withUsdConversion(currentDay.insiderTip)"></p></article>
+        </div>
+      </section>
+
+      <template x-if="currentDay.backups">
+        <section class="backup-section">
+          <div class="section-heading"><div><h3 class="section-title">Backups · 備案</h3></div></div>
+          <div class="backup-grid">
+            <template x-if="currentDay.backups.activity">
+              <article class="backup-card"><div class="min-w-0"><div class="backup-card-title"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose-400 shrink-0"></i><span x-text="currentDay.backups.activity.title"></span></div><p class="backup-card-note" x-text="withUsdConversion(currentDay.backups.activity.note)"></p></div><template x-if="currentDay.backups.activity.navigateTo"><a :href="mapUrl(currentDay.backups.activity.navigateTo)" target="_blank" rel="noopener" class="icon-action shrink-0" title="Directions" aria-label="Backup directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a></template></article>
+            </template>
+            <template x-for="(service, sIdx) in (currentDay.backups.services || [])" :key="'srv-' + sIdx">
+              <article class="backup-card"><div class="min-w-0"><div class="backup-card-title"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-rose-400 shrink-0"></i><span x-text="service.title"></span></div><p class="backup-card-note" x-text="withUsdConversion(service.note)"></p></div><template x-if="service.navigateTo"><a :href="mapUrl(service.navigateTo)" target="_blank" rel="noopener" class="icon-action shrink-0" title="Directions" aria-label="Backup service directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a></template></article>
+            </template>
+            <template x-for="(food, fIdx) in (currentDay.backups.foods || [])" :key="'food-' + fIdx">
+              <article class="backup-card"><div class="min-w-0"><div class="backup-card-title"><i data-lucide="utensils" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i><span x-text="food.title"></span></div><p class="backup-card-note" x-text="withUsdConversion(food.note)"></p></div><template x-if="food.navigateTo"><a :href="mapUrl(food.navigateTo)" target="_blank" rel="noopener" class="icon-action shrink-0" title="Directions" aria-label="Backup food directions"><i data-lucide="navigation-2" class="w-3.5 h-3.5"></i></a></template></article>
+            </template>
+          </div>
+        </section>
+      </template>
+      </aside>
+      </div>
+    </section>
+
+    <!-- TAB 2: ITINERARY OVERVIEW -->
+    <section x-show="activeTab === 'itinerary'" x-cloak class="tab-pane space-y-4">
+      <h2 class="visually-hidden">Trip days</h2>
+      
+      <!-- Search & Filters -->
+      <div class="space-y-2">
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+          <label for="day-search" class="visually-hidden">Search trip days, places, or food</label>
+          <input id="day-search" type="search"
+                 autocomplete="off"
+                 inputmode="search"
+                 x-model="searchQuery"
+                 placeholder="Search days, places or food · 搜尋"
+                 class="search-field w-full bg-slate-900 border border-slate-800 rounded-xl pl-10 pr-12 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500/80 min-h-[44px]">
+          <template x-if="searchQuery">
+            <button type="button" @click="searchQuery = ''" class="absolute right-0.5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center" aria-label="Clear search" title="Clear search">
+              <i data-lucide="x" class="w-3.5 h-3.5"></i>
+            </button>
+          </template>
+        </div>
+
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+          <button type="button" @click="selectedCityFilter = 'all'" :class="selectedCityFilter === 'all' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'all'" class="city-filter city-filter-all px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">All<span class="city-filter-tc" lang="zh-TW">全部</span></button>
+          <button type="button" @click="selectedCityFilter = 'taipei'" :class="selectedCityFilter === 'taipei' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'taipei'" class="city-filter city-filter-taipei px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Taipei<span class="city-filter-tc" lang="zh-TW">台北</span></button>
+          <button type="button" @click="selectedCityFilter = 'kaohsiung'" :class="selectedCityFilter === 'kaohsiung' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'kaohsiung'" class="city-filter city-filter-kaohsiung px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Kaohsiung<span class="city-filter-tc" lang="zh-TW">高雄</span></button>
+          <button type="button" @click="selectedCityFilter = 'hk'" :class="selectedCityFilter === 'hk' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'" :aria-pressed="selectedCityFilter === 'hk'" class="city-filter city-filter-hk px-3 py-1.5 rounded-xl text-xs font-medium min-h-[44px] transition-colors">Hong Kong<span class="city-filter-tc" lang="zh-HK">香港</span></button>
+        </div>
+      </div>
+
+      <!-- Master Day Cards List -->
+      <div class="days-list">
+        <template x-for="(day, dIdx) in filteredDays" :key="day.id">
+          <div class="index-item">
+            <template x-if="dayGroup(dIdx)">
+              <div class="index-group" :class="'index-group-' + getDayTheme(day)">
+                <h3 class="index-group-name" x-text="dayGroup(dIdx).name"></h3>
+                <span class="index-group-meta" x-text="dayGroup(dIdx).meta"></span>
+              </div>
+            </template>
+            <button type="button" class="index-card w-full text-left bg-slate-900/80 border border-slate-800 hover:border-slate-700/80 rounded-2xl p-4 cursor-pointer"
+                 :class="['index-theme-' + getDayTheme(day), liveTripDayId === day.id ? 'is-live' : '', activeDayId === day.id ? 'is-selected' : '']"
+                 @click="openDay(day.id)">
+              <img class="index-thumb" :src="dayThumb(day)" alt="" width="64" height="64" loading="lazy" decoding="async">
+              <div class="index-body">
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-rose-400 text-xs font-mono font-bold flex items-center justify-center shrink-0" x-text="day.dayNum"></span>
+                    <span class="text-xs font-medium text-slate-400 truncate" x-text="day.dateString"></span>
+                  </div>
+                  <span x-show="liveTripDayId === day.id" class="index-live"><span class="index-live-dot" aria-hidden="true"></span>Today · 今天</span>
+                  <span x-show="liveTripDayId !== day.id" class="text-xs font-mono text-slate-500 shrink-0" x-text="day.city"></span>
+                </div>
+
+                <h3 class="text-sm font-semibold text-white mt-1.5" x-text="day.title"></h3>
+
+                <div class="mt-2 flex items-center justify-between text-xs text-slate-400 font-mono pt-2 border-t border-slate-800/60">
+                  <span class="truncate" x-text="day.transitSummary"></span>
+                  <div class="flex items-center gap-1.5 shrink-0 ml-2">
+                    <template x-if="completedDayIds.includes(day.id)">
+                      <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
+                    </template>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
+                  </div>
+                </div>
+              </div>
+            </button>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <!-- TAB 3: PLAN HUB -->
+    <section x-show="activeTab === 'plan'" x-cloak class="tab-pane plan-pane space-y-5">
+      <div class="plan-hero">
+        <div class="plan-hero-copy">
+          <span class="plan-eyebrow">Pre-trip control center · 行前中心</span>
+          <h2>Plan</h2>
+          <p>Everything that must be booked or prepared before departure, in one place.</p>
+        </div>
+        <div class="plan-stats" aria-label="Planning progress">
+          <button type="button" class="plan-stat" :class="planView === 'bookings' ? 'is-active' : ''" :aria-pressed="planView === 'bookings'" @click="switchPlanView('bookings')">
+            <span class="plan-ring" :style="'--progress:' + bookingProgressPercent + ';--ring-color:var(--selection);'"><strong x-text="bookedCount"></strong></span>
+            <span><strong>Bookings</strong><small x-text="(bookings.length - bookedCount) + ' remaining'"></small></span>
+          </button>
+          <button type="button" class="plan-stat" :class="planView === 'prep' ? 'is-active' : ''" :aria-pressed="planView === 'prep'" @click="switchPlanView('prep')">
+            <span class="plan-ring" :style="'--progress:' + prepProgressPercent + ';--ring-color:var(--teal);'"><strong x-text="adminPrepDoneCount"></strong></span>
+            <span><strong>Prep</strong><small x-text="(adminPrepList.length - adminPrepDoneCount) + ' remaining'"></small></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="plan-switch" role="tablist" aria-label="Plan views" :style="'--plan-shift:' + (planView === 'prep' ? '100%' : '0%')">
+        <span class="plan-switch-lens" aria-hidden="true"></span>
+        <button id="plan-tab-bookings" type="button" role="tab" aria-controls="plan-panel-bookings" :tabindex="planView === 'bookings' ? 0 : -1" :aria-selected="planView === 'bookings'" :class="planView === 'bookings' ? 'is-active' : ''" @click="switchPlanView('bookings')" @keydown.arrow-right.prevent="switchPlanView('prep', true)" @keydown.end.prevent="switchPlanView('prep', true)">
+          <i data-lucide="ticket"></i><span>Bookings</span><small x-text="bookings.length - bookedCount"></small>
+        </button>
+        <button id="plan-tab-prep" type="button" role="tab" aria-controls="plan-panel-prep" :tabindex="planView === 'prep' ? 0 : -1" :aria-selected="planView === 'prep'" :class="planView === 'prep' ? 'is-active' : ''" @click="switchPlanView('prep')" @keydown.arrow-left.prevent="switchPlanView('bookings', true)" @keydown.home.prevent="switchPlanView('bookings', true)">
+          <i data-lucide="check-square"></i><span>Prep</span><small x-text="adminPrepList.length - adminPrepDoneCount"></small>
+        </button>
+      </div>
+
+      <div class="plan-content">
+        <section id="plan-panel-bookings" x-show="planView === 'bookings'" x-cloak role="tabpanel" aria-labelledby="plan-tab-bookings" class="plan-panel space-y-4">
+          <section class="flight-list space-y-3" aria-labelledby="flights-title">
+            <div class="section-heading"><div><h3 id="flights-title" class="section-title">Flights · 航班</h3></div></div>
+            <p class="flight-note" x-text="checkinNote"></p>
+            <div class="plan-card-grid">
+              <template x-for="flight in flights" :key="flight.id">
+                <article class="plan-card flight-card" :class="'flight-' + flightStatus(flight).key">
+                  <div class="plan-card-topline">
+                    <span class="booking-status" :class="flightStatus(flight).key === 'departed' ? 'status-done' : (flightStatus(flight).key === 'before' ? 'status-upcoming' : 'status-now')" x-text="flightStatus(flight).text"></span>
+                    <span class="booking-date font-mono" x-text="flight.no"></span>
+                  </div>
+                  <h3 class="visually-hidden" x-text="flight.no + ' ' + flight.from + ' to ' + flight.to"></h3>
+                  <div class="flight-pass">
+                    <div class="flight-end">
+                      <span class="flight-code" x-text="flight.from.split(' ')[0]"></span>
+                      <span class="flight-term" x-text="flight.from.split(' ').slice(1).join(' ')"></span>
+                      <strong class="flight-clock font-mono" x-text="flightClock(flight.dep, flight.fromTz)"></strong>
+                      <span class="flight-day" x-text="flightDay(flight.dep, flight.fromTz)"></span>
+                    </div>
+                    <div class="flight-path" aria-hidden="true">
+                      <span class="flight-track"><i data-lucide="plane"></i></span>
+                      <span class="flight-dur font-mono" x-text="flightDuration(flight)"></span>
+                    </div>
+                    <div class="flight-end is-arr">
+                      <span class="flight-code" x-text="flight.to.split(' ')[0]"></span>
+                      <span class="flight-term" x-text="flight.to.split(' ').slice(1).join(' ')"></span>
+                      <strong class="flight-clock font-mono" x-text="flightClock(flight.arr, flight.toTz)"></strong>
+                      <span class="flight-day" x-text="flightDay(flight.arr, flight.toTz)"></span>
+                    </div>
+                  </div>
+                  <template x-if="flight.id === 'f-cx840'">
+                    <ul class="flight-rules">
+                      <li>Check in online first (Cathay app or website — US flights open 24 h before departure), then use the Kowloon Station kiosks and Self Bag Drop.</li>
+                      <li>Cathay in-town check-in at Kowloon Station: 6:00 AM – 3:00 PM, from 24 h up to 90 min before departure; e-passport needed.</li>
+                      <li>Entering the in-town check-in area charges the full Airport Express fare (HK$105).</li>
+                      <li>Tap the same Octopus card or QR code at the in-town check-in gate and the Airport Express platform gate, with no more than 9 other Octopus taps in between.</li>
+                      <li>CX840 is accepted: Cathay serves its own flights at Kowloon in-town check-in, and the US boarding pass is issued within 24 hours of departure — a 9 AM drop is inside that window.</li>
+                    </ul>
+                  </template>
+                  <template x-if="bookingRef(flight)">
+                    <div class="booking-ref-row"><span>Booking code · 訂位代號</span><strong class="font-mono" x-text="bookingRef(flight)"></strong></div>
+                  </template>
+                  <div class="plan-card-actions">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <a :href="checkinUrl" target="_blank" rel="noopener" class="plan-icon-action" title="Online check-in" :aria-label="'Online check-in for ' + flight.no"><i data-lucide="ticket"></i></a>
+                      <a :href="flightStatusUrl(flight)" target="_blank" rel="noopener" class="plan-icon-action" title="Live flight status" :aria-label="'Live status for ' + flight.no"><i data-lucide="plane"></i></a>
+                      <button type="button" class="plan-icon-action" @click="openRefSheet(flight, $event.currentTarget)" :title="bookingRef(flight) ? 'Edit booking code' : 'Add booking code'" :aria-label="(bookingRef(flight) ? 'Edit booking code for ' : 'Add booking code for ') + flight.no"><i :data-lucide="bookingRef(flight) ? 'pencil' : 'key-round'"></i></button>
+                      <button type="button" class="plan-icon-action" @click="openShowCard(bookingShowData(flight), $event.currentTarget)" title="Show at the counter" :aria-label="'Show ' + flight.no + ' full screen'"><i data-lucide="maximize-2"></i></button>
+                      <button type="button" class="plan-icon-action photo-action" @click="addTicketPhoto(flight.id)" title="Add ticket photo" :aria-label="'Add ticket photo for ' + flight.title"><i data-lucide="image-plus"></i><template x-if="photoCount(flight.id)"><span class="photo-count" x-text="photoCount(flight.id)"></span></template></button>
+                    </div>
+                  </div>
+                </article>
+              </template>
+            </div>
+          </section>
+          <div class="plan-add-row">
+            <p>Own booking? Add it with its code; it shows on its day.</p>
+            <button type="button" class="data-action" @click="openAddBooking($event.currentTarget)"><i data-lucide="plus" class="w-3.5 h-3.5"></i><span>Add booking</span></button><button type="button" class="data-action" @click="openImportBooking($event.currentTarget)"><i data-lucide="clipboard-check" class="w-3.5 h-3.5"></i><span>Paste confirmation</span></button>
+          </div>
+          <template x-if="nextBookingAction">
+            <div class="next-action-card">
+              <span class="next-action-icon"><i data-lucide="zap"></i></span>
+              <div class="min-w-0 flex-1">
+                <span class="next-action-kicker">Next booking action · 下一個預訂</span>
+                <h3 x-text="nextBookingAction.title"></h3>
+                <p><strong x-text="getBookingReleaseLabel(nextBookingAction.openDate, nextBookingAction)"></strong><span aria-hidden="true"> · </span><span x-text="nextBookingAction.eventDate"></span></p>
+              </div>
+              <template x-if="nextBookingAction.url">
+                <a :href="nextBookingAction.url" target="_blank" rel="noopener" class="plan-primary-action"><span>Open</span><i data-lucide="external-link"></i></a>
+              </template>
+            </div>
+          </template>
+
+          <div class="plan-card-grid">
+            <template x-for="item in sortedBookings" :key="item.id">
+              <article class="booking-card plan-card" :class="[bookedIds.includes(item.id) ? 'is-done' : '', 'state-' + getBookingState(item)]">
+                <div class="plan-card-topline">
+                  <span class="booking-status" :class="getBookingStatusClass(item)" x-text="getBookingStatusLabel(item)"></span>
+                  <span class="booking-date font-mono" x-text="item.eventDate"></span>
+                </div>
+                <h3 x-text="item.title"></h3>
+                <template x-if="item.titleTc"><p class="plan-local-title" lang="zh-Hant" x-text="item.titleTc"></p></template>
+
+                <div class="booking-meta-grid">
+                  <div><span>Action date</span><strong x-text="item.openDate"></strong></div>
+                  <div x-show="item.cost"><span>Est. cost</span><strong x-text="withUsdConversion(item.cost)"></strong></div>
+                </div>
+                <p class="plan-card-note" x-show="item.notes" x-text="withUsdConversion(item.notes)"></p>
+                <template x-if="bookingRef(item)">
+                  <div class="booking-ref-row"><span>Booking code · 訂位代號</span><strong class="font-mono" x-text="bookingRef(item)"></strong></div>
+                </template>
+
+                <div class="plan-card-actions">
+                  <div class="flex items-center gap-1.5">
+                    <template x-if="canExportBookingReminder(item)">
+                      <button type="button" class="plan-icon-action" @click="exportBookingReminder(item)" title="Add booking reminder to calendar" aria-label="Add booking reminder to calendar"><i data-lucide="calendar-plus"></i></button>
+                    </template>
+                    <template x-if="item.url"><a :href="item.url" target="_blank" rel="noopener" class="plan-icon-action" title="Open official booking page" aria-label="Open official booking page"><i data-lucide="external-link"></i></a></template>
+                    <button type="button" class="plan-icon-action" @click="openRefSheet(item, $event.currentTarget)" :title="bookingRef(item) ? 'Edit booking code' : 'Add booking code'" :aria-label="(bookingRef(item) ? 'Edit booking code for ' : 'Add booking code for ') + item.title"><i :data-lucide="bookingRef(item) ? 'pencil' : 'key-round'"></i></button>
+                    <button type="button" class="plan-icon-action" @click="openShowCard(bookingShowData(item), $event.currentTarget)" title="Show at the counter" :aria-label="'Show ' + item.title + ' full screen'"><i data-lucide="maximize-2"></i></button>
+                    <template x-if="item.custom"><button type="button" class="plan-icon-action is-danger" @click="removeCustomBooking(item.id)" title="Remove this booking" :aria-label="'Remove ' + item.title"><i data-lucide="trash-2"></i></button></template>
+                    <button type="button" class="plan-icon-action photo-action" @click="addTicketPhoto(item.id)" title="Add ticket photo" :aria-label="'Add ticket photo for ' + item.title"><i data-lucide="image-plus"></i><template x-if="photoCount(item.id)"><span class="photo-count" x-text="photoCount(item.id)"></span></template></button>
+                  </div>
+                  <button type="button" class="plan-done-action" :class="bookedIds.includes(item.id) ? 'is-done' : ''" @click="toggleBooked(item.id)" :aria-pressed="bookedIds.includes(item.id)">
+                    <i data-lucide="check-circle-2"></i><span x-text="bookedIds.includes(item.id) ? 'Booked' : 'Mark booked'"></span>
+                  </button>
+                </div>
+              </article>
+            </template>
+          </div>
+          <template x-if="orphanPhotoGroups.length">
+            <section class="orphan-tickets space-y-2" aria-labelledby="orphan-title">
+              <div class="section-heading"><div><h3 id="orphan-title" class="section-title">Other tickets · 其他票券</h3></div></div>
+              <p class="flight-note">Photos for bookings that are no longer in the plan. Nothing here is deleted unless you delete it.</p>
+              <template x-for="group in orphanPhotoGroups" :key="group.bookingId">
+                <div class="orphan-row">
+                  <span class="min-w-0"><strong x-text="group.label"></strong><small x-text="group.count + (group.count === 1 ? ' photo' : ' photos')"></small></span>
+                  <span class="flex items-center gap-1.5">
+                    <button type="button" class="plan-icon-action" @click="openPhotoViewer(group.bookingId, group.label, $event.currentTarget)" title="View" :aria-label="'View ' + group.label"><i data-lucide="maximize-2"></i></button>
+                    <button type="button" class="plan-icon-action is-danger" @click="deleteOrphanGroup(group.bookingId)" title="Delete" :aria-label="'Delete ' + group.label"><i data-lucide="trash-2"></i></button>
+                  </span>
+                </div>
+              </template>
+            </section>
+          </template>
+        </section>
+
+        <section id="plan-panel-prep" x-show="planView === 'prep'" x-cloak role="tabpanel" aria-labelledby="plan-tab-prep" class="plan-panel space-y-4">
+          <div class="prep-intro">
+            <span><i data-lucide="check-square"></i></span>
+            <div><h3>Admin &amp; setup</h3><p>Entry forms, connectivity, transit wallets, apps and access checks.</p></div>
+          </div>
+          <div class="plan-add-row">
+            <p>Anything else to sort before you fly?</p>
+            <button type="button" class="data-action" @click="openAddPrep($event.currentTarget)"><i data-lucide="plus" class="w-3.5 h-3.5"></i><span>Add task</span></button>
+          </div>
+          <div class="plan-card-grid prep-grid">
+            <template x-for="task in adminPrepList" :key="task.id">
+              <div class="prep-item" :class="task.custom ? 'is-custom' : ''">
+              <button type="button" class="prep-card" :class="adminPrepDoneIds.includes(task.id) ? 'is-done' : ''" @click="toggleAdminPrep(task.id)" :aria-pressed="adminPrepDoneIds.includes(task.id)">
+                <span class="prep-check"><i :data-lucide="adminPrepDoneIds.includes(task.id) ? 'check' : 'circle'"></i></span>
+                <span class="prep-copy">
+                  <span class="prep-category" x-text="getPrepCategory(task)"></span>
+                  <strong x-text="task.title"></strong>
+                  <small x-text="withUsdConversion(task.note)"></small>
+                </span>
+              </button>
+              <template x-if="task.custom"><button type="button" class="plan-icon-action prep-remove is-danger" @click="removeCustomPrep(task.id)" title="Remove this task" :aria-label="'Remove ' + task.title"><i data-lucide="trash-2"></i></button></template>
+              </div>
+            </template>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- TAB 4: TOOLKIT -->
+    <section x-show="activeTab === 'toolkit'" x-cloak class="tab-pane space-y-5">
+      <h2 class="visually-hidden">Travel toolkit</h2>
+      
+      <!-- Hotel Bases -->
+      <div class="space-y-3">
+        <div>
+          <h3 class="text-sm font-semibold text-white">Hotel Bases · 住宿據點</h3>
+          
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <!-- Taipei -->
+          <div class="hotel-card hotel-taipei bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
+            <div>
+              <span class="text-xs font-mono text-rose-400 font-medium">Taipei (5 Nights)</span>
+              <h4 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.taipei.name"></h4>
+              <span class="text-xs text-slate-400 block font-mono" lang="zh-TW" x-text="hotels.taipei.nameTc"></span>
+              <p class="text-xs text-slate-300 mt-2 font-mono" lang="zh-TW" x-text="hotels.taipei.addressTc"></p>
+            </div>
+            <div class="pt-2 border-t border-slate-800/80 flex items-center justify-end gap-1">
+              <button type="button" @click="openShowCard(placeShowData(hotels.taipei, 'zh-TW'), $event.currentTarget)" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Show the address to a driver" aria-label="Show hotel address full screen">
+                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+              </button>
+              <button type="button" @click="copyText(getLocalCopyText(hotels.taipei), getLocalCopyToast(hotels.taipei))" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Copy local destination" aria-label="Copy local destination">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+              </button>
+              <a :href="mapUrl(hotels.taipei.addressTc)" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Directions" aria-label="Hotel directions">
+                <i data-lucide="navigation-2" class="w-4 h-4"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Kaohsiung -->
+          <div class="hotel-card hotel-kaohsiung bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
+            <div>
+              <span class="text-xs font-mono text-rose-400 font-medium">Kaohsiung (4 Nights)</span>
+              <h4 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.kaohsiung.name"></h4>
+              <span class="text-xs text-slate-400 block font-mono" lang="zh-TW" x-text="hotels.kaohsiung.nameTc"></span>
+              <p class="text-xs text-slate-300 mt-2 font-mono" lang="zh-TW" x-text="hotels.kaohsiung.addressTc"></p>
+            </div>
+            <div class="pt-2 border-t border-slate-800/80 flex items-center justify-end gap-1">
+              <button type="button" @click="openShowCard(placeShowData(hotels.kaohsiung, 'zh-TW'), $event.currentTarget)" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Show the address to a driver" aria-label="Show hotel address full screen">
+                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+              </button>
+              <button type="button" @click="copyText(getLocalCopyText(hotels.kaohsiung), getLocalCopyToast(hotels.kaohsiung))" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Copy local destination" aria-label="Copy local destination">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+              </button>
+              <a :href="mapUrl(hotels.kaohsiung.addressTc)" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Directions" aria-label="Hotel directions">
+                <i data-lucide="navigation-2" class="w-4 h-4"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Hong Kong -->
+          <div class="hotel-card hotel-hk bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between space-y-3">
+            <div>
+              <span class="text-xs font-mono text-rose-400 font-medium">Hong Kong (5 Nights)</span>
+              <h4 class="font-semibold text-white text-sm mt-0.5" x-text="hotels.hk.name"></h4>
+              <span class="text-xs text-slate-400 block font-mono" lang="zh-HK" x-text="hotels.hk.nameTc"></span>
+              <p class="text-xs text-slate-300 mt-2 font-mono" lang="zh-HK" x-text="hotels.hk.addressTc"></p>
+            </div>
+            <div class="pt-2 border-t border-slate-800/80 flex items-center justify-end gap-1">
+              <button type="button" @click="openShowCard(placeShowData(hotels.hk, 'zh-HK'), $event.currentTarget)" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Show the address to a driver" aria-label="Show hotel address full screen">
+                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+              </button>
+              <button type="button" @click="copyText(getLocalCopyText(hotels.hk), getLocalCopyToast(hotels.hk))" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Copy local destination" aria-label="Copy local destination">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+              </button>
+              <a :href="mapUrl(hotels.hk.addressTc)" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl text-slate-400 hover:text-white flex items-center justify-center transition-colors" title="Directions" aria-label="Hotel directions">
+                <i data-lucide="navigation-2" class="w-4 h-4"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Emergency + help (numbers from the National Police Agency, National Fire Agency, Taiwan Tourism
+           Administration and Hong Kong Tourism Board sites, checked Oct 2026). -->
+      <section class="surface-card help-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3" aria-labelledby="help-title">
+        <h3 id="help-title" class="text-sm font-semibold text-white">Emergency &amp; help · 緊急求助</h3>
+        <div class="help-groups">
+          <div class="help-group">
+            <p class="help-group-title">Taiwan · 台灣</p>
+            <a class="help-row" href="tel:110"><span class="help-number font-mono">110</span><span class="help-label">Police · 警察</span><i data-lucide="phone" aria-hidden="true"></i></a>
+            <a class="help-row" href="tel:119"><span class="help-number font-mono">119</span><span class="help-label">Fire &amp; ambulance · 消防救護</span><i data-lucide="phone" aria-hidden="true"></i></a>
+            <a class="help-row" href="tel:0800011765"><span class="help-number font-mono">0800-011-765</span><span class="help-label">Travel information hotline, 24 h, toll-free · 旅遊諮詢</span><i data-lucide="phone" aria-hidden="true"></i></a>
+          </div>
+          <div class="help-group">
+            <p class="help-group-title">Hong Kong · 香港</p>
+            <a class="help-row" href="tel:999"><span class="help-number font-mono">999</span><span class="help-label">Police, fire &amp; ambulance · 緊急服務</span><i data-lucide="phone" aria-hidden="true"></i></a>
+            <a class="help-row" href="tel:+85225277177"><span class="help-number font-mono">+852 2527 7177</span><span class="help-label">Police hotline, not an emergency · 警察熱線</span><i data-lucide="phone" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <p class="settings-footnote">For a driver or a hospital desk, the Show button on each hotel puts its address on screen in Chinese. Sources: <a href="https://www.npa.gov.tw/en/" target="_blank" rel="noopener noreferrer">National Police Agency</a>, <a href="https://www.nfa.gov.tw/cht/index.php" target="_blank" rel="noopener noreferrer">National Fire Agency</a>, <a href="https://eng.taiwan.net.tw/" target="_blank" rel="noopener noreferrer">Taiwan Tourism Administration</a>, <a href="https://www.discoverhongkong.com/eng/travel-guide/traveller-essentials.html" target="_blank" rel="noopener noreferrer">Hong Kong Tourism Board</a>.</p>
+      </section>
+
+      <!-- Basics for a first trip -->
+      <div class="surface-card basics-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3" id="basics">
+        <div>
+          <h3 class="text-sm font-semibold text-white">Basics · 新手須知</h3>
+          <p class="basics-legend"><span class="basics-mark is-ok" aria-hidden="true">✓</span> confirmed from an official source · <span class="basics-mark is-check" aria-hidden="true">?</span> not confirmed, check before relying on it · no mark: general advice</p>
+        </div>
+        <div class="basics-tabs" role="tablist" aria-label="Basics by place">
+          <template x-for="tab in basics" :key="tab.id">
+            <button type="button" role="tab" class="basics-tab" :class="basicsTab === tab.id ? 'is-active' : ''" :aria-selected="basicsTab === tab.id" @click="basicsTab = tab.id"><span x-text="tab.label"></span><span class="basics-tab-tc" lang="zh-Hant" x-text="tab.labelTc"></span></button>
+          </template>
+        </div>
+        <template x-for="tab in basics.filter(t => t.id === basicsTab)" :key="'panel-' + tab.id">
+          <div class="grid grid-cols-1 gap-2" role="tabpanel">
+            <template x-for="section in tab.sections" :key="tab.id + section.title">
+              <div class="rule-tile basics-section rounded-xl bg-slate-950/55 p-3 border border-slate-800/70">
+                <strong class="text-slate-200"><span x-text="section.title"></span> · <span lang="zh-Hant" x-text="section.titleTc"></span></strong>
+                <ul class="basics-list">
+                  <template x-for="(item, i) in section.items" :key="i">
+                    <li><span class="basics-mark" :class="item.m ? 'is-' + item.m : 'is-none'" :aria-label="item.m === 'ok' ? 'Confirmed' : (item.m === 'check' ? 'Not confirmed, check first' : 'General advice')" x-text="item.m === 'ok' ? '✓' : (item.m === 'check' ? '?' : '•')"></span><span x-text="withUsdConversion(item.t)"></span></li>
+                  </template>
+                </ul>
+              </div>
+            </template>
+          </div>
+        </template>
+      </div>
+
+      <!-- Settings -->
+      <section class="surface-card settings-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3" aria-labelledby="settings-title">
+        <h3 id="settings-title" class="text-sm font-semibold text-white">Settings · 設定</h3>
+        <div class="settings-row is-stacked">
+          <span class="settings-label" id="maps-label"><i data-lucide="map" aria-hidden="true"></i>Directions open in</span>
+          <div class="settings-segmented" role="radiogroup" aria-labelledby="maps-label">
+            <button type="button" role="radio" :aria-checked="mapProvider === 'apple'" :class="mapProvider === 'apple' ? 'is-active' : ''" @click="setMapProvider('apple')">Apple Maps</button>
+            <button type="button" role="radio" :aria-checked="mapProvider === 'google'" :class="mapProvider === 'google' ? 'is-active' : ''" @click="setMapProvider('google')">Google Maps</button>
+          </div>
+        </div>
+        <div class="settings-row">
+          <span class="settings-label"><i data-lucide="bell" aria-hidden="true"></i>Leave-by alerts</span>
+          <template x-if="notificationState === 'default'"><button type="button" class="data-action" @click="enableLeaveByAlerts()">Turn on</button></template>
+          <span class="settings-value" x-show="notificationState !== 'default'" x-text="notificationState === 'granted' ? 'On' : (notificationState === 'denied' ? 'Blocked in iOS Settings' : 'Not supported here')"></span>
+        </div>
+        <div class="settings-row">
+          <span class="settings-label"><i data-lucide="cloud-off" aria-hidden="true"></i>Offline copy</span>
+          <span class="settings-value" :class="offlineReady ? 'is-good' : ''" x-text="offlineReady ? 'Saved on this device' : 'Open once online to save'"></span>
+        </div>
+        <div class="settings-row">
+          <span class="settings-label"><i data-lucide="image-plus" aria-hidden="true"></i>Ticket photos</span>
+          <span class="settings-value" x-text="photosAvailable ? (photoStorageText || '0') : 'Not available on this device'"></span>
+        </div>
+        <div class="settings-row is-stacked" x-show="offlineMap.state !== 'unsupported'">
+          <span class="settings-label"><i data-lucide="map" aria-hidden="true"></i>Offline street map</span>
+          <span class="settings-value" :class="offlineMap.state === 'ready' ? 'is-good' : ''" x-text="offlineMapText"></span>
+          <div class="offline-progress" x-show="offlineMap.state === 'downloading'" role="progressbar" aria-label="Offline map download" aria-valuemin="0" aria-valuemax="100" :aria-valuenow="offlineMap.pct"><span :style="'width:' + offlineMap.pct + '%'"></span></div>
+          <div class="sim-controls">
+            <button type="button" class="data-action is-primary" x-show="offlineMap.state === 'none' || offlineMap.state === 'error'" @click="downloadOfflineMap()">Download over Wi-Fi</button>
+            <button type="button" class="data-action" x-show="offlineMap.state === 'ready'" @click="removeOfflineMap()">Remove</button>
+          </div>
+          <p class="settings-footnote" x-show="offlineMap.state !== 'ready'">Street-level maps of Taipei, Kaohsiung, Hong Kong and the trip areas, saved on your phone so the day map works with no signal.</p>
+        </div>
+        <div class="settings-row is-stacked">
+          <span class="settings-label"><i data-lucide="timer" aria-hidden="true"></i><label for="sim-input">Preview a moment (Taipei time)</label></span>
+          <div class="sim-controls">
+            <input id="sim-input" type="datetime-local" class="sheet-input font-mono" x-model="simInput" min="2026-11-27T00:00" max="2026-12-14T23:59">
+            <button type="button" class="data-action" @click="applySimulatedTime()">Preview</button>
+            <button type="button" class="data-action" x-show="isSimulated" @click="leavePreview()">Live</button>
+          </div>
+        </div>
+        <div class="settings-row is-stacked">
+          <span class="settings-label"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><label for="play-day">Play the day</label></span>
+          <div class="sim-controls">
+            <select id="play-day" class="sheet-input" x-model="playDayId">
+              <template x-for="day in days" :key="'play-' + day.id"><option :value="day.id" :selected="day.id === playDayId" x-text="'Day ' + day.dayNum + ' · ' + ((day.dateString.match(/[A-Z][a-z]{2} \d{1,2}/) || [''])[0])"></option></template>
+            </select>
+            <button type="button" class="data-action is-primary" @click="playDay(playDayId)">Play</button>
+          </div>
+          <div class="sim-controls">
+            <button type="button" class="data-action" @click="previewJump(-1440)">−1 day</button>
+            <button type="button" class="data-action" @click="previewJump(-60)">−1 h</button>
+            <button type="button" class="data-action" @click="previewJump(60)">+1 h</button>
+            <button type="button" class="data-action" @click="previewJump(1440)">+1 day</button>
+          </div>
+        </div>
+        <p class="settings-footnote">Leave-by alerts only fire with the app open. For alarms that always ring, use Add to calendar. Preview shows the app at any moment; it turns off when you leave the app.</p>
+      </section>
+
+
+      <!-- Core operating rules -->
+      <div class="surface-card operating-rules-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
+        <h3 class="text-sm font-semibold text-white">Operating Rules · 旅行規則</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs leading-relaxed">
+          <div class="rule-tile rule-move rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Move efficiently · 交通</strong><span class="text-slate-400 block mt-1">Walk or transit when direct. Taxi for three when it saves 15+ min, skips a transfer, protects a booking or carries luggage.</span></div>
+          <div class="rule-tile rule-queue rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Don’t queue · 排隊</strong><span class="text-slate-400 block mt-1">Food queue over 10–15 min: use the listed backup.</span></div>
+          <div class="rule-tile rule-book rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Book lightly · 預約</strong><span class="text-slate-400 block mt-1">Reserve when free and easy. Avoid prepaying unless required.</span></div>
+          <div class="rule-tile rule-energy rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Use the night · 夜晚也要玩</strong><span class="text-slate-400 block mt-1">Keep going until ~11:30 PM – midnight. Stop early only before an early start or when what’s left is filler.</span></div>
+        </div>
+      </div>
+
+      <!-- Local life & value -->
+      <div class="surface-card local-life-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
+        <h3 class="text-sm font-semibold text-white">Local life &amp; value · 在地生活</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs leading-relaxed">
+          <div class="rule-tile rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Taiwan supermarkets · 超市</strong><span class="text-slate-400 block mt-1">PX Mart 全聯: where locals shop, mostly 8 AM – 11 PM; 中正延平 (延平南路189號) near the hotel has hot bento. Simple Mart 美廉社: small neighbourhood chain (心樸 eggs, milk). Carrefour is now 萬家福.</span></div>
+          <div class="rule-tile rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Traditional markets · 傳統市場</strong><span class="text-slate-400 block mt-1">Best in the morning; rest days vary (Nanmen: closed Mon). Prices per 斤 (600 g). On the plan: Nanmen (Dec 3), Tainan West Market (Dec 5).</span></div>
+          <div class="rule-tile rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Cheap local eats · 平價在地</strong><span class="text-slate-400 block mt-1">自助餐: fill a plate, staff price it by eye; add 加蛋 or 滷豆腐. 早餐店: 蛋餅, 蘿蔔糕加蛋, 豆漿; closes late morning. Value protein: 茶葉蛋, 豆干, chicken breast, 無糖豆漿, frozen dumplings.</span></div>
+          <div class="rule-tile rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Daily life · 日常</strong><span class="text-slate-400 block mt-1">Garbage trucks play Für Elise (給愛麗絲); residents carry bags out to meet them.</span></div>
+          <div class="rule-tile rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Hong Kong markets · 街市</strong><span class="text-slate-400 block mt-1">Cooked food centres above wet markets: the cheapest sit-down meals. On the plan: Sheung Wan, Kowloon City, Bowrington Road (6 AM – 8 PM; food centres to 2 AM). Near the hotel: Haiphong Road market (28 Haiphong Road); Wellcome 惠康, 53–54 Kimberley Road and 17–19 Chatham Road South.</span></div>
+          <div class="rule-tile rounded-xl bg-slate-950/55 p-3 border border-slate-800/70"><strong class="text-slate-200">Where Hongkongers eat · 港式平價</strong><span class="text-slate-400 block mt-1">Everyday chains: Fairwood 大快活 (32–34 Nathan Road, 7 AM – 9 PM), Café de Coral 大家樂, TamJai 譚仔. Cha chaan teng sets include a drink. Green minibuses: fixed routes and fares; red: their own.</span></div>
+        </div>
+      </div>
+
+      <!-- Budget -->
+      <div class="surface-card budget-card bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
+        <div class="flex items-center justify-between gap-3">
+          <h3 class="text-sm font-semibold text-white">Budget · 預算</h3>
+          <div class="currency-switch flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-mono">
+            <button type="button" @click="selectedCurrency = 'USD'" :class="selectedCurrency === 'USD' ? 'bg-slate-800 text-white' : 'text-slate-400'" :aria-pressed="selectedCurrency === 'USD'" class="px-2.5 py-1 rounded-lg min-h-[44px]">USD</button>
+            <button type="button" @click="selectedCurrency = 'TWD'" :class="selectedCurrency === 'TWD' ? 'bg-slate-800 text-white' : 'text-slate-400'" :aria-pressed="selectedCurrency === 'TWD'" class="px-2.5 py-1 rounded-lg min-h-[44px]">TWD</button>
+            <button type="button" @click="selectedCurrency = 'HKD'" :class="selectedCurrency === 'HKD' ? 'bg-slate-800 text-white' : 'text-slate-400'" :aria-pressed="selectedCurrency === 'HKD'" class="px-2.5 py-1 rounded-lg min-h-[44px]">HKD</button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between gap-3 text-[10px] font-mono text-slate-500 -mt-0.5">
+          <span class="truncate" x-text="fxSummary"></span>
+          <button type="button" @click="refreshExchangeRates(true)" class="fx-refresh icon-action shrink-0 !w-8 !h-8" :class="fx.loading ? 'is-loading' : ''" title="Refresh exchange rates" aria-label="Refresh exchange rates">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+        <div class="fx-calc" role="group" aria-labelledby="fx-calc-title">
+          <p id="fx-calc-title" class="fx-calc-title"><i data-lucide="calculator" aria-hidden="true"></i>Quick convert · 換算</p>
+          <div class="fx-calc-row">
+            <input id="fx-calc-amount" class="fx-calc-input font-mono" type="text" inputmode="decimal" enterkeyhint="done" autocomplete="off" aria-label="Amount" placeholder="Amount" x-model="calcAmount">
+            <div class="currency-switch fx-calc-switch" role="group" aria-label="Currency of the amount">
+              <button type="button" @click="calcCurrency = 'TWD'" :class="calcCurrency === 'TWD' ? 'is-active' : ''" :aria-pressed="calcCurrency === 'TWD'">NT$</button>
+              <button type="button" @click="calcCurrency = 'HKD'" :class="calcCurrency === 'HKD' ? 'is-active' : ''" :aria-pressed="calcCurrency === 'HKD'">HK$</button>
+              <button type="button" @click="calcCurrency = 'USD'" :class="calcCurrency === 'USD' ? 'is-active' : ''" :aria-pressed="calcCurrency === 'USD'">US$</button>
+            </div>
+          </div>
+          <div class="fx-calc-chips">
+            <template x-for="chip in [100, 350, 500, 1000]" :key="'chip-' + chip"><button type="button" class="fx-chip font-mono" @click="calcAmount = String(chip)" x-text="chip.toLocaleString('en-US')"></button></template>
+          </div>
+          <p class="fx-calc-result font-mono" aria-live="polite" x-show="!calcParts">Type an amount to convert</p>
+          <template x-if="calcParts">
+            <p class="fx-calc-result is-filled font-mono" aria-live="polite"><span class="fx-calc-from" x-text="calcParts.from"></span><span class="fx-calc-eq"> = </span><template x-for="(part, pIdx) in calcParts.to" :key="part"><span class="fx-calc-to"><template x-if="pIdx"><span class="fx-calc-sep"> · </span></template><strong x-text="part"></strong></span></template></p>
+          </template>
+        </div>
+        <div class="space-y-2 text-xs">
+          <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">Flights</span><span class="font-mono text-slate-200" x-text="formatCurrency(1193)"></span></div>
+          <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">Hotels</span><span class="font-mono text-slate-200" x-text="formatCurrency(768)"></span></div>
+          <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">Transit</span><span class="font-mono text-slate-200" x-text="formatCurrency(303)"></span></div>
+          <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">Activities + wellness</span><span class="font-mono text-slate-200" x-text="formatCurrency(376)"></span></div>
+          <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">Food</span><span class="font-mono text-slate-200" x-text="formatCurrency(680)"></span></div>
+          <div class="flex justify-between pt-2 text-sm font-bold text-white"><span>Estimated / person</span><span class="font-mono text-rose-400" x-text="formatCurrency(3320)"></span></div>
+          <p class="text-[11px] text-slate-500 pt-1">Planning estimate. Currency display uses the latest available daily FX rate when online, cached rates when offline; card/network conversion may differ.</p>
+        </div>
+      </div>
+
+      <!-- Portable state backup / restore -->
+      <div class="pt-2 flex flex-wrap justify-end gap-2">
+        <input id="state-import-file" type="file" accept="application/json,.json" class="hidden" @change="importStateFile($event)">
+        <button type="button" @click="document.getElementById('state-import-file')?.click()" class="data-action">
+          <i data-lucide="upload" class="w-3.5 h-3.5"></i><span>Restore data</span>
+        </button>
+        <button type="button" @click="exportCalendar()" class="data-action">
+          <i data-lucide="calendar-plus" class="w-3.5 h-3.5"></i><span>Add trip to Calendar</span>
+        </button>
+        <button type="button" @click="exportState()" class="data-action" :disabled="!photoExportReady" :aria-busy="!photoExportReady">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i><span x-text="photoExportReady ? 'Backup data' : 'Preparing…'">Backup data</span>
+        </button>
+        <button type="button" @click="openResetSheet($event.currentTarget)" class="data-action is-quiet-danger">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i><span>Reset progress</span>
+        </button>
+      </div>
+      <section id="photo-credits" class="photo-credits" tabindex="-1" aria-labelledby="photo-credits-title">
+        <h3 id="photo-credits-title">Photo credits</h3>
+        <p>Destination photos from Wikimedia Commons, cropped and compressed and stored with the app so they work offline. Each links to its source page and license.</p>
+        <ul class="photo-credit-list">
+          <template x-for="photo in photoCredits" :key="photo.page">
+            <li><a :href="photo.page" target="_blank" rel="noopener noreferrer"><strong x-text="photo.subject"></strong> · <span x-text="photo.author + ' · ' + photo.license"></span></a></li>
+          </template>
+        </ul>
+      </section>
+    </section>
+
+  </main>
+
+  <input id="search-focus-proxy" class="search-focus-proxy" type="search" inputmode="search" tabindex="-1" aria-hidden="true" autocomplete="off">
+  <input id="ticket-photo-input" type="file" accept="image/*" multiple class="hidden" tabindex="-1" aria-hidden="true" @change="onTicketPhotoFiles($event)">
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <div class="mobile-dock-shell md:hidden fixed z-40 left-0 right-0 bottom-0" :inert="anyModalOpen">
+    <template x-if="liveTripDayId && relevantPlan && activeTab !== 'today'">
+      <button type="button" class="live-accessory" @click="openLiveContext()" :aria-label="'Open ' + liveAccessoryMeta + ': ' + liveAccessoryTitle">
+        <span class="live-accessory-badge"><span class="status-dot" aria-hidden="true"></span><span x-text="liveAccessoryMeta"></span></span>
+        <span class="live-accessory-title" x-text="liveAccessoryTitle"></span>
+        <i data-lucide="chevron-right" aria-hidden="true"></i>
+      </button>
+    </template>
+    <nav class="mobile-dock max-w-md mx-auto" aria-label="Primary navigation" :style="'--nav-shift:' + (activeTabIndex * 100) + '%'">
+      <span class="mobile-nav-lens" aria-hidden="true"></span>
+      <button type="button" @click="tapTab('today')" :class="activeTab === 'today' ? 'is-active' : ''" :aria-current="activeTab === 'today' ? 'page' : null" class="mobile-nav-item"><i data-lucide="compass"></i><span>Today</span></button>
+      <button type="button" @click="tapTab('itinerary')" :class="activeTab === 'itinerary' ? 'is-active' : ''" :aria-current="activeTab === 'itinerary' ? 'page' : null" class="mobile-nav-item"><i data-lucide="calendar"></i><span>Days</span></button>
+      <button type="button" @click="tapTab('plan')" :class="activeTab === 'plan' ? 'is-active' : ''" :aria-current="activeTab === 'plan' ? 'page' : null" class="mobile-nav-item"><i data-lucide="clipboard-check"></i><span>Plan</span></button>
+      <button type="button" @click="tapTab('toolkit')" :class="activeTab === 'toolkit' ? 'is-active' : ''" :aria-current="activeTab === 'toolkit' ? 'page' : null" class="mobile-nav-item"><i data-lucide="briefcase"></i><span>Tools</span></button>
+      <button type="button" class="mobile-nav-item mobile-search-item" @click="openGlobalSearch()" aria-haspopup="dialog" :aria-expanded="showGlobalSearch" aria-label="Search the itinerary"><i data-lucide="search" aria-hidden="true"></i><span>Search</span></button>
+    </nav>
+  </div>
+  <!-- Sheets: the Show card, booking codes and your own bookings / tasks -->
+  <div x-show="showSheet" x-cloak class="sheet-backdrop" :class="{ 'is-open': showSheet, 'is-show': sheetView === 'show' }"
+       @keydown.escape.window="showSheet && closeSheet()" @keydown.tab="trapSheetFocus($event)" @click.self="closeSheet()">
+    <div data-modal-panel="sheet" role="dialog" aria-modal="true" :aria-labelledby="'sheet-title-' + (sheetView || 'none')" class="sheet-panel" :class="sheetView === 'show' ? 'show-card' : ''">
+      <span class="sheet-grabber is-form" aria-hidden="true" x-show="sheetView === 'ref' || sheetView === 'booking' || sheetView === 'prep' || sheetView === 'reset' || sheetView === 'import'"></span>
+      <template x-if="sheetView === 'show' && showCardData">
+        <div class="show-card-body">
+          <div class="show-card-head">
+            <span id="sheet-title-show" class="show-card-kicker">Show this · 請看這裡</span>
+            <button type="button" class="show-card-close" data-autofocus @click="closeSheet()" aria-label="Close"><i data-lucide="x"></i></button>
+          </div>
+          <p class="show-card-phrase" :lang="showCardData.lang" x-text="showCardData.kind === 'booking' ? '我有預約' : '請帶我到這裡'"></p>
+          <strong class="show-card-local" :lang="showCardData.local ? showCardData.lang : 'en'" x-text="showCardData.local || showCardData.title"></strong>
+          <template x-if="showCardData.address"><p class="show-card-address" :lang="showCardData.lang" x-text="showCardData.address"></p></template>
+          <template x-if="showCardData.ref">
+            <div class="show-card-ref-wrap"><span lang="zh-Hant">訂位代號 · Booking code</span><span class="show-card-ref font-mono" x-text="showCardData.ref"></span></div>
+          </template>
+          <template x-if="showCardData.bookingId && photoCount(showCardData.bookingId)" data-photo-template>
+            <div class="show-photos" data-photo-viewer>
+              <button type="button" class="show-photo-frame" @click="nextPhoto()" :aria-label="'Ticket photo ' + (photoViewer.index + 1) + ' of ' + photoViewer.total + (photoViewer.total > 1 ? '. Tap for the next one.' : '')">
+                <img :src="photoViewer.url || 'data:,'" alt="" x-show="photoViewer.url">
+              </button>
+              <div class="show-photo-bar">
+                <span class="font-mono" x-text="(photoViewer.index + 1) + ' / ' + photoViewer.total"></span>
+                <button type="button" class="plan-icon-action is-danger" @click="deleteViewerPhoto()" title="Delete this ticket photo" aria-label="Delete this ticket photo"><i data-lucide="trash-2"></i></button>
+              </div>
+            </div>
+          </template>
+          <template x-if="showCardData.when"><p class="show-card-when" x-text="showCardData.when"></p></template>
+          <p class="show-card-en" x-show="showCardData.local" x-text="showCardData.title"></p>
+          <p class="show-card-hint" x-text="showCardData.kind === 'booking' ? 'I have a reservation. The screen stays on while this is open.' : 'Please take me here. The screen stays on while this is open.'"></p>
+        </div>
+      </template>
+
+      <template x-if="sheetView === 'stop' && stopSheet">
+        <div class="stop-sheet">
+          <div class="stop-sheet-head">
+            <span class="sheet-grabber" aria-hidden="true"></span>
+            <div class="stop-sheet-row">
+              <div class="stop-sheet-heading">
+                <span class="stop-sheet-kicker" x-show="stopSheet.time" x-text="stopSheet.time"></span>
+                <h2 id="sheet-title-stop" class="stop-sheet-title" x-text="stopSheet.title"></h2>
+                <p class="stop-sheet-local" lang="zh-Hant" x-show="stopSheet.titleTc" x-text="stopSheet.titleTc"></p>
+              </div>
+              <button type="button" class="sheet-close" data-autofocus @click="closeSheet()" aria-label="Close"><i data-lucide="x"></i></button>
+            </div>
+          </div>
+          <dl class="stop-facts-grid">
+            <template x-if="stopSheet.details.hours"><div class="stop-fact"><dt>Hours · 時間</dt><dd x-text="withUsdConversion(stopSheet.details.hours)"></dd></div></template>
+            <template x-if="stopSheet.details.cost"><div class="stop-fact"><dt>Cost · 費用</dt><dd x-text="withUsdConversion(stopSheet.details.cost)"></dd></div></template>
+            <template x-if="stopSheet.details.getThere"><div class="stop-fact"><dt>Getting there · 交通</dt><dd x-text="withUsdConversion(stopSheet.details.getThere)"></dd></div></template>
+          </dl>
+          <template x-if="stopSheet.details.highlights && stopSheet.details.highlights.length">
+            <div class="stop-list"><p class="stop-list-label">See &amp; order · 必看必點</p>
+              <ul><template x-for="(line, lIdx) in stopSheet.details.highlights" :key="lIdx"><li x-text="withUsdConversion(line)"></li></template></ul></div>
+          </template>
+          <template x-if="stopSheet.details.tips && stopSheet.details.tips.length">
+            <div class="stop-list"><p class="stop-list-label">Good to know · 小提醒</p>
+              <ul><template x-for="(line, lIdx) in stopSheet.details.tips" :key="lIdx"><li x-text="withUsdConversion(line)"></li></template></ul></div>
+          </template>
+          <template x-if="stopSheet.details.watch"><p class="stop-watch"><strong>Heads-up · 注意</strong> <span x-text="withUsdConversion(stopSheet.details.watch)"></span></p></template>
+          <div class="stop-sources">
+            <p class="stop-sources-label" x-text="'Sources · checked ' + checkedLabel(stopSheet.details.checked)"></p>
+            <div class="stop-sources-links">
+              <template x-for="(source, srcIdx) in stopSheet.details.sources" :key="srcIdx"><a :href="source.url" target="_blank" rel="noopener noreferrer" x-text="source.label"></a></template>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template x-if="sheetView === 'ref'">
+        <form class="sheet-form" @submit.prevent="saveBookingRef()">
+          <h2 id="sheet-title-ref" class="sheet-title">Booking code · 訂位代號</h2>
+          <p class="sheet-sub" x-text="sheetForm.title"></p>
+          <label class="sheet-field"><span>Code or confirmation number</span>
+            <input class="sheet-input font-mono" type="text" x-model="sheetForm.ref" data-autofocus autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="80" enterkeyhint="done"></label>
+          <p class="sheet-note">Saving a code also marks the booking as booked. Leave it empty to remove the code.</p>
+          <div class="sheet-actions"><button type="button" class="data-action" @click="closeSheet()">Cancel</button><button type="submit" class="data-action is-primary">Save</button></div>
+        </form>
+      </template>
+
+      <template x-if="sheetView === 'booking'">
+        <form class="sheet-form" @submit.prevent="saveCustomBooking()">
+          <h2 id="sheet-title-booking" class="sheet-title">Add a booking · 新增預訂</h2>
+          <label class="sheet-field"><span>What</span><input class="sheet-input" type="text" x-model="sheetForm.title" data-autofocus maxlength="120" placeholder="Dinner at …, tour, ticket" enterkeyhint="next"></label>
+          <div class="sheet-field-row">
+            <label class="sheet-field"><span>Day</span>
+              <select class="sheet-input" x-model="sheetForm.dayId">
+                <template x-for="day in days" :key="'opt-' + day.id"><option :value="day.id" :selected="day.id === sheetForm.dayId" x-text="'Day ' + day.dayNum + ' · ' + ((day.dateString.match(/[A-Z][a-z]{2} \d{1,2}/) || [''])[0])"></option></template>
+              </select></label>
+            <label class="sheet-field"><span>Time (optional)</span><input class="sheet-input" type="text" x-model="sheetForm.time" maxlength="40" placeholder="7:30 PM"></label>
+          </div>
+          <label class="sheet-field"><span>Booking code (optional)</span><input class="sheet-input font-mono" type="text" x-model="sheetForm.ref" maxlength="80" autocomplete="off" autocapitalize="characters" spellcheck="false"></label>
+          <label class="sheet-field"><span>Notes (optional)</span><textarea class="sheet-input" rows="2" x-model="sheetForm.notes" maxlength="600"></textarea></label>
+          <div class="sheet-actions"><button type="button" class="data-action" @click="closeSheet()">Cancel</button><button type="submit" class="data-action is-primary">Add</button></div>
+        </form>
+      </template>
+
+      <template x-if="sheetView === 'import'">
+        <form class="sheet-form" @submit.prevent="saveImportedBooking()">
+          <h2 id="sheet-title-import" class="sheet-title">Paste a confirmation · 貼上確認信</h2>
+          <p class="sheet-sub">Copy the booking email or app screen text and paste it here. It's read on this phone; nothing is sent anywhere.</p>
+          <label class="sheet-field"><span>Confirmation text</span>
+            <textarea class="sheet-input import-text" rows="5" x-model="sheetForm.text" data-autofocus maxlength="20000" placeholder="Booking reference: … Date: … Time: …" @input="sheetForm.read = false"></textarea></label>
+          <template x-if="!sheetForm.read">
+            <div class="sheet-actions"><button type="button" class="data-action" @click="closeSheet()">Cancel</button><button type="button" class="data-action is-primary" @click="readConfirmation()">Read it</button></div>
+          </template>
+          <template x-if="sheetForm.read && sheetForm.found">
+            <div data-import-result class="import-result">
+              <p class="sheet-note" x-text="'Found: ' + ([sheetForm.found.codes.length ? sheetForm.found.codes.length + ' code' + (sheetForm.found.codes.length > 1 ? 's' : '') : '', sheetForm.found.dates.length ? sheetForm.found.dates.length + ' date' + (sheetForm.found.dates.length > 1 ? 's' : '') : '', sheetForm.found.times.length ? sheetForm.found.times.join(', ') : '', sheetForm.found.flights.join(', '), sheetForm.found.amounts.join(', ')].filter(Boolean).join(' · ') || 'nothing recognisable — fill it in below')"></p>
+              <label class="sheet-field"><span>Belongs to</span>
+                <select class="sheet-input" x-model="sheetForm.target">
+                  <option value="new" :selected="sheetForm.target === 'new'">New booking</option>
+                  <template x-for="t in importTargets" :key="'imp-' + t.id"><option :value="t.id" :selected="t.id === sheetForm.target" x-text="t.label"></option></template>
+                </select></label>
+              <label class="sheet-field"><span>Booking code</span>
+                <input class="sheet-input font-mono" type="text" x-model="sheetForm.ref" maxlength="80" autocomplete="off" autocapitalize="characters" spellcheck="false"></label>
+              <template x-if="sheetForm.found.codes.length > 1">
+                <div class="import-chips"><template x-for="c in sheetForm.found.codes" :key="'c-' + c"><button type="button" class="data-action font-mono" :class="c === sheetForm.ref ? 'is-primary' : ''" @click="sheetForm.ref = c" x-text="c"></button></template></div>
+              </template>
+              <template x-if="sheetForm.target === 'new'">
+                <div>
+                  <label class="sheet-field"><span>What</span><input class="sheet-input" type="text" x-model="sheetForm.title" maxlength="120"></label>
+                  <div class="sheet-field-row">
+                    <label class="sheet-field"><span>Day</span>
+                      <select class="sheet-input" x-model="sheetForm.dayId">
+                        <template x-for="day in days" :key="'imp-day-' + day.id"><option :value="day.id" :selected="day.id === sheetForm.dayId" x-text="'Day ' + day.dayNum + ' · ' + ((day.dateString.match(/[A-Z][a-z]{2} \d{1,2}/) || [''])[0])"></option></template>
+                      </select></label>
+                    <label class="sheet-field"><span>Time</span><input class="sheet-input" type="text" x-model="sheetForm.time" maxlength="40" placeholder="7:30 PM"></label>
+                  </div>
+                </div>
+              </template>
+              <p class="sheet-note" x-show="sheetForm.target !== 'new'">Saving puts the code on that booking and marks it booked.</p>
+              <div class="sheet-actions"><button type="button" class="data-action" @click="closeSheet()">Cancel</button><button type="submit" class="data-action is-primary">Save</button></div>
+            </div>
+          </template>
+        </form>
+      </template>
+
+      <template x-if="sheetView === 'reset'">
+        <div class="sheet-form">
+          <h2 id="sheet-title-reset" class="sheet-title">Reset trip progress?</h2>
+          <p class="sheet-sub">This clears every day marked complete, every booking marked booked, every prep task ticked, all booking codes, and the bookings and tasks you added yourself.</p>
+          <p class="sheet-note">The itinerary, currency and map settings stay. To keep a copy first, cancel and use Backup data.</p>
+          <div class="sheet-actions"><button type="button" class="data-action" @click="closeSheet()" data-autofocus>Cancel</button><button type="button" class="data-action is-danger" @click="resetTripProgress()">Reset</button></div>
+        </div>
+      </template>
+
+      <template x-if="sheetView === 'prep'">
+        <form class="sheet-form" @submit.prevent="saveCustomPrep()">
+          <h2 id="sheet-title-prep" class="sheet-title">Add a task · 新增事項</h2>
+          <label class="sheet-field"><span>Task</span><input class="sheet-input" type="text" x-model="sheetForm.title" data-autofocus maxlength="120" enterkeyhint="next"></label>
+          <label class="sheet-field"><span>Note (optional)</span><textarea class="sheet-input" rows="2" x-model="sheetForm.note" maxlength="400"></textarea></label>
+          <div class="sheet-actions"><button type="button" class="data-action" @click="closeSheet()">Cancel</button><button type="submit" class="data-action is-primary">Add</button></div>
+        </form>
+      </template>
+    </div>
+  </div>
+
+<!-- Toast Notification Overlay -->
+  <div role="status" aria-live="polite" aria-atomic="true" class="mobile-toast fixed bottom-20 md:bottom-6 z-50 pointer-events-none space-y-2">
+    <template x-for="t in toasts" :key="t.id">
+      <div class="toast-card bg-slate-900 border border-slate-700 text-white text-xs px-3.5 py-2.5 rounded-xl shadow-lg flex items-center gap-2 pointer-events-auto" :class="t.tone === 'warning' ? 'is-warning' : ''" x-transition>
+        <template x-if="t.tone === 'warning'"><i data-lucide="triangle-alert" class="w-3.5 h-3.5 shrink-0" style="color:var(--warning)"></i></template>
+        <template x-if="t.tone !== 'warning'"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i></template>
+        <span x-text="t.message"></span>
+      </div>
+    </template>
+  </div>
+
+    <script defer src="./assets/details.js?v=2215b623e8"></script>
+    <script defer src="./assets/app.js?v=a565153803"></script>
+    <script defer src="./assets/features.js?v=c430e72e99"></script>
+    <script defer src="./assets/ux.js?v=517ee75731"></script>
+  <!-- Lucide 1.43.0 (ISC) and Alpine.js 3.17.2 (MIT), pinned and embedded for single-file reliability. -->
+    <script defer src="./assets/vendor/lucide.js?v=792f20a6e0"></script>
+    <script defer src="./assets/vendor/alpine.js?v=abe5b75652"></script>
+    <script defer src="./assets/runtime.js?v=63cb038a07"></script>
+  
+
+
+
+</body>
+</html>

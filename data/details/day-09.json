@@ -1,0 +1,248 @@
+{
+  "day": "day-09",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Private Charter Pickup → Maolin",
+      "getThere": "Private charter from the hotel to Maolin District. The Maolin NSA recommends self-drive or a charter for this mountain area (public buses and Taiwan Tourist Shuttles are limited/reservation-only).",
+      "hours": "Maolin Visitor Center (茂林巷7-7號): 09:00–17:00, tel 07-680-1111.",
+      "tips": [
+        "Ask the driver to fuel up before leaving the plains — the Maolin NSA explicitly advises filling the tank before entering the mountain area.",
+        "Butterflies are most active on calm, sunny mornings from first light to about 11 AM, so the 7:15 AM pickup is justified; don't let breakfast delay departure."
+      ],
+      "sources": [
+        {
+          "label": "Maolin NSA – How to get to Maolin",
+          "url": "https://www.maolin-nsa.gov.tw/zh-tw/go-to-maolin/"
+        },
+        {
+          "label": "Maolin NSA – Butterfly viewing guide",
+          "url": "https://www.maolin-nsa.gov.tw/zh-tw/butterfly/"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "Maolin Purple Butterfly Valley",
+      "hours": "Ecological park open 24 h; best viewing from first light to about 11 AM on calm, sunny mornings. Season October – end of February.",
+      "cost": "Free entry.",
+      "getThere": "Park entrance opposite 高雄市茂林區茂林里1鄰16號; park in the Purple Butterfly Ecological Park car park (official advice for the butterfly season).",
+      "highlights": [
+        "Walk the 姿沙里沙里步道 from the park: 2.1 km open section (~50 min), a key overwintering cluster spot; viewing deck over Maolin village, then 瑪雅亭 lookout over the Zhuokou/Laonong river confluence.",
+        "Four species overwinter here: 小紫斑蝶, 圓翅紫斑蝶, 斯氏紫斑蝶, 端紫斑蝶 (mnemonic: one dot / two dots / three dots / scattered dots).",
+        "Before sun hits the valley, look for 'butterfly trees' — wings closed, hanging in grape-like bunches — then watch them open to sunbathe.",
+        "Best case per the NSA: a sunny day right after rain, when swarms glide down the valley to drink (\"butterfly carpet\")."
+      ],
+      "tips": [
+        "Check the official daily forecast (蝶況預報) the evening before: it rates butterfly numbers 1–5 stars and names the best trail and window for that day.",
+        "Season events run Oct 31 2026 – Mar 31 2027, with interpretation at the ecological park entrance.",
+        "Bring sun protection and insect repellent; dress for outdoor walking."
+      ],
+      "watch": "Rules: no catching butterflies, no shaking trees or throwing objects, don't enter overwintering valleys without permission (some are private land), slow down when driving through the valley. Rainy/overcast days mean little activity.",
+      "sources": [
+        {
+          "label": "Maolin NSA – Butterfly viewing guide",
+          "url": "https://www.maolin-nsa.gov.tw/zh-tw/butterfly/"
+        },
+        {
+          "label": "Maolin NSA – Purple Butterfly Ecological Park",
+          "url": "https://www.maolin-nsa.gov.tw/zh-tw/attraction/58/"
+        },
+        {
+          "label": "Maolin NSA – 姿沙里沙里步道",
+          "url": "https://www.maolin-nsa.gov.tw/zh-tw/attraction/60/"
+        },
+        {
+          "label": "Maolin butterfly forecast (蝶況預報)",
+          "url": "https://theme.maolin-nsa.gov.tw/maolin-butterfly/pre.aspx"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Butterfly Festival Market (Dec 5–6)",
+      "hours": "Sat Dec 5 – Sun Dec 6 2026, 10:00–16:00 (2nd of 5 sessions; this one at the Purple Butterfly Ecological Park).",
+      "cost": "Free; DIY is free with on-site sign-up.",
+      "highlights": [
+        "Programme: 09:55 host intro · 10:00–11:00 DIY part 1 · 11:00–12:00 singers part 1 · 12:00–14:00 music/break · 14:00–15:00 DIY part 2 · 15:00–16:00 singers part 2.",
+        "Rukai-community 護蝶市集 with local culture, food and crafts; Dec 5–6 DIY is a 陶壺皮雕 (pottery-pot leather-carving) keychain."
+      ],
+      "tips": [
+        "Arriving ~10:00 puts you in the DIY slot; the first singers start at 11:00 — after your planned 10:25 departure.",
+        "DIY (if anyone wants it): 30 places per session, register at the market service desk 30 min before the session."
+      ],
+      "watch": "Later sessions (Jan 16–17 Dream Mall, Feb/Mar Aozihdi Forest Park) are in the city, not Maolin — Dec 5–6 is the last Maolin date this season.",
+      "sources": [
+        {
+          "label": "Maolin butterfly season – 護蝶市集 (official)",
+          "url": "https://theme.maolin-nsa.gov.tw/maolin-butterfly/zh-tw/market.html"
+        },
+        {
+          "label": "Tourism Administration event listing",
+          "url": "https://media.taiwan.net.tw/zh-tw/portal/travel/details/event_a15010900h_005680"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Drive to Qishan",
+      "getThere": "Charter car to Qishan Old Street; the old street runs along 中山路, 復興街 and 華中街 and starts at Qishan Station (中山路1號).",
+      "tips": [
+        "Drop at Qishan Station/old street rather than at the temple — streets around 旗山天后宮 are likely to be crowded on procession day."
+      ],
+      "sources": [
+        {
+          "label": "Kaohsiung Travel – Qishan Old Street",
+          "url": "https://khh.travel/zh-tw/attractions/detail/157/"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "title": "2026 Qilu Tongfu Mazu Procession — Qishan",
+      "hours": "Sun Dec 6 2026; Kaohsiung Travel lists timing 'per organiser's latest announcement'.",
+      "cost": "Free.",
+      "highlights": [
+        "Official name 2026旗鹿同福 聖母巡安; organisers 鹿港天后宮 and 旗山天后宮. Lukang Mazu travels from Changhua to Qishan Tianhou Temple for a joint double-Mazu procession.",
+        "Crawling under the palanquin (躦轎腳) for blessings is opened at specific locations; those locations/times are announced by the temple.",
+        "Qishan Tianhou Temple itself: completed 1824, a Kaohsiung municipal heritage site known for its imperially-honoured Tiger General (金虎將軍)."
+      ],
+      "tips": [
+        "The temple says it posted the joint route on its Facebook page on Nov 3, warning times may run early or late with crowds and rituals — get the route image before Dec 6 (FB requires login).",
+        "Temple service line: 07-661-2037."
+      ],
+      "watch": "Expect heavy crowds and road control around the temple; do not touch the palanquin or sacred objects.",
+      "sources": [
+        {
+          "label": "Kaohsiung Travel – event listing",
+          "url": "https://khh.travel/zh-tw/event/calendardetail/8049/"
+        },
+        {
+          "label": "News586 via yam – event announcement",
+          "url": "https://n.yam.com/Article/20260919386374"
+        },
+        {
+          "label": "Twpowernews via yam – temple phone",
+          "url": "https://n.yam.com/Article/20260926759722"
+        },
+        {
+          "label": "Search snippet of 旗山天后宮 FB route post (Nov 3)",
+          "url": "https://www.bing.com/search?q=%E6%97%97%E9%B9%BF%E5%90%8C%E7%A6%8F+%E9%81%B6%E5%A2%83%E8%B7%AF%E7%B7%9A+%E5%85%AC%E5%B8%83+%E8%B5%B7%E9%A7%95"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "title": "Driver Back to Kaohsiung (or Stay in Qishan)",
+      "getThere": "Have the driver drop you by Kaohsiung Arena; if you come by MRT instead, Red Line to 巨蛋 (R14) Exit 1.",
+      "tips": [
+        "Ruifeng opens at 17:00 — arriving 17:15–18:00 is right as stalls start up."
+      ],
+      "sources": [
+        {
+          "label": "Kaohsiung Travel – Night markets",
+          "url": "https://khh.travel/zh-tw/board-and-lodging/night-market/"
+        },
+        {
+          "label": "KRTC – Kaohsiung Arena station",
+          "url": "https://www.krtc.com.tw/Guide/station_info?id=bd5435a1ddc7441eb7d2e957ea074eb4"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "title": "Ruifeng Night Market — Backup Dinner & Games",
+      "hours": "17:00–00:00; closed Mondays and Wednesdays — open Sunday Dec 6.",
+      "getThere": "Red Line 巨蛋 (R14), Exit 1.",
+      "highlights": [
+        "Near the Arena shopping district; over a thousand stalls laid out in an L-shaped, managed grid.",
+        "Mix of decades-old classic snacks, international stalls and newer creative dishes and drinks; Kaohsiung markets keep old-style games such as ring toss and balloon shooting."
+      ],
+      "sources": [
+        {
+          "label": "Kaohsiung Travel – Night markets",
+          "url": "https://khh.travel/zh-tw/board-and-lodging/night-market/"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "title": "Kaohsiung Music Center → Love River",
+      "hours": "KMC outdoor areas open; indoor venues only for events",
+      "getThere": "Light Rail: C10 光榮碼頭 for the Coral Reef / Whale Embankment, C11 真愛碼頭 for the Wave Tower (音浪塔), C12 駁二大義 for LIVE WAREHOUSE. KMC address 真愛路1號.",
+      "highlights": [
+        "Walk the KMC waterfront (Wave Tower, Coral Reef, Whale Embankment), then follow the Love River north-east.",
+        "Love River night lights run from 愛河之心 and 光之塔 down to 真愛碼頭.",
+        "Gondola rides board at 河東路 × 民生路; round trip about 25 min, passing under 五福橋 (zodiac lights)."
+      ],
+      "tips": [
+        "KMC has rentable lockers (40 small 32.5×40.4 cm, 4 medium, 2 large).",
+        "Riverside paths have cafés and, on weekends, food-truck markets."
+      ],
+      "watch": "Gondola fares/schedules aren't published on the tourism page — ask at the dock.",
+      "sources": [
+        {
+          "label": "KMC directions & opening",
+          "url": "https://kpmc.com.tw/transportation/"
+        },
+        {
+          "label": "Kaohsiung Tourism: Love River",
+          "url": "https://khh.travel/zh-tw/attractions/detail/232/"
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "title": "Liuhe / Formosa Boulevard Late Pass",
+      "hours": "Liuhe Night Market daily 17:00–02:00.",
+      "getThere": "Red Line R14 巨蛋 → R10 美麗島 (4 stops). Exits 1 and 11 are signed for 六合觀光夜市.",
+      "highlights": [
+        "Dome of Light (光之穹頂): Narcissus Quagliata's glass artwork, described as the world's largest glass mosaic work, inside the Red/Orange interchange station.",
+        "Liuhe dates from the 1950s; Liuhe 2nd Rd is pedestrianised at night. Signature items lean seafood (seafood congee, salt-steamed shrimp, mullet gizzard)."
+      ],
+      "tips": [
+        "Treat Liuhe as dessert or one snack, as planned; a seafood signature works as that snack.",
+        "Station has 11 exits — follow signs for Exit 1 or 11 to avoid surfacing on the wrong side of Zhongshan Rd."
+      ],
+      "sources": [
+        {
+          "label": "Kaohsiung Travel – Night markets",
+          "url": "https://khh.travel/zh-tw/board-and-lodging/night-market/"
+        },
+        {
+          "label": "KRTC – Formosa Boulevard station",
+          "url": "https://www.krtc.com.tw/Guide/station_info?id=6d709285233f48249ff3668e5851e6a0"
+        },
+        {
+          "label": "Kaohsiung Travel – Dome of Light",
+          "url": "https://khh.travel/zh-tw/attractions/detail/159/"
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "title": "Back to the Hotel",
+      "getThere": "Red Line from 美麗島 (R10) one stop north (toward 岡山車站) to 高雄車站 (R11). Last train toward 岡山車站 from 美麗島: 24:21 (all days).",
+      "sources": [
+        {
+          "label": "KRTC – Formosa Boulevard first/last trains",
+          "url": "https://www.krtc.com.tw/Guide/station_traintime?id=6d709285233f48249ff3668e5851e6a0"
+        },
+        {
+          "label": "KRTC – station list",
+          "url": "https://www.krtc.com.tw/Guide/station_guide?id=R10"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "index": 5,
+      "field": "notes / guide.steps",
+      "existing": "The hour-by-hour schedule isn't posted yet; the listing says times follow the organiser's announcement.",
+      "published": "旗山天后宮 posted '雙媽祖聯合遶境路線正式公布' on Facebook on Nov 3 2026, including 路程時間 with the caveat that timings may run early/late. Content is behind FB login; only the search snippet was readable.",
+      "url": "https://www.bing.com/search?q=%E6%97%97%E9%B9%BF%E5%90%8C%E7%A6%8F+%E9%81%B6%E5%A2%83%E8%B7%AF%E7%B7%9A+%E5%85%AC%E5%B8%83+%E8%B5%B7%E9%A7%95"
+    }
+  ]
+}

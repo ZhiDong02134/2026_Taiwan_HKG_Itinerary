@@ -1,0 +1,273 @@
+{
+  "day": "day-07",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Checkout → Taipei Main → THSR Boarding",
+      "hours": "THSR Taipei Station: operation 06:00–24:00; ticketing 06:00 until last train departure",
+      "getThere": "THSR Taipei Station is at No.3 Beiping W. Rd. (Zhongzheng). It links by B1/B3 corridors to the TRA Taipei Station gate areas; follow THSR signs down to the THSR concourse and gates.",
+      "highlights": [
+        "Pick up or check the reserved ticket before 8:45; trains in this window leave at 08:31, 08:46 and 09:01 (Dec 4 timetable).",
+        "Carry-on limit per piece: ≤150 cm long and ≤220 cm length+width+height; 40 kg total per passenger."
+      ],
+      "tips": [
+        "Large suitcases go in the luggage area at the car ends; small bags on the rack above window seats.",
+        "No hot/cold drinking water is provided on board — buy water before the gates."
+      ],
+      "watch": "Reserved tickets are valid only for the date and train number printed; miss it and you lose the seat.",
+      "sources": [
+        {
+          "label": "THSR Taipei Station info",
+          "url": "https://en.thsrc.com.tw/ArticleContent/53156954-1528-461f-af8b-54c517a435a4"
+        },
+        {
+          "label": "THSR Passenger Guide (baggage limits)",
+          "url": "https://en.thsrc.com.tw/ArticleContent/0ab9938f-60c9-4ca0-b91d-7d9b90ea155a"
+        },
+        {
+          "label": "THSR services overview (water, lockers)",
+          "url": "https://www.thsrc.com.tw/ArticleContent/9915abee-dc70-4ba3-9f6d-c425873c3475"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "THSR: Taipei → Zuoying",
+      "hours": "Fri Dec 4 southbound Taipei→Zuoying: 0207 08:31→10:10 · 0615 08:46→10:45 · 1307 09:01→11:00 · 0813 09:11→11:25 · 0619 09:21→11:20 · 0117 09:31→11:05",
+      "cost": "Standard reserved NT$1,490 · Non-reserved NT$1,445 · Business NT$2,440 (adult, one way)",
+      "getThere": "Non-reserved cars are 10–12 on most of these trains (9–12 on 0615). Car 6 is the Business Car. 0117 (09:31) is the fastest at 1h34 and still arrives 11:05.",
+      "highlights": [
+        "0615 (08:46→10:45) or 1307 (09:01→11:00) match the plan; 0207 (08:31→10:10) buys an extra 50 min in Zuoying.",
+        "Every car has at least one large-luggage area by the doors.",
+        "Toilets in cars 1/3/5/7/9/11; cold-drink vending in cars 1, 5 and 11."
+      ],
+      "tips": [
+        "Standard-car seats swivel 180° so a group can face each other.",
+        "Early-bird discount was showing on train 0813 at time of check; discounts are capped and change — check the booking system."
+      ],
+      "watch": "Non-reserved tickets are valid for the date but do not guarantee a seat. Do not eat strong-smelling food on board.",
+      "sources": [
+        {
+          "label": "THSR timetable & fare search (Dec 4 query)",
+          "url": "https://www.thsrc.com.tw/ArticleContent/a3b630bb-1066-4352-a1ef-58c7b4e8ef7c"
+        },
+        {
+          "label": "THSR car services",
+          "url": "https://en.thsrc.com.tw/ArticleContent/5e3b8b4d-ca1e-447d-b95b-fd7e4e5cccda"
+        },
+        {
+          "label": "THSR Passenger Guide",
+          "url": "https://en.thsrc.com.tw/ArticleContent/0ab9938f-60c9-4ca0-b91d-7d9b90ea155a"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Store Luggage at New Zuoying",
+      "hours": "THSR Zuoying Station operation 05:25–24:00",
+      "getThere": "THSR Zuoying Station, No.105 Gaotie Rd. The 2F corridor links to TRA Xinzuoying Station; Global Mall (Boulder Space, 3F) occupies 1–4F of the Xinzuoying station building at 站前北路1號.",
+      "highlights": [
+        "THSR runs paid coin lockers (寄物櫃) at every station; the Zuoying floor map lists a Baggage Storage point.",
+        "Storing here keeps bags beside the climbing gym, which is in the same station complex."
+      ],
+      "tips": [
+        "Use the station floor map (1F/2F) on the THSR Zuoying page to find the locker bank before you arrive.",
+        "Global Mall 2F food hall: some counters from 07:30, restaurants from 11:00 — handy for a snack while sorting bags."
+      ],
+      "watch": "Locker prices and sizes are not published on the THSR site; large suitcases may not fit small lockers — have a fallback (hotel can't take bags until it is open to you).",
+      "sources": [
+        {
+          "label": "THSR Zuoying Station info",
+          "url": "https://en.thsrc.com.tw/ArticleContent/ecdd8e68-3d12-4f0f-8385-f4891e513494"
+        },
+        {
+          "label": "THSR services overview (寄物櫃)",
+          "url": "https://www.thsrc.com.tw/ArticleContent/9915abee-dc70-4ba3-9f6d-c425873c3475"
+        },
+        {
+          "label": "Global Mall Xinzuoying branch info",
+          "url": "https://www.twglobalmall.com/branch/7/8"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Lunch at Zuoying — Fenyang Wonton (Founding Shop)",
+      "getThere": "高雄市左營區左營大路84號 (old Zuoying) — this is not inside the station complex (高鐵路105號 / 站前北路1號); budget a taxi each way.",
+      "highlights": [
+        "This address is the founding shop of 老左營汾陽餛飩 (opened 1954), tel 07-588-7000.",
+        "Order the hand-wrapped wontons: fresh pork hind-leg filling, made by hand daily.",
+        "Add 祖傳鹹湯圓 — savoury glutinous dumplings filled with pork and shiitake."
+      ],
+      "tips": [
+        "Wonton soup plus salty tangyuan is a solid pre-climb protein lunch.",
+        "Call ahead (07-588-7000) to confirm it is open Friday lunchtime — hours are not on the official site."
+      ],
+      "watch": "Opening hours for the founding shop are not published by the operator; branch hours differ (e.g. 德賢店 11:00–23:00).",
+      "sources": [
+        {
+          "label": "老左營汾陽餛飩 official site",
+          "url": "https://fywonton.com.tw/"
+        },
+        {
+          "label": "Official site: founding shop address",
+          "url": "https://fywonton.com.tw/article_d.php?lang=tw&tb=2&id=94"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "title": "Boulder Space Zuoying — Indoor Bouldering",
+      "hours": "Global Mall 3F (享樂天地) Fri 11:00–22:00",
+      "cost": "Single entry adult NT$350 + shoe rental NT$80 = NT$430 (Global Mall Online voucher, pickup at the Boulder Space counter)",
+      "getThere": "Global Mall Xinzuoying, 高雄市左營區站前北路1號 3F — same building as TRA Xinzuoying and connected to THSR Zuoying.",
+      "highlights": [
+        "Bouldering-focused gym with varied wall angles and training equipment; suits beginners and experienced climbers.",
+        "Shoe rental is bundled in the NT$430 online product."
+      ],
+      "tips": [
+        "Buy the NT$430 product on Global Mall Online (credit card, LINE Pay, JKOPAY, 悠遊付, iPASS MONEY) to skip pricing questions at the desk.",
+        "Mall 2F has food outlets for a post-climb protein snack."
+      ],
+      "watch": "Gym-specific hours and walk-in rules are not on an official page; the mall's 3F hours (Fri 11:00–22:00) are the outer limit.",
+      "sources": [
+        {
+          "label": "Global Mall Online: Boulder Space single entry + shoes",
+          "url": "https://gmonline.twglobalmall.com/product/2C10501510000018"
+        },
+        {
+          "label": "Global Mall Xinzuoying hours",
+          "url": "https://www.twglobalmall.com/branch/7/8"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "title": "Collect Luggage → Airline Inn Check-In",
+      "hours": "Check-in from 3:00 PM; check-out 11:00 AM",
+      "getThere": "From Zuoying take the KMRT Red Line to Kaohsiung Main Station (R11), then walk 3–5 min to 高雄市三民區建國三路33號. TRA Kaohsiung Station is also a 3–5 min walk.",
+      "highlights": [
+        "134-room hotel in front of Kaohsiung Main Station; tel +886-7-285-3888.",
+        "Staff languages: Chinese, English, Japanese."
+      ],
+      "tips": [
+        "Arriving before 3 PM: ask the front desk to hold bags, then head to Pier-2 and check in later.",
+        "Since 1 Jan 2025 no single-use toiletries are placed in rooms — ask the front desk if needed."
+      ],
+      "watch": "Hotel is entirely non-smoking; only partner car parks (paid, first-come).",
+      "sources": [
+        {
+          "label": "Airline Inn Kaohsiung Station — About",
+          "url": "https://www.airlineinn.com/KS/about_us.php"
+        },
+        {
+          "label": "Airline Inn — Location & transport",
+          "url": "https://www.airlineinn.com/KS/location.php"
+        },
+        {
+          "label": "Airline Inn — amenities notice",
+          "url": "https://www.airlineinn.com/KS/news.php?number=14"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Pier-2 / Warehouse & Harbour Corridor",
+      "hours": "Fri 10:00–20:00 (Mon–Thu 10:00–18:00). Ticketed exhibits: last ticket sale 19:00 on Fri. Pier-2 Tower Fri 10:00–19:30",
+      "cost": "Outdoor areas free. 駁二當代館 combo (C5 + 舊事倉庫) NT$120; single exhibit NT$80. Pier-2 Tower NT$10 coin entry",
+      "getThere": "大勇路1號, 鹽埕. Nearest stops: KMRT Yanchengpu (O2), Light Rail 駁二大義 / 駁二蓬萊. Hamasen MRT/LRT for the west end.",
+      "highlights": [
+        "Walk the Dayong (P2/P3/C-warehouses) → Dayi (C6–C11) → Penglai (B-warehouses) strip along the light-rail line.",
+        "Pier-2 Tower: NT$10 coin entry for a harbour view.",
+        "Continue west to 舊打狗驛故事館 and 哈瑪星鐵道園區 if time allows."
+      ],
+      "tips": [
+        "Tickets are sold at the C5 問吧 desk (Dayong) and C7 desk (Dayi).",
+        "Exhibitions: no food/drink, no flash, no running."
+      ],
+      "watch": "2026駁二動漫祭 runs Sat–Sun Dec 5–6 in P2/P3/自行車倉庫 and B3/B4/B9 — expect setup or closures there on Fri Dec 4.",
+      "sources": [
+        {
+          "label": "Pier-2 official (hours, map, events)",
+          "url": "https://pier2.org/"
+        },
+        {
+          "label": "Pier-2 ticket info",
+          "url": "https://pier2.org/ticket/"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "title": "Yancheng Early Dinner",
+      "hours": "鴨肉珍: Fri 10:00–20:20 (closed Tue)",
+      "getThere": "KMRT Yanchengpu (O2) is the hub; the Bib Gourmand shops are a short walk in the 鹽埕 grid.",
+      "highlights": [
+        "鴨肉珍 — Michelin Bib Gourmand; duck rice and duck meat, a lean protein pick that runs past 8 PM.",
+        "Other Bib picks in Yancheng named by Kaohsiung Tourism: 北港蔡三代筒仔米糕, 鄭家切仔麵."
+      ],
+      "tips": [
+        "Go to 鴨肉珍 first — it closes 20:20.",
+        "Pair duck with a meat-heavy side to hit the protein target before E7PLAY."
+      ],
+      "watch": "鄭家切仔麵 closes at 15:00 daily — not a dinner option.",
+      "sources": [
+        {
+          "label": "Kaohsiung Tourism: 鴨肉珍",
+          "url": "https://khh.travel/zh-tw/shop/gourmet/796/"
+        },
+        {
+          "label": "Kaohsiung Tourism: 鹽埕 eating guide (Bib picks)",
+          "url": "https://khh.travel/zh-tw/event/news/5094/"
+        },
+        {
+          "label": "Kaohsiung Tourism: 鄭家切仔麵 hours",
+          "url": "https://khh.travel/zh-tw/shop/gourmet/790/"
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "title": "E7PLAY Sanduo — Bowling, Billiards, Darts, Arcade",
+      "hours": "08:30–02:30 daily, all year",
+      "cost": "Fri entry after 18:00 = holiday rate (non-member): 3 h NT$350, 5 h NT$430, plus 10% cleaning fee (3 h = NT$385). Overtime NT$60 per 30 min",
+      "getThere": "高雄市苓雅區三多一路335號2F (above 小北百貨, opposite 三信家商), tel (07)727-0853. KMRT 五塊厝 Exit 4 is the operator's suggested approach.",
+      "highlights": [
+        "One ticket covers bowling, billiards, darts, KTV booths, arcade machines and massage chairs.",
+        "Glow bowling (夜光保齡球) session at 23:00 — right at the end of a 9 PM entry."
+      ],
+      "tips": [
+        "A 9 PM entry on a 3 h ticket ends at midnight — matches the plan.",
+        "First-time E7 app sign-up gives a buy-one-get-one ticket coupon; member discounts need the in-app card."
+      ],
+      "watch": "Card payments listed are Taiwan-issued Visa/Mastercard/JCB, LINE Pay, TWQR — bring cash. Under-18s, or adults without ID, must leave by midnight.",
+      "sources": [
+        {
+          "label": "E7PLAY Sanduo price table",
+          "url": "https://e7play.com.tw/index.php/all-shop/kaohsiung-sanduo/e7play03price"
+        },
+        {
+          "label": "E7PLAY Sanduo store & transport",
+          "url": "https://www.e7play.com.tw/index.php/all-shop/kaohsiung-sanduo/e7play03shop"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "index": 3,
+      "field": "title",
+      "existing": "Shen Fu Wonton 神福餛飩 at 左營大路84號",
+      "published": "The shop at 高雄市左營區左營大路84號 is 老左營汾陽餛飩 創始老店 (tel 07-588-7000); no '神福餛飩' found",
+      "url": "https://fywonton.com.tw/article_d.php?lang=tw&tb=2&id=94"
+    },
+    {
+      "index": 5,
+      "field": "time",
+      "existing": "~2:10 PM – 3:00 PM: check in now",
+      "published": "Check-in time 3:00 PM (check-out 11:00 AM)",
+      "url": "https://www.airlineinn.com/KS/about_us.php"
+    }
+  ]
+}

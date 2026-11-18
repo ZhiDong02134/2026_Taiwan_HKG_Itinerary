@@ -1,0 +1,291 @@
+{
+  "day": "day-14",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "MTR: TST → Tung Chung",
+      "getThere": "Tsuen Wan Line (red) from Tsim Sha Tsui towards Tsuen Wan, change at Lai King to the Tung Chung Line (orange) and ride to Tung Chung, the terminus. Tung Chung Line stops: Lai King → Tsing Yi → Sunny Bay → Tung Chung.",
+      "tips": [
+        "NLB buses leave from Tung Chung Station Bus Terminus on Tat Tung Road, next to the MTR station; have Octopus loaded for the bus too.",
+        "Fri Dec 11 is a weekday, so NLB charges the lower weekday fares all day."
+      ],
+      "sources": [
+        {
+          "label": "MTR system map & line station lists",
+          "url": "https://www.mtr.com.hk/en/customer/services/system_map.html"
+        },
+        {
+          "label": "NLB route 11 Tung Chung → Tai O (terminus & stops)",
+          "url": "https://www.nlb.com.hk/en/route/13"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "Taxi to Pak Kung Au",
+      "cost": "NLB route 11, weekday fare HK$14.0 from Tung Chung Station Bus Terminus (holiday fare HK$23.3).",
+      "getThere": "NLB 11 (Tung Chung Station Bus Terminus → Tai O) calls at the 'Pak Kung Au' stop on Tung Chung Road, the 15th stop. Mon–Sat departures around your window: 07:50, 08:00, 08:15, 08:30, 08:45, 09:05.",
+      "tips": [
+        "Ask the driver for 伯公坳 Pak Kung Au; it comes right after Tung Chung Au Management Centre.",
+        "The plan uses a taxi; if you take the bus, the 07:50 or 08:00 fits. The 08:15 and 08:30 trips detour via Tong Fuk Correctional Institution, which is beyond Pak Kung Au, so it does not affect you."
+      ],
+      "watch": "Route 11 fares are flat to Pak Kung Au (you pay the full HK$14.0 even though you leave early).",
+      "sources": [
+        {
+          "label": "NLB route 11 Tung Chung → Tai O: stops, fares, timetable",
+          "url": "https://www.nlb.com.hk/en/route/13"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Lantau Peak: Pak Kung Au → Summit → Ngong Ping",
+      "hours": "Country park trail; no gate hours. HKTB: best hiked early morning, October–April.",
+      "cost": "Free",
+      "getThere": "Lantau Trail Section (Stage) 3: Pak Kung Au (Tung Chung Gap) → Lantau Peak 934 m → Ngong Ping. HKTB calls it the easiest route up: about 600 m of climbing over 4.5 km, typically 2.5 hours.",
+      "highlights": [
+        "Lantau Peak (Fung Wong Shan, 'Phoenix Mountain') is Hong Kong's second-highest summit and the high point of Lantau South Country Park.",
+        "Summit views over the South China Sea, outlying islands and, on clear days, the Hong Kong skyline.",
+        "In winter the slopes turn brown and gold; the descent drops you toward Ngong Ping and the Big Buddha."
+      ],
+      "tips": [
+        "AFCD: the climb is steep and strenuous; carry a windbreaker, dry food and drinking water.",
+        "HKTB: winter is cooler and clearer but the peak can be windy; pack a layer for the summit.",
+        "The Kau Nga Ling 'Dog Teeth Range' alternatives are for experienced hikers only; stay on Stage 3."
+      ],
+      "watch": "AFCD: the first five Lantau Trail stages follow rugged slopes and ridges and demand physical strength and experience. Respect the weather veto.",
+      "sources": [
+        {
+          "label": "Discover Hong Kong: Lantau Peak",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-lantau-peak.html"
+        },
+        {
+          "label": "AFCD: Lantau South Country Park",
+          "url": "https://www.afcd.gov.hk/english/country/cou_vis/cou_vis_cou/cou_vis_cou_ls/cou_vis_cou_ls.html"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Big Buddha (20 min)",
+      "hours": "Tian Tan Buddha 10:00 AM – 5:30 PM daily; Po Lin Monastery 9:00 AM – 6:00 PM daily (incl. public holidays).",
+      "highlights": [
+        "Bronze seated Buddha on Mount Muk Yue at 482 m: 26.4 m with lotus seat, 34 m with the three-level base, 250 tonnes, cast in 202 bronze pieces.",
+        "Base platform halls are open: Hall of Merits (500-year-old nanmu Ksitigarbha), Hall of Realm of Reality, and the Memorial Hall with two Buddha relics.",
+        "Six bronze Deities circle the statue; look back over Po Lin Monastery and the South China Sea."
+      ],
+      "tips": [
+        "Po Lin says expect a long flight of stone steps up to the statue; budget legs after the summit.",
+        "The 'Thus Come Thus Gone' renovation exhibition (10 AM – 5 PM, in front of the Buddha Hall) is optional; skip it to keep to 30 min."
+      ],
+      "sources": [
+        {
+          "label": "Po Lin Monastery: visitor information & hours",
+          "url": "https://www.plm.org.hk/eng/visitors.php"
+        },
+        {
+          "label": "Po Lin Monastery: Tian Tan Big Buddha",
+          "url": "https://www.plm.org.hk/eng/tour_buddha.php"
+        },
+        {
+          "label": "Po Lin Monastery: Building the Big Buddha",
+          "url": "https://www.plm.org.hk/eng/buddha.php"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "title": "Quick Lunch at Ngong Ping",
+      "hours": "Po Lin Vegetarian Kitchen 11:30 AM – 4:30 PM daily.",
+      "highlights": [
+        "Po Lin Vegetarian Kitchen (left of the Main Shrine Hall): set meals sized to the table — typically a soup, a deep-fried dish and a vegetable dish with rice.",
+        "Snack shop next door: house-made bean curd dessert and mango glutinous rice dumplings (limited quantity).",
+        "Ngong Ping Village: a two-storey building with 20+ outlets from classic Hong Kong dishes to international food."
+      ],
+      "tips": [
+        "Protein: the monastery meal is vegetarian; for meat, eat in Ngong Ping Village instead.",
+        "Enquiries at the Vegetarian Kitchen reception or the Big Buddha entrance; group bookings tel 2985 4736."
+      ],
+      "sources": [
+        {
+          "label": "Po Lin Monastery: Vegetarian food",
+          "url": "https://www.plm.org.hk/eng/food.php"
+        },
+        {
+          "label": "Discover Hong Kong: Ngong Ping Village",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-ngong-ping-village.html"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "title": "Bus 21: Ngong Ping → Tai O (1:20 PM)",
+      "hours": "Mon–Sat departures from Ngong Ping: 07:30, 10:35, 11:20, 12:20, 13:20, 14:20, 15:20, 16:20, 17:15, 17:45 (Sat only), 18:15.",
+      "cost": "Weekday fare HK$7.9 (holiday HK$19.2).",
+      "getThere": "Board at the Ngong Ping stop on Po Ngong Road (terminus). 15 stops via Keung Shan Road and Tai O Road to Tai O; journey time 18 minutes.",
+      "tips": [
+        "The target is 1:20 PM (on the Mon–Sat timetable); the next is 2:20 PM.",
+        "Sunday adds half-hourly extras (13:50, 14:50) — not relevant on Friday."
+      ],
+      "sources": [
+        {
+          "label": "NLB route 21 Ngong Ping → Tai O",
+          "url": "https://www.nlb.com.hk/en/route/19"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Tai O — Stilt Houses, Waterfront, Food, Short Sampan",
+      "highlights": [
+        "HKTB: a historic fishing village of winding canals, with local snacks and nearby hiking trails.",
+        "Walk the canals and waterfront, then graze the local snacks before the bus."
+      ],
+      "tips": [
+        "Check the government 'Tai O Tourist Hotspots Pedestrian Information' platform for live crowd levels, camera feeds, weather and transport.",
+        "Bus 11 leaves from the Tai O stop on Tai O Road; be there 10 min before your departure."
+      ],
+      "watch": "Sampan price and operating times are set by private operators and were not verifiable; agree the price before boarding.",
+      "sources": [
+        {
+          "label": "Discover Hong Kong: Tai O",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-tai-o.html"
+        },
+        {
+          "label": "NLB route 11 Tai O → Tung Chung",
+          "url": "https://www.nlb.com.hk/en/route/14"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "title": "Bus 11: Tai O → Tung Chung (3:45 PM)",
+      "hours": "Mon–Sat departures from Tai O: 16:10, 16:25, 16:35, 16:45, 16:55, 17:05, 17:15, 17:25, 17:35, 17:50, 18:05 … last 00:15.",
+      "cost": "Weekday fare HK$14.0 (holiday HK$23.3).",
+      "getThere": "Tai O stop (Tai O Road) → South Lantau Road (Shek Pik, Tong Fuk, Cheung Sha) → Pak Kung Au → Tung Chung Station Bus Terminus. Timetabled journey 52 minutes.",
+      "tips": [
+        "Mon–Sat departures from Tai O around your window: 3:30, 3:45, 4:00, 4:10 and 4:25 PM, so a missed bus costs 10–15 minutes.",
+        "The ride takes about 52 minutes, so the 3:45 PM bus reaches Tung Chung around 4:37 PM."
+      ],
+      "watch": "Some trips detour via Sha Tsui or Tong Fuk Correctional Institution and take longer; check the trip in the NLB app.",
+      "sources": [
+        {
+          "label": "NLB route 11 Tai O → Tung Chung",
+          "url": "https://www.nlb.com.hk/en/route/14"
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "title": "Winter Wonderland in Central",
+      "hours": "Christmas Town (18 Nov 2026 – 5 Jan 2027): Mon–Fri 4:00–11:30 PM, Sat–Sun 11 AM – 11:30 PM; lights on from 6 PM; last admission 30 min before closing. Light show 7–11 PM daily, every 30 minutes.",
+      "cost": "Free admission",
+      "getThere": "North and South Statue Square Gardens, Des Voeux Road Central. MTR Central station Exit K.",
+      "highlights": [
+        "22-metre Christmas tree, interactive booths, a Hot Air Balloon Terminal and Christmas Express Station set.",
+        "Projection light show on the Bank of China Tower, HSBC Main Building, Mandarin Oriental, Court of Final Appeal, City Hall and more, viewed from the gardens."
+      ],
+      "tips": [
+        "Light shows run on the hour and half-hour from 7 PM: catch the 7:00 show, walk Christmas Town, and the 7:30 show if you're still there.",
+        "Santa appears on selected days only."
+      ],
+      "watch": "Crowd control may be imposed at peak periods; follow staff and police instructions.",
+      "sources": [
+        {
+          "label": "Discover Hong Kong: Winter Wonderland in Central",
+          "url": "https://www.discoverhongkong.com/eng/events/hong-kong-winterfest/winter-wonderland-in-central.html"
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "title": "Hong Kong Observation Wheel",
+      "hours": "Fri–Sun 11:00 AM – 11:00 PM; Mon–Thu 12:00–10:00 PM; last admission 30 min before closing (10:30 PM on Friday).",
+      "cost": "Adult HK$20; concession HK$10; private gondola HK$160.",
+      "getThere": "33 Man Kwong Street, Central Harbourfront, inside AIA Vitality Park.",
+      "highlights": [
+        "60 m tall with 42 air-conditioned gondolas; the ride lasts about 15–20 min (two to three rotations).",
+        "Views over Victoria Harbour, Central's towers, the Star Ferry pier and Kowloon's lights."
+      ],
+      "tips": [
+        "Book online to skip the ticket queue.",
+        "The site publishes separate weather arrangements; check them if wind or rain picks up."
+      ],
+      "sources": [
+        {
+          "label": "Hong Kong Observation Wheel (official)",
+          "url": "https://www.hkow.hk/"
+        },
+        {
+          "label": "Discover Hong Kong: The Hong Kong Observation Wheel",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-the-hong-kong-observation-wheel.html"
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "title": "Star Ferry → TST",
+      "hours": "Central ↔ Tsim Sha Tsui runs 6:30 AM – 11:30 PM; weekday evenings every 6–8 min until ~8:30–8:40 PM, then every 10–12 min.",
+      "cost": "Mon–Fri adult: upper deck HK$5.0, lower deck HK$4.0.",
+      "getThere": "Central Star Ferry Pier → Tsim Sha Tsui Star Ferry Pier.",
+      "tips": [
+        "Pay by Octopus at the gate, HKD cash (HK$10/HK$20 notes and coins; change given), or QR/credit card at the self-service machines.",
+        "Upper deck costs HK$1 more and has the better harbour view."
+      ],
+      "watch": "No eating or drinking on board; sailings can be adjusted for marine traffic and weather.",
+      "sources": [
+        {
+          "label": "Star Ferry: routes, timetable & fares",
+          "url": "https://www.starferry.com.hk/en/service"
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "title": "TST Waterfront / WinterFest",
+      "hours": "Prudential Hong Kong Winter Wonderland in TST: light show 7–11 PM daily (18 Nov 2026 – 5 Jan 2027).",
+      "cost": "Free",
+      "getThere": "Walk from the TST Star Ferry Pier to the Hong Kong Cultural Centre Viewing Deck.",
+      "highlights": [
+        "Projection mapping across the Hong Kong Cultural Centre, Museum of Art and Space Museum, set to a northern-lights Christmas concert."
+      ],
+      "tips": [
+        "Vantage points: the Cultural Centre Viewing Deck, or outside the Museum of Art and Space Museum.",
+        "Show schedule is subject to change without notice."
+      ],
+      "sources": [
+        {
+          "label": "Discover Hong Kong: Winter Wonderland in Tsim Sha Tsui",
+          "url": "https://www.discoverhongkong.com/eng/events/hong-kong-winterfest/winter-wonderland-in-tsim-sha-tsui.html"
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "title": "Late Food / Dessert",
+      "highlights": [
+        "Kai Kai Dessert (Michelin-recognised, 40+ years): traditional dessert soups — black sesame, almond, red bean with lotus seeds, tofu skin with ginkgo. G/F, 113-115 Parkes Street, Jordan."
+      ],
+      "tips": [
+        "No specific late-night arcade or dessert hours could be verified; check live hours on a map app before walking over."
+      ],
+      "watch": "Kai Kai's opening hours were not published on the pages checked.",
+      "sources": [
+        {
+          "label": "Discover Hong Kong: Kai Kai Dessert",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-kai-kai-dessert.html"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "index": 7,
+      "field": "time",
+      "existing": "4:45 PM – 5:30 PM",
+      "published": "NLB route 11 Tai O → Tung Chung Station Bus Terminus: entire journey time 52 minutes (arrival ~5:37 PM for the 4:45 departure).",
+      "url": "https://www.nlb.com.hk/en/route/14"
+    }
+  ]
+}

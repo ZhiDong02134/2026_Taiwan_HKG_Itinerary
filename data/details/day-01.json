@@ -1,0 +1,65 @@
+{
+  "day": "day-01",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Arrive at JFK Terminal 8 (Cathay Pacific Desk)",
+      "highlights": [
+        "Walk times from T8 security to gates: 1–10 about 2–5 min, 12–20 about 2–4 min, 31–41 about 6–12 min, 42–47 about 6–8 min.",
+        "T8 lounges: Chelsea, Greenwich and Soho (premium), American Admirals Club; Minute Suites private nap/work suites near Gate 37; Jabbrrbox pods at check-in.",
+        "60+ shops and restaurants in T8, many with order-ahead mobile pickup."
+      ],
+      "tips": [
+        "Cathay online check-in lets you pick seats, store a mobile boarding pass and use self-service bag drop instead of the counter queue.",
+        "TWAC (Taiwan arrival card) is free and accepted only within 7 days before arrival; for a Nov 29 landing, file it from about Nov 23 so it is done before you leave home.",
+        "Check the live TSA wait shown on the JFK T8 page before leaving home (sampled at 23 min general / 7 min PreCheck on Nov 11)."
+      ],
+      "watch": "Cathay did not publish a T8 counter-closing time on a page that could be read; treat the boarding pass and airport screens as final.",
+      "sources": [
+        {
+          "label": "JFK Terminal 8 (Port Authority)",
+          "url": "https://www.jfkairport.com/explore-jfk/terminals/terminal-8"
+        },
+        {
+          "label": "JFK T8 lounges and rest",
+          "url": "https://www.jfkairport.com/dine-shop-relax/lounge-and-rest?structureName=Terminal+8"
+        },
+        {
+          "label": "Taiwan Arrival Card (National Immigration Agency)",
+          "url": "https://twac.immigration.gov.tw/"
+        },
+        {
+          "label": "Cathay Pacific online check-in",
+          "url": "https://www.cathaypacific.com/cx/en_US/manage-booking/check-in.html"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "Board Flight CX841 to Hong Kong",
+      "hours": "Scheduled 09:00 EST from JFK → 14:05 HKT next day at HKG; 16h05 block.",
+      "highlights": [
+        "Usual equipment recently: Airbus A350-900 (e.g., B-LRD, B-LRK, B-LRI).",
+        "In early Nov 2026 most CX841 flights pushed back 09:05–09:30 and several landed at HKG well before 14:05 (12:48–13:59)."
+      ],
+      "tips": [
+        "An early landing adds slack to the HKG connection; a late one eats into it — check the CX472 gate as soon as you are on the ground.",
+        "Note the 09:00 departure applies after the US switch to standard time; October flights left at 10:00 EDT.",
+        "Cathay's flight-status tool only covers departures up to 6 days ahead, so live status for Nov 28 appears from about Nov 22."
+      ],
+      "watch": "PlaneMapper logged 3 delays on CX841 in the prior month (average 154 min). Third-party schedule data — Cathay app/boarding pass is final.",
+      "sources": [
+        {
+          "label": "PlaneMapper CX841 schedule & history",
+          "url": "https://www.planemapper.com/flights/CX841"
+        },
+        {
+          "label": "Cathay Pacific flight status",
+          "url": "https://www.cathaypacific.com/cx/en_US/prepare-trip/flight-status.html"
+        }
+      ]
+    }
+  ],
+  "conflicts": []
+}

@@ -1,0 +1,183 @@
+{
+  "day": "day-10",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 1,
+      "title": "Taxi to the Shoushan Trailhead",
+      "getThere": "Taxi to the 龍泉寺 trailhead (route 1 of the seven Chaishan trail routes starts at 龍泉寺登山口). Kaohsiung Travel lists parking at the Chaishan trails.",
+      "tips": [
+        "Eat before leaving and pack food in a closed bag — macaques frequent the trails from the trailhead onward."
+      ],
+      "sources": [
+        {
+          "label": "Kaohsiung Travel – Chaishan trails (Shoushan NNP)",
+          "url": "https://khh.travel/zh-tw/attractions/detail/1231/"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Shoushan / Chaishan Hike",
+      "cost": "Free.",
+      "highlights": [
+        "Seven marked routes on raised-coral limestone; mostly boardwalk, but 盤榕道 (banyan-root route) needs hands and feet among boulders — the fit-hiker option.",
+        "Look for 泰國谷, 一線天 and 一簾幽夢 rock/banyan scenery; the popular end-point 雅座亭 looks out over the Taiwan Strait.",
+        "Former military land opened from 1989, so native forest is well preserved; wild Formosan macaques and squirrels are common."
+      ],
+      "tips": [
+        "Trail signposts give walking times between junctions — use them to time the descent for the late-morning ferry.",
+        "Kaohsiung Travel publishes a map of mobile-signal points on the main Shoushan trails; download offline maps."
+      ],
+      "watch": "Limestone and roots get slippery in rain; skip 盤榕道 if wet. Keep food sealed and don't feed or approach macaques.",
+      "sources": [
+        {
+          "label": "Kaohsiung Travel – Chaishan trails (Shoushan NNP)",
+          "url": "https://khh.travel/zh-tw/attractions/detail/1231/"
+        },
+        {
+          "label": "Kaohsiung Travel – Shoushan National Nature Park",
+          "url": "https://khh.travel/zh-tw/attractions/detail/102/"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "title": "Descend to Gushan → Ferry to Cijin",
+      "hours": "Mon Dec 7 = weekday timetable: 09:50–16:10 a boat roughly every 12–15 min (08:30–09:50 and 16:10–20:00 every 8–12 min). Crossing ~5 min.",
+      "cost": "Adult pedestrian NT$30 cash (discounted from NT$40) or NT$30 by iPASS/EasyCard/icash2.0.",
+      "getThere": "Gushan Ferry Station, 高雄市鼓山區濱海二路1號 → Cijin Ferry Station, 旗津區海岸路10號.",
+      "highlights": [
+        "Cijin Ferry Station reopened in July 2026 as the new '光之渡口' (Ferry of Light) building."
+      ],
+      "tips": [
+        "Have coins ready — cash fares are paid by dropping coins at boarding (請自備零錢投幣登船); tapping an EasyCard/iPASS is the same NT$30.",
+        "Timetable is indicative only: tides, weather and ship traffic in the harbour can shift sailings."
+      ],
+      "watch": "Gushan station building is being rebuilt (its phone line is diverted to 07-571-2542); boats run, but confirm the temporary boarding point on arrival.",
+      "sources": [
+        {
+          "label": "Kaohsiung City Shipping – Gushan–Cijin route (fare & timetable images)",
+          "url": "https://kcs.kcg.gov.tw/en/Content_List.aspx?n=832C80D391F0764A"
+        },
+        {
+          "label": "Kaohsiung City Shipping – home (renovation notice, news)",
+          "url": "https://kcs.kcg.gov.tw/Default.aspx"
+        },
+        {
+          "label": "Kaohsiung Travel – Waterborne transport",
+          "url": "https://khh.travel/zh-tw/traffic/waterborne-traffic/"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "title": "Cijin Headland — Lighthouse, Fort, Coastal Paths",
+      "hours": "Kaohsiung Lighthouse: 10:00–21:00 daily, no closing day (Monday closure was dropped). Cihou Fort: open 24 h.",
+      "getThere": "Lighthouse: 高雄市旗津區旗下巷34號, on top of 旗後山 (tel 07-571-5021). The fort sits on the south side of the same hill, facing the lighthouse.",
+      "highlights": [
+        "Lighthouse built 1883 by British engineer John Reginald Harding, rebuilt 1918; Taiwan's only white octagonal brick lighthouse (15.2 m tower, light 58.2 m above sea).",
+        "Its wind vane is the only one in Taiwan marked with Chinese characters 東西南北; small exhibition of old lighthouse equipment, sundial on the lawn, café on site.",
+        "Cihou Fort: largest and best-preserved of the harbour's three forts; red brick with 囍 and bat motifs and the '威震天南' gate inscription.",
+        "From the fort: Port No. 1 breakwaters, Cijin Beach and the city skyline — good for watching big ships enter."
+      ],
+      "sources": [
+        {
+          "label": "Maritime and Port Bureau – Kaohsiung Lighthouse",
+          "url": "https://www.motcmpb.gov.tw/Lighthouse/Detail/2f3c9806-8e45-404c-9938-cbc98d879d5f?SiteId=1&NodeId=50091"
+        },
+        {
+          "label": "Kaohsiung Travel – Kaohsiung Lighthouse",
+          "url": "https://khh.travel/zh-tw/attractions/detail/119/"
+        },
+        {
+          "label": "Kaohsiung Travel – Cihou Fort",
+          "url": "https://khh.travel/zh-tw/attractions/detail/259/"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "title": "Optional Hotel Shower Stop",
+      "getThere": "Ferry back to Gushan (weekday boats every ~12–15 min until 16:10, then every 8–12 min), then KRTC Orange Line from O1 哈瑪星 to O5/R10 美麗島, change to the Red Line one stop north to R11 高雄車站.",
+      "cost": "Ferry NT$30 per adult.",
+      "sources": [
+        {
+          "label": "Kaohsiung City Shipping – Gushan–Cijin route",
+          "url": "https://kcs.kcg.gov.tw/en/Content_List.aspx?n=832C80D391F0764A"
+        },
+        {
+          "label": "KRTC – station list",
+          "url": "https://www.krtc.com.tw/Guide/station_guide?id=R10"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "title": "Travel North to Zuoying",
+      "getThere": "From R11 高雄車站 the Red Line runs north via R13 凹子底, R14 巨蛋 and R15 生態園區 to R16 左營; a taxi straight to 文慈路76號 avoids an unverified last-mile walk.",
+      "sources": [
+        {
+          "label": "KRTC – station list",
+          "url": "https://www.krtc.com.tw/Guide/station_guide?id=R10"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "title": "Shrimp Fishing — 佰吉星釣蝦競技場",
+      "getThere": "高雄市左營區文慈路76號 (same address previously listed for 佰吉興 shrimp hall).",
+      "highlights": [
+        "An Oct 10 2026 food-blogger reel describes it as newly (re)opened as a shrimp-fishing + stir-fry (熱炒) venue with big Thai prawns in many flavours, golden-sand squid, crispy ginger chicken and squid-conch-garlic soup."
+      ],
+      "tips": [
+        "Hours and rod prices are still not published by the venue; phone 07-350-3909 (number from the existing plan) the day before.",
+        "A July 2026 post on the venue's FB (seen via search snippet) announced an internal renovation and '全新升級 即將登場'; the Oct reel suggests it has reopened."
+      ],
+      "watch": "All details here come from social posts, not an official listing — verify opening hours, pricing and whether rods can be shared before committing the evening.",
+      "sources": [
+        {
+          "label": "food_fat_plan Instagram reel (Oct 10 2026)",
+          "url": "https://www.instagram.com/reel/DeUFlYQM5Tg/"
+        },
+        {
+          "label": "Search results for the venue (FB/IG snippets)",
+          "url": "https://www.bing.com/search?q=%E4%BD%B0%E5%90%89%E6%98%9F%E9%87%A3%E8%9D%A6+%E6%96%87%E6%85%88%E8%B7%AF76%E8%99%9F"
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "title": "Grill the Catch → Proper Dinner",
+      "highlights": [
+        "Per the Oct 2026 reel, shrimp you catch can be cooked by the kitchen on request (代客料理), and there's a full stir-fry/grill/fried menu — so the 'late meal' can happen in the same venue."
+      ],
+      "tips": [
+        "Order a chicken or pork stir-fry alongside the shrimp to round out the protein."
+      ],
+      "watch": "Cooking-fee and menu prices not published; ask when ordering.",
+      "sources": [
+        {
+          "label": "food_fat_plan Instagram reel (Oct 10 2026)",
+          "url": "https://www.instagram.com/reel/DeUFlYQM5Tg/"
+        },
+        {
+          "label": "Search results for the venue (reel snippet incl. 代客料理)",
+          "url": "https://www.bing.com/search?q=%E4%BD%B0%E5%90%89%E6%98%9F%E9%87%A3%E8%9D%A6+%E6%96%87%E6%85%88%E8%B7%AF76%E8%99%9F"
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "title": "Back to the Hotel",
+      "getThere": "Taxi, or Red Line south (toward 小港) from the Zuoying-area stations (R16 左營 / R14 巨蛋 / R13 凹子底) to R11 高雄車站.",
+      "sources": [
+        {
+          "label": "KRTC – station list",
+          "url": "https://www.krtc.com.tw/Guide/station_guide?id=R10"
+        }
+      ]
+    }
+  ],
+  "conflicts": []
+}

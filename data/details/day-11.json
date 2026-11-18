@@ -1,0 +1,364 @@
+{
+  "day": "day-11",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Breakfast",
+      "hours": "Hotel breakfast restaurant (B1) posted as 7:00–9:30 AM on weekdays (7:00–10:00 weekends); Tue Dec 8 is a weekday.",
+      "highlights": [
+        "Buffet per the hotel's own post: congee with side dishes, cold noodles, salads, fruit, bread and toast, hot vegetables, egg dishes, soup, coffee and tea.",
+        "Eggs from the hot counter are the easiest protein before a long transit day."
+      ],
+      "tips": [
+        "Hotel checkout is 11:00 AM, so the 8:30 AM departure is your own schedule, not a hotel constraint.",
+        "Breakfast opens at 7:00, so a 7:00–7:45 sitting buys margin if you choose the 9:00 AM THSR (see the THSR item)."
+      ],
+      "watch": "Breakfast hours come from a 2024 hotel post; the hotel says special dates may differ and are announced at check-in. Confirm the time at the desk the night before.",
+      "sources": [
+        {
+          "label": "Airline Inn Kaohsiung Station (official site: address, check-in/out)",
+          "url": "https://www.airlineinn.com/KS/about_us.php"
+        },
+        {
+          "label": "Search result showing the hotel's Facebook post (breakfast B1, weekday 7:00–9:30)",
+          "url": "https://www.bing.com/search?q=%E9%A0%AD%E7%AD%89%E8%89%99%E9%A3%AF%E5%BA%97+%E9%AB%98%E9%9B%84%E7%AB%99%E5%89%8D%E9%A4%A8+%E6%97%A9%E9%A4%90%E6%99%82%E9%96%93"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "Checkout → MRT to THSR Zuoying",
+      "hours": "Red Line from R11 Kaohsiung Main Station toward Gangshan: first train 06:00 on workdays.",
+      "getThere": "Walk ~500 m from the hotel (33 Jianguo 3rd Rd) to MRT R11 Kaohsiung Main Station (Exits 1–4; Exits 1–3 have lifts). Take the Red Line in the 'Up' direction (toward Gangshan) to R16 Zuoying, then Exit 1, signed 'THSR Zuoying Station'.",
+      "highlights": [
+        "R16 Zuoying Exit 1 connects to THSR Zuoying; Exit 2 goes to TRA New Zuoying.",
+        "Both R11 and R16 have island platforms, so you don't need to switch platforms with luggage."
+      ],
+      "tips": [
+        "Use the lift at R11 Exits 1–3 with suitcases; Exit 4 has only an up escalator.",
+        "Allow extra time at Zuoying to get from the MRT to the THSR gates and pick up tickets if you didn't buy them online."
+      ],
+      "watch": "The KRTC fare and journey time for R11→R16 weren't verifiable on the operator's site, so plan your own buffer for the THSR departure you choose.",
+      "sources": [
+        {
+          "label": "KRTC R11 Kaohsiung Main Station: exits and lifts",
+          "url": "https://www.krtc.com.tw/eng/Guide/station_info?id=bbca0fceac624e1c955f499d242ec1aa"
+        },
+        {
+          "label": "KRTC R11 first and last trains",
+          "url": "https://www.krtc.com.tw/eng/Guide/station_traintime?id=bbca0fceac624e1c955f499d242ec1aa"
+        },
+        {
+          "label": "KRTC R16 Zuoying: Exit 1 to THSR",
+          "url": "https://www.krtc.com.tw/eng/Guide/station_info?id=e9d98c3129844b4c8a7d88814f89135a"
+        },
+        {
+          "label": "Airline Inn official: ~500 m from station",
+          "url": "https://www.airlineinn.com/KS/about_us.php"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "THSR: Zuoying → Taoyuan",
+      "hours": "Tue Dec 8 departures from Zuoying: 0616 08:35→10:09; 0618 09:00→10:36; 0814 09:25→11:18 (stopping train); 0622 09:35→11:09; 0624 10:00→11:36.",
+      "cost": "Adult one-way, Zuoying→Taoyuan: Standard reserved NT$1,330; Business NT$2,200; Non-reserved NT$1,290. Child/concession: NT$665 / NT$1,100 / NT$645.",
+      "getThere": "THSR Zuoying (south terminus) to Taoyuan: about 1 h 34–36 min on the faster trains (0616, 0618, 0622), or 1 h 53 min on 0814.",
+      "highlights": [
+        "Best fit for the plan is 0618 at 09:00 (arrives 10:36). The 0622 at 09:35 (arrives 11:09) also works.",
+        "Non-reserved seats are in cars 10–12 on trains 0616, 0618 and 0622."
+      ],
+      "tips": [
+        "Book reserved seats now: the timetable for Dec 8 already shows on THSR's search page.",
+        "The 0814 shows Early Bird and student discounts but takes 19 minutes longer. Choose a faster train unless the saving matters."
+      ],
+      "watch": "There is no 9:15 AM departure. If you take the 09:35, you reach T1 around 11:36, which still leaves margin before the 12:20 counter close. Your booked ticket is final.",
+      "sources": [
+        {
+          "label": "THSR Timetable and Fare Search (queried for 2026/12/08)",
+          "url": "https://en.thsrc.com.tw/ArticleContent/a3b630bb-1066-4352-a1ef-58c7b4e8ef7c"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Taoyuan Airport MRT: THSR → TPE Terminal 1",
+      "hours": "Midday A18→A12 commuter trains leave at :02, :17, :32 and :47 past each hour (for example 10:47→11:06 and 11:17→11:36).",
+      "cost": "Single-journey ticket A18→A12: NT$35 (full fare).",
+      "getThere": "Walk from the THSR Taoyuan concourse to Airport MRT A18 Taoyuan HSR Station. Take a commuter train (all stops) to A12 Airport Terminal 1, 19 minutes.",
+      "highlights": [
+        "From 10:30 to about 17:00 only commuter trains serve A18 toward the airport. Express trains stop at A18 only at set peak times.",
+        "If you take THSR 0618 (arrives 10:36), catch the 10:47 and reach A12 at 11:06. With 0622 (arrives 11:09), catch the 11:17 and reach A12 at 11:36."
+      ],
+      "tips": [
+        "Buy single-journey tokens at the machines or the information counter, or tap a stored-value card.",
+        "Express trains (purple line) skip A18, so board the commuter train shown on the A18 platform."
+      ],
+      "watch": "The operator says its timetable is for reference only. Leave buffer for airport formalities: the airport advises reaching airline counters 2–3 hours before departure.",
+      "sources": [
+        {
+          "label": "Taoyuan Metro route search A18→A12, 2026-12-08 (times and fare)",
+          "url": "https://www.tymetro.com.tw/tymetro-new/en/_pages/travel-guide/index.php"
+        },
+        {
+          "label": "Taoyuan Metro timetable and train types",
+          "url": "https://www.tymetro.com.tw/tymetro-new/en/_pages/travel-guide/timetable.php"
+        },
+        {
+          "label": "Taoyuan Metro single-journey tickets",
+          "url": "https://www.tymetro.com.tw/tymetro-new/en/_pages/travel-guide/ticketson01.php"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "title": "Check-in, Airside Lunch, Gate",
+      "hours": "Cathay Pacific TPE T1 counters open 180 min before departure (10:20 for CX495) and close at exactly 60 min before (12:20). Self-service kiosks and bag drop close 70 min before (12:10).",
+      "getThere": "Cathay Pacific check-in: Terminal 1, Counter 4. Self-service kiosks and bag drop at Counters 3/4.",
+      "highlights": [
+        "T1 3F Departure Area (airside) food options with posted hours: Burger King 06:00–23:00, Guiji 06:00–22:00, Hómee RICE 05:00–23:00, COMEME 06:00–22:00, Gontran Cherrier bakery 06:00–20:00, L.E.A.F CAFÉ 24 h.",
+        "Burger King or a rice set from Hómee RICE are the quickest protein-heavy choices before the flight."
+      ],
+      "tips": [
+        "Check in online before you leave Kaohsiung, then use self-service bag drop. It closes 10 minutes earlier than the staffed counters.",
+        "The airport homepage shows live T1 security wait times; it read 10 min when checked."
+      ],
+      "watch": "Cathay says counters close at exactly 60 minutes before departure. Arriving after 12:10 rules out self-service bag drop.",
+      "sources": [
+        {
+          "label": "Cathay Pacific – Taoyuan International Airport page",
+          "url": "https://www.cathaypacific.com/cx/en_TW/destinations/airports/taoyuan-international-airport.html"
+        },
+        {
+          "label": "Taoyuan Airport dining – T1 Departure Area filter",
+          "url": "https://www.taoyuan-airport.com/services_facilities?lang=en&p=1&m=9CBEA40D-B7AB-EB11-AB4D-D45D6481BBEB&t=1&a=2"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "title": "Cathay Pacific CX495: Taipei → Hong Kong",
+      "hours": "Scheduled TPE 13:20 (Terminal 1) → HKG 15:25 (Terminal 1). Operates Tue–Sun.",
+      "highlights": [
+        "The timetable allows 2 h 05 min, but the flight usually takes about 1 h 20 min (806 km). Recent flights often landed 25–35 min early, around 14:45–15:05.",
+        "All of the last 9 flights tracked arrived on time (none 15+ min late)."
+      ],
+      "tips": [
+        "An early arrival leaves more of the evening in Hong Kong. Plan on landing before 15:25 but don't rely on it.",
+        "Gate assignments change. On Nov 11 it left from TPE gate B6; check your boarding pass and the screens."
+      ],
+      "watch": "The cabin type and meal in the app notes weren't independently verified here. Your booking and boarding pass take precedence.",
+      "sources": [
+        {
+          "label": "Airportia – CX495 schedule and history",
+          "url": "https://www.airportia.com/flights/cx495/taipei/hong-kong/"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Touchdown Hong Kong (HKG T1) → Immigration → Bags",
+      "getThere": "Arrival sequence: Immigration Hall → Baggage Reclaim → Customs & Excise → Arrivals Hall. The Airport Express ticket counters and trains are reached from the Arrivals Hall.",
+      "highlights": [
+        "Visitors need only a valid travel document at Immigration.",
+        "Eligible frequent visitors can pre-enrol for the e-Channel using the Immigration Department's 'Go Hong Kong' app."
+      ],
+      "tips": [
+        "Have passports out before the Immigration Hall.",
+        "Declare any dutiable goods above the duty-free limits at Customs."
+      ],
+      "watch": "e-Channel pre-enrolment is only for eligible frequent visitors. First-time visitors should expect the staffed counters.",
+      "sources": [
+        {
+          "label": "HKIA – Arrivals passenger guide",
+          "url": "https://www.hongkongairport.com/en/passenger-guide/arrivals/index.page"
+        },
+        {
+          "label": "HKTB – Traveller Essentials (Go Hong Kong app, customs)",
+          "url": "https://www.discoverhongkong.com/eng/plan/getting-around/airport-express.html"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "title": "Airport Express to Kowloon → Sasa Inn",
+      "hours": "Airport Express runs about every 10 min, 05:54–00:48 daily (24 min to Hong Kong Station; Kowloon is the stop before).",
+      "cost": "Airport → Kowloon, adult: HK$115 single smart ticket or HK$105 Octopus (child HK$57.5 / HK$52.5).",
+      "getThere": "Airport Express to Kowloon Station, then a taxi to Sasa Inn: Flat C1, 8/F, Block C, Tsim Sha Tsui Mansion (華源大廈), 87 Nathan Road, Tsim Sha Tsui. Hotel nearest exit: TST MTR Exit C2.",
+      "highlights": [
+        "Sasa Inn is licensed as Hotel/Guesthouse H/6290 (tel 5125 0008). The address matches the one in the app.",
+        "The building's official English name is Tsim Sha Tsui Mansion. Show taxi drivers the Chinese address 彌敦道87號華源大廈C座8字樓."
+      ],
+      "tips": [
+        "Paying with Octopus saves HK$10 per adult on this fare.",
+        "Use the Chinese address in the app's Show card for the taxi."
+      ],
+      "watch": "The MTR website was down for maintenance during research, so the free Airport Express shuttle and Kowloon taxi-stand details couldn't be verified.",
+      "sources": [
+        {
+          "label": "HKIA – Airport Express fares and frequency",
+          "url": "https://www.hongkongairport.com/en/transport/to-from-airport/airport-express.page"
+        },
+        {
+          "label": "Tourists.hk licensed-lodging directory – Sasa Inn H/6290",
+          "url": "https://www.tourists.hk/listing/h-6290.html"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "title": "Tsim Sha Tsui Harbourfront Walk",
+      "hours": "Promenade always open. The WinterFest TST light show runs 7–11 PM. A Symphony of Lights ended with its final show on Nov 18, 2026.",
+      "cost": "Free.",
+      "highlights": [
+        "Avenue of Stars: a 400 m harbour promenade with plaques, handprints and statues of Bruce Lee, Jackie Chan and Anita Mui.",
+        "Next to it on the Hung Hom Bypass is the 250 m Sports Wall of Fame, with portraits of 40+ Hong Kong Olympic and Asian Games medallists.",
+        "At dusk the Hong Kong Island skyline lights up across the harbour."
+      ],
+      "tips": [
+        "HKTB recommends dusk for the day-to-night transition, which fits the 5:15 PM start.",
+        "The TST Winter Wonderland show starts at 7 PM on the TST harbourfront — it has replaced A Symphony of Lights."
+      ],
+      "sources": [
+        {
+          "label": "HKTB – Avenue of Stars",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-avenue-of-stars.html"
+        },
+        {
+          "label": "Tourism Commission – A Symphony of Lights special announcement (final show Nov 18, 2026)",
+          "url": "https://www.tourism.gov.hk/symphony/english/SpecialAnnouncements/SpecialAnnouncements.html"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "title": "Mak Man Kee Wonton Noodles — Jordan",
+      "hours": "Daily 12:00 noon – 12:30 AM. Closed Tuen Ng, Mid-Autumn and Lunar New Year days 1–3, none of which fall on Dec 8.",
+      "getThere": "G/F, 51 Parkes Street, Jordan (白加士街51號地下), at MTR Jordan Exit C2. Tel 2736 5561.",
+      "highlights": [
+        "Started in 1958 as a dai pai dong. Known for handmade wonton noodles brought from Guangzhou by founder Mak Woon-chi. Michelin Bib Gourmand.",
+        "Kwun Chung Market and Bowring Street Market are a short walk away if you want more to eat."
+      ],
+      "tips": [
+        "The official menu (2025) is posted only as images on mmk.hk; check it there or in the shop.",
+        "Arriving around 6:30 PM is ahead of the busiest dinner hour. The app's 15-minute queue rule still applies."
+      ],
+      "watch": "Dish prices couldn't be verified as text from an official source.",
+      "sources": [
+        {
+          "label": "Mak Man Kee official – contact and hours",
+          "url": "https://www.mmk.hk/contact-mmk"
+        },
+        {
+          "label": "HKTB – Mak Man Kee Noodle Shop",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-mak-man-kee-noodle-shop.html"
+        },
+        {
+          "label": "Mak Man Kee official – menu page",
+          "url": "https://www.mmk.hk/menu-mmk"
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "title": "Temple Street / Yau Ma Tei Night Walk",
+      "hours": "Temple Street between Jordan Road and Kansu Street is closed to cars 2 PM – midnight. Most stalls set up around 4 PM; busiest after dark until about 10–11 PM.",
+      "cost": "Free to walk.",
+      "highlights": [
+        "Street food near the Temple Street archway: claypot rice, fish balls, siu mai, plus pepper cakes, spicy skewers, Turkish lamb and Pakistani dishes.",
+        "Impromptu Cantonese opera performances and fortune-teller stalls.",
+        "Photo stops: the archway, Tin Hau Temple at Yau Ma Tei, and the retro Mido Cafe."
+      ],
+      "tips": [
+        "Skewers, lamb or a seafood plate if you are still hungry after noodles.",
+        "Fortune tellers and opera singers usually appear later in the evening, so the end of this 7:30–8:20 PM walk is when they start to appear."
+      ],
+      "watch": "Dai pai dong menus lean on seafood. Some stalls stay open past midnight depending on the day and weather.",
+      "sources": [
+        {
+          "label": "HKTB – Temple Street Night Market",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-temple-street-night-market.html"
+        },
+        {
+          "label": "Temple Street Night Market guide – opening hours",
+          "url": "https://www.temple-street-night-market.hk/opening-hours"
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "title": "Winter Wonderland in Tsim Sha Tsui",
+      "hours": "18 Nov 2026 – 5 Jan 2027, 7–11 PM daily. Dec 8 uses the normal schedule; late shows to 1 AM run only on 24–27 Dec and 1–2 Jan.",
+      "getThere": "MTR to Tsim Sha Tsui or East Tsim Sha Tsui, then walk to the Hong Kong Cultural Centre precinct on the waterfront.",
+      "highlights": [
+        "First edition of Prudential Hong Kong Winter Wonderland in TST: projection mapping, synchronised music and storytelling across the Cultural Centre, Museum of Art and Space Museum, themed as a northern-lights Christmas concert.",
+        "Best viewing: the Viewing Deck at the Hong Kong Cultural Centre, or outside the Museum of Art and Space Museum."
+      ],
+      "tips": [
+        "The 8:30 PM visit sits well inside the 7–11 PM show hours.",
+        "WinterFest also has a 22 m tree and a 360° light-and-sound show at Statue Square Gardens, Central (same dates) if you want another evening."
+      ],
+      "watch": "HKTB says the schedule can change without notice. Shows are partly suspended 28–30 Dec and fully on 31 Dec, which doesn't affect Dec 8.",
+      "sources": [
+        {
+          "label": "HKTB – Prudential Hong Kong Winter Wonderland in Tsim Sha Tsui",
+          "url": "https://www.discoverhongkong.com/eng/events/hong-kong-winterfest/winter-wonderland-in-tsim-sha-tsui.html"
+        },
+        {
+          "label": "HKTB – Hong Kong WinterFest 2026",
+          "url": "https://www.discoverhongkong.com/eng/what-s-new/events/hong-kong-winterfest.html"
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "title": "Promenade, Dessert or an Arcade",
+      "hours": "Silvercord Amusement & Games: 08:00–02:00. Retrocity Concept: 10:00–02:00. NAMCO branches close by 22:00–22:30 and none are in TST.",
+      "getThere": "Silvercord Amusement & Games: Shop B03, Silvercord, 30 Canton Road, TST (tel 2730 3632). Retrocity Concept: LG23, Houston Centre, 63 Mody Road, TST (tel 6576 6680).",
+      "highlights": [
+        "Silvercord: 16 linked Wangan Midnight Maximum Tune 5 / Initial D racing simulators, an original Taiko no Tatsujin, and Hatsune Miku rhythm games.",
+        "Retrocity Concept: a non-smoking retro arcade with classic video games, maimai DX, Drum Mania and Z Gundam, and retro games for sale."
+      ],
+      "tips": [
+        "Silvercord on Canton Road is the closer arcade to the Cultural Centre waterfront.",
+        "If you are short on protein, pick something up at a 7-Eleven on the way back, as the day plan suggests."
+      ],
+      "watch": "Arcade hours come from a 2024 guide and a directory that marks them 'pending verification'. Playspot lists Retrocity's building as Hoi Sun Centre; the street number is the same.",
+      "sources": [
+        {
+          "label": "Honeycombers – arcades and game centres in Hong Kong",
+          "url": "https://thehoneycombers.com/hong-kong/game-arcades-game-centres-hong-kong/"
+        },
+        {
+          "label": "Playspot – Silvercord Amusement & Games",
+          "url": "https://playspot.com.hk/en/venue/silvercord-amusement-games-248"
+        },
+        {
+          "label": "Playspot – Retrocity Concept",
+          "url": "https://playspot.com.hk/en/venue/retrocity-concept-249"
+        },
+        {
+          "label": "NAMCO Hong Kong – branch list and hours",
+          "url": "https://www.namco.com.hk/shop"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "index": 2,
+      "field": "time",
+      "existing": "~9:15 AM – 10:50 AM; 'A train around 9:15 AM'",
+      "published": "No 09:15 departure on Tue Dec 8. Nearest: 0618 09:00→10:36, 0814 09:25→11:18 (stopping train), 0622 09:35→11:09.",
+      "url": "https://en.thsrc.com.tw/ArticleContent/a3b630bb-1066-4352-a1ef-58c7b4e8ef7c"
+    },
+    {
+      "index": 2,
+      "field": "notes",
+      "existing": "reach the airport by ~11:20",
+      "published": "Matching connections: 0618 + Airport MRT 10:47 reaches A12 at 11:06; 0622 + Airport MRT 11:17 reaches A12 at 11:36. No connection lands at 11:20.",
+      "url": "https://www.tymetro.com.tw/tymetro-new/en/_pages/travel-guide/index.php"
+    }
+  ]
+}

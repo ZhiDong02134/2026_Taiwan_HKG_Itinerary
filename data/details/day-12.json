@@ -1,0 +1,243 @@
+{
+  "day": "day-12",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Star Ferry: Tsim Sha Tsui → Central",
+      "hours": "Central ↔ TST runs 06:30–23:30. Weekday (Wed 9 Dec) frequency: every 6 min until ~09:45–09:55, then every 6–8 min until ~20:30–20:40, then every 10–12 min.",
+      "cost": "Adult, Monday–Friday (excl. public holidays): upper deck HK$5.0, lower deck HK$4.0. Four-Day Tourist Pass HK$50 (unlimited Central–TST and Wan Chai–TST rides for 4 days).",
+      "getThere": "Tsim Sha Tsui Star Ferry Pier on Salisbury Road by the Clock Tower; tap Octopus at the gate. Arrives at Central Star Ferry Pier, next to ifc mall and Hong Kong Station.",
+      "highlights": [
+        "Upper deck costs HK$1 more than the lower deck on weekdays (HK$5.0 vs HK$4.0); no reserved seating — sit anywhere.",
+        "Central pier side: Central Harbourfront Promenade and the Hong Kong Observation Wheel are beside the pier."
+      ],
+      "tips": [
+        "Octopus is simplest. Cash is HKD only: HK$10/HK$20 notes and coins, change given. Self-service machines take credit cards, Alipay, WeChat Pay and UnionPay QuickPass and issue one ticket per person.",
+        "The Four-Day Tourist Pass is sold only at the TST pier Control Centre (near Mammy Pancake).",
+        "TST pier has a 7-Eleven, % Arabica and restrooms if you need a pre-crossing stop."
+      ],
+      "watch": "No eating or drinking on board; no standing on the upper deck until docked. Bags limited to 40 × 40 × 17.5 cm. Sailing times can vary with marine traffic and weather.",
+      "sources": [
+        {
+          "label": "Star Ferry: routes, timetable, fares, payment, passenger notice",
+          "url": "https://www.starferry.com.hk/en/service"
+        },
+        {
+          "label": "Star Ferry: piers and facilities",
+          "url": "https://www.starferry.com.hk/en/pier"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "Central / Sheung Wan Compact Urban Route",
+      "cost": "Free to walk. Tourist reward (27 Jul–31 Dec 2026): spend HK$200+ in one same-day transaction at participating Old Town Central merchants for a limited-edition Street Sign Pin, while stocks last.",
+      "getThere": "From Central Star Ferry Pier walk inland to Queen's Road Central. Old Town Central is bounded by Wyndham Street, Possession Street, Queen's Road Central and Caine Road; Sheung Wan's dried-goods streets are just west.",
+      "highlights": [
+        "Hollywood Road: galleries, cafés, murals and heritage sites; HKTB notes Time Out ranked it the world's second-coolest street.",
+        "Central–Mid-Levels Escalator: 800 m covered system from Queen's Road Central to Conduit Road, 16 escalators plus 3 travelators.",
+        "Dried Seafood & Tonic Food Street (Des Voeux Road West, Wing Lok Street, Bonham Strand West): shop fronts of dried scallops, shrimp, fish maw, ginseng, dried berries and roots — a look-only street."
+      ],
+      "tips": [
+        "The escalator runs DOWNHILL 06:00–10:00 and uphill only from 10:20 — during this 9–10 AM slot walk the stairs beside it.",
+        "Pick up a free Old Town Map (street-sign designs) while stocks last."
+      ],
+      "watch": "The escalator does not reach The Peak (HKTB states this explicitly).",
+      "sources": [
+        {
+          "label": "HKTB: Old Town Central",
+          "url": "https://www.discoverhongkong.com/eng/explore/neighbourhoods/old-town-central.html"
+        },
+        {
+          "label": "HKTB: Central–Mid-Levels Escalator",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/attractions/central-mid-levels-escalator.html"
+        },
+        {
+          "label": "HKTB: Dried Seafood Street & Tonic Food Street",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-dried-seafood-street-and-tonic-food-street.html"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Climb to the Peak → Lugard Road → High West",
+      "hours": "Public roads and country-park trail; no gates. Go in daylight.",
+      "cost": "Free",
+      "getThere": "Old Peak Road climbs from the Robinson Road junction (Mid-Levels) to Victoria Gap; the upper part is a pedestrian-only slope. From the Peak Tower, Lugard Road starts the AFCD Peak Trail (High West Section); High West is a branch off it.",
+      "highlights": [
+        "Old Peak Road was the original route to the summit (built 1920s, formerly 'Peak Road'); one of six surviving Victoria City Boundary Markers stands on it.",
+        "Lugard Road (built 1913–14): century-old plank-road sections over the cliff with the classic Victoria Harbour panorama; Lugard Road Lookout is at 31 Lugard Road, ~20 min from the Peak Tower.",
+        "High West viewing point (AFCD): 180° view west over Tsing Yi, Lantau and Lamma; AFCD also lists the High West artillery observation post (西高山砲兵觀察所) nearby."
+      ],
+      "tips": [
+        "AFCD rates the full Peak Trail (High West Section) 4 km / 2.5 h, difficulty 2 of 5 (普通); doing just Lugard Road + the High West spur and returning is shorter.",
+        "The whole Peak Circle Walk loop (Lugard + Harlech Roads) is 3.5 km and about 1 hour per HKTB.",
+        "Water/food only at Peak Tower, Peak Galleria, and a kiosk in Victoria Peak Garden — none on Lugard Road or High West.",
+        "Check HKO's Hiking Trail Weather Service before climbing."
+      ],
+      "watch": "AFCD: Lugard Road edges and the High West cliffs are weathered and steep — stay on the road/built path and never cross railings. If cloud covers the Peak, views vanish (see rain plan).",
+      "sources": [
+        {
+          "label": "AFCD hiking.gov.hk: Peak Trail (High West Section)",
+          "url": "https://www.hiking.gov.hk/trail/info/id/dDI5eDQrbTBHemxIaTEvKzh6N3hwdz09"
+        },
+        {
+          "label": "AFCD Enjoy Leisure: Peak Trail (High West Section)",
+          "url": "https://enjoyleisure.afcd.gov.hk/en/activities/fisheries/peak-trail-high-west-section-87"
+        },
+        {
+          "label": "HKTB: Peak Circle Walk",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-peak-circle-walk.html"
+        },
+        {
+          "label": "Wikipedia: Old Peak Road (route/history)",
+          "url": "https://en.wikipedia.org/wiki/Old_Peak_Road"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Taxi Down to Wan Chai",
+      "cost": "Red urban taxi: HK$29 for the first 2 km, then HK$2.1 per 200 m (or per minute waiting) until the meter reaches HK$102.5, HK$1.4 thereafter. HK$6 per bag carried in the boot.",
+      "getThere": "Pick up near Peak Tower / Peak Galleria; ask for 希慎廣場 Hysan Place, 500 Hennessy Road, Causeway Bay. Public-transport fallback: bus 15 / X15 or green minibus 1 from Peak Galleria to Central, then MTR Island Line Central → Causeway Bay.",
+      "tips": [
+        "Ask for a machine-printed receipt; drivers must issue one on request.",
+        "Carry small notes: drivers are not obliged to change HK$500/HK$1,000."
+      ],
+      "sources": [
+        {
+          "label": "Transport Department: taxi fares",
+          "url": "https://www.td.gov.hk/en/transport_in_hong_kong/public_transport/taxi/taxi_fare_of_hong_kong/index.html"
+        },
+        {
+          "label": "HKTB: Peak Circle Walk (leaving The Peak)",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-peak-circle-walk.html"
+        },
+        {
+          "label": "MTR system map (Island Line stations)",
+          "url": "https://www.mtr.com.hk/en/customer/services/system_map.html"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "title": "Causeway Bay → Happy Valley on Foot and by Tram",
+      "cost": "Tram adult HK$3.30 flat fare.",
+      "getThere": "Board a tram showing 'Happy Valley' — route 2 (Happy Valley ↔ Shau Kei Wan) or route 5 (Kennedy Town ↔ Happy Valley) — and ride to the Happy Valley terminus beside the racecourse on Wong Nai Chung Road.",
+      "tips": [
+        "Pay when you exit at the FRONT door: Octopus, Visa/Mastercard/UnionPay/JCB/Amex contactless, Apple/Google Pay, or QR (AlipayHK, WeChat Pay). No change for cash.",
+        "Aim to reach the racecourse gates as they open; on a nine-race night they may open earlier than two hours before race 1 (see index 6)."
+      ],
+      "watch": "From 1.5 h before the first race, Wong Nai Chung Road southbound (Queen's Road East → racecourse) closes to most traffic, so road travel around the course slows.",
+      "sources": [
+        {
+          "label": "Hong Kong Tramways: schedules and fares",
+          "url": "https://www.hktramways.com/en/schedules-fares/"
+        },
+        {
+          "label": "HKJC: special traffic arrangements, Happy Valley race meetings",
+          "url": "https://corporate.hkjc.com/corporate/corporate-news/english/2022-11/news_2022112901842.aspx"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "title": "Happy Valley — International Jockeys' Championship",
+      "hours": "LONGINES IJC confirmed for Wed 9 Dec 2026, Happy Valley night meeting (9 turf races, 1000–1800 m). First race 6:40 or 7:10 PM (card not yet published); gates open 2 h before race 1, earlier when >8 night races. Last race ~11:00 PM.",
+      "cost": "Public Enclosure: free for visitors 18+ with a valid passport/travel document (otherwise HK$10 by Octopus). Members Enclosure Tourist Badge on IJC night: HK$190 (passport required at purchase).",
+      "getThere": "Public Enclosure entrance on Wong Nai Chung Road (HKJC names entrance G for the HK$10 Octopus gate).",
+      "highlights": [
+        "IJC format: elite local and overseas jockeys ride four designated races; highest points total wins. Ride allocation is drawn on 7 Dec, press conference 8 Dec.",
+        "HKJC top spots: Parade Ring, 1650 m starting gate, Winning Post, Beer Garden food trucks, centre-stage live bands; Racing Academy and virtual-ride simulator on 1/F, Grandstand Gate G.",
+        "2/F Track View Terrace has a sweeping track view plus a big screen showing races from multiple angles (HKTB)."
+      ],
+      "tips": [
+        "Final two IJC places are decided after the 25 Nov meeting; check the HKIR event hub for the full jockey line-up.",
+        "HKJC suggests arriving by 9:30 PM at the latest; earlier is better on a big night.",
+        "Free Wi-Fi: network 'HKJC'."
+      ],
+      "watch": "No entry under 18. Public Enclosure bans slippers, flip-flops, plastic footwear and offensive clothing; Members Enclosure also bans singlets and sports shorts. HKJC says start times are provisional and may change; check the race card once published.",
+      "sources": [
+        {
+          "label": "HKJC: LONGINES HKIR event hub (IJC 9 Dec, key dates)",
+          "url": "https://campaigns.hkjc.com/racing-event-hub-hkir/en/"
+        },
+        {
+          "label": "HKJC Happy Wednesday: LONGINES IJC admission & hours",
+          "url": "https://happywednesday.hkjc.com/en-US/parties/S2627LonginesIJC/"
+        },
+        {
+          "label": "HKJC: Happy Valley Racecourse visit page",
+          "url": "https://entertainment.hkjc.com/en-us/visit-us/happy-valley-racecourse"
+        },
+        {
+          "label": "HKJC: December 2026 fixture",
+          "url": "https://racing.hkjc.com/en-us/local/information/fixture?calyear=2026&calmonth=12"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "title": "Back to TST",
+      "getThere": "MTR: walk to Causeway Bay station, Island Line west to Admiralty, change to Tsuen Wan Line to Tsim Sha Tsui (hotel is at Exit C2). Alternative: Star Ferry Central → TST runs until 23:30.",
+      "cost": "Taxi to Kowloon adds the Cross-Harbour Tunnel charge: HK$25 toll + HK$25 return toll (return toll waived only from a cross-harbour taxi stand).",
+      "tips": [
+        "The Sung Tak Street taxi stand is suspended 5:00–11:59 PM on night meetings; a temporary stand on Wong Nai Chung Road (south of the Members' entrance) runs only from race 3 until the end of the second-last race."
+      ],
+      "sources": [
+        {
+          "label": "HKJC: special traffic arrangements (taxi stands)",
+          "url": "https://corporate.hkjc.com/corporate/corporate-news/english/2022-11/news_2022112901842.aspx"
+        },
+        {
+          "label": "Transport Department: taxi fares & tunnel tolls",
+          "url": "https://www.td.gov.hk/en/transport_in_hong_kong/public_transport/taxi/taxi_fare_of_hong_kong/index.html"
+        },
+        {
+          "label": "MTR system map",
+          "url": "https://www.mtr.com.hk/en/customer/services/system_map.html"
+        },
+        {
+          "label": "Star Ferry: timetable",
+          "url": "https://www.starferry.com.hk/en/service"
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "title": "Late Arcade / Dessert in TST",
+      "getThere": "From Tsim Sha Tsui MTR (Tsuen Wan Line) — the hotel exit C2 is the base.",
+      "tips": [
+        "Decide at the racecourse: if you stay to the final race (~11:00 PM), this slot realistically shrinks to a quick dessert near the hotel."
+      ],
+      "watch": "No specific TST arcade with late opening hours could be verified for 9 Dec; confirm hours on the spot before walking over.",
+      "sources": [
+        {
+          "label": "HKJC Happy Wednesday: race-night hours (last race ~11 PM)",
+          "url": "https://happywednesday.hkjc.com/en-US/parties/S2627LonginesIJC/"
+        },
+        {
+          "label": "MTR system map",
+          "url": "https://www.mtr.com.hk/en/customer/services/system_map.html"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "index": 7,
+      "field": "notes",
+      "existing": "gates open two hours before [the first race]",
+      "published": "Opening time is 2 hours before the first race, but if there are more than eight races on a night meeting it is brought forward. The Dec 9 fixture lists nine races, so gates may open earlier than 2 h before race 1.",
+      "url": "https://entertainment.hkjc.com/en-us/visit-us/happy-valley-racecourse"
+    },
+    {
+      "index": 7,
+      "field": "guide.steps[Entry]",
+      "existing": "Overseas visitors get free public-enclosure admission — bring passports.",
+      "published": "Free entry applies to tourists aged 18+ holding a valid travel document or passport for entry to Hong Kong; nobody under 18 may enter. (Clarification, not a contradiction.)",
+      "url": "https://happywednesday.hkjc.com/en-US/parties/S2627LonginesIJC/"
+    }
+  ]
+}

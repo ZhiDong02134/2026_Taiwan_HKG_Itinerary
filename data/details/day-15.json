@@ -1,0 +1,180 @@
+{
+  "day": "day-15",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Yat Tung Heen — Michelin-Star Dim Sum Brunch #2",
+      "hours": "Sat, Sun & PH: 10:00 AM – 4:00 PM (last order 3:30 PM); 6:00–10:30 PM (last order 9:30 PM). Takeaway 12–9 PM daily.",
+      "getThere": "Level B2, Eaton HK, 380 Nathan Road, Jordan, Kowloon.",
+      "highlights": [
+        "One Michelin star every year 2017–2026; Cantonese kitchen led by Chef Tam Tung, in a moody 1920s-Shanghai-tavern dining room.",
+        "Signatures on the restaurant's menu page: Signature Honey-glazed Barbecued Pork (char siu), Golden Fried Crispy Chicken Skin and Meat with steamed pancakes, Roasted Suckling Pig.",
+        "Menus listed: Dim Sum Set Lunch, Chef's Winter Recommendations, Michelin Degustation 2026."
+      ],
+      "tips": [
+        "Book via SevenRooms (linked from the restaurant site) or call +852 2710 1093 / 2710 1094; LINE ID yattungheen.",
+        "The 'dine-in dim sum lunch deal' is weekday-only — not available on Saturday.",
+        "Protein: char siu, roast suckling pig and crispy chicken are the meat-forward anchors."
+      ],
+      "watch": "Per-dish prices were not readable on the published menus; budget is unverified.",
+      "sources": [
+        {
+          "label": "Yat Tung Heen: menus, hours & contact",
+          "url": "https://www.yattungheen.com/menus"
+        },
+        {
+          "label": "Eaton HK: Food & Drink (Yat Tung Heen)",
+          "url": "https://www.eatonworkshop.com/en-us/hong-kong/food-beverage/"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "MTR to Causeway Bay",
+      "getThere": "Tsuen Wan Line (red) from Jordan via Tsim Sha Tsui to Admiralty, change to the Island Line (blue) eastbound: Wan Chai → Causeway Bay.",
+      "sources": [
+        {
+          "label": "MTR system map & line station lists",
+          "url": "https://www.mtr.com.hk/en/customer/services/system_map.html"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "60th Hong Kong Brands & Products Expo — Opening Day",
+      "hours": "12 Dec 2026 – 4 Jan 2027 (24 days). 11:00 AM – 9:00 PM daily to 3 Jan; last day 11 AM – 8 PM. No admission in the final 30 min (final hour on the last day).",
+      "getThere": "Victoria Park, Causeway Bay.",
+      "highlights": [
+        "11 themed zones and 900+ outdoor booths (organiser CMA).",
+        "Zones include Hong Kong Brands Square, Food & Beverages, Grocery & Noodles, Ginseng/Dried Seafood & Soup Packs, Beauty & Healthcare, Living & Household, Chillax Zone, Food Plaza, Hometown Flavors.",
+        "Stage performances, shopping offers and lucky draws."
+      ],
+      "tips": [
+        "Head for the Food Plaza and Hometown Flavors zones for snacks; Food & Beverages for samples.",
+        "Opening day is Saturday Dec 12; the gates open at 11 AM, so an 11:30 arrival is inside hours."
+      ],
+      "watch": "Admission fee was not shown on the organiser pages checked.",
+      "sources": [
+        {
+          "label": "HKBPE: The 60th Hong Kong Brands and Products Expo",
+          "url": "https://www.hkbpe.com.hk/web/subpage.php?mid=102&id=1333&lang=en"
+        },
+        {
+          "label": "CMA: 60th HKBPE announcement",
+          "url": "https://www.cma.org.hk/en/"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "title": "Ding Ding Tram West → Wan Chai (20–30 min)",
+      "cost": "Adult HK$3.30 flat fare.",
+      "getThere": "Board any westbound tram in Causeway Bay (routes to Kennedy Town, Shek Tong Tsui or Western Market) and ride through Wan Chai to Central.",
+      "tips": [
+        "Pay when you leave by the front exit: Octopus, Visa/Mastercard/UnionPay/JCB/Amex, Apple/Google/Samsung Pay, or QR codes.",
+        "Cash goes straight into the coin box — no change on board."
+      ],
+      "sources": [
+        {
+          "label": "Hong Kong Tramways: schedules & fares",
+          "url": "https://www.hktramways.com/en/schedules-fares/"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Star Ferry: Wan Chai → TST",
+      "hours": "Central ↔ TST Saturday sailings every 6–8 min from ~7:25 AM to ~10:30–10:40 PM.",
+      "cost": "Sat, Sun & PH adult: upper deck HK$6.5, lower deck HK$5.6.",
+      "getThere": "Walk the Central Harbourfront (AIA Vitality Park, Observation Wheel) to the Central Star Ferry Pier → Tsim Sha Tsui Star Ferry Pier.",
+      "tips": [
+        "Octopus at the gate, HKD cash (HK$10/HK$20 notes and coins; change given), or QR/credit card at the ticket machines.",
+        "Upper deck costs ~HK$1 more and has the better view."
+      ],
+      "watch": "No eating or drinking on board.",
+      "sources": [
+        {
+          "label": "Star Ferry: routes, timetable & fares",
+          "url": "https://www.starferry.com.hk/en/service"
+        },
+        {
+          "label": "Discover Hong Kong: Observation Wheel & AIA Vitality Park",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-the-hong-kong-observation-wheel.html"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "title": "Aqua Luna Evening Harbour Cruise — Tsim Sha Tsui Pier 1",
+      "hours": "Evening Harbour Cruise sailings at 4:30, 5:30, 6:30 and 8:30 PM; 45 minutes. Sailings on the half-hour return to your boarding pier.",
+      "cost": "Adult HK$280, child (4–11) HK$180; one complimentary drink per ticket.",
+      "getThere": "Pick-up points: Tsim Sha Tsui Public Pier 1 and Central Pier 9 (two pick-ups per cruise; check the timetable for the order).",
+      "highlights": [
+        "Lounge beds on deck; the 5:30 PM sailing catches sunset turning into city lights.",
+        "The sunset sailing pairs with an aqualuna Sundowner mocktail."
+      ],
+      "tips": [
+        "Pick TST Pier 1 as your boarding pier when booking so the 5:30 PM loop returns you to TST.",
+        "One free reschedule if requested 12+ hours before departure; within 12 hours HK$50 per person."
+      ],
+      "watch": "Tickets are non-refundable. Sailing cancelled if Typhoon Signal No. 3 or Red Rainstorm (or higher) is hoisted; the route may change for weather.",
+      "sources": [
+        {
+          "label": "Aqua Luna: Evening Harbour Cruise",
+          "url": "https://aqualuna.com.hk/experiences/evening-harbour-cruise/"
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "title": "Winter Wonderland in Tsim Sha Tsui",
+      "hours": "7–11 PM daily, 18 Nov 2026 – 5 Jan 2027.",
+      "cost": "Free",
+      "getThere": "Hong Kong Cultural Centre precinct; MTR Tsim Sha Tsui or East Tsim Sha Tsui.",
+      "highlights": [
+        "Projection mapping on the Hong Kong Cultural Centre, Museum of Art and Space Museum — a Christmas concert inspired by the northern lights."
+      ],
+      "tips": [
+        "Vantage points: the Cultural Centre Viewing Deck, or outside the Museum of Art and Space Museum."
+      ],
+      "watch": "Show schedule is subject to change without prior notice.",
+      "sources": [
+        {
+          "label": "Discover Hong Kong: Winter Wonderland in Tsim Sha Tsui",
+          "url": "https://www.discoverhongkong.com/eng/events/hong-kong-winterfest/winter-wonderland-in-tsim-sha-tsui.html"
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "title": "Arcade / Games — TST Late Night",
+      "tips": [
+        "No TST arcade's late hours could be verified; confirm on a map app before walking.",
+        "Fallback that is verified: the TST harbourfront light show keeps running until 11 PM."
+      ],
+      "sources": [
+        {
+          "label": "Discover Hong Kong: Winter Wonderland in Tsim Sha Tsui",
+          "url": "https://www.discoverhongkong.com/eng/events/hong-kong-winterfest/winter-wonderland-in-tsim-sha-tsui.html"
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "title": "Final Dessert + Harbour",
+      "getThere": "Kai Kai Dessert, G/F, 113-115 Parkes Street, Jordan (second branch: G/F, 472 Lockhart Road, Causeway Bay).",
+      "highlights": [
+        "Michelin-recognised, 40+ years of traditional Chinese dessert soups: thick black sesame, almond, red bean with lotus seeds, tofu skin with ginkgo."
+      ],
+      "watch": "Closing time was not published on the page checked; verify before heading over late.",
+      "sources": [
+        {
+          "label": "Discover Hong Kong: Kai Kai Dessert",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-kai-kai-dessert.html"
+        }
+      ]
+    }
+  ],
+  "conflicts": []
+}

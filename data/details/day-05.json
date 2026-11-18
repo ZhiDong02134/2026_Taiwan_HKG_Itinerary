@@ -1,0 +1,287 @@
+{
+  "day": "day-05",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Private Driver Pickup at Via Hotel → Shifen",
+      "getThere": "Pickup at Via Hotel Taipei Station, No. 60, Sec. 1, Chongqing S. Rd. (台北市中正區重慶南路一段60號), hotel tel +886-2-2314-2121. Destination: Shifen Waterfall Park, 新北市平溪區乾坑10號 (park tel 02-2495-8409).",
+      "tips": [
+        "Give the driver the Chinese address 新北市平溪區乾坑10號; the park has a visitor centre, toilets and parking.",
+        "Nearest listed paid lot: 城市車旅平溪停三, about 526 m from the park — NT$35 first hour, then NT$15 per 30 min, NT$100 daily cap.",
+        "Arriving ~9:30 AM is after the 9:00 AM opening, so there is no wait at the gate."
+      ],
+      "sources": [
+        {
+          "label": "Via Hotel Taipei Station (official)",
+          "url": "https://www.via-hotel.com.tw/taipei-station"
+        },
+        {
+          "label": "New Taipei City Travel — Shifen Waterfall Park",
+          "url": "https://newtaipei.travel/zh-tw/attractions/detail/109612"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "Shifen Waterfall Trails & Viewpoints",
+      "hours": "Non-summer season (Oct–May): 09:00–17:00, last entry 16:30. (Summer Jun–Sep is 09:00–18:00.)",
+      "cost": "Free entry.",
+      "getThere": "Driver to 新北市平溪區乾坑10號. From the Shifen visitor centre, walk across 四廣潭橋 (Sihguangtan Bridge) toward the falls.",
+      "highlights": [
+        "Shifen Falls: a curtain-type waterfall on the Keelung River main stream, nicknamed 'Taiwan's Niagara' for its resemblance; the plunge pool below is very deep.",
+        "When sun hits the spray a rainbow often appears — look from the lower platforms.",
+        "Along the walk from the visitor centre: Sihguangtan pothole formations and Yanjingdong (Spectacles Cave) Falls.",
+        "Several viewing platforms: upper ones look onto the green pool at the lip; the lower one gives the full frontal view, the classic photo spot."
+      ],
+      "tips": [
+        "Budget the full 65 min: the walk out from the visitor centre plus multiple platforms takes longer than the falls alone suggest.",
+        "No sky lantern needed — the park itself is the attraction."
+      ],
+      "watch": "Last entry 16:30 in December; irrelevant for a morning visit but matters if the day is reshuffled.",
+      "sources": [
+        {
+          "label": "New Taipei City Travel — Shifen Waterfall Park",
+          "url": "https://newtaipei.travel/zh-tw/attractions/detail/109612"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Drive to Jinguashi",
+      "getThere": "Gold Museum's official driving route: Freeway 1 toward Keelung → Dahua System IC → Prov. Hwy 62 (Wanrui Expressway) → Ruifang exit → Hwy 2丁 → right on 明燈路 → through Jiufen → North 34 (北34) → Gold Museum. In Google Maps search '黃金博物館遊客服務中心'.",
+      "tips": [
+        "Parking near the museum is limited; the museum advises using the Quanji Temple (勸濟堂) car park, about a 10-min walk — also the Teapot Mountain trailhead side.",
+        "Vehicle controls with shuttle buses apply on national holidays and special-event days only; a Wednesday is normally unaffected.",
+        "The mountain road into the museum area takes about 15 min of curves; take motion-sickness precautions."
+      ],
+      "sources": [
+        {
+          "label": "Gold Museum — Transport (official)",
+          "url": "https://www.gep.ntpc.gov.tw/xmdoc/cont?xsmsid=0G246368749796990112"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Lunch in Jinguashi — Eat Before the Hike",
+      "hours": "Miners' Cafe (礦工食堂): weekdays 09:00–17:00, weekends 09:00–18:00. Gold Museum: Mon–Fri 09:30–17:00 (Wed Dec 2 open).",
+      "cost": "Gold Museum admission NT$80 (cash, credit card or O'Pay at the counter; online via the museum's ticket site / Taipei Fun Pass).",
+      "getThere": "Miners' Cafe is at 新北市瑞芳區金光路8-1號 (tel 02-2496-2898), inside the Gold Museum park next to No. 8 Jinguang Rd.",
+      "highlights": [
+        "Miners' Cafe is the site of the miners' lunch box (礦工便當) referenced in the notes; it also sells sweet-potato soft serve made from Tainung No. 18 sweet potato.",
+        "If time allows after eating: the museum park itself is the rain backup for the hike."
+      ],
+      "tips": [
+        "Eat at the cafe, not in the museum: eating, drinking and gum are banned inside museum buildings.",
+        "Gold-panning experience was suspended Oct 5–Nov 30, 2026 for roof works; the notice runs to Dec 1, so confirm on arrival before planning around it."
+      ],
+      "watch": "Museum closed on the first Monday of each month (Dec 7, 2026), Lunar New Year's Eve/Day and government natural-disaster closure days. Dec 2 (Wed) is not a closure day.",
+      "sources": [
+        {
+          "label": "New Taipei City Travel — Miners' Cafe",
+          "url": "https://newtaipei.travel/zh-tw/shop/detail/207452"
+        },
+        {
+          "label": "Gold Museum — Tickets & Hours (official, zh)",
+          "url": "https://www.gep.ntpc.gov.tw/xmdoc/cont?xsmsid=0G246368552167800609"
+        },
+        {
+          "label": "Gold Museum — Admission & Opening Hours (official, en)",
+          "url": "https://www.gep-en.ntpc.gov.tw/xmdoc/cont?xsmsid=0N245407682332344267"
+        },
+        {
+          "label": "Gold Museum — gold-panning suspension notice",
+          "url": "https://www.gep.ntpc.gov.tw/xceventsnews/cont?xsmsid=0G266496700270752519&sid=0Q254403485632857841"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "title": "Teapot Mountain / Jinguashi Mining Landscape",
+      "hours": "Open 24 hours.",
+      "cost": "Free.",
+      "getThere": "Trailhead reachable from either the Gold Museum or Quanji Temple (勸濟堂); the official listing gives the route as about 1.16 km. Hiker reports: ~10 min from Quanji Temple to the trailhead, then stone steps to a mid-slope viewpoint and the 'teapot mouth'.",
+      "highlights": [
+        "Teapot Mountain (無耳茶壺山), ~600 m elevation, named for its handleless-teapot summit as seen from Jinguashi.",
+        "Summit views: the Pacific to the east, Banping Mountain to the south, Keelung Mountain and the coastal road, and the blue-yellow Yin-Yang Sea below.",
+        "The 'teapot mouth' at the top: a rock opening you climb into and out the other side — the signature photo spot."
+      ],
+      "tips": [
+        "Official grade: 'natural hiking' (stone and timber surfacing) with alternating climbs and flats; strenuous for unfit walkers but easy for this group.",
+        "Hiker reports put the ascent at 40–60 min and descent 30–40 min, which fits the 2-hour block with summit time.",
+        "There is no water or food on the trail; carry at least 500 ml each."
+      ],
+      "watch": "The teapot-mouth scramble needs hands and feet; skip it if rock is wet. Steps get slippery in rain, and winter brings northeast-monsoon wind and fog — turn back at the lower viewpoint if visibility goes.",
+      "sources": [
+        {
+          "label": "New Taipei City Travel — Teapot Mountain Trail",
+          "url": "https://newtaipei.travel/zh-tw/attractions/detail/109986"
+        },
+        {
+          "label": "Hiking Biji — Teapot Mountain trail report (corroboration)",
+          "url": "https://hiking.biji.co/index.php?q=review&act=info&review_id=37685"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "title": "Golden Waterfall & Yin-Yang Sea (Photo Stops, If on Route)",
+      "hours": "Both open 24 hours / year-round.",
+      "cost": "Free.",
+      "getThere": "Both sit on the Shuinandong coastal side reached via North 34 (北34) from the Gold Museum: Golden Waterfall is beside 金水公路; Yin-Yang Sea is just north of Shuinandong village. The museum lists Hwy 2 km 78.5 (Shuinandong car park) ↔ North 34 as its coast-side road.",
+      "highlights": [
+        "Golden Waterfall: water pouring over rocks stained gold by iron-sulfide minerals leached by the area's heavy rain; the streambed is golden along the approach.",
+        "Yin-Yang Sea: a bay with a sharp blue/yellow-brown split, caused by iron hydroxide from pyrite weathering on Jinguashi Mountain."
+      ],
+      "tips": [
+        "Parking: Shuinandong car park is ~133 m from the Yin-Yang Sea viewpoint; the Shuinandong visitor-centre lot is ~524 m from Golden Waterfall.",
+        "Both are drive-up photo stops; 10 minutes each is enough."
+      ],
+      "watch": "These are downhill toward the coast from the museum, not on the direct Jinguashi→Jiufen road; adding them means a descent and climb back on North 34. Drop them first if behind schedule.",
+      "sources": [
+        {
+          "label": "New Taipei City Travel — Golden Waterfall",
+          "url": "https://newtaipei.travel/zh-tw/attractions/detail/110626"
+        },
+        {
+          "label": "New Taipei City Travel — Yin-Yang Sea",
+          "url": "https://newtaipei.travel/zh-tw/attractions/detail/109992"
+        },
+        {
+          "label": "Gold Museum — Transport (official)",
+          "url": "https://www.gep.ntpc.gov.tw/xmdoc/cont?xsmsid=0G246368749796990112"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Jiufen — Hillside Lanes, Food, Views, Dusk",
+      "hours": "Jiufen Old Street (基山街) listed hours: Mon–Thu 08:00–19:00, Fri–Sun 08:00–22:00 (Wed Dec 2: until 19:00). Sunset Dec 2 in Taipei: 5:03 PM; civil twilight ends 5:28 PM.",
+      "cost": "Free to walk. Nearby lot 禾亭-九份礦業 (~159 m): NT$200 per entry.",
+      "getThere": "Driver to 新北市瑞芳區基山街 (Jiufen Old Street); bus stop, toilets and parking are listed at the street.",
+      "highlights": [
+        "Classic snacks named by the city: taro balls (芋圓), meatballs (肉圓) and 草仔粿 (herb rice cakes).",
+        "Shengping Theater (昇平戲院), Jiufen's first theatre, with a vintage ticket booth, old film posters and kiosk.",
+        "The film location of 'A City of Sadness'; the red lanterns and hillside lights at dusk are the main event."
+      ],
+      "tips": [
+        "Sunset is 5:03 PM, after you leave at 4:00 PM, so plan on daytime sea views from the upper lanes rather than dusk.",
+        "On a weekday the street winds down at 19:00, so eat snacks early rather than saving them for after dark."
+      ],
+      "sources": [
+        {
+          "label": "New Taipei City Travel — Jiufen Old Street",
+          "url": "https://newtaipei.travel/zh-tw/attractions/detail/109990"
+        },
+        {
+          "label": "timeanddate — Taipei sunrise/sunset Dec 2026",
+          "url": "https://www.timeanddate.com/sun/taiwan/taipei?month=12&year=2026"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "title": "Private Driver Back to Taipei",
+      "getThere": "Either to Via Hotel Taipei Station (台北市中正區重慶南路一段60號) or straight to the Da'an area near NARA (台北市大安區仁愛路四段345巷4弄19號), which is a 6-min walk from MRT Zhongxiao Dunhua.",
+      "tips": [
+        "Dropping straight in Da'an saves a cross-city return: NARA is 6 min from Zhongxiao Dunhua and 10 min from Xinyi Anhe or Sun Yat-sen Memorial Hall MRT.",
+        "If Jiufen traffic runs late, skip the hotel: NARA holds the 8:30 PM slot for only 10 minutes."
+      ],
+      "sources": [
+        {
+          "label": "Via Hotel Taipei Station (official)",
+          "url": "https://www.via-hotel.com.tw/taipei-station"
+        },
+        {
+          "label": "FunNow — NARA Thai Massage branch page",
+          "url": "https://www.myfunnow.com/en/branches/3027568833955"
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "title": "NARA Thai Massage: 120-min Traditional Bodywork",
+      "cost": "FunNow '泰式古法舒壓按摩 120 min': from TWD 1,299 (listed TWD 1,400). Thai oil massage 120 min: from TWD 1,599. Prices vary by slot.",
+      "getThere": "No. 19, Aly. 4, Ln. 345, Sec. 4, Ren'ai Rd., Da'an (台北市大安區仁愛路四段345巷4弄19號), beside 東區粉圓. MRT Zhongxiao Dunhua 6 min walk; Xinyi Anhe or Sun Yat-sen Memorial Hall 10 min. Tel 02-2771-6692.",
+      "highlights": [
+        "Package: 10-min foot bath + 110-min traditional Thai massage + snack and tea (110 min of hands-on time).",
+        "All therapists are Thai women; handmade Thai dessert after the session (limited daily; substituted if sold out).",
+        "Private rooms, shower and Wi-Fi listed; rated 4.9 on FunNow (6,800+ reviews)."
+      ],
+      "tips": [
+        "Book in the FunNow app/site; the earliest bookable slot is 10:00, so an 8:30 PM slot should be reserved in advance.",
+        "Tell staff about any injury or sensitive areas before starting; pressure is checked during the session per reviews."
+      ],
+      "watch": "This package cannot specify a particular therapist or therapist gender. Arrive on time: 10-minute hold, then possible cancellation without refund.",
+      "sources": [
+        {
+          "label": "FunNow — NARA 120-min traditional Thai massage",
+          "url": "https://www.myfunnow.com/zh-tw/products/3050385552931"
+        },
+        {
+          "label": "FunNow — NARA Thai Massage branch page",
+          "url": "https://www.myfunnow.com/en/branches/3027568833955"
+        },
+        {
+          "label": "i-formosa — NARA listing (address, phone)",
+          "url": "https://i-formosa.com/places/narathai/"
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "title": "East District Late Food & Dessert",
+      "hours": "Eastern Ice Store 東區粉圓: open daily 11:00–23:00 (open all year).",
+      "cost": "One flat price per bowl with up to 4 toppings — NT$70 per the most recent blog update (an older guide lists NT$60). Free self-serve ice and syrup top-ups.",
+      "getThere": "東區粉圓, 台北市大安區忠孝東路四段216巷38號 — right next to NARA. MRT Zhongxiao Dunhua Exit 3.",
+      "highlights": [
+        "Handmade tapioca pearls plus ~30 toppings: taro, sweet-potato balls, red bean, grass jelly, tofu pudding, peanuts, aiyu jelly, coix seed.",
+        "The East District is Taipei's designated night-life hub ('五夜城'), with lanes of late eateries around Zhongxiao Dunhua."
+      ],
+      "tips": [
+        "Go straight from NARA: you finish at ~10:30 PM and the shop closes at 23:00. Order by pointing at the trays; a queue moves fast.",
+        "Taro and peanut toppings are already very sweet — skip extra syrup."
+      ],
+      "watch": "Eastern Ice closes at 23:00, so the second half of the 10:30–11:30 PM block needs another late venue; none was verified for this item.",
+      "sources": [
+        {
+          "label": "東區粉圓 official site — location/transport",
+          "url": "https://efy.com.tw/travel.html"
+        },
+        {
+          "label": "Taipei Travel Geek — Eastern Ice Store",
+          "url": "https://www.taipeitravelgeek.com/eastern-ice-store"
+        },
+        {
+          "label": "SaraTrip — 東區粉圓 (hours, price)",
+          "url": "https://saratrip.com/eastern-ice/"
+        },
+        {
+          "label": "Taipei Travel — East District shopping area",
+          "url": "https://www.travel.taipei/zh-tw/attraction/details/1981"
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "title": "Back to Via Hotel",
+      "getThere": "Taxi from Zhongxiao Dunhua / Ren'ai Rd area to Via Hotel Taipei Station, No. 60, Sec. 1, Chongqing S. Rd. (台北市中正區重慶南路一段60號). Show the driver the Chinese address.",
+      "tips": [
+        "Hotel phone for the driver if needed: +886-2-2314-2121.",
+        "The nearest MRT for an alternative is Zhongxiao Dunhua on the Bannan Line (Exit 3 is the Eastern Ice exit)."
+      ],
+      "sources": [
+        {
+          "label": "Via Hotel Taipei Station (official)",
+          "url": "https://www.via-hotel.com.tw/taipei-station"
+        },
+        {
+          "label": "東區粉圓 official site — location/transport",
+          "url": "https://efy.com.tw/travel.html"
+        }
+      ]
+    }
+  ],
+  "conflicts": []
+}

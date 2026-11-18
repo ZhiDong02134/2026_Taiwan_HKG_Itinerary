@@ -1,0 +1,176 @@
+{
+  "day": "day-08",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "TRA: Kaohsiung → Bao'an Station",
+      "hours": "Sat Dec 5 direct locals Kaohsiung→Bao'an: 3146 07:50→08:52 · 3152 08:24→09:20 · 3158 08:53→09:43 · 3162 09:26→10:22",
+      "cost": "NT$85 adult (local train, one way)",
+      "getThere": "TRA Kaohsiung Station is a 3–5 min walk from Airline Inn. All four trains are direct 區間 (local) services; no change needed.",
+      "highlights": [
+        "3152 (08:24→09:20) lands just before Ten Drum's 09:30 Saturday opening.",
+        "3146 (07:50→08:52) gives a buffer if you want breakfast near Bao'an."
+      ],
+      "tips": [
+        "Local (區間) trains are non-reserved — no seat booking needed.",
+        "Child/senior fare on these locals is NT$43."
+      ],
+      "watch": "Bao'an is a small station — confirm the train actually stops there (all four listed above do).",
+      "sources": [
+        {
+          "label": "TRA timetable search (Kaohsiung→Bao'an, 2026/12/05)",
+          "url": "https://tip.trc.com.tw/tra-tip-web/tip/tip001/tip112/gobytime"
+        },
+        {
+          "label": "Airline Inn — location",
+          "url": "https://www.airlineinn.com/KS/location.php"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "Bao'an Station → Ten Drum (walk or short taxi)",
+      "getThere": "Bao'an Station: 臺南市仁德區文賢路一段529巷10號. Ten Drum: 臺南市仁德區文華路二段326號 (tel 06-2662225).",
+      "highlights": [
+        "Bao'an Station (built 1899, Alishan cypress) is Taiwan's best-preserved Japanese-era wooden station — worth 5 min of photos.",
+        "The station is open all year and free to look around."
+      ],
+      "tips": [
+        "Ten Drum opens 09:30 on Saturdays, so arriving on the 09:20 train is ideal.",
+        "Weekday hours are different (10:00–17:20) — the Saturday times apply on Dec 5."
+      ],
+      "sources": [
+        {
+          "label": "Tainan Travel: Bao'an Station",
+          "url": "https://www.twtainan.net/zh-tw/attractions/detail/571/"
+        },
+        {
+          "label": "Tainan Travel: Ten Drum",
+          "url": "https://www.twtainan.net/zh-tw/attractions/detail/816/"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Ten Drum Cultural Village",
+      "hours": "Sat 09:30–17:50 (Mon–Fri 10:00–17:20). Drum shows 11:00 and 15:00. Some halls/rides pause 11:45–13:10 for maintenance",
+      "cost": "Adult NT$509 at gate; NT$458 online via Ten Drum's LINE (valid 2026/1/1–12/31, exchange at ticket booth on the day and book a show slot). Extra show NT$300",
+      "getThere": "臺南市仁德區文華路二段326號 — near TRA Bao'an Station.",
+      "highlights": [
+        "Ticket includes unlimited use of the 'extreme' facilities: Sky Swing (min 120 cm, 25–180 kg), Free Fall and Outdoor Zipline (min 120 cm, 30–110 kg).",
+        "Also: Chimney Slide, Transparent Climbing Wall, Outdoor Archery, Pole Rowing, Laser Tag (min 140 cm).",
+        "One drum show per ticket (11:00 or 15:00); seats chosen when you exchange the ticket."
+      ],
+      "tips": [
+        "Zipline, Sky Swing, Free Fall and Laser Tag open from 13:10 — do archery, chimney slide and climbing wall in the morning.",
+        "Wear closed-toe shoes and trousers: high rides need closed-toe shoes and some walkways are see-through.",
+        "Lunch during the 11:45–13:10 pause: 十鼓餐廳, 蜜橋咖啡, 修護書屋, 鼓找冰屋 stay open."
+      ],
+      "watch": "Single same-day entry — leaving means a new ticket. Sign the extreme-activity consent form. Pole Rowing had November closure dates; check the facility notice for December.",
+      "sources": [
+        {
+          "label": "Ten Drum opening hours",
+          "url": "https://www.tendrum.com.tw/TpLandTime/zt"
+        },
+        {
+          "label": "Ten Drum 2026 tickets",
+          "url": "https://www.tendrum.com.tw/TpElecsTicket/zt"
+        },
+        {
+          "label": "Ten Drum 2026 hours/show-time card",
+          "url": "https://www.tendrum.com.tw/userfiles/images/2026%E7%A5%A8%E5%83%B9%E8%A1%A8_140x80(1).jpg"
+        },
+        {
+          "label": "Ten Drum facility rules & times",
+          "url": "https://www.tendrum.com.tw/TpNewsInfo/zt/463"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Taxi into Central Tainan",
+      "cost": "TRA alternative: NT$22 Bao'an→Tainan (local)",
+      "getThere": "Cheaper than a taxi: TRA Bao'an→Tainan locals on Dec 5 at 15:37→15:43, 15:48→15:54, 16:08→16:14, 16:13→16:20, 16:33→16:39 (6–7 min). From Tainan Station take a short taxi to the food stop.",
+      "highlights": [
+        "Trains run every 10–20 min in the late afternoon.",
+        "The ride is only 6–7 min to Tainan Station."
+      ],
+      "tips": [
+        "Ten Drum closes 17:50 on Saturdays; later Bao'an→Tainan locals also run (16:45, 16:54).",
+        "Wusheng Night Market opens at 17:00, so there is no need to rush."
+      ],
+      "sources": [
+        {
+          "label": "TRA timetable search (Bao'an→Tainan, 2026/12/05)",
+          "url": "https://tip.trc.com.tw/tra-tip-web/tip/tip001/tip112/gobytime"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "title": "Wusheng Night Market — Food & Games",
+      "hours": "Wed, Fri, Sat 17:00–00:00 (closed Sun–Tue, Thu) — Saturday Dec 5 is an operating night",
+      "getThere": "臺南市中西區武聖路69巷42號 — the square at 武聖路69巷 × 光賢街.",
+      "highlights": [
+        "~330 stalls; opened 1984; rated a 4-star market (MOEA 2024).",
+        "Strong on old-school games: ring toss (套圈圈), pinball (打彈珠).",
+        "3-star stalls: 陳家阿嬤拔絲地瓜 (candied sweet-potato fries), 古玥茶 (soy-milk black tea, herbal black tea)."
+      ],
+      "tips": [
+        "Arrive near 17:00 opening to play games before the crowd.",
+        "Eat the protein-heavy stalls first, then the rated sweet-potato and tea stalls for dessert."
+      ],
+      "watch": "If Wusheng is too crowded, Garden Night Market (北區) also runs on Saturdays (Thu–Sun).",
+      "sources": [
+        {
+          "label": "Tainan Travel: Wusheng Night Market",
+          "url": "https://www.twtainan.net/zh-tw/attractions/detail/6108/"
+        },
+        {
+          "label": "Tainan Market Office: 武聖夜市",
+          "url": "https://marketoffice.tainan.gov.tw/News_Content.aspx?n=44651&s=8747428"
+        },
+        {
+          "label": "Tainan Travel: night-market schedule",
+          "url": "https://www.twtainan.net/zh-tw/statics/night-market/"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Taxi to Tainan Station → TRA to Kaohsiung",
+      "hours": "Sat Dec 5 Tainan→Kaohsiung: 自強141 21:54→22:31 · 區間3281 22:13→23:17 · 自強145 22:29→23:05 · 區間3271 22:36→23:34 · 區間3287 22:54→23:52 · 自強149 23:22→23:57 · last 自強281 23:46→00:21",
+      "cost": "Tze-Chiang (自強) NT$158; local (區間) NT$102 (adult, one way)",
+      "getThere": "Tainan Station → Kaohsiung Station, then 3–5 min walk to Airline Inn.",
+      "highlights": [
+        "自強145 (22:29→23:05) fits the 'back ~11:15 PM' target.",
+        "Tze-Chiang trains take 30–37 min; locals take ~1 h."
+      ],
+      "tips": [
+        "Book a Tze-Chiang seat on the TRA app/site in advance for a Saturday night.",
+        "Missed 22:29? 自強149 at 23:22 arrives 23:57."
+      ],
+      "watch": "Last train is 自強281 at 23:46 (arrives 00:21). Child/senior fares: 自強 NT$79, 區間 NT$51.",
+      "sources": [
+        {
+          "label": "TRA timetable search (Tainan→Kaohsiung, 2026/12/05)",
+          "url": "https://tip.trc.com.tw/tra-tip-web/tip/tip001/tip112/gobytime"
+        },
+        {
+          "label": "Airline Inn — location",
+          "url": "https://www.airlineinn.com/KS/location.php"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "index": 0,
+      "field": "time",
+      "existing": "~8:00 AM – 9:10 AM",
+      "published": "No direct train matches: nearest are 07:50→08:52, 08:24→09:20 or 08:53→09:43",
+      "url": "https://tip.trc.com.tw/tra-tip-web/tip/tip001/tip112/gobytime"
+    }
+  ]
+}

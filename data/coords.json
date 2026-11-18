@@ -1,0 +1,876 @@
+{
+  "checked": "2026-11-11",
+  "hotels": {
+    "taipei": {
+      "lat": 25.04381,
+      "lng": 121.51311,
+      "source": "nominatim: Via Hotel Station 丰居旅店北車館, 60, 重慶南路一段, 光復里"
+    },
+    "kaohsiung": {
+      "lat": 22.63753,
+      "lng": 120.30127,
+      "source": "nominatim: 頭等艙高雄駅前館, 33, 建國三路, 港西里"
+    },
+    "hk": {
+      "lat": 22.29776,
+      "lng": 114.17177,
+      "source": "official: HK Gov Address Lookup Service — Tsim Sha Tsui Mansion, 87 Nathan Road"
+    }
+  },
+  "stops": {
+    "day-01": {
+      "0": {
+        "title": "Arrive at JFK Terminal 8 (Cathay Pacific Desk)",
+        "lat": 40.64687,
+        "lng": -73.7884,
+        "source": "nominatim: Terminal 8, JFK Access Road, Queens, Queens County"
+      }
+    },
+    "day-02": {
+      "2": {
+        "title": "Touchdown TPE T1: Immigration → Bags → EasyCard → Airport MRT",
+        "lat": 25.0805,
+        "lng": 121.2384,
+        "source": "nominatim: 機場第一航廈, 17之1, 航站南路, 埔心里"
+      },
+      "3": {
+        "title": "Check In: Via Hotel Taipei Station — Bags Down",
+        "lat": 25.04381,
+        "lng": 121.51311,
+        "source": "nominatim: Via Hotel Station 丰居旅店北車館, 60, 重慶南路一段, 光復里"
+      },
+      "4": {
+        "title": "Fuhong Beef Noodles (backup: Xiao Wu) — Arrival Dinner",
+        "lat": 25.04759,
+        "lng": 121.50771,
+        "source": "nominatim: 富宏牛肉麵, 洛陽街, 福星里, 萬華區"
+      },
+      "5": {
+        "lat": 25.04443,
+        "lng": 121.50506,
+        "source": "nominatim: 寶雅, 昆明街, 萬壽里, 萬華區",
+        "title": "Protein Run — POYA Shaker + PX Mart Whey"
+      },
+      "6": {
+        "title": "Ximending at Night",
+        "lat": 25.04214,
+        "lng": 121.50628,
+        "source": "nominatim: 西門紅樓, 西寧南路, 西門里, 萬華區"
+      },
+      "7": {
+        "title": "Back to Via Hotel",
+        "lat": 25.04381,
+        "lng": 121.51311,
+        "source": "nominatim: Via Hotel Station 丰居旅店北車館, 60, 重慶南路一段, 光復里"
+      }
+    },
+    "day-03": {
+      "0": {
+        "title": "Dadaocheng / Dihua Street — Yongle Market, Dry Goods, Tea",
+        "lat": 25.05487,
+        "lng": 121.51055,
+        "source": "nominatim: 永樂布業商場, 21, 迪化街一段, 永樂里"
+      },
+      "1": {
+        "title": "Early Lunch — Traditional Dadaocheng / Wanhua Corridor",
+        "lat": 25.06099,
+        "lng": 121.50981,
+        "source": "nominatim: 賣麵炎仔 金泉小吃店, 安西街, 大同區 (the shop at 安西街106號)"
+      },
+      "2": {
+        "lat": 25.03388,
+        "lng": 121.4938,
+        "source": "nominatim (approx.): 168, 大理街 — next to 大理街170巷, the procession start",
+        "title": "Taxi to Wanhua"
+      },
+      "3": {
+        "title": "Qingshan Festival — Pass 1 (Main Procession Day)",
+        "lat": 25.03385,
+        "lng": 121.4937,
+        "source": "osm: mouth of 大理街170巷, beside OSM address nodes 大理街168/168之1號"
+      },
+      "4": {
+        "lat": 25.03725,
+        "lng": 121.49988,
+        "source": "nominatim: 艋舺龍山寺, 211, 廣州街",
+        "title": "Longshan Temple / Bopiliao / Wanhua Streets"
+      },
+      "5": {
+        "title": "Wanhua / Nanjichang Food Break",
+        "lat": 25.02851,
+        "lng": 121.50602,
+        "source": "nominatim: 南機場夜市, 中華路二段307巷, 忠勤里, 中正區"
+      },
+      "6": {
+        "lat": 25.03388,
+        "lng": 121.4938,
+        "source": "nominatim (approx.): 168, 大理街 — next to 大理街170巷, the procession start",
+        "title": "Qingshan Festival — Pass 2 (Only If Active Nearby)"
+      },
+      "7": {
+        "lat": 25.04214,
+        "lng": 121.50628,
+        "source": "nominatim: 西門紅樓, 西寧南路, 西門里, 萬華區",
+        "title": "Ximending Games / Coffee / Dessert"
+      },
+      "8": {
+        "lat": 25.03839,
+        "lng": 121.49841,
+        "source": "nominatim: 華西街観光夜市, 環河南路二段5巷",
+        "title": "Huaxi / Wanhua Street-Life Loop"
+      },
+      "9": {
+        "title": "Qingshan Festival — Pass 3 (Optional, Night)",
+        "lat": 25.03982,
+        "lng": 121.4995,
+        "source": "nominatim: 艋舺青山宮, 貴陽街二段, 青山里, 萬華區"
+      },
+      "10": {
+        "title": "Wanhua Dinner",
+        "lat": 25.02851,
+        "lng": 121.50602,
+        "source": "nominatim: 南機場夜市, 中華路二段307巷, 忠勤里, 中正區"
+      },
+      "11": {
+        "lat": 25.0611,
+        "lng": 121.50139,
+        "source": "nominatim: E7play, 63, 中央南路, 三重區",
+        "title": "E7PLAY Sanchong — Bowling, Billiards, Darts (Plan A)"
+      },
+      "12": {
+        "title": "Back to Via Hotel",
+        "lat": 25.04381,
+        "lng": 121.51311,
+        "source": "nominatim: Via Hotel Station 丰居旅店北車館, 60, 重慶南路一段, 光復里"
+      }
+    },
+    "day-04": {
+      "0": {
+        "title": "Shilin Residence Chrysanthemum Show",
+        "lat": 25.0928,
+        "lng": 121.53048,
+        "source": "osm: relation 6171020 士林官邸公園, 福林路60"
+      },
+      "1": {
+        "title": "Taxi to Lengshuikeng",
+        "lat": 25.16556,
+        "lng": 121.56394,
+        "source": "nominatim: 冷水坑遊客服務站, 菁山路101巷, 菁山里, 士林區"
+      },
+      "2": {
+        "title": "Qixing Mountain: Lengshuikeng → East Peak → Main Peak → Lengshuikeng",
+        "lat": 25.16556,
+        "lng": 121.56394,
+        "source": "nominatim: 冷水坑遊客服務站, 菁山路101巷, 菁山里, 士林區"
+      },
+      "3": {
+        "title": "Pre-Arranged Pickup at Lengshuikeng → Beitou",
+        "lat": 25.16556,
+        "lng": 121.56394,
+        "source": "nominatim: 冷水坑遊客服務站, 菁山路101巷, 菁山里, 士林區"
+      },
+      "4": {
+        "lat": 25.13669,
+        "lng": 121.51033,
+        "source": "nominatim: 地熱谷, 光明路, 溫泉里, 北投區",
+        "title": "Beitou Thermal Valley (20–25 min)"
+      },
+      "5": {
+        "lat": 25.13696,
+        "lng": 121.50317,
+        "source": "nominatim: 新北投, 700, 大業路, 北投區",
+        "title": "Late Lunch near Xinbeitou"
+      },
+      "7": {
+        "title": "Tamsui — Old Street, Riverfront & Sunset",
+        "lat": 25.17184,
+        "lng": 121.4378,
+        "source": "nominatim: 中正路, 新生里, 淡水區, 滬尾"
+      },
+      "8": {
+        "lat": 25.16921,
+        "lng": 121.44329,
+        "source": "nominatim: 黑殿飯店, 中正路, 淡水區",
+        "title": "Tamsui Dinner — Hei Dian Pork-Chop Rice"
+      },
+      "10": {
+        "title": "Shilin Night Market — Games & Food",
+        "lat": 25.08963,
+        "lng": 121.52471,
+        "source": "nominatim: 士林慈諴宮, 84, 大南路, 士林夜市"
+      },
+      "12": {
+        "lat": 25.0611,
+        "lng": 121.50139,
+        "source": "nominatim: E7play, 63, 中央南路, 三重區",
+        "title": "E7PLAY Sanchong — Bowling, Billiards, Darts"
+      },
+      "13": {
+        "title": "Back to Via Hotel",
+        "lat": 25.04381,
+        "lng": 121.51311,
+        "source": "nominatim: Via Hotel Station 丰居旅店北車館, 60, 重慶南路一段, 光復里"
+      }
+    },
+    "day-05": {
+      "0": {
+        "title": "Private Driver Pickup at Via Hotel → Shifen",
+        "lat": 25.04381,
+        "lng": 121.51311,
+        "source": "nominatim: Via Hotel Station 丰居旅店北車館, 60, 重慶南路一段, 光復里"
+      },
+      "1": {
+        "title": "Shifen Waterfall Trails & Viewpoints",
+        "lat": 25.04895,
+        "lng": 121.78731,
+        "source": "nominatim: 十分瀑布, 新寮, 新北市, 臺灣"
+      },
+      "2": {
+        "title": "Drive to Jinguashi",
+        "lat": 25.10738,
+        "lng": 121.85771,
+        "source": "nominatim: 黃金博物館, 8, 金光路, 銅山里"
+      },
+      "3": {
+        "title": "Lunch in Jinguashi — Eat Before the Hike",
+        "lat": 25.10738,
+        "lng": 121.85771,
+        "source": "nominatim: 黃金博物館, 8, 金光路, 銅山里"
+      },
+      "4": {
+        "title": "Teapot Mountain / Jinguashi Mining Landscape",
+        "lat": 25.11018,
+        "lng": 121.85978,
+        "source": "nominatim: 勸濟堂, 53, 祈堂路, 石山里"
+      },
+      "5": {
+        "title": "Golden Waterfall & Yin-Yang Sea (Photo Stops, If on Route)",
+        "lat": 25.11717,
+        "lng": 121.86135,
+        "source": "nominatim: 黃金瀑布, 濂新里, 瑞芳區, 水湳洞"
+      },
+      "6": {
+        "title": "Jiufen — Hillside Lanes, Food, Views, Dusk",
+        "lat": 25.10758,
+        "lng": 121.84372,
+        "source": "nominatim: 九份老街, 崇文里, 瑞芳區, 九份"
+      },
+      "7": {
+        "title": "Private Driver Back to Taipei",
+        "lat": 25.04381,
+        "lng": 121.51311,
+        "source": "nominatim: Via Hotel Station 丰居旅店北車館, 60, 重慶南路一段, 光復里"
+      },
+      "8": {
+        "lat": 25.03827,
+        "lng": 121.53854,
+        "source": "nominatim (street-level approx.): 仁愛路三段, 大安區",
+        "title": "Dinner — Zhong Nan Restaurant (忠南飯館)"
+      },
+      "10": {
+        "title": "NARA Thai Massage: 120-min Traditional Bodywork",
+        "lat": 25.03898,
+        "lng": 121.55241,
+        "source": "nominatim: 仁愛路四段345巷4弄, 建倫里, 大安區, 車罾"
+      },
+      "12": {
+        "title": "Back to Via Hotel",
+        "lat": 25.04381,
+        "lng": 121.51311,
+        "source": "nominatim: Via Hotel Station 丰居旅店北車館, 60, 重慶南路一段, 光復里"
+      }
+    },
+    "day-06": {
+      "0": {
+        "title": "Zhongzheng Sports Center — Archery",
+        "lat": 25.03786,
+        "lng": 121.51985,
+        "source": "nominatim: 中正運動中心, 信義路一段, 東門里, 中正區"
+      },
+      "1": {
+        "title": "Liberty Square / Chiang Kai-shek Memorial Hall — Quick Pass",
+        "lat": 25.03458,
+        "lng": 121.52178,
+        "source": "nominatim: 中正紀念堂, 21, 中山南路, 東門里"
+      },
+      "2": {
+        "title": "Light Early Lunch — Jin Feng Braised Pork Rice",
+        "lat": 25.03203,
+        "lng": 121.51851,
+        "source": "nominatim: 金鋒魯肉飯, 10之2, 羅斯福路一段, 龍福里"
+      },
+      "3": {
+        "lat": 25.03489,
+        "lng": 121.52691,
+        "source": "nominatim: 東門市場, 信義路二段79巷, 中正區",
+        "title": "Nanmen Market — How Taipei Shops + Coffee"
+      },
+      "4": {
+        "title": "10m Air-Rifle Shooting — Zhongzheng Sports Center",
+        "lat": 25.03786,
+        "lng": 121.51985,
+        "source": "nominatim: 中正運動中心, 信義路一段, 東門里, 中正區"
+      },
+      "5": {
+        "title": "Taipei 101 Observatory (89F)",
+        "lat": 25.03384,
+        "lng": 121.5645,
+        "source": "nominatim: 台北101, 7, 信義路五段, 西村里"
+      },
+      "6": {
+        "title": "Elephant Mountain — Golden Hour & Dusk",
+        "lat": 25.02735,
+        "lng": 121.57076,
+        "source": "nominatim: 象山親山步道靈雲宮登山口, 象山自然步道(主線), 三犁里, 信義區"
+      },
+      "7": {
+        "title": "Raohe Night Market",
+        "lat": 25.05129,
+        "lng": 121.57764,
+        "source": "nominatim: 松山慈祐宮, 八德路四段, 慈祐里, 松山區"
+      },
+      "8": {
+        "lat": 25.05222,
+        "lng": 121.57666,
+        "source": "nominatim: 彩虹橋, 慈祐里, 松山區",
+        "title": "Rainbow Bridge / Keelung River (Optional)"
+      },
+      "9": {
+        "title": "Taipei Christmas — Opening Night",
+        "lat": 25.02969,
+        "lng": 121.53582,
+        "source": "nominatim: 大安森林公園, 新生南路二段, 龍門里, 大安區"
+      },
+      "12": {
+        "title": "Back to Via Hotel",
+        "lat": 25.04381,
+        "lng": 121.51311,
+        "source": "nominatim: Via Hotel Station 丰居旅店北車館, 60, 重慶南路一段, 光復里"
+      }
+    },
+    "day-07": {
+      "0": {
+        "title": "Checkout → Taipei Main → THSR Boarding",
+        "lat": 25.04772,
+        "lng": 121.51712,
+        "source": "nominatim: 臺北車站, 3, 北平西路, 黎明里"
+      },
+      "2": {
+        "title": "Store Luggage at New Zuoying",
+        "lat": 22.68714,
+        "lng": 120.30769,
+        "source": "nominatim: 高鐵左營站, 高鐵路, 左營高鐵特區, 高鐵里"
+      },
+      "3": {
+        "title": "Lunch at Zuoying — Fenyang Wonton (Founding Shop)",
+        "lat": 22.6822,
+        "lng": 120.28835,
+        "source": "nominatim: 汾陽餛飩, 左營大路, 埤西里, 左營區"
+      },
+      "4": {
+        "title": "Boulder Space Zuoying — Indoor Bouldering",
+        "lat": 22.68772,
+        "lng": 120.30712,
+        "source": "osm: node 3860820635 環球購物中心新左營店 (站前北路1號)"
+      },
+      "5": {
+        "title": "Collect Luggage → Airline Inn Check-In",
+        "lat": 22.63753,
+        "lng": 120.30127,
+        "source": "nominatim: 頭等艙高雄駅前館, 33, 建國三路, 港西里"
+      },
+      "6": {
+        "title": "Pier-2 / Warehouse & Harbour Corridor",
+        "lat": 22.61953,
+        "lng": 120.28162,
+        "source": "nominatim: 駁二藝術特區, 大港橋, 大港倉410, 麗興里"
+      },
+      "7": {
+        "title": "Yancheng Early Dinner",
+        "lat": 22.62416,
+        "lng": 120.28408,
+        "source": "nominatim: 鹽埕埔, 莒光街179巷, 新樂里, 鹽埕區"
+      },
+      "9": {
+        "lat": 22.58329,
+        "lng": 120.32868,
+        "source": "nominatim: 迷你鈴鹿賽道, 中山四路, 前鎮區",
+        "title": "Mini Suzuka Kart (If the Wait Is Short)"
+      },
+      "11": {
+        "title": "E7PLAY Sanduo — Bowling, Billiards, Darts, Arcade",
+        "lat": 22.62146,
+        "lng": 120.32807,
+        "source": "osm: address node 三多一路335號, 苓雅區 (E7PLAY Sanduo)"
+      }
+    },
+    "day-08": {
+      "0": {
+        "title": "TRA: Kaohsiung → Bao'an Station",
+        "lat": 22.63944,
+        "lng": 120.30402,
+        "source": "nominatim: 高雄車站, 建國二路, 港西里, 三民區"
+      },
+      "1": {
+        "title": "Bao'an Station → Ten Drum (walk or short taxi)",
+        "lat": 22.93898,
+        "lng": 120.23095,
+        "source": "nominatim: 十鼓仁糖文創園區, 文華路二段, 虎山, 成功里"
+      },
+      "2": {
+        "title": "Ten Drum Cultural Village",
+        "lat": 22.93898,
+        "lng": 120.23095,
+        "source": "nominatim: 十鼓仁糖文創園區, 文華路二段, 虎山, 成功里"
+      },
+      "4": {
+        "lat": 22.98979,
+        "lng": 120.19445,
+        "source": "nominatim (street-level approx.): 郡西路, 中西區",
+        "title": "Tainan Fresh Beef Soup — 樑記 + Guohua Street"
+      },
+      "5": {
+        "title": "Wusheng Night Market — Food & Games",
+        "lat": 23.00404,
+        "lng": 120.19051,
+        "source": "nominatim: 武聖夜市, 武聖路197巷49弄, 光賢里, 中西區"
+      },
+      "6": {
+        "title": "Taxi to Tainan Station → TRA to Kaohsiung",
+        "lat": 22.99828,
+        "lng": 120.21354,
+        "source": "nominatim: 臺南車站, 前鋒路, 成大里, 東區"
+      },
+      "8": {
+        "lat": 22.63753,
+        "lng": 120.30127,
+        "source": "nominatim: 頭等艙高雄駅前館, 33, 建國三路, 港西里",
+        "title": "Back to the Hotel"
+      }
+    },
+    "day-09": {
+      "0": {
+        "title": "Private Charter Pickup → Maolin",
+        "lat": 22.63753,
+        "lng": 120.30127,
+        "source": "nominatim: 頭等艙高雄駅前館, 33, 建國三路, 港西里"
+      },
+      "1": {
+        "title": "Maolin Purple Butterfly Valley",
+        "lat": 22.88765,
+        "lng": 120.66321,
+        "source": "nominatim: 紫蝶幽谷, 茂林巷, 茂林里, 茂林區"
+      },
+      "2": {
+        "title": "Butterfly Festival Market (Dec 5–6)",
+        "lat": 22.88765,
+        "lng": 120.66321,
+        "source": "nominatim: 紫蝶幽谷, 茂林巷, 茂林里, 茂林區"
+      },
+      "4": {
+        "lat": 22.88551,
+        "lng": 120.48158,
+        "source": "nominatim (street-level approx.): 永平街, 旗山老街",
+        "title": "Qishan Lunch — Xiuming Pork-Heart Vermicelli"
+      },
+      "5": {
+        "title": "2026 Qilu Tongfu Mazu Procession — Qishan",
+        "lat": 22.88662,
+        "lng": 120.48218,
+        "source": "nominatim: 旗山天后宮, 16, 永福街23巷, 旗山老街"
+      },
+      "6": {
+        "lat": 22.88584,
+        "lng": 120.38984,
+        "source": "nominatim: 田寮月世界遊客中心, 36, 月球路",
+        "title": "Tianliao Moon World (If You've Seen Enough)"
+      },
+      "7": {
+        "title": "Driver Back to Kaohsiung (or Stay in Qishan)",
+        "lat": 22.63753,
+        "lng": 120.30127,
+        "source": "nominatim: 頭等艙高雄駅前館, 33, 建國三路, 港西里"
+      },
+      "8": {
+        "title": "Ruifeng Night Market — Backup Dinner & Games",
+        "lat": 22.66625,
+        "lng": 120.29937,
+        "source": "nominatim: 瑞豐夜市, 南屏路, 華夏新村, 新下里"
+      },
+      "9": {
+        "title": "Kaohsiung Music Center → Love River",
+        "lat": 22.61836,
+        "lng": 120.29214,
+        "source": "nominatim: 高雄流行音樂中心, 苓洲里, 苓雅區, 高雄市"
+      },
+      "10": {
+        "title": "Liuhe / Formosa Boulevard Late Pass",
+        "lat": 22.63232,
+        "lng": 120.29981,
+        "source": "nominatim: 六合夜市, 南台路, 明莊里, 新興區"
+      },
+      "11": {
+        "title": "Back to the Hotel",
+        "lat": 22.63753,
+        "lng": 120.30127,
+        "source": "nominatim: 頭等艙高雄駅前館, 33, 建國三路, 港西里"
+      }
+    },
+    "day-10": {
+      "0": {
+        "lat": 22.62637,
+        "lng": 120.29323,
+        "source": "nominatim (street-level approx.): 大同二路, 前金區",
+        "title": "Local Breakfast — Cianjin Braised Pork Rice"
+      },
+      "1": {
+        "title": "Taxi to the Shoushan Trailhead",
+        "lat": 22.65606,
+        "lng": 120.2753,
+        "source": "nominatim: 龍泉寺, 鼓山三路, 忠正里, 鼓山區"
+      },
+      "2": {
+        "title": "Shoushan / Chaishan Hike",
+        "lat": 22.65606,
+        "lng": 120.2753,
+        "source": "nominatim: 龍泉寺, 鼓山三路, 忠正里, 鼓山區"
+      },
+      "3": {
+        "lat": 22.62345,
+        "lng": 120.27115,
+        "source": "nominatim (street-level approx.): 臨海二路, 哈瑪星",
+        "title": "Lunch — Dain-Dain Hamburger (Hamasen)"
+      },
+      "4": {
+        "title": "Descend to Gushan → Ferry to Cijin",
+        "lat": 22.61989,
+        "lng": 120.27001,
+        "source": "nominatim: 鼓山輪渡站, 濱海二路, 哈瑪星, 維生里"
+      },
+      "5": {
+        "title": "Cijin Headland — Lighthouse, Fort, Coastal Paths",
+        "lat": 22.61542,
+        "lng": 120.26494,
+        "source": "wikipedia: Kaohsiung (Cihou) Lighthouse"
+      },
+      "6": {
+        "lat": 22.61391,
+        "lng": 120.26976,
+        "source": "nominatim: 旗津輪渡站, 大觀路, 旗津區",
+        "title": "Ferry Back to Gushan"
+      },
+      "7": {
+        "title": "Optional Hotel Shower Stop",
+        "lat": 22.63753,
+        "lng": 120.30127,
+        "source": "nominatim: 頭等艙高雄駅前館, 33, 建國三路, 港西里"
+      },
+      "9": {
+        "title": "Shrimp Fishing — 佰吉星釣蝦競技場",
+        "lat": 22.68057,
+        "lng": 120.31774,
+        "source": "osm: address node 文慈路76號, 左營區 (佰吉星)"
+      },
+      "11": {
+        "lat": 22.61836,
+        "lng": 120.29214,
+        "source": "nominatim: 高雄流行音樂中心, 苓洲里, 苓雅區, 高雄市",
+        "title": "Harbour / Music Center or Liuhe Dessert"
+      },
+      "12": {
+        "title": "Back to the Hotel",
+        "lat": 22.63753,
+        "lng": 120.30127,
+        "source": "nominatim: 頭等艙高雄駅前館, 33, 建國三路, 港西里"
+      }
+    },
+    "day-11": {
+      "1": {
+        "title": "Checkout → MRT to THSR Zuoying",
+        "lat": 22.68714,
+        "lng": 120.30769,
+        "source": "nominatim: 高鐵左營站, 高鐵路, 左營高鐵特區, 高鐵里"
+      },
+      "3": {
+        "title": "Taoyuan Airport MRT: THSR → TPE Terminal 1",
+        "lat": 25.01372,
+        "lng": 121.21414,
+        "source": "nominatim: 高鐵桃園站, 5, 高鐵北路一段, 中厝"
+      },
+      "7": {
+        "title": "Airport Express to Kowloon → Sasa Inn",
+        "lat": 22.29776,
+        "lng": 114.17177,
+        "source": "official: HK Gov Address Lookup Service — Tsim Sha Tsui Mansion, 87 Nathan Road"
+      },
+      "8": {
+        "title": "Tsim Sha Tsui Harbourfront Walk",
+        "lat": 22.2931,
+        "lng": 114.17476,
+        "source": "wikipedia: Avenue of Stars, Tsim Sha Tsui promenade"
+      },
+      "9": {
+        "title": "Mak Man Kee Wonton Noodles — Jordan",
+        "lat": 22.30468,
+        "lng": 114.17053,
+        "source": "nominatim: 麥文記 Mak Man Kee, 51, 白加士街 Parkes Street, 官涌 Kwun Chung"
+      },
+      "10": {
+        "title": "Temple Street / Yau Ma Tei Night Walk",
+        "lat": 22.3064,
+        "lng": 114.16997,
+        "source": "nominatim: 廟街夜市 Temple Street Night Market, 南京街 Nanking Street, 官涌 Kwun Chung, 油麻地 Yau Ma Tei"
+      },
+      "11": {
+        "title": "Winter Wonderland in Tsim Sha Tsui",
+        "lat": 22.29372,
+        "lng": 114.17046,
+        "source": "nominatim: 香港文化中心 Hong Kong Cultural Centre, 梳士巴利道 Salisbury Road, 尖沙咀 Tsim Sha Tsui, 油尖旺區 Yau Tsim Mong District"
+      }
+    },
+    "day-12": {
+      "0": {
+        "title": "Star Ferry: Tsim Sha Tsui → Central",
+        "lat": 22.29354,
+        "lng": 114.16799,
+        "source": "nominatim: 尖沙咀天星碼頭 Tsim Sha Tsui Star Ferry Pier, 梳士巴利道 Salisbury Road, 尖沙咀 Tsim Sha Tsui, 油尖旺區 Yau Tsim Mong District"
+      },
+      "1": {
+        "title": "Central / Sheung Wan Compact Urban Route",
+        "lat": 22.2866,
+        "lng": 114.1497,
+        "source": "approx. (manual): Sheung Wan Municipal Services Building, 345 Queen's Road Central"
+      },
+      "2": {
+        "title": "Climb to the Peak → Lugard Road → High West",
+        "lat": 22.27704,
+        "lng": 114.15401,
+        "source": "nominatim: 嘉諾撒醫院 Canossa Hospital, 1, 羅便臣道 Robinson Road, 政府山 Government Hill"
+      },
+      "4": {
+        "lat": 22.2778,
+        "lng": 114.1748,
+        "source": "approx. (manual): 265 Hennessy Road, Wan Chai",
+        "title": "Joy Hing Roast Meats — Siu Mei Lunch"
+      },
+      "7": {
+        "title": "Happy Valley — International Jockeys' Championship",
+        "lat": 22.2726,
+        "lng": 114.18064,
+        "source": "nominatim: 跑馬地馬場 Happy Valley Racecourse, 雲地利道 Ventris Road, 禮頓山 Leighton Hill, 跑馬地 Happy Valley"
+      }
+    },
+    "day-13": {
+      "0": {
+        "title": "Taxi / MTR to the Lion Rock Approach",
+        "lat": 22.35462,
+        "lng": 114.20409,
+        "source": "nominatim: 沙田坳道 Shatin Pass Road, 茅笪 Mau Tat, 沙田區 Sha Tin District, 新界 New Territories"
+      },
+      "1": {
+        "title": "Lion Rock Hike",
+        "lat": 22.35462,
+        "lng": 114.20409,
+        "source": "nominatim: 沙田坳道 Shatin Pass Road, 茅笪 Mau Tat, 沙田區 Sha Tin District, 新界 New Territories"
+      },
+      "2": {
+        "title": "Finish Wang Tau Hom / Tsz Wan Shan Side → Taxi to Kowloon Walled City Park",
+        "lat": 22.33213,
+        "lng": 114.19024,
+        "source": "nominatim: 九龍寨城公園 Kowloon Walled City Park, 九龍城 Kowloon City, 九龍城區 Kowloon City District, 九龍 Kowloon"
+      },
+      "3": {
+        "title": "Kowloon Walled City: A Cinematic Journey (If a Slot Is Free)",
+        "lat": 22.33213,
+        "lng": 114.19024,
+        "source": "nominatim: 九龍寨城公園 Kowloon Walled City Park, 九龍城 Kowloon City, 九龍城區 Kowloon City District, 九龍 Kowloon"
+      },
+      "4": {
+        "lat": 22.329,
+        "lng": 114.1907,
+        "source": "approx. (manual): 33–35 Tak Ku Ling Road, Kowloon City",
+        "title": "Kowloon City Lunch — Islam Food"
+      },
+      "5": {
+        "title": "Walk East: Sung Wong Toi → Kai Tak Waterfront → Sports Park",
+        "lat": 22.32582,
+        "lng": 114.1967,
+        "source": "nominatim: 啟德體藝館 Kai Tak Arena, 38, 啟德體育大道 Kai Tak Sports Avenue, 啟德坊 Kai Tak Grid Neighbourhood"
+      },
+      "6": {
+        "title": "Kai Tak Buffer — JOYPOLIS SPORTS (Backup Only)",
+        "lat": 22.32477,
+        "lng": 114.19558,
+        "source": "nominatim: JOYPOLIS SPORTS Hong Kong, 渡行徑 Pier Gallery, 靠背石 Kau Pui Shek, 啟德 Kai Tak"
+      },
+      "8": {
+        "title": "WTT Finals Hong Kong — Kai Tak Arena (Ticketed Session)",
+        "lat": 22.32582,
+        "lng": 114.1967,
+        "source": "nominatim: 啟德體藝館 Kai Tak Arena, 38, 啟德體育大道 Kai Tak Sports Avenue, 啟德坊 Kai Tak Grid Neighbourhood"
+      }
+    },
+    "day-14": {
+      "0": {
+        "title": "MTR: TST → Tung Chung",
+        "lat": 22.28931,
+        "lng": 113.94145,
+        "source": "nominatim: 東涌站 Tung Chung Station, 達東路 Tat Tung Road, 東涌市中心 Tung Chung Town Centre, 大嶼山 Lantau"
+      },
+      "1": {
+        "title": "Taxi to Pak Kung Au",
+        "lat": 22.24815,
+        "lng": 113.94322,
+        "source": "nominatim: 伯公坳 Pak Kung Au, 新界 New Territories, 香港 Hong Kong, 中国"
+      },
+      "2": {
+        "title": "Lantau Peak: Pak Kung Au → Summit → Ngong Ping",
+        "lat": 22.24815,
+        "lng": 113.94322,
+        "source": "nominatim: 伯公坳 Pak Kung Au, 新界 New Territories, 香港 Hong Kong, 中国"
+      },
+      "3": {
+        "title": "Big Buddha (20 min)",
+        "lat": 22.25411,
+        "lng": 113.90514,
+        "source": "wikipedia: The Big Buddha (Tian Tan Buddha), Ngong Ping"
+      },
+      "5": {
+        "title": "Bus 21: Ngong Ping → Tai O (1:20 PM)",
+        "lat": 22.2545,
+        "lng": 113.90629,
+        "source": "nominatim: 昂坪巴士站公廁 Ngong Ping Bus Terminus Public Toilet, 昂平路 Ngong Ping Road, 大嶼山 Lantau, 離島區 Islands District"
+      },
+      "6": {
+        "title": "Tai O — Stilt Houses, Waterfront, Food, Short Sampan",
+        "lat": 22.25468,
+        "lng": 113.86311,
+        "source": "nominatim: 66, 吉慶街 Kat Hing Street, 大澳市中心 Tai O Town Centre, 大嶼山 Lantau"
+      },
+      "7": {
+        "title": "Bus 11: Tai O → Tung Chung (3:45 PM)",
+        "lat": 22.25255,
+        "lng": 113.86277,
+        "source": "nominatim: 大澳巴士總站 Tai O Bus Terminus, 大澳道 Tai O Road, 大澳市中心 Tai O Town Centre, 大嶼山 Lantau"
+      },
+      "9": {
+        "lat": 22.2824,
+        "lng": 114.155,
+        "source": "approx. (manual): 60 Stanley Street, Central",
+        "title": "Dinner — Tai Ping Koon (Soy-Sauce Western)"
+      },
+      "10": {
+        "title": "Winter Wonderland in Central",
+        "lat": 22.28178,
+        "lng": 114.16012,
+        "source": "nominatim: 皇后像廣場 Statue Square, 政府山 Government Hill, 中環 Central, 中西區 Central and Western District"
+      },
+      "11": {
+        "title": "Hong Kong Observation Wheel",
+        "lat": 22.28532,
+        "lng": 114.16177,
+        "source": "nominatim: 香港摩天輪 The Hong Kong Observation Wheel, 中環 Central, 中西區 Central and Western District, 香港島 Hong Kong Island"
+      },
+      "13": {
+        "title": "TST Waterfront / WinterFest",
+        "lat": 22.29372,
+        "lng": 114.17046,
+        "source": "nominatim: 香港文化中心 Hong Kong Cultural Centre, 梳士巴利道 Salisbury Road, 尖沙咀 Tsim Sha Tsui, 油尖旺區 Yau Tsim Mong District"
+      }
+    },
+    "day-15": {
+      "0": {
+        "title": "Yat Tung Heen — Michelin-Star Dim Sum Brunch #2",
+        "lat": 22.30806,
+        "lng": 114.17183,
+        "source": "nominatim: 香港逸東酒店 Eaton, Hong Kong, 加士居道天橋 Gascoigne Road Flyover, 槍會山 Gun Club Hill"
+      },
+      "2": {
+        "title": "60th Hong Kong Brands & Products Expo — Opening Day",
+        "lat": 22.28123,
+        "lng": 114.18911,
+        "source": "nominatim: 維多利亞公園 Victoria Park, 銅鑼灣 Causeway Bay, 灣仔區 Wan Chai District, 香港島 Hong Kong Island"
+      },
+      "3": {
+        "lat": 22.27909,
+        "lng": 114.18515,
+        "source": "nominatim: 渣甸坊 Jardine's Crescent, Causeway Bay",
+        "title": "Causeway Bay Streets — Jardine's Crescent"
+      },
+      "5": {
+        "lat": 22.2786,
+        "lng": 114.182,
+        "source": "approx. (manual): Bowrington Road Market, 21 Bowrington Road",
+        "title": "Wan Chai Active Block"
+      },
+      "7": {
+        "lat": 22.2949,
+        "lng": 114.1685,
+        "source": "approx. (manual): Ocean Terminal, Harbour City, 3–27 Canton Road",
+        "title": "NBA ATELIER — Harbour City, Ocean Terminal (20 min)"
+      },
+      "9": {
+        "title": "Aqua Luna Evening Harbour Cruise — Tsim Sha Tsui Pier 1",
+        "lat": 22.293,
+        "lng": 114.17065,
+        "source": "osm: node 13228889552 Landing Steps No.1, Kowloon (TST) Public Pier"
+      },
+      "10": {
+        "lat": 22.3044,
+        "lng": 114.1704,
+        "source": "approx. (manual): 15 Temple Street, Yau Ma Tei",
+        "title": "Final Dinner — Hing Kee Claypot Rice"
+      },
+      "11": {
+        "title": "Winter Wonderland in Tsim Sha Tsui",
+        "lat": 22.29372,
+        "lng": 114.17046,
+        "source": "nominatim: 香港文化中心 Hong Kong Cultural Centre, 梳士巴利道 Salisbury Road, 尖沙咀 Tsim Sha Tsui, 油尖旺區 Yau Tsim Mong District"
+      },
+      "13": {
+        "title": "Final Dessert + Harbour",
+        "lat": 22.30667,
+        "lng": 114.17083,
+        "source": "nominatim: 白加士街 Parkes Street, 官涌 Kwun Chung, 油麻地 Yau Ma Tei, 油尖旺區 Yau Tsim Mong District"
+      },
+      "14": {
+        "lat": 22.29776,
+        "lng": 114.17177,
+        "source": "official: HK Gov Address Lookup Service — Tsim Sha Tsui Mansion, 87 Nathan Road",
+        "title": "Back to Sasa Inn"
+      }
+    },
+    "day-16": {
+      "0": {
+        "title": "Checkout with Luggage",
+        "lat": 22.3051,
+        "lng": 114.16187,
+        "source": "nominatim: 九龍站 Kowloon Station, 1, 車站環迴路東 Station Perimeter Road East, 凱旋門 The Arch"
+      },
+      "1": {
+        "title": "Kowloon Station Bag Drop",
+        "lat": 22.3051,
+        "lng": 114.16187,
+        "source": "nominatim: 九龍站 Kowloon Station, 1, 車站環迴路東 Station Perimeter Road East, 凱旋門 The Arch"
+      },
+      "2": {
+        "title": "Sham Shui Po — Breakfast, Market Streets, Old Kowloon",
+        "lat": 22.32857,
+        "lng": 114.16409,
+        "source": "nominatim: 鴨寮街 Apliu Street, 塘尾 Tong Mi, 深水埗 Sham Shui Po, 深水埗區 Sham Shui Po District"
+      },
+      "3": {
+        "lat": 22.3302,
+        "lng": 114.1617,
+        "source": "approx. (manual): 82 Fuk Wing Street, Sham Shui Po",
+        "title": "Lunch — Lau Sum Kee Bamboo-Pole Noodles"
+      },
+      "5": {
+        "title": "Airport Express → HKG",
+        "lat": 22.3051,
+        "lng": 114.16187,
+        "source": "nominatim: 九龍站 Kowloon Station, 1, 車站環迴路東 Station Perimeter Road East, 凱旋門 The Arch"
+      }
+    }
+  }
+}

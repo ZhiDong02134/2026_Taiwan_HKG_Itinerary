@@ -1,0 +1,7 @@
+protomaps-leaflet 5.1.0 and pmtiles 4.5.0 — Copyright 2021-2024 Protomaps LLC, BSD 3-Clause License
+(Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+copyright notice, this list of conditions and the disclaimer are retained; the name of the copyright holder may not be
+used to endorse derived products. THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND.)
+
+Offline map tiles (assets/offline/trip.pmtiles): Protomaps basemap build of 2026-11-13, cut to the trip areas.
+Map data © OpenStreetMap contributors, available under the Open Database Licence (https://www.openstreetmap.org/copyright).

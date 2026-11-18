@@ -1,0 +1,154 @@
+{
+  "day": "day-16",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Checkout with Luggage",
+      "getThere": "Taxi to Kowloon Station (Airport Express). Airport Express Taxi Interchange Offer (18 Sep 2026–17 Sep 2027): show an original same-day taxi receipt of HK$50+ at the Kowloon Station AEL Customer Service Centre for 50% off the Octopus fare (HK$52.5 adult to Airport).",
+      "tips": [
+        "Ask the driver for a printed receipt — photos or screenshots are not accepted; one receipt covers up to 5 people.",
+        "If using In-town Check-in, redeem the taxi offer at the Customer Service Centre before entering the In-town Check-in area."
+      ],
+      "watch": "Taxi offer is Octopus-only (not smart tickets, not combinable with other offers) and must be used immediately after redemption.",
+      "sources": [
+        {
+          "label": "MTR – Airport Express Taxi Interchange Offer",
+          "url": "https://www.mtr.com.hk/en/customer/tickets/ael_taxi.html"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "Kowloon Station Bag Drop",
+      "hours": "Cathay Pacific In-town Check-in at Kowloon Station: 6:00 am–3:00 pm. Check in from 24 h up to 90 min before departure, within service hours.",
+      "cost": "Free check-in, but entry to the In-town Check-in area deducts the full Airport Express fare: Kowloon–Airport HK$105 (Octopus/contactless/QR) or HK$115 (AEL QR Code Ticket).",
+      "highlights": [
+        "Smart Check-in Kiosks print boarding passes and bag tags; then Self Bag Drop: belt, face scan, scan tag, collect claim tag.",
+        "No further charge at the platform gate later — the fare was taken at the In-town Check-in gate."
+      ],
+      "tips": [
+        "Use the SAME Octopus/card for the In-town Check-in gate and the platform gate; MTR caps it at 9 Octopus transactions in between, so pay for Sham Shui Po snacks with a different card.",
+        "Cathay confirms a valid Airport Express ticket is needed to use any Hong Kong In-town Check-in."
+      ],
+      "watch": "E-passport (electronic travel document) required; codeshares on other airlines excluded. Bags max 145×100×85 cm and 32 kg.",
+      "sources": [
+        {
+          "label": "MTR – Free In-town Check-in Service",
+          "url": "https://www.mtr.com.hk/en/customer/services/complom_checkin.html"
+        },
+        {
+          "label": "MTR – Airport Express ticket types & fares",
+          "url": "https://www.mtr.com.hk/en/customer/tickets/tf_index.html"
+        },
+        {
+          "label": "Cathay FAQ – AEL ticket for In-Town Check-In",
+          "url": "https://www.cathaypacific.com/cx/en_US/faqs/check-in/online-check-in/do-i-need-a-valid-airport-express-line-ticket-when-accessing-any-hong-kong-in-town-check-in.html"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Sham Shui Po — Breakfast, Market Streets, Old Kowloon",
+      "highlights": [
+        "Apliu Street street market: phone accessories, audio/electrical cables, batteries, film cameras, alarm clocks, second-hand radios and vintage typewriters; haggling expected. Infernal Affairs (2002) audio-shop scene was shot here.",
+        "Kung Wo Beancurd Factory, 118 Pei Ho St (since 1960, Michelin-listed 2020): stone-ground silky tofu pudding, beancurd puffs, deep-fried tofu, sugar-free soy milk.",
+        "Sun Heung Yuen (Kin Kee), G/F 38 Kweilin St (since 1968): beef-and-egg sandwich — marinated beef fried with egg; +HK$1 to toast."
+      ],
+      "tips": [
+        "Protein breakfast: Sun Heung Yuen's beef-and-egg sandwich, then Kung Wo for soy milk and fried tofu.",
+        "Kung Wo grinds soybeans each morning on a granite stone mill — the retro green-and-white mosaic shop is worth a look."
+      ],
+      "watch": "Sun Heung Yuen is popular with locals — expect a wait. Kung Wo's golden fish tofu (魚腐) is a signature. Opening hours for these spots were not confirmed on official pages.",
+      "sources": [
+        {
+          "label": "Discover Hong Kong – Apliu Street",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-apliu-street.html"
+        },
+        {
+          "label": "Discover Hong Kong – Kung Wo Beancurd Factory",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-kung-wo-beancurd-factory.html"
+        },
+        {
+          "label": "Time Out Hong Kong – Sun Heung Yuen",
+          "url": "https://www.timeout.hk/restaurants/sun-heung-yuen"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "title": "Back Toward Kowloon Station",
+      "getThere": "MTR Sham Shui Po → Kowloon: check the MTR Trip Planner or MTR Mobile app for the current interchange and time, or take a taxi.",
+      "tips": [
+        "Each MTR ride on the In-town Check-in Octopus counts toward the 9-transaction limit before you re-enter the Airport Express platform."
+      ],
+      "sources": [
+        {
+          "label": "MTR Trip Planner (Sham Shui Po → Kowloon)",
+          "url": "https://www.mtr.com.hk/en/customer/jp/index.php?oLabel=Sham%20Shui%20Po&oType=HRStation&oValue=17&dLabel=Kowloon&dType=HRStation&dValue=40"
+        },
+        {
+          "label": "MTR – Free In-town Check-in Service",
+          "url": "https://www.mtr.com.hk/en/customer/services/complom_checkin.html"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "title": "Airport Express → HKG",
+      "hours": "Kowloon → Airport first train 05:53, last 00:52 (timetable effective 13 Sep 2026); trains about every 10 min.",
+      "cost": "Kowloon–Airport adult HK$105 Octopus/contactless/QR, HK$115 AEL QR Code Ticket (already paid at In-town Check-in). Ride Together group tickets: 2 for HK$150, 3 for HK$210, 4 for HK$250.",
+      "getThere": "Kowloon → Airport 22 min.",
+      "tips": [
+        "Group tickets are same-day paper Single Journey Tickets bought at the Customer Service Centre; In-town Check-in entry lists only Octopus, contactless card, QR or AEL QR Code Ticket — confirm with staff before buying."
+      ],
+      "watch": "Bags already checked at Kowloon: at HKG go straight to Departures with boarding passes.",
+      "sources": [
+        {
+          "label": "MTR – Airport Express timetable & journey times",
+          "url": "https://www.mtr.com.hk/en/customer/services/timetable_index.html"
+        },
+        {
+          "label": "MTR – Airport Express ticket types & fares",
+          "url": "https://www.mtr.com.hk/en/customer/tickets/tf_index.html"
+        },
+        {
+          "label": "MTR – Ride Together group tickets",
+          "url": "https://www.mtr.com.hk/en/customer/tickets/promotions_4persons.html"
+        },
+        {
+          "label": "HKIA – Airport Express",
+          "url": "https://www.hongkongairport.com/en/transport/to-from-airport/airport-express.page"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Cathay Pacific CX840 Non-Stop Flight to JFK",
+      "hours": "Scheduled 16:35 HKT → 19:05 EST same day; 15h30 block.",
+      "highlights": [
+        "Usually an Airbus A350-900 (e.g., B-LRF, B-LRQ, B-LRT)."
+      ],
+      "tips": [
+        "Power banks: max two per passenger, carry-on only, no in-flight recharging (HKIA notice, 30 Mar 2026).",
+        "Before the gate, have boarding pass and passport ready; e-passport holders aged 7+ can use the e-Security Gates."
+      ],
+      "watch": "HKIA notes extra US-required security measures on electronic devices for US-bound flights. Schedule data is third-party; the Cathay app and boarding pass are final.",
+      "sources": [
+        {
+          "label": "PlaneMapper CX840 schedule & history",
+          "url": "https://www.planemapper.com/flights/CX840"
+        },
+        {
+          "label": "HKIA power bank notice",
+          "url": "https://www.hongkongairport.com/en/important-notice/index.page?noticeid=1585121172788-1"
+        },
+        {
+          "label": "HKIA Transfer / Transit (security, US-bound measures)",
+          "url": "https://www.hongkongairport.com/en/passenger-guide/transfer-transit/index.page"
+        }
+      ]
+    }
+  ],
+  "conflicts": []
+}

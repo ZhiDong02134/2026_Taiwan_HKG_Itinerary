@@ -1,0 +1,276 @@
+{
+  "day": "day-04",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Shilin Residence Chrysanthemum Show",
+      "hours": "2026 show \"菊映方圓\" runs Nov 27–Dec 13; outdoor exhibition areas 8:00 AM–7:00 PM, so it is open at 8:40 AM on Tue Dec 1. The park itself is open daily year-round 8 AM–6 PM. 2026 indoor-hall hours not yet published (2025: 8:30 AM–5 PM).",
+      "cost": "Park and outdoor show: free (no 2026 admission fee announced). The Main Residence building (正館) is separately ticketed, open Tue–Sun 9:30–12:00 and 13:30–17:00.",
+      "getThere": "MRT Red Line to Shilin Station Exit 2, turn left, cross Zhongshan N. Rd, ~10 min walk (Parks Office directions). Venue: Shilin Residence Park, 60 Fulin Rd (福林路60號).",
+      "highlights": [
+        "Theme 菊映方圓: circles, squares and geometric lines worked into flower beds and landscape pieces across 15 themed zones.",
+        "Living plant wall designed by green-sculpture artist Lai Wen-bin (26 years' experience), inspired by Henri Matisse, co-planted with Shilin Elementary pupils.",
+        "Classic cultivation forms: large standing chrysanthemum (大立菊), cascade (懸崖菊), topiary (造型菊), large and small blooms plus daisy-family bedding."
+      ],
+      "tips": [
+        "Outdoor zones open at 8 AM, so a weekday 8:40 visit beats the crowds; 35 minutes covers the outdoor loop.",
+        "Shoot the whole geometric layout from a distance first, then close-ups; the show is designed for both views.",
+        "Arts events are scheduled on weekends/holidays, so expect a quiet show on a Tuesday."
+      ],
+      "watch": "Bloom condition depends on weather and maintenance; zones may be re-routed in rain or wind. Do not step into beds or touch displays. The workshop series was lottery-only (registration closed Oct 31).",
+      "sources": [
+        {
+          "label": "Taipei Parks Office – 2026 show dates and outdoor hours (Nov 9, 2026)",
+          "url": "https://pkl.gov.taipei/News_Content.aspx?n=43E05059FCC72525&sms=72544237BBE4C5F6&s=7ABDE15426ACEC61"
+        },
+        {
+          "label": "Taipei Parks Office – park hours, Main Residence hours (Jan 2026)",
+          "url": "https://pkl.gov.taipei/News_Content.aspx?n=43E05059FCC72525&sms=72544237BBE4C5F6&s=0AC2BE10FAD11BEE"
+        },
+        {
+          "label": "Taipei Parks Office – 2025 show release with MRT Exit 2 directions",
+          "url": "https://pkl.gov.taipei/News_Content.aspx?n=43E05059FCC72525&sms=72544237BBE4C5F6&s=ADB4C42EA5A0542D"
+        },
+        {
+          "label": "Taipei Travel – 2026 Shilin Residence Chrysanthemum Show",
+          "url": "https://www.travel.taipei/zh-tw/event-calendar/details/66398"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "Taxi to Lengshuikeng",
+      "hours": "Lengshuikeng Visitor Center: 9:00 AM–4:30 PM; closed the last Monday of each month (Tue Dec 1 is open).",
+      "cost": "Taipei taxi meter (day): NT$85 for the first 1.25 km, then NT$5 per 200 m; NT$5 per 60 s when below 5 km/h.",
+      "getThere": "Taxi to 冷水坑遊客服務站 (台北市士林區菁山路101巷170號). Public-transport fallback: bus 小15 from MRT Jiantan toward Qingtiangang runs via Lengshuikeng; or Red 5 to Yangmingshan terminal, then the 108 park loop to the 冷水坑服務站 stop.",
+      "highlights": [
+        "Lengshuikeng is a basin between Qixing and Qigu mountains, an old sulphur-mining site.",
+        "Milk Lake (牛奶湖): a milky-white pool in the Lengshuikeng explosion crater, seen from a viewing platform on a hillock on the way to the suspension bridge.",
+        "Jingshan Suspension Bridge crosses the Lengshuikeng stream, headwater of the Juansi Waterfall."
+      ],
+      "tips": [
+        "YMSNP runs a live camera at the Lengshuikeng parking lot; check it for fog before leaving Shilin.",
+        "108 loop on weekdays: 07:00–17:30, every 30–40 min — fine as a fallback, too slow to rely on for timed plans."
+      ],
+      "watch": "Xiaoyoukeng trailhead → Qixing Main Peak (~1.6 km) is fully closed Oct 27, 2026–Jan 19, 2027 (undermined footing ~560 m from Xiaoyoukeng). YMSNP names Lengshuikeng, Menghuan Lake car park and Miaopu as alternative trailheads.",
+      "sources": [
+        {
+          "label": "YMSNP – Qixing Main Peak trail closure notice (Oct 21, 2026)",
+          "url": "https://www.ymsnp.gov.tw/ch/titlelist/news/4623"
+        },
+        {
+          "label": "YMSNP – Lengshuikeng (Milk Lake, visitor center hours)",
+          "url": "https://www.ymsnp.gov.tw/ch/specialreport/recreation/1115"
+        },
+        {
+          "label": "YMSNP – bus routes (小15, 108, 紅5)",
+          "url": "https://www.ymsnp.gov.tw/ch/sglarticle/bus-search-system"
+        },
+        {
+          "label": "Taipei Public Transportation Office – taxi fares",
+          "url": "https://pto.gov.taipei/News_Content.aspx?n=6B4D38874E971F4B&sms=87415A8B9CE81B16&s=63C0CCF302898D25"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Qixing Mountain: Lengshuikeng → East Peak → Main Peak → Lengshuikeng",
+      "hours": "Trail has no gate hours; visitor centers (water, info) 9:00 AM–4:30 PM.",
+      "cost": "Free.",
+      "getThere": "Start at the Lengshuikeng Visitor Center trailhead. Official figures: Xiaoyoukeng→Lengshuikeng 3.7 km / ~2.5 h, of which Xiaoyoukeng→Main Peak 1.65 km and Main↔East Peak 0.3 km (~15 min). So Lengshuikeng→East Peak ≈1.75 km; out-and-back to the Main Peak ≈4.1 km.",
+      "highlights": [
+        "Main Peak ~1,120 m: the highest summit in Yangmingshan National Park.",
+        "The name comes from seven igneous-rock knobs left around the old crater after violent eruptions.",
+        "East Peak and Main Peak are linked by a 0.3 km saddle walk with up-and-down steps."
+      ],
+      "tips": [
+        "YMSNP rates the Qixing Main–East Peak trail Grade 2; route junctions are signposted, and the closure notice advises returning the way you came.",
+        "Allow the planned 3–3.5 h: ~4.1 km round trip with sustained climbing; turn around by a fixed time to make the ~1:15 PM pickup."
+      ],
+      "watch": "Do not continue from the Main Peak toward Xiaoyoukeng: that 1.6 km section is closed until Jan 19, 2027. Summit is exposed; cancel in fog or high wind.",
+      "sources": [
+        {
+          "label": "YMSNP – Qixing Mountain trail system (lengths, times, grade)",
+          "url": "https://www.ymsnp.gov.tw/ch/trailpoint/qixing-mountain-range"
+        },
+        {
+          "label": "National Park Service – Qixing Main & East Peak trail segments",
+          "url": "https://www.taiwan.nps.gov.tw/home/zh-tw/trails/21197.html"
+        },
+        {
+          "label": "YMSNP – trail closure and alternative trailheads",
+          "url": "https://www.ymsnp.gov.tw/ch/titlelist/news/4623"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Pre-Arranged Pickup at Lengshuikeng → Beitou",
+      "cost": "Taxi meter (day): NT$85 first 1.25 km, NT$5 per 200 m, NT$5 per 60 s in slow traffic.",
+      "getThere": "Pre-booked taxi from 冷水坑遊客服務站 to Beitou Thermal Valley (地熱谷, 中山路), about 35–40 minutes. Bus fallback (slow): the 108 loop to the Yangmingshan terminal (weekday every 30–40 minutes, last 17:30), then bus 230 down to MRT Beitou.",
+      "tips": [
+        "Give the driver both the pickup point and 幽雅路30號 in Chinese when booking.",
+        "If the taxi fails, the bus fallback is slow: skip Thermal Valley and go straight on to Tamsui."
+      ],
+      "sources": [
+        {
+          "label": "Taipei e-bus – route 108 schedule and frequency",
+          "url": "https://ebus.gov.taipei/Route/RouteSchedule?routeid=0100010800"
+        },
+        {
+          "label": "YMSNP – bus routes (230 Beitou–Yangmingshan)",
+          "url": "https://www.ymsnp.gov.tw/ch/sglarticle/bus-search-system"
+        },
+        {
+          "label": "Taipei Public Transportation Office – taxi fares",
+          "url": "https://pto.gov.taipei/News_Content.aspx?n=6B4D38874E971F4B&sms=87415A8B9CE81B16&s=63C0CCF302898D25"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Taxi to Tamsui",
+      "getThere": "Taxi from Xinbeitou MRT straight to Tamsui Old Street, about 30–40 minutes. MRT alternative: Xinbeitou → Beitou on the branch line (3–4 min), then the Red Line north to Tamsui (the terminus).",
+      "tips": [
+        "On weekdays some Red Line trains run Beitou–Da'an only and start at Beitou heading south; for Tamsui board the northbound platform.",
+        "Taxi meter: NT$85 first 1.25 km, NT$5 per 200 m (day rate)."
+      ],
+      "sources": [
+        {
+          "label": "Taipei Metro – Tamsui-Xinyi Line routes and headways",
+          "url": "https://www.metro.taipei/cp.aspx?n=EAD981369A065968&s=1CC297E1D0B4C7B1"
+        },
+        {
+          "label": "Taipei Public Transportation Office – taxi fares",
+          "url": "https://pto.gov.taipei/News_Content.aspx?n=6B4D38874E971F4B&sms=87415A8B9CE81B16&s=63C0CCF302898D25"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "title": "Tamsui — Old Street, Riverfront & Sunset",
+      "hours": "Old Street is an open street (listed 24 h). Sunset Tue Dec 1: 5:03 PM; civil dusk ends 5:28 PM (Taipei).",
+      "cost": "Free to walk; food pay-as-you-go.",
+      "getThere": "From MRT Tamsui Station exit, turn right: Zhongzheng Rd and its extensions Chongjian St and Qingshui St form Tamsui Old Street.",
+      "highlights": [
+        "Riverside sunset over the Tamsui River mouth; Taipei Travel notes the far end of Old Street opens toward Fisherman's Wharf, a classic sunset spot.",
+        "Old Street mixes traditional pastry shops and grocers with snack stalls, clothing and toy shops.",
+        "Ferry docks for Bali are along the waterfront (skip per plan)."
+      ],
+      "tips": [
+        "Be on the riverbank by ~4:50 PM; the best colour runs from the 5:03 sunset to ~5:28 PM dusk.",
+        "Walk the waterfront at sunset, then do Old Street and a sit-down dinner after dark."
+      ],
+      "sources": [
+        {
+          "label": "New Taipei Travel – Tamsui Old Street",
+          "url": "https://newtaipei.travel/zh-tw/attractions/detail/109658"
+        },
+        {
+          "label": "Taipei Travel – Tamsui Old Street",
+          "url": "https://www.travel.taipei/en/attraction/details/659"
+        },
+        {
+          "label": "timeanddate – Taipei sunrise/sunset Dec 2026",
+          "url": "https://www.timeanddate.com/sun/taiwan/taipei?month=12&year=2026"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "title": "Red Line South to Jiantan",
+      "getThere": "Red Line from Tamsui (terminus) southbound to Jiantan; weekday trains ~6 min apart until 19:30, then ~8–10 min. Leave Jiantan by Exit 1 and walk north ~400 m to the Yangming Theater / Shilin Market area.",
+      "tips": [
+        "Tamsui is the terminus, so every southbound train there passes Jiantan.",
+        "The full Tamsui–Guangci run takes ~61 min; Jiantan is well short of that."
+      ],
+      "sources": [
+        {
+          "label": "Taipei Metro – Tamsui-Xinyi Line routes and headways",
+          "url": "https://www.metro.taipei/cp.aspx?n=EAD981369A065968&s=1CC297E1D0B4C7B1"
+        },
+        {
+          "label": "mm旅遊札記 – Shilin Night Market via Jiantan Exit 1",
+          "url": "https://picnicstory.tw/shilin-night-market/"
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "title": "Shilin Night Market — Games & Food",
+      "hours": "5:00 PM–midnight daily; no market closing day (Taipei Market Office). Individual stalls take their own rest days.",
+      "cost": "No entry fee; each stall charges separately.",
+      "getThere": "MRT Red Line Jiantan Station. Exit 1 is closest; walk ~400 m north to Yangming Theater and Shilin Market (101 Jihe Rd).",
+      "highlights": [
+        "Taipei's largest night market: a triangle around the heritage Shilin Public Market, bounded by Wenlin Rd (east), Jihe Rd (west) and Xiaobei/Xiaoxi St (north).",
+        "Two zones: streets around Yangming Theater up to Cixian Temple on Danan Rd, and the Shilin Market building at 101 Jihe Rd.",
+        "Protein-forward picks from the official specialties list: big fried chicken cutlet, Shilin sausage, Shanghai pan-fried pork buns, herbal-stewed spare ribs.",
+        "Street lanes carry the game stalls and clothing; the market building is for sit-down hot food."
+      ],
+      "tips": [
+        "Shilin Market B1 food court has ~35 vendors and 600+ seats (steak, xiaolongbao, teppanyaki, oyster omelette) — best base if it rains.",
+        "Carry NT$100 notes and coins; some stalls take Taiwanese mobile pay, cards rarely.",
+        "Friendly free toilets: Shilin Market and 7-Eleven Wenlin are 24 h."
+      ],
+      "watch": "Mostly cash. Weekend and holiday dinner hours are the most crowded. Keep bags in front in dense lanes.",
+      "sources": [
+        {
+          "label": "Taipei Market Office – Shilin Night Market (hours, area, MRT)",
+          "url": "https://www.tcma.gov.taipei/News_Content.aspx?n=FAC14AD2DE4E01A4&s=AF2DC775A3AA076A&sms=32F7BA052C5CA548"
+        },
+        {
+          "label": "Taipei Travel – 士林觀光夜市 (two zones)",
+          "url": "https://www.travel.taipei/zh-tw/attraction/details/1536/"
+        },
+        {
+          "label": "Taipei Travel – Shilin Night Market specialties",
+          "url": "https://www.travel.taipei/en/attraction/details/1692"
+        },
+        {
+          "label": "mm旅遊札記 – Jiantan Exit 1, B1 food court, payment (checked Oct 20, 2026)",
+          "url": "https://picnicstory.tw/shilin-night-market/"
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "title": "Back to Via Hotel",
+      "cost": "Taxi from 11 PM: night surcharge +NT$20 per trip (flag fall NT$105 for the first 1.25 km), based on boarding time.",
+      "getThere": "From Jiantan take the Red Line southbound toward Taipei Main Station (same line, no transfer). After 11 PM Red Line trains run every ~12–15 min. Hotel: 台北市中正區重慶南路一段60號.",
+      "tips": [
+        "Leaving E7PLAY at ~11:00 PM, a taxi is quicker than the Orange Line plus a transfer."
+      ],
+      "sources": [
+        {
+          "label": "Taipei Metro – Tamsui-Xinyi Line headways after 23:00",
+          "url": "https://www.metro.taipei/cp.aspx?n=EAD981369A065968&s=1CC297E1D0B4C7B1"
+        },
+        {
+          "label": "Taipei Public Transportation Office – taxi night surcharge",
+          "url": "https://pto.gov.taipei/News_Content.aspx?n=6B4D38874E971F4B&sms=87415A8B9CE81B16&s=63C0CCF302898D25"
+        },
+        {
+          "label": "mm旅遊札記 – Red Line Jiantan to Taipei Main Station",
+          "url": "https://picnicstory.tw/shilin-night-market/"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "index": 1,
+      "field": "notes",
+      "existing": "Closure attributed to a Taipei Geotechnical Engineering Office notice.",
+      "published": "The closure works and notice are by Yangmingshan National Park Headquarters: Xiaoyoukeng trailhead → Main Peak, ~1.6 km, closed Oct 27, 2026–Jan 19, 2027 (dates match the app).",
+      "url": "https://www.ymsnp.gov.tw/ch/titlelist/news/4623"
+    },
+    {
+      "index": 10,
+      "field": "notes",
+      "existing": "Open from late afternoon (sources say 4 or 5 PM) to midnight.",
+      "published": "Taipei Market Office: 5 PM–midnight, no closing day.",
+      "url": "https://www.tcma.gov.taipei/News_Content.aspx?n=FAC14AD2DE4E01A4&s=AF2DC775A3AA076A&sms=32F7BA052C5CA548"
+    }
+  ]
+}

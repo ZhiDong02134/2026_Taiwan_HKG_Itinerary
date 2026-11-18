@@ -1,0 +1,179 @@
+{
+  "day": "day-02",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Hong Kong Connection: CX841 Arrival → CX472 Boarding (~1h40 Transit)",
+      "getThere": "HKIA transfer with onward boarding pass: follow the directional signs to the Departures level for boarding gates; transfer security screening is mandatory before reaching the gate.",
+      "highlights": [
+        "Have boarding pass and passport ready before the screening point.",
+        "Electronic and metal items in hand baggage go in a separate tray; walk-through metal detector, possible hand search."
+      ],
+      "tips": [
+        "Liquids sealed in tamper-evident duty-free bags get extra LAGs screening at transfer security and may be unbagged; HKIA advises allowing extra time.",
+        "Power banks departing HKG: max two per passenger, carry-on only, and recharging them in flight is prohibited (HKIA notice, 30 Mar 2026)."
+      ],
+      "watch": "Do not exit through Arrivals/immigration — that is for entering Hong Kong, not for a same-day connection.",
+      "sources": [
+        {
+          "label": "HKIA Transfer / Transit procedures",
+          "url": "https://www.hongkongairport.com/en/passenger-guide/transfer-transit/index.page"
+        },
+        {
+          "label": "HKIA power bank notice",
+          "url": "https://www.hongkongairport.com/en/important-notice/index.page?noticeid=1585121172788-1"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "Cathay Pacific CX472: Hong Kong → Taipei",
+      "hours": "Scheduled 15:45 HKT → 17:35 Taipei; 1h50 block (late-Oct timetable showed 17:40 arrival).",
+      "highlights": [
+        "Usually an Airbus A330-300 on this rotation.",
+        "Recent actual departures mostly 16:00–16:50 but arrivals 17:17–18:31 thanks to padding."
+      ],
+      "watch": "PlaneMapper logged 8 late departures in the prior month (average 32 min). Third-party data; the Cathay app and boarding pass are final.",
+      "sources": [
+        {
+          "label": "PlaneMapper CX472 schedule & history",
+          "url": "https://www.planemapper.com/flights/CX472"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Touchdown TPE T1: Immigration → Bags → EasyCard → Airport MRT",
+      "cost": "Airport MRT A12 Terminal 1 ↔ A1 Taipei Main Station NT$160. Empty EasyCard NT$100 (top-ups NT$100 multiples at machines; any amount at the station information counter).",
+      "getThere": "Express train A12 → A1 Taipei Main: 39 min (commuter 53 min). Express and commuter trains alternate about every 7.5 min. Last express to Taipei from A12 departs 22:58.",
+      "highlights": [
+        "Airport MRT gates also take contactless Visa/Mastercard/JCB/UnionPay and phone wallets at the full single-journey fare.",
+        "Taipei Main (A1) connects to the Red (Tamsui-Xinyi), Blue (Bannan) and Green (Songshan-Xindian) lines, TRA and THSR."
+      ],
+      "tips": [
+        "TWAC must be submitted online within 7 days before arrival; submission is free.",
+        "Board the express, not the commuter: 39 vs 53 min to Taipei Main."
+      ],
+      "sources": [
+        {
+          "label": "Taoyuan Airport – Airport MRT (fares, times)",
+          "url": "https://www.taoyuan-airport.com/airport_mrt?lang=en"
+        },
+        {
+          "label": "Taoyuan Metro – EasyCard",
+          "url": "https://www.tymetro.com.tw/tymetro-new/en/_pages/travel-guide/ticketson03.php"
+        },
+        {
+          "label": "Taoyuan Metro – credit card payment",
+          "url": "https://www.tymetro.com.tw/tymetro-new/en/_pages/travel-guide/ticketson05.php"
+        },
+        {
+          "label": "Taiwan Arrival Card",
+          "url": "https://twac.immigration.gov.tw/"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Check In: Via Hotel Taipei Station — Bags Down",
+      "hours": "Check-in from 15:00; check-out by 12:00.",
+      "getThere": "From Taipei Main Station take Exit Z10, then walk about 8 min along Chongqing S. Rd. Sec. 1 to No. 60.",
+      "highlights": [
+        "Official name: 丰居旅店 北車館 (VIA Hotel Taipei Station), 台北市中正區重慶南路一段60號. Tel +886-2-2314-2121."
+      ],
+      "tips": [
+        "If you arrive before your room is ready, the hotel will hold luggage so you can head out."
+      ],
+      "sources": [
+        {
+          "label": "VIA Hotel Taipei Station FAQ",
+          "url": "http://www.vhotel.com.tw/tw/taipei-station/faqs"
+        },
+        {
+          "label": "VIA Hotel Taipei Station official site",
+          "url": "https://www.via-hotel.com.tw/taipei-station"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "title": "Fuhong Beef Noodles (backup: Xiao Wu) — Arrival Dinner",
+      "hours": "Fuhong: 24 hours, year-round. Xiao Wu: also open 24 hours.",
+      "highlights": [
+        "Fuhong (Luoyang St., Ximending edge): rich beef-tallow broth with springy noodles; a late-night canteen for night owls and taxi drivers.",
+        "Xiao Wu (same Luoyang St. 'beef noodle war zone'): signature red-braised broth with a distinctive savory edge and soft-stewed beef."
+      ],
+      "tips": [
+        "Both being 24h means no closing-time pressure tonight — if Fuhong's line is long, walk to Xiao Wu."
+      ],
+      "watch": "Prices and payment methods were not found on an authoritative page; bring cash as a fallback.",
+      "sources": [
+        {
+          "label": "TVBS/女人我最大 via LINE Today (Aug 2026)",
+          "url": "https://today.line.me/tw/v3/article/YaRPL78"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Ximending at Night",
+      "hours": "Red House: Sun 11:00–21:00 (free; closed Mondays). Red House creative market (North Plaza): Sun 14:30–21:30, vendors pack up 21:00–21:30.",
+      "getThere": "MRT Ximen on the Blue (Bannan) Line; the Red House is about 1 min on foot from Exit 1.",
+      "highlights": [
+        "Youth-culture hub: street dancing, cosplay, Wannian Plaza accessory shops and the tattoo street.",
+        "Red House (1908): one of Taiwan's earliest government-built public markets and the oldest intact Grade-3 heritage market building, at 成都路10號."
+      ],
+      "tips": [
+        "Arriving 9:30 PM you will see the Red House exterior only; the creative market will be packing up."
+      ],
+      "watch": "Red House interior closes 21:00 on Sundays, before this stop starts.",
+      "sources": [
+        {
+          "label": "Red House – hours & admission",
+          "url": "https://www.redhouse.taipei/contact.aspx"
+        },
+        {
+          "label": "Red House – visit info & MRT",
+          "url": "https://www.redhouse.taipei/info.aspx"
+        },
+        {
+          "label": "Red House creative market",
+          "url": "https://www.redhouse.taipei/redhouseMarket.aspx?id=1"
+        },
+        {
+          "label": "Taipei Travel – Ximending",
+          "url": "https://travel.taipei/en/attraction/details/1694"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "title": "Back to Via Hotel",
+      "getThere": "MRT Blue (Bannan) Line from Ximen to Taipei Main Station, exit Z10, then ~8 min walk along Chongqing S. Rd. Sec. 1 to No. 60.",
+      "sources": [
+        {
+          "label": "Red House – Ximen station (Bannan Line)",
+          "url": "https://www.redhouse.taipei/info.aspx"
+        },
+        {
+          "label": "Taoyuan Airport – Taipei Main Station lines",
+          "url": "https://www.taoyuan-airport.com/airport_mrt?lang=en"
+        },
+        {
+          "label": "VIA Hotel Taipei Station FAQ",
+          "url": "http://www.vhotel.com.tw/tw/taipei-station/faqs"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "index": 3,
+      "field": "titleTc",
+      "existing": "豐居旅店 站前館",
+      "published": "丰居旅店 北車館 (VIA Hotel Taipei Station), 台北市中正區重慶南路一段60號",
+      "url": "http://www.vhotel.com.tw/tw/taipei-station/faqs"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "taiwan-hong-kong-trip-pwa",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "icons": "node scripts/build-icons.mjs",
+    "details": "node scripts/build-details.mjs",
+    "verify": "python3 scripts/verify.py",
+    "finalize": "python3 scripts/finalize.py",
+    "test:interaction": "python3 scripts/interaction-test.py"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10",
+    "lucide": "1.43.0",
+    "parse5": "8.0.0"
+  }
+}

@@ -1,0 +1,291 @@
+{
+  "day": "day-06",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Zhongzheng Sports Center — Archery",
+      "getThere": "臺北市中正運動中心, 台北市中正區信義路1段1號 (tel 02-2396-1000). The archery range is on 9F, across Xinyi Rd from Chiang Kai-shek Memorial Hall, near MRT Chiang Kai-shek Memorial Hall station.",
+      "highlights": [
+        "Indoor 30 m range with 12 parallel target lanes and backstop netting on the building's 9F.",
+        "Walk-in flow reported: register and pay at the 9F range counter; lanes are assigned as they free up, so expect a short wait at peak times.",
+        "Shooters must follow the range officer's commands for shooting and arrow retrieval."
+      ],
+      "tips": [
+        "First-timers get a 10–15 minute safety and basic-technique briefing.",
+        "The centre is run by 舞動陽光 (wsjjsc.com.tw); phone 02-2396-1000 if plans change."
+      ],
+      "watch": "ID and age rules for the range weren't stated; bring your passports.",
+      "sources": [
+        {
+          "label": "iPlay national sports venue registry (Sports Administration)",
+          "url": "https://iplay.sports.gov.tw/GymInfo/Index/9627"
+        },
+        {
+          "label": "Blog: Zhongzheng Sports Center archery range",
+          "url": "https://www.lovefood.cc/2024/09/1300-tpejjsports.html"
+        },
+        {
+          "label": "Old operator Facebook page (now 舊營業者)",
+          "url": "https://www.facebook.com/tpejjsports/"
+        }
+      ],
+      "hours": "9:00 AM – 10:00 PM; 6:00–9:00 AM by reservation only",
+      "cost": "NT$300 for the first hour, including range, bow, equipment and basic instruction"
+    },
+    {
+      "index": 1,
+      "title": "Liberty Square / Chiang Kai-shek Memorial Hall — Quick Pass",
+      "hours": "Memorial Hall 9:00 AM–6:00 PM daily; Memorial Park 5:00 AM–midnight.",
+      "cost": "Free.",
+      "getThere": "No. 21 Zhongshan S. Rd. MRT Chiang Kai-shek Memorial Hall station (Red Tamsui-Xinyi and Green Songshan-Xindian lines): about 8 min on foot from Exit 3, 9 min from Exit 5. Dongmen station (Orange) Exit 3 is also about 8 min.",
+      "highlights": [
+        "Military Honor Guard Ceremonial Patrols and Drills run hourly 9:00 AM–5:00 PM (about 15 min each) on Democracy Boulevard in front of the hall stairs; the 11:00 AM drill fits this slot.",
+        "6.3 m bronze statue inside the main hall; the 25-hectare complex was completed in 1980.",
+        "Free exhibitions are running in the hall in late 2026, but this stop is a quick pass."
+      ],
+      "tips": [
+        "Arrive by about 10:55 AM and stand near the hall stairs to catch the 11:00 AM drill before lunch.",
+        "Flag lowering is 5:10 PM (Oct 1–Mar 31) if you ever pass back through at dusk."
+      ],
+      "watch": "Drills are cancelled when it rains. The hall closes on Lunar New Year's Eve/Day, 228 Peace Memorial Day and maintenance days (not an issue on Dec 3).",
+      "sources": [
+        {
+          "label": "CKS Memorial Hall – Visit Info",
+          "url": "https://www.cksmh.gov.tw/en/cp.aspx?n=6369"
+        },
+        {
+          "label": "CKS Memorial Hall – Transportation",
+          "url": "https://www.cksmh.gov.tw/en/cp.aspx?n=6422"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Light Early Lunch — Jin Feng Braised Pork Rice",
+      "getThere": "金峰魯肉飯, 台北市羅斯福路一段10號之1, beside Nanmen Market; MRT Chiang Kai-shek Memorial Hall station Exit 2. Tel (02) 2396-0808.",
+      "highlights": [
+        "Braised pork rice in small/medium/large: hand-cut, fatty, gelatinous pork with pickled cucumber.",
+        "Protein add-ons: braised duck egg, fried tofu, braised pork belly (焢肉), pork thick soup (肉羹湯), chicken soups.",
+        "Also sells 鼎邊趖 (rice-batter soup with shrimp and pork), rare in Taipei."
+      ],
+      "tips": [
+        "Dine-in: scan the table QR code (Chinese/English/Japanese menu with photos), order, eat, then pay at the counter. Takeaway: scan, pay first, then wait.",
+        "Since Feb 2025 the left storefront is gone; most seating is now upstairs on 2F with only a few tables at the back of 1F.",
+        "Turnover is fast; a weekend-noon queue was 20–30 min, so a weekday 11:05 AM arrival should be quicker."
+      ],
+      "watch": "No official site; blogs disagree on hours (09:00–01:00 daily vs 11:00–01:00 closed Monday), so confirm on Google Maps. Thursday is open under both.",
+      "sources": [
+        {
+          "label": "Blog (updated 2025-11-19): Jin Feng",
+          "url": "https://lordcat.net/archives/2247"
+        },
+        {
+          "label": "Blog: Jin Feng menu and QR ordering",
+          "url": "https://panpanlife.com/jinfeng/"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "title": "10m Air-Rifle Shooting — Zhongzheng Sports Center",
+      "getThere": "Back to 台北市中正區信義路1段1號. The 10 m air-gun range is on 6F; earlier operator rules were to buy the ticket at the 1F counter first, then go up to 6F.",
+      "highlights": [
+        "Indoor 10 m air-gun range with 10 international-standard fixed lanes and electronic target carriers.",
+        "Coaches give a safety briefing, explain the gun and loading, and teach a two-handed hold for beginners.",
+        "One of only two Taipei City sports centres with an indoor shooting range."
+      ],
+      "tips": [
+        "Arrive at 1:00 PM sharp on a Thursday to get an early lane.",
+        "Call 02-2396-1000 only if plans change."
+      ],
+      "sources": [
+        {
+          "label": "Blog: Zhongzheng 10M shooting range",
+          "url": "https://fgblog.fashionguide.com.tw/11633/posts/417123"
+        },
+        {
+          "label": "iPlay national sports venue registry (Sports Administration)",
+          "url": "https://iplay.sports.gov.tw/GymInfo/Index/9627"
+        }
+      ],
+      "hours": "Monday closed; Tue–Fri 1:00–9:00 PM; Sat 10:00 AM – 9:00 PM; Sun 10:00 AM – 6:00 PM",
+      "cost": "NT$350 per person per session, including the gun, coaching, one target and 30 pellets"
+    },
+    {
+      "index": 5,
+      "title": "Taipei 101 Observatory (89F)",
+      "hours": "Daily 10:00 AM–9:00 PM; last admission 8:15 PM.",
+      "cost": "General ticket (89F + 88F): adult NT$600; concession NT$540 (children over 115 cm, students, special needs); Priority Pass NT$1,200; under 115 cm free. Visiting 101F costs NT$380 more per person. Skyline 460 (outdoor 101F) is NT$3,000 by reservation.",
+      "getThere": "MRT Red line direct from Chiang Kai-shek Memorial Hall to Taipei 101/World Trade Center station. Go to the Observatory Ticket Counter on the Office Tower 1F (temporary arrangement 2026/6/1–12/25).",
+      "highlights": [
+        "382 m-high 89F deck with a 360° view of Taipei.",
+        "Elevators climb up to 1,010 m/min: 37 s from 5F to 89F.",
+        "The 660-tonne, 5.5 m tuned mass damper ball, the world's largest on public display.",
+        "Photo zones: Infinite Horizon kaleidoscope, Secret Garden in the Clouds, Rainbow Light Zone."
+      ],
+      "tips": [
+        "Full-price tickets can be bought online; concession tickets are sold only at the Office Tower 1F counter.",
+        "The 'Taipei 101 Observatory & Taipei Metro' combo is NT$990: observatory ticket plus a collectible EasyCard that works as a Metro one-day pass with NT$150 preloaded. Buy via Taipei FunPASS or KLOOK; redeem at Taipei Main or Taipei 101/World Trade Center station."
+      ],
+      "watch": "Concession tickets need a valid Taiwan ID, so foreign adults pay NT$600. Skyline 460 requires height over 145 cm and no heels or skirts, and is cancelled in bad weather.",
+      "sources": [
+        {
+          "label": "Taipei 101 – Observatory",
+          "url": "https://www.taipei-101.com.tw/en/observatory"
+        },
+        {
+          "label": "Taipei 101 – Ticket Information (EN)",
+          "url": "https://www.taipei-101.com.tw/en/observatory/ticket"
+        },
+        {
+          "label": "Taipei 101 – 購票資訊 (ZH)",
+          "url": "https://www.taipei-101.com.tw/tw/observatory/ticket"
+        },
+        {
+          "label": "Taipei Metro – 101 combo ticket news",
+          "url": "https://english.metro.taipei/News_Content.aspx?n=840A770A8CA5AB80&sms=DFFA119D1FD5602C&s=36F8B07276E5AE50"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Elephant Mountain — Golden Hour & Dusk",
+      "cost": "Free.",
+      "getThere": "MRT Xiangshan station Exit 2, then through Xiangshan Park and Lane 150, Xinyi Rd Sec 5. The sign there reads 'Elephant Mountain Trail (Lingyun Temple) 700 m, about 10 min'. The trailhead is at the end of Lane 150, Alley 22, next to Daitian Temple/Lingyun Temple 靈雲宮.",
+      "highlights": [
+        "Peak 183 m; the trail is 1,450 m long and about 1 h 40 min end to end.",
+        "Stone steps all the way, with railings at drops and handrails on steep pitches. Yongchun Pavilion (toilets and AED) is the midway rest stop.",
+        "Six Giant Rocks viewing platform faces Taipei 101; it is about 19 min more to Xiangshan Peak, which has a heart-shaped bench framing 101.",
+        "Toilets at Lingyun Temple, near Yongchun Pavilion and at Yixian Pavilion near the peak."
+      ],
+      "tips": [
+        "A September 2026 walk took about 14 min from Exit 2 to the trailhead, 49 min to Six Giant Rocks and 68 min to the peak, including photo stops.",
+        "If the 2026 entrance works are underway, the original trailhead is closed 8:00 AM–5:00 PM; enter via Lingyun Temple and follow the in-temple 象山登山步道入口 signs.",
+        "Do not climb the giant rocks; the posted rule is no climbing, and the platform has the full 101 view."
+      ],
+      "watch": "Official PWD notice: partial trail closures for upgrade works from 2026-07-20 to 2027-04-13. On-site detour maps showed one section closed until 2026-12-20 and another until 2027-02-28; the photo platform 攝手平台 area is affected. Detours are paved stone steps.",
+      "sources": [
+        {
+          "label": "Taipei Public Works Dept – trail closure notice",
+          "url": "https://pwd.gov.taipei/News_Content.aspx?n=C8255DF7355DF2F1&s=8826D23D548E4171"
+        },
+        {
+          "label": "Taipei Travel – 象山親山步道",
+          "url": "https://www.travel.taipei/zh-tw/attraction/details/185"
+        },
+        {
+          "label": "Blog: Elephant Mountain walk, Sep 2026",
+          "url": "https://zanzan.tw/archives/a00022"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "title": "Raohe Night Market",
+      "hours": "Daily 5:00 PM–midnight (individual stalls vary).",
+      "getThere": "MRT Songshan station (Green Songshan-Xindian line, terminus) Exit 5, about 1 min to the gate beside Songshan Ciyou Temple. Houshanpi (Blue) is the alternative. Raohe St. between Sec. 4 Bade Rd and Fuyuan St.",
+      "highlights": [
+        "Fuzhou pepper buns 福州世祖胡椒餅 (Michelin Bib Gourmand), right at the Ciyou Temple gate in front of No. 249: charcoal-baked on drum-oven walls, filled with black-pepper pork and scallion.",
+        "Chen Dong herbal pork ribs 陳董藥燉排骨 (Bib Gourmand, No. 160): falls-off-the-bone ribs in a medicinal-herb broth, topped with ginger; pair with braised pork rice.",
+        "Shi Boss spicy stinky tofu with duck blood (Bib) and Ma Shu Bao Bao mochi (peanut, sugar or black sesame).",
+        "Songshan Ciyou Temple (31 m) and Rainbow Bridge (109 m, open 24 h) are next to the market."
+      ],
+      "tips": [
+        "Michelin says the pepper-bun line moves fast; it is at the entrance, so join it first.",
+        "Thursday is clear of the regular stall rest days FUNIT lists (Chen Dong closes Tue; A-Guo lu wei and Ma Shu Bao Bao Mon; 身煎百戰 Wed).",
+        "More protein: big fried chicken cutlet 小師傅大雞排 (opposite No. 192), beef noodles and beef offal soup (in front of No. 63)."
+      ],
+      "watch": "Taipei Travel lists Ciyou Temple closing at 22:30, so visit the temple before late-night eating.",
+      "sources": [
+        {
+          "label": "Taipei Travel – Raohe Street Tourist Night Market",
+          "url": "https://www.travel.taipei/en/attraction/details/1691"
+        },
+        {
+          "label": "MICHELIN Guide – 5 Michelin-Recommended Eats at Raohe",
+          "url": "https://guide.michelin.com/en/article/travel/5-michelin-recommended-eats-at-taipei-raohe-night-market"
+        },
+        {
+          "label": "FUNIT Raohe stall guide (updated 2026-11-10)",
+          "url": "https://gofunit.com/%E9%A5%92%E6%B2%B3%E5%A4%9C%E5%B8%82%E7%BE%8E%E9%A3%9F/"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "title": "Taipei Christmas — Opening Night",
+      "hours": "Event runs Dec 3, 2026–Jan 1, 2027 (Dec 3 is the opening day). Daily lighting and concert times were not yet published on 2026-11-11.",
+      "cost": "Free public event.",
+      "getThere": "Daan Forest Park, 臺北市大安區新生南路二段1號. Nearby parking: Jianguo S. Rd viaduct lots (165–271 m) and the Daan Forest Park underground car park (265 m).",
+      "highlights": [
+        "'2026臺北耶誕愛無限' organised by Taipei's Department of Information and Tourism: light installations across Daan Forest Park.",
+        "A '耶誕音樂會' Christmas concert with several singers is part of the programme."
+      ],
+      "tips": [
+        "This is the Taipei City event. New Taipei's 新北歡樂耶誕城 (christmasland.ntpc.gov.tw, Banqiao) is a separate event; its site showed '2 天後開城' on 2026-11-11.",
+        "Recheck the Taipei Travel event page a few days before for the opening-night concert time and line-up."
+      ],
+      "watch": "Opening-night timings, stage location and any crowd controls are not yet published.",
+      "sources": [
+        {
+          "label": "Taipei Travel – 2026臺北耶誕愛無限",
+          "url": "https://www.travel.taipei/zh-tw/event-calendar/details/66401"
+        },
+        {
+          "label": "New Taipei Christmasland official site",
+          "url": "https://christmasland.ntpc.gov.tw/"
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "title": "Back to Via Hotel",
+      "getThere": "From the market, MRT Songshan station (Green Songshan-Xindian line) by the Ciyou Temple end, or a taxi to 台北市中正區重慶南路一段60號.",
+      "tips": [
+        "If using the 101 + Metro combo EasyCard, its one-day pass is valid until the end of Metro operations that day.",
+        "At 11:30 PM check the last-train time in the Go! Taipei Metro app or the metro.taipei 'First & Last Trains' page; take a taxi if it is tight."
+      ],
+      "sources": [
+        {
+          "label": "Taipei Travel – Raohe (nearby MRT)",
+          "url": "https://www.travel.taipei/en/attraction/details/1691"
+        },
+        {
+          "label": "Taipei Metro – combo ticket / one-day pass terms",
+          "url": "https://english.metro.taipei/News_Content.aspx?n=840A770A8CA5AB80&sms=DFFA119D1FD5602C&s=36F8B07276E5AE50"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "index": 1,
+      "field": "title",
+      "existing": "Liberty Square / Chiang Kai-shek Memorial Hall — Quick Pass",
+      "published": "The official site calls the plaza in front of the hall 'Democracy Square', and the guard drills are 'Military Honor Guard Ceremonial Patrols and Drills' on Democracy Boulevard, hourly 9 AM–5 PM, cancelled in rain.",
+      "url": "https://www.cksmh.gov.tw/en/cp.aspx?n=6369"
+    },
+    {
+      "index": 2,
+      "field": "navigateTo",
+      "existing": "台北市中正區羅斯福路一段10號",
+      "published": "台北市羅斯福路一段10號之1 (blog source; no official site)",
+      "url": "https://lordcat.net/archives/2247"
+    },
+    {
+      "index": 6,
+      "field": "notes",
+      "existing": "About 140 m of the trail has been closed for works since July and is due to reopen around December.",
+      "published": "Taipei PWD: partial closures for trail upgrade works 2026-07-20 to 2027-04-13. On-site detour map (blog photo): sections closed to 2026-12-20 and to 2027-02-28; original entrance closed 8:00–17:00 from 2026-09-30, use Lingyun Temple.",
+      "url": "https://pwd.gov.taipei/News_Content.aspx?n=C8255DF7355DF2F1&s=8826D23D548E4171"
+    },
+    {
+      "index": 4,
+      "field": "notes",
+      "existing": "NT$350 gets the air gun, coaching, one target sheet and 30 pellets; open 1:00–9:00 PM Tuesday–Friday.",
+      "published": "The only published fee found is from the previous operator (2021: NT$250 with 25 pellets; weekdays 13:00–21:00). The centre is now run by 舞動陽光, and its 2026 fee table could not be accessed, so the app figures are unverified.",
+      "url": "https://fgblog.fashionguide.com.tw/11633/posts/417123"
+    }
+  ]
+}

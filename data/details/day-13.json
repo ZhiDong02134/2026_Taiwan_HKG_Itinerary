@@ -1,0 +1,328 @@
+{
+  "day": "day-13",
+  "checked": "2026-11-11",
+  "items": [
+    {
+      "index": 0,
+      "title": "Taxi / MTR to the Lion Rock Approach",
+      "cost": "Urban (red) taxi: HK$29 for the first 2 km, then HK$2.1 per 200 m or per minute waiting until the meter reaches HK$102.5, HK$1.4 after; HK$6 per boot bag; HK$8 surcharge if routed via Lion Rock Tunnel.",
+      "getThere": "HKTB route note: MTR to Wong Tai Sin or Diamond Hill, then taxi up Sha Tin Pass Road to the Lion Pavilion (start of MacLehose Trail Section 5). From TST: Tuen Ma Line East Tsim Sha Tsui → Hung Hom → Ho Man Tin → To Kwa Wan → Sung Wong Toi → Kai Tak → Diamond Hill.",
+      "highlights": [
+        "Sha Tin Pass was the old footpath between Sha Tin and Tsz Wan Shan; the trailhead sits at the pass on Sha Tin Pass Road.",
+        "AFCD: a small village store at Shatin Pass sells cold drinks — the last resupply before the ridge."
+      ],
+      "tips": [
+        "Say 沙田坳道 獅子亭 (Lion Pavilion) to the driver; a red urban taxi is the right type for Kowloon.",
+        "Ask for a printed receipt — drivers must issue one on request; they are not required to change HK$500/1,000 notes."
+      ],
+      "watch": "Drivers can legally refuse change for HK$500/HK$1,000 notes — carry small bills or Octopus.",
+      "sources": [
+        {
+          "label": "Hello! Hong Kong (HKTB content): Sha Tin Pass Road route",
+          "url": "https://www.hellohongkong.com.hk/blog/sha-tin-pass-road-to-kowloon-reservoir"
+        },
+        {
+          "label": "Transport Department: taxi fares",
+          "url": "https://www.td.gov.hk/en/transport_in_hong_kong/public_transport/taxi/taxi_fare_of_hong_kong/index.html"
+        },
+        {
+          "label": "AFCD: Lion Rock Country Park",
+          "url": "https://www.afcd.gov.hk/english/country/cou_vis/cou_vis_cou/cou_vis_cou_lr/cou_vis_cou_lr.html"
+        },
+        {
+          "label": "MTR system map & station list",
+          "url": "https://www.mtr.com.hk/en/customer/services/system_map.html"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "Lion Rock Hike",
+      "hours": "Country park trail, no gate hours. Go in daylight; the path is unlit.",
+      "cost": "Free",
+      "getThere": "From Sha Tin Pass (MacLehose Trail Section 5) climb west to the ridge (~1.5–2 km, ~200 m gain to the summit), then descend the AFCD-restored stone trail from Lion Rock Pass down to Wang Tau Hom / Wong Tai Sin.",
+      "highlights": [
+        "Lion Rock summit 495 m: the 'lion's head' faces west over all of Kowloon, Victoria Harbour and the New Territories.",
+        "Reunification Pavilion on the mid-slope: open views of east Kowloon and the old Kai Tak runway (today's cruise terminal) — preview of the afternoon.",
+        "Qing-era stone trails on both flanks were the old Sha Tin–Kowloon routes."
+      ],
+      "tips": [
+        "Final 50–70 m to the lion's head is a hands-on rock scramble; stow poles. Stop at the main ridge if the rock is wet.",
+        "No water on the trail: carry 1–1.5 L each; the Shatin Pass store is the only top-up.",
+        "Emergency: 999 or 112; quote the nearest distance post number (e.g. M0xx on the MacLehose Trail)."
+      ],
+      "watch": "Ridge is exposed and the scramble is hazardous when wet or windy. Macaques live in the park (mainly near Tai Po Road): never feed them; keep food packed.",
+      "sources": [
+        {
+          "label": "AFCD: Lion Rock Country Park",
+          "url": "https://www.afcd.gov.hk/english/country/cou_vis/cou_vis_cou/cou_vis_cou_lr/cou_vis_cou_lr.html"
+        },
+        {
+          "label": "Hong Kong Trip: Lion Rock hike guide",
+          "url": "https://www.hongkong-trip.com/guides/lion-rock-hike-guide/"
+        },
+        {
+          "label": "HKTB: hiking safety (emergency, distance posts)",
+          "url": "https://www.discoverhongkong.com/eng/outdoors/top-10-easy-hikes.html"
+        },
+        {
+          "label": "TGR: Lion Rock route overview",
+          "url": "https://tgr.run/routes/lion-rock-hiking-guide"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "Finish Wang Tau Hom / Tsz Wan Shan Side → Taxi to Kowloon Walled City Park",
+      "cost": "Taxi on the urban meter (HK$29 flag, HK$2.1 per 200 m); MTR by Octopus.",
+      "getThere": "The Wang Tau Hom trail ends ~8–12 min walk from Wong Tai Sin MTR Exit D3 (Ching Tak Street). Taxi from there, or MTR: Kwun Tong Line Wong Tai Sin → Diamond Hill, change to Tuen Ma Line → Kai Tak → Sung Wong Toi, Exit B3, then ~8 min walk to the park.",
+      "tips": [
+        "MTR is a reliable fallback if taxis are scarce: Sung Wong Toi Exit B3 is the station exit MTR names for the park.",
+        "Buy water at the convenience stores near Wong Tai Sin station after the descent."
+      ],
+      "sources": [
+        {
+          "label": "Hong Kong Trip: Wong Tai Sin approach (Exit D3)",
+          "url": "https://www.hongkong-trip.com/guides/lion-rock-hike-guide/"
+        },
+        {
+          "label": "LCSD: Kowloon Walled City Park — Getting Here",
+          "url": "https://www.lcsd.gov.hk/en/parks/kwcp/access.html"
+        },
+        {
+          "label": "MTR: Kai Tak / Sung Wong Toi discoveries",
+          "url": "https://www.mtr.com.hk/en/customer/main/discover-tkw-swt-huh.html"
+        },
+        {
+          "label": "Transport Department: taxi fares",
+          "url": "https://www.td.gov.hk/en/transport_in_hong_kong/public_transport/taxi/taxi_fare_of_hong_kong/index.html"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "title": "Kowloon Walled City: A Cinematic Journey (If a Slot Is Free)",
+      "hours": "Park daily 6:30 AM – 11:00 PM. Film-set exhibition daily 9:00 AM – 7:00 PM, 24 May 2025 – 23 May 2028. Since 1 Sep 2026: Mon–Fri 9 AM–12 noon = 2 sessions of 25 min per hour; all other hours = 3 sessions of 15 min per hour.",
+      "cost": "Free",
+      "getThere": "MTR Sung Wong Toi Exit B3, ~8 min walk. Entrance area: Tung Tsing Road / Carpenter Road. Ticket counter is in front of the Yamen.",
+      "highlights": [
+        "Sets from Twilight of the Warriors: Walled In, installed inside the restored Qing Yamen.",
+        "Free outdoor display at the South Gate: bronze model of a pre-demolition Walled City building and a cross-section shadow wall.",
+        "Old South Gate remains and Yamen are the genuine surviving fabric; the film set is reconstruction."
+      ],
+      "tips": [
+        "Same-day tickets: morning sessions (9 AM–before 2 PM) from 8:45 AM; afternoon (2–7 PM) from 1:45 PM; max 2 tickets per person per collection, first come first served.",
+        "Arriving ~11:30 Thu: slots before noon are 25 min; from 12:00 they shrink to 15 min.",
+        "Enter at the printed time — late tickets are void; remaining places go to the standby queue."
+      ],
+      "watch": "Max 60 visitors inside at once. Closed under Black Rainstorm or Signal No. 8+; reopens within 2 h of cancellation if conditions permit. Staff may shift session start times.",
+      "sources": [
+        {
+          "label": "LCSD: Opening Hours and Admission",
+          "url": "https://www.lcsd.gov.hk/en/parks/kwcp/opening.html"
+        },
+        {
+          "label": "LCSD: A City of Thousand Faces / exhibition rooms",
+          "url": "https://www.lcsd.gov.hk/en/parks/kwcp/fac/thousand.html"
+        },
+        {
+          "label": "LCSD: Getting Here",
+          "url": "https://www.lcsd.gov.hk/en/parks/kwcp/access.html"
+        },
+        {
+          "label": "HKTB: Kowloon Walled City Park",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-kowloon-walled-city-park.html"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "title": "Walk East: Sung Wong Toi → Kai Tak Waterfront → Sports Park",
+      "hours": "Sung Wong Toi station archaeology display: same as station opening hours.",
+      "cost": "Free",
+      "getThere": "Kowloon City → Sung Wong Toi Garden (inscribed rock) → Sung Wong Toi station concourse (Exit D side) → Kai Tak Sports Park, 38 Shing Kai Road; MTR Kai Tak and Sung Wong Toi stations are each within ~10 min walk of the park.",
+      "highlights": [
+        "Sung Wong Toi Garden: the 'Terrace of the Song Emperors' inscription, cut from Sacred Hill in 1956 when the hill was levelled for Kai Tak Airport.",
+        "'Treasures from Sacred Hill' in Sung Wong Toi station: 500+ Song–Yuan finds (porcelain, tea bowls, coins) unearthed 2012–2015; display renewed March 2024.",
+        "Kai Tak Sports Park on the old airport tarmac: 50,000-seat Stadium with retractable roof, 10,000-seat Arena, 5,000-seat Youth Sports Ground (free when not in use)."
+      ],
+      "tips": [
+        "The garden, station display and park are three separate places with separate entrances — pin each one.",
+        "Kai Tak Mall inside the park is the indoor fallback if it rains."
+      ],
+      "sources": [
+        {
+          "label": "AMO: Archaeological Display at Sung Wong Toi Station",
+          "url": "https://www.amo.gov.hk/en/visitor-centre/exhibitions/sung-wong-toi-station/index.html"
+        },
+        {
+          "label": "MTR: Kai Tak / Sung Wong Toi discoveries",
+          "url": "https://www.mtr.com.hk/en/customer/main/discover-tkw-swt-huh.html"
+        },
+        {
+          "label": "HKTB: Kai Tak Sports Park",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-kai-tak-sports-park.html"
+        },
+        {
+          "label": "HomeHK: Walled City / Sung Wong Toi half-day",
+          "url": "https://homehk.org/en/guides/hk-kowloon-walled-city-sung-wong-toi"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "Kai Tak Buffer — JOYPOLIS SPORTS (Backup Only)",
+      "hours": "Regular days: all floors 10:30 AM – 6:30 PM; 3/F Future Arena to 8:30 PM. Peak days: all floors 10:30 AM – 8:30 PM. Last entry 6:30 PM. Check the business calendar for whether Thu Dec 10 is Regular or Peak.",
+      "cost": "Regular day JPS Pass 60 min: HK$180 (age 12+). Peak day 120-min fixed sessions: HK$360 adult. Grip socks HK$30/pair if needed.",
+      "getThere": "G/F–4/F, Health and Wellness Centre, Kai Tak Sports Park. MTR Sung Wong Toi Exit D or Kai Tak Exit D, each within a 10-min walk. Taxi stand: G/F Kai Tak Mall 2.",
+      "highlights": [
+        "G/F Ninja Dojo: ninja obstacle courses and shuriken laser battles.",
+        "2/F SONIC Stadium: SEGA-licensed Sonic sports challenges (incl. treadmill race game).",
+        "3/F Future Arena: MR lava game, VR horse racing, AR climbing wall.",
+        "4/F Hungry Tiger Hidden Dragon restaurant: 270° views over Kai Tak."
+      ],
+      "tips": [
+        "Book online (quotas limited) and arrive 20 min early to redeem wristbands; sign the online waiver beforehand to speed entry.",
+        "A 2:15 PM entry on a Regular day gets all floors; after 6:30 PM only 3/F runs."
+      ],
+      "watch": "Tickets are date-specific, non-refundable and non-reschedulable. Private events can close time slots — check the notice on the ticketing site. Closed under Signal No. 8+ or Black Rainstorm.",
+      "sources": [
+        {
+          "label": "JOYPOLIS SPORTS ticketing (hours, calendar)",
+          "url": "https://ticketing.hk-joypolis-sports.com/en/"
+        },
+        {
+          "label": "JOYPOLIS SPORTS: Ticket prices & T&Cs",
+          "url": "https://hk-joypolis-sports.com/ticket"
+        },
+        {
+          "label": "JOYPOLIS SPORTS: Access",
+          "url": "https://hk-joypolis-sports.com/en/access"
+        },
+        {
+          "label": "HKTB: JOYPOLIS SPORTS HONG KONG",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-joypolis-sports.html"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "title": "Early Dinner at Kai Tak",
+      "getThere": "Inside Kai Tak Sports Park (38 Shing Kai Road): Kai Tak Mall 1/2/3 next to the Arena.",
+      "highlights": [
+        "Ming Garden (M2-310, 3/F Kai Tak Mall 2): char siu, suckling pig, dim sum; window seats face Kai Tak Stadium.",
+        "So Gor Beef Brisket (M3-107, 1/F Mall 3): signature braised outer skirt; brisket, short rib, tendon noodles.",
+        "Gyu-Kaku J (M2-301, 3/F Mall 2): budget yakiniku sets grilled at the table — easy protein.",
+        "N+ Burger (M2-102, 1/F Mall 2): Angus burgers in old-Kai-Tak-airport decor.",
+        "Food Gala (2/F Mall 1): 10 counters incl. Pepper Lunch Express and JMT Korean — fastest option."
+      ],
+      "tips": [
+        "Eat by ~5:15 so you clear security and find seats before your session (about 6:00 PM expected; the ticket time rules).",
+        "Food Gala is the low-queue fallback if sit-down places are full before the session."
+      ],
+      "sources": [
+        {
+          "label": "HKTB: Exciting Eats at Kai Tak Sports Park",
+          "url": "https://www.discoverhongkong.com/eng/food-and-drink/exciting-eats-at-kai-tak-sports-park-and-beyond.html"
+        },
+        {
+          "label": "DinkStart: Kai Tak Arena logistics (food court)",
+          "url": "https://dinkstart.com/hong-kong-slam-2026/getting-there"
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "title": "WTT Finals Hong Kong — Kai Tak Arena (Ticketed Session)",
+      "hours": "Thu Dec 10, 18:00 = Session 04: Women's Singles R16 + Men's Singles R16 + Mixed Doubles QF. (Session 03 is 12:00 the same day.) Event runs Dec 9–13.",
+      "cost": "Sessions 1–4: HK$880 / HK$680 (CAT 2) / HK$480 / HK$300, plus HK$35 customer service fee per ticket.",
+      "getThere": "Kai Tak Arena (10,000-seat indoor hall), Kai Tak Sports Park, Shing Kai Road. MTR Tuen Ma Line to Kai Tak Exit D or Sung Wong Toi Exit D, ~5–10 min walk; follow signs for the Arena, not the Stadium.",
+      "highlights": [
+        "Season-ending event: 16 top men's and women's singles players plus mixed doubles.",
+        "A Thursday evening Round-of-16 session packs many matches across three events into one ticket."
+      ],
+      "tips": [
+        "Central side-on seats matter more than category in a 10,000-seat arena.",
+        "Bags are screened at the park entrance; check the park-rules page for prohibited items before going."
+      ],
+      "watch": "Schedule and order of play are subject to change by the organiser. Session end time was not published on the sources checked.",
+      "sources": [
+        {
+          "label": "DotDotNews: WTT HK Finals dates & ticket prices",
+          "url": "https://english.dotdotnews.com/a/202610/20/AP6ad6d045e4b02fd1c5f51358.html"
+        },
+        {
+          "label": "Koobit: WTT Finals Hong Kong session schedule",
+          "url": "https://www.koobit.com/wtt-finals-hong-kong-e73000"
+        },
+        {
+          "label": "HKTB: Kai Tak Sports Park (Arena capacity)",
+          "url": "https://www.discoverhongkong.com/eng/place-to-go/travel.guide-kai-tak-sports-park.html"
+        },
+        {
+          "label": "DinkStart: getting to Kai Tak Arena",
+          "url": "https://dinkstart.com/hong-kong-slam-2026/getting-there"
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "title": "Late Dinner → Back to TST",
+      "getThere": "Kai Tak Exit D → Tuen Ma Line towards Tuen Mun: Kai Tak → Sung Wong Toi → To Kwa Wan → Ho Man Tin → Hung Hom → East Tsim Sha Tsui (5 stops). Sung Wong Toi (also Exit D) can be calmer when a session empties.",
+      "highlights": [
+        "Kowloon City's Thai quarter is a short taxi from the park for a late meal (see lunch list).",
+        "Kai Tak Mall has 60+ food and drink outlets if you'd rather eat on site."
+      ],
+      "tips": [
+        "During major events MTR runs crowd management and adds trains — no need to rush; don't stop or meet up inside the station.",
+        "Have Octopus or a contactless card ready before the gates."
+      ],
+      "watch": "Taxi pick-up zones change on event days and queue right after sessions; the MTR is usually faster at that moment.",
+      "sources": [
+        {
+          "label": "MTR: Kai Tak Sports Park travel tips",
+          "url": "https://www.mtr.com.hk/en/customer/main/kaitak-sports-park-mtr.html"
+        },
+        {
+          "label": "MTR system map & station list",
+          "url": "https://www.mtr.com.hk/en/customer/services/system_map.html"
+        },
+        {
+          "label": "DinkStart: Kai Tak Arena logistics",
+          "url": "https://dinkstart.com/hong-kong-slam-2026/getting-there"
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "title": "TST Arcade / Dessert (If Still Awake)",
+      "highlights": [
+        "Verified dessert alternative if you eat in Kowloon City instead: Chiu Chow Hop Shing Dessert (9 Lung Kong Rd) — ~70 years, 90 varieties incl. black sesame dumplings.",
+        "Tei Mou Koon Dessert (G/F, 47 Fuk Lo Tsun Rd, Kowloon City): walnut, black sesame, almond and lotus seed sweet soups."
+      ],
+      "tips": [
+        "No TST arcade or dessert shop hours were verified in this pass — confirm on the spot before walking far.",
+        "Kowloon City is a short taxi or bus hop from the park, so dessert there before riding back to TST is an option."
+      ],
+      "sources": [
+        {
+          "label": "HKTB: Top Dining Hotspots in Kowloon City",
+          "url": "https://www.discoverhongkong.com/eng/neighbourhoods/kowloon-city/dining-hotspots-in-kowloon-city.html"
+        },
+        {
+          "label": "DinkStart: eating around Kai Tak",
+          "url": "https://dinkstart.com/hong-kong-slam-2026/getting-there"
+        }
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "index": 3,
+      "field": "guide.exit",
+      "existing": "Hard cap about 45 minutes. Only 60 people are inside at once.",
+      "published": "Viewing slots are fixed: since 1 Sep 2026, Mon–Fri 9 AM–12 noon has 2 × 25-min sessions per hour; all other hours 3 × 15-min sessions per hour (max 60 inside).",
+      "url": "https://www.lcsd.gov.hk/en/parks/kwcp/opening.html"
+    }
+  ]
+}
